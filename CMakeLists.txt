@@ -15,7 +15,17 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/bin)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/lib)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/lib)
 
-set(CMAKE_REQUIRED_LIBRARIES m)
+if(UNIX)
+    set(CMAKE_REQUIRED_LIBRARIES m)
+endif()
+
+#
+# Global settings.
+#
+
+if(WIN32)
+    add_compile_definitions(_CRT_SECURE_NO_WARNINGS)
+endif()
 
 #
 # Lists of all modules (i.e. source files).
@@ -79,7 +89,10 @@ add_executable(tcode mylib/tcode.c)
 #
 
 add_library(testu01 STATIC ${all_sources})
-target_link_libraries(testu01 PUBLIC m)
+
+if(UNIX)
+    target_link_libraries(testu01 PUBLIC m)
+endif()
 
 target_include_directories(
     testu01
@@ -87,6 +100,8 @@ target_include_directories(
     include
     ${CMAKE_CURRENT_BINARY_DIR}/include
 )
+
+target_compile_definitions(testu01 PRIVATE HAVE_CONFIG_H)
 
 #
 # Build headers from TeX source.
