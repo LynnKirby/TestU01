@@ -1,0 +1,8 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: Lynn's TestU01
+Upstream-Contact: Lynn Kirby <lynn@arrak.is>
+Source: https://github.com/LynnKirby/TestU01
+
+Files: doc/* examples/* mylib/* param/* probdist/* testu01/*
+Copyright: 2002 Pierre L'Ecuyer
+License: LicenseRef-testu01
