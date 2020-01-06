@@ -27,7 +27,7 @@ else()
     set(enable_warnings OFF)
 endif()
 
-set(TESTU01_ENABLE_WARNINGS enable_warnings CACHE BOOL "Enable warnings.")
+set(TESTU01_ENABLE_WARNINGS ${enable_warnings} CACHE BOOL "Enable warnings.")
 
 if(NOT TESTU01_ENABLE_WARNINGS)
     if(MSVC)
