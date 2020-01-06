@@ -15,8 +15,26 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/bin)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/lib)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/lib)
 
-if(UNIX)
-    set(CMAKE_REQUIRED_LIBRARIES m)
+#
+# Handle build options.
+#
+
+# Enable warnings by default if we're a standalone project. Disable them if
+# we're built as a subdirectory.
+if(CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
+    set(enable_warnings ON)
+else()
+    set(enable_warnings OFF)
+endif()
+
+set(TESTU01_ENABLE_WARNINGS enable_warnings CACHE BOOL "Enable warnings.")
+
+if(NOT TESTU01_ENABLE_WARNINGS)
+    if(MSVC)
+        add_compile_options(/w)
+    else()
+        add_compile_options(-w)
+    endif()
 endif()
 
 #
@@ -56,6 +74,10 @@ endforeach()
 #
 # Generate config headers.
 #
+
+if(UNIX)
+    list(APPEND CMAKE_REQUIRED_LIBRARIES m)
+endif()
 
 set(PACKAGE_STRING "${CMAKE_PROJECT_NAME} ${CMAKE_PROJECT_VERSION}")
 
