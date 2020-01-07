@@ -31,7 +31,13 @@ set(TESTU01_ENABLE_WARNINGS ${enable_warnings} CACHE BOOL "Enable warnings.")
 
 add_library(testu01_build_config INTERFACE)
 
-if(NOT TESTU01_ENABLE_WARNINGS)
+if(TESTU01_ENABLE_WARNINGS)
+    if(MSVC)
+        target_compile_options(testu01_build_config INTERFACE /W4)
+    else()
+        target_compile_options(testu01_build_config INTERFACE -Wall -pedantic)
+    endif()
+else()
     if(MSVC)
         target_compile_options(testu01_build_config INTERFACE /w)
     else()
@@ -169,12 +175,13 @@ set(examples bat1 bat2 bat3 birth1 birth2 ex1 ex4 fbirth fcoll scat scat2)
 
 foreach(example IN LISTS examples)
     add_executable(testu01_example-${example} examples/${example}.c)
-    target_link_libraries(testu01_example-${example} testu01)
+    target_link_libraries(testu01_example-${example}
+                          testu01_build_config testu01)
 endforeach()
 
 add_executable(testu01_example-ex3 examples/ex3.c examples/my16807.c)
-target_link_libraries(testu01_example-ex3 testu01)
+target_link_libraries(testu01_example-ex3 testu01_build_config testu01)
 
 add_executable(testu01_example-ex7
                examples/ex7.c examples/mrg32k3a.c examples/xorshift.c)
-target_link_libraries(testu01_example-ex7 testu01)
+target_link_libraries(testu01_example-ex7 testu01_build_config testu01)
