@@ -125,9 +125,9 @@ void *util_Free (void *p)
 void util_WriteBool (bool b, int d)
 {
    if (b)
-      printf ("%*s", d, "true");
+      printf ("%*s", d, "TRUE");
    else
-      printf ("%*s", d, "false");
+      printf ("%*s", d, "FALSE");
 }
 
 
