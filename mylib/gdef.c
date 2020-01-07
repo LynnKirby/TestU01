@@ -50,19 +50,12 @@ void gdef_GetHostName (char machine[], int n)
    char buf[MAX_COMPUTERNAME_LENGTH + 1];
    DWORD size = MAX_COMPUTERNAME_LENGTH + 1;
    GetComputerNameA (buf, &size);
-   strncat (machine, buf, n);
+	snprintf (machine, n, "%s, Windows", buf);
 #else
    struct utsname Z;
 
    if (uname(&Z) != -1) {
-      strncpy (machine, Z.nodename, (size_t) n);
-      int j = strlen (machine);
-      if (n - j > 2)
-         strncat (machine, ", ", (size_t) 2);
-      j = strlen (machine);
-      if (n - j > 0)
-         strncat (machine, Z.sysname, (size_t) (n - j));
-      machine[n - 1] = '\0';  
+      snprintf(machine, n, "%s, %s", Z.nodename, Z.sysname);
    }
 #endif
 }
