@@ -153,9 +153,7 @@ double fdist_Normal2 (double x);
 \code
 
 
-#ifdef HAVE_ERF
-   double fdist_Normal3 (double x);
-#endif
+double fdist_Normal3 (double x);
 \endcode
   \tab
  \hpierre{Je trouve ces {\tt ifdef} tr\`es laids.  Pas moyen de cacher
@@ -167,9 +165,8 @@ de sa machine, il faut qu'il les voit; sinon, il faudra l'\'eliminer.}
   Returns an approximation of $\Phi(x)$, 
   where $\Phi$ is the standard normal distribution function,
   with mean 0 and variance 1. 
-  Uses the {\tt erf} function from the standard Unix C library. The macro
-  {\tt HAVE\_ERF} from {\tt mylib/gdef} must be defined. On some machines,
-   this function is twice as fast as {\tt fdist\_Normal1}.
+  Uses the {\tt erf} function from the standard C library. On some machines,
+  this function is twice as fast as {\tt fdist\_Normal1}.
  \endtab
 \code
 

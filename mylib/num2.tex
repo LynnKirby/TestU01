@@ -45,37 +45,11 @@ double num2_Combination (int n, int s);
 \code
 
 
-#ifdef HAVE_LGAMMA
-#define num2_LnGamma lgamma
-#else
-   double num2_LnGamma (double x);
-#endif
-\endcode
-  \tab Calculates the natural logarithm of the gamma function  $\Gamma(x)$
-   at {\tt x}. Our {\tt num2\_LnGamma} gives 16 decimal digits
-   of precision, but is implemented only for $x>0$.
-   The function {\tt lgamma} is from the {\tt ISO C99} standard math library.
-  \endtab
-\code
-
-
 double num2_Digamma (double x);
 \endcode
 \tab Returns the value of the logarithmic derivative of the Gamma function
    $\psi(x) = \Gamma'(x) / \Gamma(x)$.
 \endtab
-\code
-
-
-#ifdef HAVE_LOG1P
-#define num2_log1p log1p
-#else
-   double num2_log1p (double x);
-#endif
-\endcode
-  \tab Returns a value equivalent to {\tt log}$(1 + x)$ accurate also for small
-   $x$. The function {\tt log1p} is from the {\tt ISO C99} standard math library.
-  \endtab
 \code
 
 

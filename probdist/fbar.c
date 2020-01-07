@@ -280,14 +280,13 @@ double fbar_Normal2 (double x)
 
 
 /*=========================================================================*/
-#ifdef HAVE_ERF
 
 double fbar_Normal3 (double x)
 {
    return 0.5 * erfc (x * num_1Rac2);
 }
 
-#endif
+
 /*=========================================================================*/
 
 double fbar_BiNormal1 (double x, double y, double rho, int ndig)
@@ -658,7 +657,7 @@ double fbar_Gamma (double alpha, int d, double x)
    if (x <= 1.0 || x < alpha)
       return 1.0 - fdist_Gamma (alpha, d, x);
 
-   v = exp (alpha * log (x) - x - num2_LnGamma (alpha));
+   v = exp (alpha * log (x) - x - lgamma (alpha));
 
    A = 1.0 - alpha;
    B = A + x + 1.0;
@@ -740,7 +739,7 @@ static double KSPlusbarUpper (long n, double x)
 
    while (j > 0) {
       q = (double)j / n + x;
-      term = LogCom + (j - 1)*log (q) + (n - j)*num2_log1p (-q);
+      term = LogCom + (j - 1)*log (q) + (n - j)*log1p (-q);
       t = exp (term);
       Sum += t;
       LogCom += log ((double)j / (n - j + 1));
@@ -755,7 +754,7 @@ static double KSPlusbarUpper (long n, double x)
 
    while (j <= jmax) {
       q = (double)j / n + x;
-      term = LogCom + (j - 1)*log(q) + (n - j)*num2_log1p(-q);
+      term = LogCom + (j - 1)*log(q) + (n - j)*log1p(-q);
       t = exp (term);
       Sum += t;
       LogCom += log ((double)(n - j)/(j + 1));
@@ -766,7 +765,7 @@ static double KSPlusbarUpper (long n, double x)
 
    Sum *= x;
    /* add the term j = 0 */
-   Sum += exp (n*num2_log1p (-x));
+   Sum += exp (n*log1p (-x));
    return Sum;
 }
 

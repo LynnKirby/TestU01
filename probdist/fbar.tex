@@ -106,16 +106,13 @@ double fbar_Normal2 (double x);
 \code
 
 
-#ifdef HAVE_ERF
-   double fbar_Normal3 (double x);
-#endif
+double fbar_Normal3 (double x);
 \endcode
   \tab
   Returns an approximation of $1 - \Phi(x)$, 
   where $\Phi$ is the standard normal distribution function,
   with mean 0 and variance 1. 
-  Uses the {\tt erfc} function from the standard Unix C library. The macro
-  {\tt HAVE\_ERF} from {\tt mylib/gdef} must be defined. This function
+  Uses the {\tt erfc} function from the standard C library. This function
   is twice as fast as {\tt fbar\_Normal2}.
  \endtab
 \code

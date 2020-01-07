@@ -78,7 +78,7 @@ double fmass_PoissonTerm1 (double lam, long s)
       Res = exp (-lam) * pow (lam, x) / num2_Factorial (s);
 
    } else {
-      y = x * log (lam) - num2_LnGamma (x + 1.0) - lam;
+      y = x * log (lam) - lgamma (x + 1.0) - lam;
       Res = exp (y);
    }
 
@@ -306,7 +306,7 @@ double fmass_BinomialTerm4 (long n, double p, double p2, long s)
          Res = pow (p, (double) s) * num2_Combination (n, s) * pow (1.0 - p2,
                (double) (n - s));
       } else {
-         double temp = (n - s)*num2_log1p (-p2);
+         double temp = (n - s)*log1p (-p2);
          Res = pow (p, (double) s) * num2_Combination (n, s) * exp(temp);
       }
       return Res;
@@ -317,7 +317,7 @@ double fmass_BinomialTerm4 (long n, double p, double p2, long s)
          last few digits can be lost. But we need the function lgammal in
          long double precision. Another possibility would be to use an
          asymptotic expansion for the binomial coefficient. */
-      Res = s * log (p) + (n - s) * num2_log1p(-p2) + num2_LnFactorial (n)
+      Res = s * log (p) + (n - s) * log1p(-p2) + num2_LnFactorial (n)
          - num2_LnFactorial (n - s) - num2_LnFactorial (s);
       util_Assert (Res < maxexp, "fmass_BinomialTerm4:   term overflow");
 
@@ -372,7 +372,7 @@ double fmass_BinomialTerm3 (long n, double p, long s)
          Res = pow (p, (double) s) * num2_Combination (n, s) * pow (q,
                (double) (n - s));
       } else {
-         double temp = (n - s)*num2_log1p (-p);
+         double temp = (n - s)*log1p (-p);
          Res = pow (p, (double) s) * num2_Combination (n, s) * exp(temp);
       }
       return signe * Res;
@@ -383,7 +383,7 @@ double fmass_BinomialTerm3 (long n, double p, long s)
          last few digits can be lost. But we need the function lgammal in
          long double precision. Another possibility would be to use an
          asymptotic expansion for the binomial coefficient. */
-      Res = s * log (p) + (n - s) * num2_log1p (-p) + num2_LnFactorial (n)
+      Res = s * log (p) + (n - s) * log1p (-p) + num2_LnFactorial (n)
          - num2_LnFactorial (n - s) - num2_LnFactorial (s);
       util_Assert (Res < maxexp, "fmass_BinomialTerm3:   term overflow");
 
@@ -595,7 +595,7 @@ double fmass_NegaBinTerm1 (long n, double p, long s)
       return y;
 
    } else {
-      y = s * num2_log1p (-p) + n * log (p) + num2_LnFactorial (n + s - 1)
+      y = s * log1p (-p) + n * log (p) + num2_LnFactorial (n + s - 1)
          - num2_LnFactorial (n - 1) - num2_LnFactorial (s);
       util_Assert (y < maxexp, "fmass_NegaBinTerm1:   term overflow");
       if (y <= minexp)

@@ -373,14 +373,11 @@ double fdist_Normal2 (double x)
 
 
 /*=========================================================================*/
-#ifdef HAVE_ERF
 
 double fdist_Normal3 (double x)
 {
    return (erfc (-x * num_1Rac2)) / 2.0;
 }
-
-#endif
 
 
 /*=========================================================================*/
@@ -1039,7 +1036,7 @@ double fdist_Student1 (long n, double x)
    } else if (x < Student_x1) {
       a = n - 0.5;
       b = 48.0 * a * a;
-      z2 = a * num2_log1p (x * x / n);
+      z2 = a * log1p (x * x / n);
       z = sqrt (z2);
       y = (((((64.0 * z2 + 788.0) * z2 + 9801.0) * z2 + 89775.0) * z2 +
             543375.0) * z2 + 1788885.0) * z / (210.0 * b * b * b);
@@ -1057,7 +1054,7 @@ double fdist_Student1 (long n, double x)
       b = 1.0 + x * x / n;
       /* to avoid overflow with the 2 Gamma functions, use their logarithm.
          However, for large n, there will be some loss of precision */
-      y = num2_LnGamma ((n + 1) / 2.0) - num2_LnGamma (n / 2.0);
+      y = lgamma ((n + 1) / 2.0) - lgamma (n / 2.0);
       y = exp (y);
       y *= pow (b, -(n + 1) / 2.0) / sqrt (num_Pi * n);
 
@@ -1122,7 +1119,7 @@ double fdist_Gamma (double alpha, int d, double x)
 
    if (x <= 1.0 || x < alpha) {
       double v, z, an, term;
-      v = exp (alpha * log (x) - x - num2_LnGamma (alpha));
+      v = exp (alpha * log (x) - x - lgamma (alpha));
       z = 1.0;
       term = 1.0;
       an = alpha;
@@ -1164,7 +1161,7 @@ static double Isubx_pq_small (double p, double q, double x, int d)
       k++;
    } while ((fabs (v) / s) > epsilon);
 
-   v = num2_LnGamma (p + q) - num2_LnGamma (p) - num2_LnGamma (q);
+   v = lgamma (p + q) - lgamma (p) - lgamma (q);
    return s * exp (v);
 }
 
@@ -1480,7 +1477,7 @@ double fdist_Beta (double p, double q, int d, double x)
          temp = (1.0 - x) / (1.0 + x);
       yd = 2.0 * u * temp;
       gam =
-         (exp (q * log (yd) - yd - num2_LnGamma (q)) * (2.0 * yd * yd - (q -
+         (exp (q * log (yd) - yd - lgamma (q)) * (2.0 * yd * yd - (q -
                1.0) * yd - (q * q - 1.0))) / (24.0 * u * u);
       if (flag) {
          yd = fbar_Gamma (q, d, yd);
@@ -1649,13 +1646,13 @@ void fdist_CalcB4 (double alpha, double *pB, double *plogB, double *pC,
       *pC = *pB / (4.0*(1.0 - alpha*LOG4));
 
    } else if (alpha <= 1.0) {
-      *plogB = 2.0 * num2_LnGamma (alpha) - num2_LnGamma (2.0*alpha);
+      *plogB = 2.0 * lgamma (alpha) - lgamma (2.0*alpha);
       *plogC = *plogB + (alpha - 1.0)*LOG4;
       *pC = exp(*plogC);
       *pB = exp(*plogB);
 
    } else if (alpha <= 10.0) {
-      *plogC = num2_LnGamma (alpha) - num2_LnGamma (0.5 + alpha) + LOG_SQPI_2;
+      *plogC = lgamma (alpha) - lgamma (0.5 + alpha) + LOG_SQPI_2;
       *plogB = *plogC - (alpha - 1.0)*LOG4;
 
    } else if (alpha <= 200.0) {
@@ -1750,7 +1747,7 @@ double fdist_BetaSymmetric (double alpha, double x)
 
       } else {
          const double y = 0.5 - x;
-         temp = num2_log1p(-4.0*y*y);
+         temp = log1p(-4.0*y*y);
          temp = alpha * temp - logC;
          u = 0.5 - (series4 (alpha, y)) * exp(temp);
       }
@@ -2195,14 +2192,14 @@ double fdist_KSPlus (long N, double x)
          q = jreal / N - x;
          /* we must avoid log(0.0) for j = jmax and N*x near an integer */
          if (-q > Epsilon) {
-            term = LogCom + jreal * log (-q) + (Njreal - 1.0) * num2_log1p (-q);
+            term = LogCom + jreal * log (-q) + (Njreal - 1.0) * log1p (-q);
             Sum += Sign * exp (term);
          }
          Sign = -Sign;
          LogCom += log (Njreal / (j + 1));
       }
       /* add the term j = 0 */
-      Sum += exp ((N - 1) * num2_log1p (x));
+      Sum += exp ((N - 1) * log1p (x));
       if (Sum >= 0.0)
          return Sum * x;
       else
@@ -2224,7 +2221,7 @@ double fdist_KSPlus (long N, double x)
          jreal = j;
          Njreal = N - j;
          q = jreal / N + x;
-         term = LogCom + (jreal - 1.0) * log (q) + Njreal * num2_log1p(-q);
+         term = LogCom + (jreal - 1.0) * log (q) + Njreal * log1p(-q);
          Sum += exp (term);
          LogCom += log (Njreal / (jreal + 1.0));
       }
@@ -2232,7 +2229,7 @@ double fdist_KSPlus (long N, double x)
 
       /* add the term j = 0; avoid log(0.0) */
       if (1.0 > x)
-         Sum += exp (N * num2_log1p(-x));
+         Sum += exp (N * log1p(-x));
       Sum = 1.0 - Sum;
       if (Sum >= 0.0)
          return Sum;
@@ -2305,7 +2302,7 @@ double fdist_KSPlusJumpOne (long N, double a, double x)
          LogCom += log (Njreal / (jreal + 1.0));
       }
       /* add the term j = 0 */
-      Sum += exp ((N - 1) * num2_log1p(x));
+      Sum += exp ((N - 1) * log1p(x));
       return Sum * x;
    }
 
@@ -2321,7 +2318,7 @@ double fdist_KSPlusJumpOne (long N, double a, double x)
       Njreal = N - jreal;
       q = jreal / N + x;
       if (1.0 - q > Epsilon) {
-         term = LogCom + (jreal - 1.0) * log (q) + Njreal * num2_log1p (-q);
+         term = LogCom + (jreal - 1.0) * log (q) + Njreal * log1p (-q);
          Sum += exp (term);
       }
       LogCom += log (Njreal / (jreal + 1.0));
@@ -2330,7 +2327,7 @@ double fdist_KSPlusJumpOne (long N, double a, double x)
 
    /* add the term j = 0 */
    if (1.0 - x > Epsilon)
-      Sum += exp (N * num2_log1p (-x));
+      Sum += exp (N * log1p (-x));
    return 1.0 - Sum;
 }
 

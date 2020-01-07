@@ -6,9 +6,7 @@
 #ifndef GDEFCONF_H
 #define GDEFCONF_H
 
-#cmakedefine HAVE_ERF
 #cmakedefine HAVE_RANDOM
-#cmakedefine HAVE_LGAMMA
 #cmakedefine HAVE_GMP_H
 #undef HAVE_MATHEMATICA
 #cmakedefine HAVE_SYS_UTSNAME_H

@@ -229,8 +229,8 @@ void sknuth_Gap (unif01_Gen *gen, sres_Chi2 *res,
 
    Timer = chrono_Create ();
    p = Beta - Alpha;
-   t = log (gofs_MinExpected / n) / num2_log1p (-p);
-   len = 1 + log (gofs_MinExpected / (n*p)) / num2_log1p (-p);
+   t = log (gofs_MinExpected / n) / log1p (-p);
+   len = 1 + log (gofs_MinExpected / (n*p)) / log1p (-p);
    t = util_Min(t, len);
    t = util_Max(t, 0);
 

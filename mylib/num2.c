@@ -302,86 +302,6 @@ double num2_LnFactorial (int n)
    }
 }
 
-
-/*=========================================================================*/
-#ifndef HAVE_LGAMMA
-
-/* The new standard ISO_C99 includes the lgamma function in math.h;
-   otherwise, we shall have to use our own. */
-
-double num2_LnGamma (double x)
-{
-   const double xlimbig = 1.0 / DBL_EPSILON;
-   const double xlim1 = 18.0;
-   const double dk2 = 0.91893853320467274178; /* Ln (sqrt (2 Pi)) */
-   const double dk1 = 0.9574186990510627;
-   const int N = 15;              /* Degree of Chebyshev polynomial */
-   double y = 0, z = 0;
-   int i, k;
-
-   /* Chebyshev coefficients for lnGamma (x + 3), 0 <= x <= 1 In Yudell Luke:
-      The special functions and their approximations, Vol. II, Academic Press,
-      p. 301, 1969. There is an error in the additive constant in the formula:
-      (Ln (2)). */
-   static const double A[] = {
-      0.52854303698223459887,
-      0.54987644612141411418,
-      0.02073980061613665136,
-      -0.00056916770421543842,
-      0.00002324587210400169,
-      -0.00000113060758570393,
-      0.00000006065653098948,
-      -0.00000000346284357770,
-      0.00000000020624998806,
-      -0.00000000001266351116,
-      0.00000000000079531007,
-      -0.00000000000005082077,
-      0.00000000000000329187,
-      -0.00000000000000021556,
-      0.00000000000000001424,
-      -0.00000000000000000095
-   };
-
-   util_Assert (x > 0.0, "num2_LnGamma:   accepts only x > 0");
-   if (x > xlim1) {
-      if (x > xlimbig)
-         y = 0.0;
-      else
-         y = 1.0 / (x * x);
-      z = ((-(5.95238095238E-4 * y) + 7.936500793651E-4) * y -
-         2.7777777777778E-3) * y + 8.3333333333333E-2;
-      z = ((x - 0.5) * log (x) - x) + dk2 + z / x;
-      return z;
-
-   } else if (x > 4.0) {
-      k = (int) x;
-      z = x - k;
-      y = 1.0;
-      for (i = 3; i < k; i++)
-         y *= z + i;
-      y = log (y);
-
-   } else if (x <= 0.0) {
-      return DBL_MAX;
-
-   } else if (x < 3.0) {
-      k = (int) x;
-      z = x - k;
-      y = 1.0;
-      for (i = 2; i >= k; i--)
-         y *= z + i;
-      y = -log (y);
-
-   } else {                       /* 3 <= x <= 4 */
-      z = x - 3.0;
-      y = 0.0;
-   }
-
-   z = num2_EvalCheby (A, N, 2.0 * z - 1.0);
-   return z + dk1 + y;
-}
-
-#endif
 /*=========================================================================*/
 
 #define NLIM 100                  /* pour eviter les debordements */
@@ -418,28 +338,6 @@ double num2_Combination (int n, int s)
 }
 
 
-/*=========================================================================*/
-#ifndef HAVE_LOG1P
-
-double num2_log1p (double x)
-{
-   /* returns a value equivalent to log (1 + x) accurate also for small x. */
-   if (fabs (x) > 0.1) {
-      return log (1.0 + x);
-   } else {
-      double term = x;
-      double sum = x;
-      int s = 2;
-      while (fabs (term) > EPSILON * fabs (sum) && s < MAXI) {
-         term *= -x;
-         sum += term / s;
-         s++;
-      }
-      return sum;
-   }
-}
-
-#endif
 /*=========================================================================*/
 
 void num2_CalcMatStirling (double ***M, int m, int n)
@@ -516,8 +414,8 @@ double num2_VolumeSphere (double pLR, int k)
          break;
       }
    }
-   Vol = kLR * (num_Ln2 + num2_LnGamma (1.0 + 1.0 / pLR)) -
-      num2_LnGamma (1.0 + kLR / pLR);
+   Vol = kLR * (num_Ln2 + lgamma (1.0 + 1.0 / pLR)) -
+      lgamma (1.0 + kLR / pLR);
    return exp (Vol);
 }
 

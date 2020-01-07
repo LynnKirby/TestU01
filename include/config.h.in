@@ -4,10 +4,7 @@
  */
 
 #cmakedefine PACKAGE_STRING "@PACKAGE_STRING@"
-#cmakedefine HAVE_ERF
 #cmakedefine HAVE_GMP_H
-#cmakedefine HAVE_LGAMMA
-#cmakedefine HAVE_LOG1P
 #undef HAVE_MATHEMATICA
 #cmakedefine HAVE_RANDOM
 #cmakedefine HAVE_SYS_UTSNAME_H

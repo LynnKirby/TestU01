@@ -76,7 +76,7 @@ double finv_Expon (double u)
    }
    if (u <= 0.0)
       return 0.0;
-   return -num2_log1p (-u);
+   return -log1p (-u);
 }
 
 
@@ -95,7 +95,7 @@ double finv_Weibull (double c, double u)
       return fdist_XINF;
    }
 
-   t = -num2_log1p (-u);
+   t = -log1p (-u);
    if (log10 (t) >= c * DBL_MAX_10_EXP) {
       util_Warning (1, "finv_Weibull:   u --> 1");
       return fdist_XINF;
@@ -149,7 +149,7 @@ double finv_Pareto (double c, double u)
    util_Assert (u >= 0.0 && u <= 1.0, "finv_Pareto:   u not in [0, 1]");
    if (u <= 0.0)
       return 1.0;
-   t = -num2_log1p (-u);
+   t = -log1p (-u);
 
    if ((u >= 1.0) || t >= c * DBL_MAX_EXP) {
       util_Warning (1, "finv_Pareto:   u = 1  or  t >= c * DBL_MAX_EXP");
@@ -1272,14 +1272,14 @@ double finv_ChiSquare2 (long k, double u)
    if (u >= 0.999998)
       return (k + 4.0 * sqrt (2.0 * k));
 
-   G = num2_LnGamma (k / 2.0);
+   G = lgamma (k / 2.0);
    XX = 0.5 * k;
    C = XX - 1.0;
 
    if (k >= -1.24 * log (u)) {
       if (k <= 0.32) {
          CH = 0.4;
-         A = num2_log1p (-u);
+         A = log1p (-u);
          Q = CH;
          P1 = 1.0 + CH * (4.67 + CH);
          P2 = CH * (6.73 + CH * (6.66 + CH));
@@ -1299,7 +1299,7 @@ double finv_ChiSquare2 (long k, double u)
          P1 = 0.222222 / k;
          CH = k * pow ((X * sqrt (P1) + 1.0 - P1), 3.0);
          if (CH > 2.2 * k + 6.0)
-            CH = -2.0 * (num2_log1p (-u) - C * log (0.5 * CH) + G);
+            CH = -2.0 * (log1p (-u) - C * log (0.5 * CH) + G);
       }
    } else {
       CH = pow ((u * XX * exp (G + XX * AA)), (1.0 / XX));
@@ -1641,7 +1641,7 @@ static double inverse3 (
    /* Compute starting point of Newton's iterates */
    w = logBua / alpha;
    x = exp (w);
-   term = (num2_log1p(-x) + logBua) / alpha;
+   term = (log1p(-x) + logBua) / alpha;
    z = exp (term);
    if (z >= 0.25)
        xnew = X0;
@@ -1725,7 +1725,7 @@ static double inverse4 (
       sum *= y * (1.0 - z);
 
       /* Newton's method */
-      term = sum - exp (logBva - (alpha - 1.0) * num2_log1p (-z));
+      term = sum - exp (logBva - (alpha - 1.0) * log1p (-z));
       ynew = y - term;
       if (fabs(term) < 32.0*EPSSINGLE)
          eps = EPSILON;
@@ -1820,7 +1820,7 @@ double finv_BetaSymmetric (double alpha, double u)
          logBua = logB + log (u * alpha);
          x = inverse3 (alpha, logBua);
       } else {
-         logBva = logC - LOG2 + num2_log1p (-2.0*u);
+         logBva = logC - LOG2 + log1p (-2.0*u);
          x = inverse4 (alpha, logBva);
       }
    }
@@ -1848,9 +1848,9 @@ long finv_Geometric (double p, double u)
       return INT_MAX;
    if (pold != p) {
       pold = p;
-      v = num2_log1p (-p);
+      v = log1p (-p);
    }
-   return (long) (num2_log1p (-u) / v);
+   return (long) (log1p (-u) / v);
 }
 
 

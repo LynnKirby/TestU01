@@ -468,7 +468,7 @@ double gofs_AndersonDarling (double V[], long N)
          U1 = U = gofs_EpsilonAD;
       } else if (U >= 1 - gofs_EpsilonAD)
          U1 = 1.0 - gofs_EpsilonAD;
-      A2 += (2 * i - 1) * log (U) + (1 + 2 * (N - i)) * num2_log1p (-U1);
+      A2 += (2 * i - 1) * log (U) + (1 + 2 * (N - i)) * log1p (-U1);
    }
    A2 = -N - A2 / N;
    return A2;
