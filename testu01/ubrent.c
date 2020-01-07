@@ -1052,7 +1052,7 @@ static UINT xor4096i (UINT seed)
    static UINT w, weyl, zero = 0, x[r];
    UINT t, v;
    static int i = -1;             /* i < 0 indicates first call */
-   int k;
+   unsigned k;
    if ((i < 0) || (seed != zero)) { /* Initialisation necessary */
 
       /* weyl = odd approximation to 2**wlen*(sqrt(5)-1)/2. */

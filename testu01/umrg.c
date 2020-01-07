@@ -212,32 +212,6 @@ typedef struct {
 
 /*============================ functions ==================================*/
 
-
-static void AddArrayString (char *name, const char *add, int high, char *A[])
-/*
- * Add the string array A of size = high to name
- */
-{
-   int j;
-   strcat (name, add);
-   strcat (name, "(");
-   strcat (name, A[0]);
-   for (j = 1; (j < high) && (j < 7); j++) {
-      strcat (name, ", ");
-      if (A[j])
-         strcat (name, A[j]);
-      else
-         strcat (name, "0");
-   }
-   if (high > 7)
-      strcat (name, ", ... )");
-   else
-      strcat (name, ")");
-}
-
-
-/**************************************************************************/
-
 static double MRG2_U01 (void *vpar, void *vsta)
 /*
  * Implementation used for k = 2,  a1 > 0,  a2 > 0
@@ -1592,7 +1566,7 @@ static double LagFibSousFloatLux_U01 (void *vpar, void *vsta)
             temp = state->X[state->r] - state->X[state->s];
          else
             temp = state->X[state->s] - state->X[state->r];
-            state->X[state->r] = (temp < 0.0) ? temp + 1.0 : temp;
+         state->X[state->r] = (temp < 0.0) ? temp + 1.0 : temp;
          if (--state->r == 0)
             state->r = state->Lag;
          if (--state->s == 0)

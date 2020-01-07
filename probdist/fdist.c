@@ -1271,7 +1271,7 @@ static void Isubx_q_fixed (double p, double q, double x, int d, int nmax,
 {
 
    int m, mmax;
-   double s, q0, Iq0, Iq1;
+   double s, q0, Iq0, Iq1 = 0.0;
    double *Iq;
 
    util_Assert (p > 0.0 && p <= 1.0, "Isubx_q_fixed:   p not in (0, 1] ");

@@ -217,8 +217,10 @@ static void BerlekampMassey (
             PolycOld[i] = Polyc[i];
 
          for (i = 0; i <= L; i++) {
-            if (Polyb[i] == 1)
-               Polyc[k - m + i] = (++Polyc[k - m + i]) & 1;
+            if (Polyb[i] == 1) {
+		         Polyc[k - m + i] += 1;
+               Polyc[k - m + i] &= 1;
+		      }
          }
          if (2 * L <= k) {
             L = k + 1 - L;

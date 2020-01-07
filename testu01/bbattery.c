@@ -2908,8 +2908,7 @@ static void DoMultinom (bool fileFlag, /* */
 {
    const long NLIM = 10000000;
    long n, N;
-   int L, t;
-   double x;
+   int L;
    int i;
    int j = *pj;
    smultin_Res *res;

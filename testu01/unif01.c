@@ -1324,17 +1324,15 @@ void unif01_TimerGen (unif01_Gen *gen, unif01_TimerRec * pt, long n,
     bool fU01)
 {
    chrono_Chrono *C1;
-   double U;
-   unsigned long V;
    long i;
 
    C1 = chrono_Create ();
    if (fU01)
       for (i = 0; i < n; i++)
-         U = gen->GetU01 (gen->param, gen->state);
+         gen->GetU01 (gen->param, gen->state);
    else
       for (i = 0; i < n; i++)
-         V = gen->GetBits (gen->param, gen->state);
+         gen->GetBits (gen->param, gen->state);
    pt->time = chrono_Val (C1, chrono_sec);
    pt->mean = 0.0;
    pt->n = n;

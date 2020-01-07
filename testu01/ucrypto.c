@@ -345,6 +345,8 @@ void ucrypto_DeleteAES (unif01_Gen * gen)
    gen->state = util_Free (gen->state);
    gen->param = util_Free (gen->param);
    gen->name = util_Free (gen->name);
+   util_Free (param);
+   util_Free (state);
    util_Free (gen);
 }
 

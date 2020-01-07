@@ -461,17 +461,8 @@ static double RanrotB(void) {
   return x * scale;
 }
 
-/* get integer random number in interval from min to max */
-static int iRanrotB(int min, int max) {
-  int i, r;
-  i = max - min + 1;
-  r = i * RanrotB();
-  if (r >= i) r = i-1;
-  return min + r;
-}
-
 /* this function initializes the random number generator.      */
-/* Must be called before the first call to RanrotB or iRanrotB */
+/* Must be called before the first call to RanrotB */
 static void RanrotBInit (my_uint seed) {
   int i;
 

@@ -1671,8 +1671,8 @@ static void CalcResultsPowDiv (
 {
 
    double pR, pL;
-   double pCollLeft;              /* Left p-value of Collision test */
-   double pCollRight;             /* Right p-value of Collision test */
+   double pCollLeft = 0.0;              /* Left p-value of Collision test */
+   double pCollRight = 0.0;             /* Right p-value of Collision test */
    int j;
    statcoll_Collector *SC = res->Collector[s];
    fmass_INFO Mass1, Mass2;
@@ -1881,7 +1881,7 @@ static void UpdateCountHash (
    long *Count;
    smultin_CellType *Cell;
    smultin_CellType *Nb;
-   long Decal, Pos, Tem;
+   long Decal, Pos;
 
    if (DimFlag == false) {
       Count = res->Count;         /* Counters in t dimensions */
@@ -2640,13 +2640,12 @@ static void OverHashGenere (
  * case, and fill the counters. We use hashing.
  */
 {
-   long j, tem;
+   long j;
    long d = dLR;
    smultin_CellType Indice;
    smultin_CellType element;
    double UnSurHache1;
    double UnSurHache11;
-   double UnSurk1;
    smultin_CellType Premier[MAX_DIM];
    long *Count = res->Count;      /* Counters in t dimensions */
    long *Count1 = res->Count1;    /* Counters in t - 1 dimensions */
@@ -2656,7 +2655,6 @@ static void OverHashGenere (
    smultin_CellType *Nb1 = res->Nb1;
 
    util_Assert (t < MAX_DIM, "OverHashGenere:   t > 64");
-   UnSurk1 = 1.0 / k1;
    UnSurHache1 = 1.0 / Hache1;
    UnSurHache11 = 1.0 / Hache11;
 
@@ -3452,7 +3450,6 @@ void smultin_MultinomialOver (unif01_Gen * gen, smultin_Param * par,
    int i;
    smultin_CellType k1;       /* Number of urns in t - 1 dimensions */
    smultin_CellType k;        /* Number of urns in t dimensions */
-   double NbExp;              /* Expected number per cell in t dimensions */
    chrono_Chrono *Timer;
    char *TestName = "smultin_MultinomialOver test";
 
@@ -3463,7 +3460,6 @@ void smultin_MultinomialOver (unif01_Gen * gen, smultin_Param * par,
    for (i = 1; i < t; i++)
       k1 *= d;
    k = k1 * d;
-   NbExp = (double) n / k;
    util_Assert (n > 4, "smultin_MultinomialOver:   n <= 4");
    util_Assert (t > 1, "smultin_MultinomialOver:   t < 2");
    if (par->GenerCell != smultin_GenerCellPermut)
@@ -3533,7 +3529,6 @@ void smultin_MultinomialBitsOver (unif01_Gen * gen, smultin_Param * par,
 {
    smultin_CellType k1;       /* Number of urns in L - 1 dimensions */
    smultin_CellType k;        /* Number of urns in L dimensions */
-   double NbExp;              /* Expected number per cell in L dimensions */
    chrono_Chrono *Timer;
    char *TestName = "smultin_MultinomialBitsOver test";
 
@@ -3543,7 +3538,6 @@ void smultin_MultinomialBitsOver (unif01_Gen * gen, smultin_Param * par,
    util_Assert (L <= 64, "smultin_MultinomialBitsOver:   L > 64");
    k1 = num_TwoExp[L - 1];
    k = num_TwoExp[L];
-   NbExp = (double) n / k;
    util_Assert (n > 4, "smultin_MultinomialBitsOver:   n <= 4");
    util_Assert (L > 1, "smultin_MultinomialBitsOver:   L < 2");
    util_Assert (s > 0, "smultin_MultinomialBitsOver:   s < 1");

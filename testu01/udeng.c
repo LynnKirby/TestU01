@@ -23,8 +23,6 @@
 
 #define LEN  200                  /* Max length of strings */
 
-static int co1 = 0;               /* Counters */
-
 
 typedef struct {
    double b, m;
