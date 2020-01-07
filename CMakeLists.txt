@@ -86,25 +86,12 @@ endforeach()
 # Generate config headers.
 #
 
-if(UNIX)
-    list(APPEND CMAKE_REQUIRED_LIBRARIES m)
-endif()
+set(TESTU01_PACKAGE_NAME "${CMAKE_PROJECT_NAME} ${CMAKE_PROJECT_VERSION}")
 
-set(PACKAGE_STRING "${CMAKE_PROJECT_NAME} ${CMAKE_PROJECT_VERSION}")
-
-check_include_file(dlfcn.h       HAVE_DLFCN_H)
-check_include_file(gmp.h         HAVE_GMP_H)
-check_include_file(memory.h      HAVE_MEMORY_H)
-check_include_file(strings.h     HAVE_STRINGS_H)
-check_include_file(sys/stat.h    HAVE_SYS_STAT_H)
-check_include_file(sys/types.h   HAVE_SYS_TYPES_H)
-check_include_file(sys/utsname.h HAVE_SYS_UTSNAME_H)
-check_include_file(unistd.h      HAVE_UNISTD_H)
-check_include_file(windows.h     HAVE_WINDOWS_H)
-
+# FIXME: Replace with FindGMP
+check_include_file(gmp.h HAVE_GMP_H)
 check_symbol_exists(random stdlib.h HAVE_RANDOM)
 
-configure_file(include/config.h.in   include/config.h)
 configure_file(include/gdefconf.h.in include/gdefconf.h)
 
 #

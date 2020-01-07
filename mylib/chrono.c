@@ -28,10 +28,6 @@
  *
 \*************************************************************************/
 
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
-
 #include "chrono.h"
 #include "gdef.h"
 #include "util.h"
@@ -41,7 +37,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#ifdef HAVE_WINDOWS_H
+#ifdef _WIN32
 
 #include <windows.h>
 

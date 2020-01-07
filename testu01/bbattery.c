@@ -28,8 +28,8 @@
  *
 \*************************************************************************/
 
+#include "gdef.h"
 #include "util.h"
-#include "config.h"
 #include "bbattery.h"
 #include "smultin.h"
 #include "sknuth.h"
@@ -173,7 +173,7 @@ static void WriteReport (
    printf ("%s", batName);
    printf (" =========\n\n");
    if (VersionFlag)
-      printf (" Version:          %s\n", PACKAGE_STRING);
+      printf (" Version:          %s\n", TESTU01_PACKAGE_NAME);
    if (Flag)
       printf (" File:             ");
    else
@@ -438,7 +438,7 @@ static void SmallCrush (unif01_Gen * gen, char *filename, int Rep[])
          "                 Starting SmallCrush\n"
          "                 Version: %s\n"
          "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n\n\n",
-         PACKAGE_STRING);
+         TESTU01_PACKAGE_NAME);
    }
 
    if (NULL == gen) {
@@ -633,7 +633,7 @@ static void Crush (unif01_Gen * gen, int Rep[])
          "                 Starting Crush\n"
          "                 Version: %s\n"
          "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n\n\n",
-         PACKAGE_STRING);
+         TESTU01_PACKAGE_NAME);
    }
    {
       sres_Basic *res;
@@ -1573,7 +1573,7 @@ static void BigCrush (unif01_Gen * gen, int Rep[])
          "                 Starting BigCrush\n"
          "                 Version: %s\n"
          "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n\n\n",
-         PACKAGE_STRING);
+         TESTU01_PACKAGE_NAME);
    }
    {
       sres_Basic *res;
@@ -2605,7 +2605,7 @@ static void Alphabit (unif01_Gen * gen, char *fname, double nb, int r, int s,
          "          Starting Alphabit:   nb = %.0f\n"
          "          Version: %s\n"
          "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n\n\n",
-         nb, PACKAGE_STRING);
+         nb, TESTU01_PACKAGE_NAME);
    }
    util_Assert (nb > 0, "Alphabit:   nb <= 0");
    /* Bits will be read as 32-bit unsigned integers */
@@ -3120,7 +3120,7 @@ static void Rabbit (unif01_Gen * gen, char *fname, double nb, int Rep[])
          "          Starting Rabbit:   nb = %.0f\n"
          "          Version: %s\n"
          "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n\n\n",
-         nb, PACKAGE_STRING);
+         nb, TESTU01_PACKAGE_NAME);
    }
    util_Assert (nb >= 500.0, "bbattery_Rabbit:   nb < 500");
 
