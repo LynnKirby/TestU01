@@ -12,7 +12,7 @@ Two types of combinations are implemented:
 the one proposed by L'Ecuyer \cite{rLEC88a}, and the one proposed
 by Wichmann and Hill \cite{rWIC82a}.
 See \cite{rLEC91b} for details.
-Some of the implementations use the GNU multiprecision package GMP. 
+Some of the implementations use the GNU multiprecision package GMP.
 %% (see the web site at \url{http://www.gnu.org/software/gmp/gmp.html}).
 The macro {\tt USE\_GMP} is defined in module {\tt gdef} in directory
 {\tt mylib}.
@@ -24,9 +24,9 @@ Parameters for combined LCGs can be found in
 \cite{rLEC88a,rLEC91b,rLEC97d}.
 
 
-\begin{center} 
+\begin{center}
 \topcaption {Some specific (popular) LCGs\label {tab:listgen}}
-\tablehead{ \hline \multicolumn{1}{|c}{$m$} & \multicolumn{1}{|c}{$a$} & 
+\tablehead{ \hline \multicolumn{1}{|c}{$m$} & \multicolumn{1}{|c}{$a$} &
   \multicolumn{1}{|c}{$c$} & \multicolumn{1}{|c|}{Reference}\\ \hline \hline}
 \begin {supertabular}{|l|r|r|l|}
  $2^{24}$    & 1140671485 & 12820163 & in Microsoft VisualBasic\\
@@ -62,7 +62,7 @@ Parameters for combined LCGs can be found in
             {\tt prng} at Cornell Theory Center \cite{rPER89a} \\
 \hline
 \end {supertabular}
-\end{center} 
+\end{center}
 
 
 \bigskip\hrule
@@ -98,8 +98,8 @@ unif01_Gen * ulcg_CreateLCGFloat (long m, long a, long c, long s);
 \endcode
  \tab  The same as {\tt ulcg\_CreateLCG}, except that the implementation
   is in floating-point arithmetic. Valid only if the
-   IEEE floating-point standard is respected (all integers smaller than 
-   $ 2^{53}$ are represented exactly as {\tt double}). 
+   IEEE floating-point standard is respected (all integers smaller than
+   $ 2^{53}$ are represented exactly as {\tt double}).
   Restrictions : $-m < a < m$, $0 \le c < m$, $-m < s < m$,
   $|am|+c < 2^{53}$, and $c=0$ when $a < 0$.
  \endtab
@@ -118,22 +118,22 @@ unif01_Gen * ulcg_CreateLCGFloat (long m, long a, long c, long s);
 #endif
 
 
-unif01_Gen * ulcg_CreateLCGWu2 (long m, char o1, unsigned int q, char o2, 
+unif01_Gen * ulcg_CreateLCGWu2 (long m, char o1, unsigned int q, char o2,
                                 unsigned int r, long s);
 \endcode
   \tab  Implements a LCG of the kind proposed by Wu \cite{rWU97a},
    and generalized by L'Ecuyer and Simard \cite{rLEC99e}, for which
-   the modulus and multiplier can be written as 
+   the modulus and multiplier can be written as
    $m = 2^e -h$ and $a = \pm 2^q \pm 2^r$.
 \index{Generator!Wu}%
    The parameters $o1$ and $o2$ can be {\tt '+'} or {\tt '-'};
    they give the sign in front of $2^q$ and $2^r$, respectively.
-   Uses an implementation proposed in \cite{rLEC99e,rWU97a}, 
+   Uses an implementation proposed in \cite{rLEC99e,rWU97a},
    which uses shifts instead of multiplications.
    The initial state is $x_0 = s$ and the output at step $i$ is $x_i/m$.
    We use a fast implementation with shifts instead of multiplications,
    whenever possible.
-   Restrictions: $0 < s < m$, $m < 2^{31}$, 
+   Restrictions: $0 < s < m$, $m < 2^{31}$,
    and the parameters must also satisfy the conditions $h < 2^q$,
    $h(2^q - (h+1)/{2^{e-q}}) < m$ and  $h < 2^r$,
      $h(2^r - (h+1)/{2^{e-r}}) < m$.
@@ -200,13 +200,12 @@ unif01_Gen * ulcg_CreatePow2LCG (int e, long a, long c, long s);
 \code
 
 
-#ifdef USE_LONGLONG
-unif01_Gen * ulcg_CreateLCG2e48L (ulonglong a, ulonglong c, ulonglong s);
+unif01_Gen * ulcg_CreateLCG2e48L (uint64_t a, uint64_t c, uint64_t s);
 \endcode
   \tab A simple LCG of the form $x_{i+1} = (ax_i +c) \bmod 2^{48}$, where
   $x_0 = s$ is the seed.
 \index{Generator!drand48}%
-  The generator  {\tt drand48} of the SUN 
+  The generator  {\tt drand48} of the SUN
   C library is obtained with the parameters
    $$
      a = 25214903917, \qquad c = 11.
@@ -217,22 +216,19 @@ unif01_Gen * ulcg_CreateLCG2e48L (ulonglong a, ulonglong c, ulonglong s);
 \code
 
 
-unif01_Gen * ulcg_CreatePow2LCGL (int e, ulonglong a, ulonglong c,
-                                  ulonglong s);
+unif01_Gen * ulcg_CreatePow2LCGL (int e, uint64_t a, uint64_t c,
+                                  uint64_t s);
 \endcode
   \tab  Implements a LCG as in  {\tt ulcg\_CreatePow2LCG}, but with
    $e \le 64$.   Only the 32 most significant bits are kept.
   \endtab
-\code
-#endif
-\endcode
 \code
 
 
 #ifdef USE_GMP
 unif01_Gen * ulcg_CreateBigPow2LCG (long e, char *a, char *c, char *s);
 \endcode
-  \tab  Implements the same type of generator as {\tt ulcg\_CreatePow2LCG}, 
+  \tab  Implements the same type of generator as {\tt ulcg\_CreatePow2LCG},
    but using arbitrary large integers. The integers $a$, $c$ and $s$ are
    given as strings of decimal digits.
   \endtab
@@ -269,9 +265,9 @@ unif01_Gen * ulcg_CreateCombLEC2Float (long m1, long m2, long a1, long a2,
                                        long c1, long c2, long s1, long s2);
 \endcode
   \tab  Floating-point version of {\tt ulcg\_CreateCombLEC2}.
-   Valid only if any positive integer smaller than 
+   Valid only if any positive integer smaller than
    $2^{53}$ is represented exactly as a {\tt double}
-   (this holds, e.g., if the IEEE  floating-point standard is respected). 
+   (this holds, e.g., if the IEEE  floating-point standard is respected).
    Restrictions:  $a_1m_1+c_1 - a_1 < 2^{53}$ and $a_2m_2+c_2 - a_2< 2^{53}$.
   \endtab
 \code
@@ -307,8 +303,8 @@ unif01_Gen * ulcg_CreateCombWH2Float (long m1, long m2, long a1, long a2,
                                       long c1, long c2, long s1, long s2);
 \endcode
   \tab  Floating-point version of {\tt ulcg\_CreateCombWH2}. Valid only if the
-   IEEE  floating-point standard is respected (all integers smaller than 
-   $ 2^{53}$ are represented exactly as {\tt double}). 
+   IEEE  floating-point standard is respected (all integers smaller than
+   $ 2^{53}$ are represented exactly as {\tt double}).
    Restrictions:  $a_1m_1+c_1 - a_1 < 2^{53}$ and $a_2m_2+c_2 - a_2< 2^{53}$.
   \endtab
 \code
@@ -354,7 +350,7 @@ unif01_Gen * ulcg_CreateCombWH3 (long m1, long m2, long m3, long a1,
 void ulcg_DeleteGen (unif01_Gen *gen);
 \endcode
  \tab Frees the dynamic memory used by any generator of this module
-  that does not have an explicit {\tt Delete} function. 
+  that does not have an explicit {\tt Delete} function.
   This function should be called to clean up a generator object
   when it is no longer in use.
  \endtab

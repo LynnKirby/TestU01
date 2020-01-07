@@ -1,7 +1,7 @@
 \defmodule {sstring}
 
 This module implements different tests that are applied to
-strings of random bits.   Each test takes a block of $s$ bits 
+strings of random bits.   Each test takes a block of $s$ bits
 from each uniform and concatenate them to construct bit strings.
 \resdef
 
@@ -13,7 +13,7 @@ from each uniform and concatenate them to construct bit strings.
 #ifndef SSTRING_H
 #define SSTRING_H
 \endhide
-#include "tables.h" 
+#include "tables.h"
 #include "unif01.h"
 #include "sres.h"
 \endcode
@@ -25,30 +25,30 @@ from each uniform and concatenate them to construct bit strings.
 #define sstring_MAXD 8
 \endcode
  \tab
- Maximal value of $d$ in {\tt sstring\_HammingIndep}.   
+ Maximal value of $d$ in {\tt sstring\_HammingIndep}.
  \endtab
 \code
 
 
-extern lebool sstring_Counters;
+extern bool sstring_Counters;
 \endcode
  \tab
    This flag is used only in test {\tt sstring\_HammingIndep}.
-%  and {\tt svaria\_MarkovEigenvalue}. 
-   Its default value is {\tt FALSE}.
-   If it is set to {\tt TRUE}, the {\it unnormalized} {\tt Counters} in
-   the test will be printed. The {\it normalized} {\tt Counters} 
-   will be printed if   {\tt swrite\_Counters} is set to  {\tt TRUE}.
+%  and {\tt svaria\_MarkovEigenvalue}.
+   Its default value is {\tt false}.
+   If it is set to {\tt true}, the {\it unnormalized} {\tt Counters} in
+   the test will be printed. The {\it normalized} {\tt Counters}
+   will be printed if   {\tt swrite\_Counters} is set to  {\tt true}.
  \endtab
 \code
 
 
-extern lebool sstring_CorrFlag;
+extern bool sstring_CorrFlag;
 \endcode
- \tab 
+ \tab
   This switch controls the printing of strings correlations
   in test {\tt sstring\_PeriodsInStrings}. By default, it is set to
-  {\tt FALSE}.
+  {\tt false}.
  \endtab
 
 
@@ -69,7 +69,7 @@ typedef struct {
 \endcode
  \tabb
   The results of the chi-square test for the longest run of 1's in each
-  block are kept in {\tt Chi}.  The results for the longest run of 1's 
+  block are kept in {\tt Chi}.  The results for the longest run of 1's
   over all blocks and all $N$ replications of the base test are kept in
   {\tt Disc}.
  \endtabb
@@ -86,16 +86,16 @@ typedef struct {
 
 sstring_Res2 * sstring_CreateRes2 (void);
 \endcode
- \tab 
+ \tab
   Creates and returns a structure that will hold the results
-  of a  {\tt sstring\_LongestHeadRun} test. 
+  of a  {\tt sstring\_LongestHeadRun} test.
  \endtab
 \code
 
 
 void sstring_DeleteRes2 (sstring_Res2 *res);
 \endcode
- \tab 
+ \tab
   Frees the memory allocated by {\tt sstring\_CreateRes2}.
  \endtab
 
@@ -131,16 +131,16 @@ typedef struct {
 
 sstring_Res3 * sstring_CreateRes3 (void);
 \endcode
- \tab 
+ \tab
   Creates and returns a structure that will hold the results
-  of a  {\tt sstring\_Run} test. 
+  of a  {\tt sstring\_Run} test.
  \endtab
 \code
 
 
 void sstring_DeleteRes3 (sstring_Res3 *res);
 \endcode
- \tab 
+ \tab
   Frees the memory allocated by {\tt sstring\_CreateRes3}.
  \endtab
 
@@ -190,7 +190,7 @@ typedef struct {
    int d;
 \endcode
  \tabb
-  Actual dimension of the matrix {\tt XD[][2]} (the first dimension) 
+  Actual dimension of the matrix {\tt XD[][2]} (the first dimension)
   and of {\tt Block[]}. Valid indices for these arrays are in {\tt [1..d]}.
  \endtabb
 \code
@@ -200,7 +200,7 @@ typedef struct {
  \tabb
   Counters for the number of values in the diagonal blocks
   (sub-matrices) in the test {\tt sstring\_HammingIndep}:
-  {\tt XD[][0]} for the blocks $++$ and $--$, 
+  {\tt XD[][0]} for the blocks $++$ and $--$,
   {\tt XD[][1]} for the blocks $+-$ and $-+$.
  \endtabb
 \code
@@ -213,7 +213,7 @@ typedef struct {
 \endtabb
 \code
 
-   sres_Basic *Bas;  
+   sres_Basic *Bas;
 \endcode
  \tabb
   Results of the main test.
@@ -232,15 +232,15 @@ typedef struct {
 
 sstring_Res * sstring_CreateRes (void);
 \endcode
- \tab 
-  Creates and returns a structure that will hold the results of a test. 
+ \tab
+  Creates and returns a structure that will hold the results of a test.
  \endtab
 \code
 
 
 void sstring_DeleteRes (sstring_Res *res);
 \endcode
- \tab 
+ \tab
   Frees the memory allocated by {\tt sstring\_CreateRes}.
  \endtab
 
@@ -254,25 +254,25 @@ void sstring_DeleteRes (sstring_Res *res);
 \code
 
 
-void sstring_PeriodsInStrings (unif01_Gen *gen, sres_Chi2 *res, 
+void sstring_PeriodsInStrings (unif01_Gen *gen, sres_Chi2 *res,
                                long N, long n, int r, int s);
 \endcode
- \tab  This function applies a test 
+ \tab  This function applies a test
 \index{Test!PeriodsInStrings}%
-   based on the distribution of the correlations 
+   based on the distribution of the correlations
 \index{correlation of bits}%
    in  bit strings of length $s$.
    The {\em correlation\/} of a bit string $b = b_0 b_1 \cdots b_{s-1}$
-   is defined as the bit vector $c = c_0 c_1 \cdots c_{s-1}$ such that 
+   is defined as the bit vector $c = c_0 c_1 \cdots c_{s-1}$ such that
    $c_p=1$ if and only if $p$ is a period of $b$, i.e.  if and only if
-   $b_i = b_{i+p}$ for $i=0,\dots,s-p-1$ 
+   $b_i = b_{i+p}$ for $i=0,\dots,s-p-1$
    (see Guibas and Odlyzko \cite{pGUI81a}).
    One always has $c_0=1$.
 
    The function first enumerates all possible correlations $c$ for bit
    strings of length $s$, and computes  the expected number of strings
-   of correlation $c$, $E_s(c) = n L_s(c)/2^s$, 
-   where $L_s(c)$ is the number of strings, among all $2^s$ strings 
+   of correlation $c$, $E_s(c) = n L_s(c)/2^s$,
+   where $L_s(c)$ is the number of strings, among all $2^s$ strings
    of length $s$, having correlation $c$.
    These numbers are computed as explained in \cite{pGUI81a}.
    Then, $n$ strings of length $s$ are generated, by generating $n$
@@ -292,18 +292,18 @@ void sstring_PeriodsInStrings (unif01_Gen *gen, sres_Chi2 *res,
 void sstring_LongestHeadRun (unif01_Gen *gen, sstring_Res2 *res,
                              long N, long n, int r, int s, long L);
 \endcode
- \tab  This test 
+ \tab  This test
 \index{Test!LongestHeadRun}%
  \index{Test!Longest Run of ones|see{LongestHeadRun}}%
    generates $n$ blocks of $L$ bits by taking $s$ bits
    from each of $n \lfloor L/s\rfloor$ successive uniforms.
-   In each block, it finds the length $\ell$ of the longest run 
+   In each block, it finds the length $\ell$ of the longest run
    of successive 1's, and counts how many times each value of $\ell$
    has occurred.  It then compares these countings to the corresponding
    expected values via a chi-square test, after regrouping classes
    if needed.  The expected values (i.e., the theoretical distribution)
    are computed as described in \cite{tFOL79a}, \cite{tGOR86a} and
-   \cite[p. 21]{rRUK01a}. It also finds the length $\ell$ of the longest run 
+   \cite[p. 21]{rRUK01a}. It also finds the length $\ell$ of the longest run
    of 1's over all blocks of  all $N$ replications
    and compares it with  the theoretical distribution.
 %   Recommendation: $n \ge 100$.
@@ -325,13 +325,13 @@ void sstring_HammingWeight (unif01_Gen *gen, sres_Chi2 *res,
   This test is a one-dimensional version of {\tt sstring\_HammingIndep}.
   It generates $n$ blocks of $L$ bits and examines the proportion of 1's
   \index{Test!HammingWeight}%
-  \index{Test!Frequency|see{HammingWeight}}% 
+  \index{Test!Frequency|see{HammingWeight}}%
   within each  (non-overlapping) $L$-bit block.
   \index{Hamming weight}%
   Under $\cH_0$, the number of 1's in each block are
-  i.i.d.\ binomial random variables 
+  i.i.d.\ binomial random variables
   with parameters $L$ and $1/2$ (with mean $L/2$ and variance $L/4$).
-  Let $X_j$ be the number of blocks amongst $n$, having $j$ 1's 
+  Let $X_j$ be the number of blocks amongst $n$, having $j$ 1's
   (i.e., with Hamming weight $j$).
   The observed numbers of blocks having $j$ 1's are compared
   with the expected numbers via a chi-square test.
@@ -351,21 +351,21 @@ void sstring_HammingWeight2 (unif01_Gen *gen, sres_Basic *res,
   Given a string of $n$ bits, the test examines the proportion of 1's
   \index{Test!HammingWeight2}%
   \index{Test!Monobit|see{HammingWeight2}}%
-  within (non-overlapping) $L$-bit blocks. It partitions the bit string into 
+  within (non-overlapping) $L$-bit blocks. It partitions the bit string into
   $K = \lfloor n/L \rfloor$  blocks.
   Let $X_j$ be the number of 1's in block $j$ (i.e., its Hamming weight).
   \index{Hamming weight}%
-  Under $\cH_0$, the $X_j$'s are i.i.d.\ binomial random variables 
+  Under $\cH_0$, the $X_j$'s are i.i.d.\ binomial random variables
   with parameters $L$ and $1/2$ (with mean $L/2$ and variance $L/4$).
   The test computes the chi-square statistic
 $$
    X^2 = \sum_{j=1}^K \frac{(X_j - L/2)^2}{L/4}
        = \frac{4}{L} \sum_{j=1}^K (X_j - L/2)^2,
 $$
-  which should have approximately the chi-square distribution with $K$ 
+  which should have approximately the chi-square distribution with $K$
   degrees of freedom if $L$ is large enough.
-  For $L=n$, this test degenerates to the {\em monobit\/} test 
-  used in \cite{rRUK01a}, which simply counts the proportion of 1's 
+  For $L=n$, this test degenerates to the {\em monobit\/} test
+  used in \cite{rRUK01a}, which simply counts the proportion of 1's
   in a string of $n$ bits.
   Restrictions: $r + s \le 32$, \ $ L \le n$ and  $L$ large.
  \endtab
@@ -384,12 +384,12 @@ void sstring_HammingCorr (unif01_Gen *gen, sstring_Res *res,
   It is strongly related to the test {\tt sstring\_HammingIndep} below.
   The test uses the $s$ most significant bits from each generated random
   number (after dropping the first $r$ bits) to build $n$ blocks of $L$ bits.
-  Let $X_j$ be the Hamming weight (the numbers of bits equal to 1) 
+  Let $X_j$ be the Hamming weight (the numbers of bits equal to 1)
   of the $j$th block, for $j=1,\dots,n$.
   The test computes the empirical correlation between the
   successive  $X_j$'s,
  $$
-  \hat\rho = {4 \over (n-1) L } \sum_{j=1}^{n-1} 
+  \hat\rho = {4 \over (n-1) L } \sum_{j=1}^{n-1}
       \left(X_j -  L/2\right) \left(X_{j+1} - L/2\right).
  $$
   Under $\cH_0$, as $n\to\infty$, $\hat\rho \sqrt{n-1}$ has asymptotically
@@ -404,7 +404,7 @@ void sstring_HammingIndep (unif01_Gen *gen, sstring_Res *res,
                            long N, long n, int r, int s, int L, int d);
 \endcode
  \tab
-  Applies two tests of independence between the Hamming weights 
+  Applies two tests of independence between the Hamming weights
   of successive blocks of $L$ bits.
 \index{Test!HammingIndep}%
 \index{Hamming weight}%
@@ -412,7 +412,7 @@ void sstring_HammingIndep (unif01_Gen *gen, sstring_Res *res,
   These tests were introduced by L'Ecuyer and Simard \cite{rLEC99e}.
   They use the $s$ most significant bits from each generated random number
   (after dropping the first $r$ bits)  to  build $2n$ blocks of $L$ bits.
-  Let $X_j$ be the Hamming weight (the numbers of bits equal to 1) 
+  Let $X_j$ be the Hamming weight (the numbers of bits equal to 1)
   of the $j$th block, for $j=1,\dots,2n$.
   Each vector $(X_i, X_{i+1})$ can take $(L+1)\times(L+1)$ possible
   values.  The test counts the number of occurrences of each possibility
@@ -432,7 +432,7 @@ void sstring_HammingIndep (unif01_Gen *gen, sstring_Res *res,
   upper right submatrices, $Y_2$ the sum of the counters in the
   lower right and upper left submatrices, and $Y_3 = n - Y_1 - Y_2$.
   The observed values of $Y_1$, $Y_2$  and $Y_3$ are compared with their
-  expected values with a chi-square test. 
+  expected values with a chi-square test.
   The chi-square statistic has 1 degree of freedom if $d=1$ and $m$ is odd
    (because $Y_3=0$ in that case),  and 2 degrees of freedom otherwise.
 \ifdetailed
@@ -440,7 +440,7 @@ void sstring_HammingIndep (unif01_Gen *gen, sstring_Res *res,
 \else
   Restrictions:   $d \le 8$, $d \le (L + 1)/2$.
 \fi
-  If $d$ is too large for a given $n$, the expected numbers in the 
+  If $d$ is too large for a given $n$, the expected numbers in the
    categories will be too small for the chi-square to be valid.
   \endtab
 \code
@@ -454,7 +454,7 @@ void sstring_Run (unif01_Gen *gen, sstring_Res3 *res,
   It is also related to the gap test.
   In a bit string of length $n$, the runs of successive 1's can be seen
   as {\em gaps\/} between the blocks of successive 0's.
-  These gap (or run) lengths are independent geometric random variables, 
+  These gap (or run) lengths are independent geometric random variables,
   plus 1; i.e., each run has length $i$ with probability $2^{-i}$,
   for $i=1,2,\dots$.  Of course, this is also true if we swap 0 and 1
   and look at the runs of 0's.
@@ -462,14 +462,14 @@ void sstring_Run (unif01_Gen *gen, sstring_Res3 *res,
   Suppose we construct a bit string until we have $n$ runs of 1's and
   $n$ runs of 0's, i.e., a total of $2n$ runs.
   Select some positive integer $k$.
-  For $j=0$ and 1, let $X_{j,i}$ be the number of runs of $j$'s of 
-  length $i$ for $i = 1,\dots,k-1$, and let $X_{j,k}$ 
-  be the number of runs of $j$'s of length $\ge k$. 
-  Under $\cH_0$, for each $j$, $(X_{j,1},\dots,X_{j,k-1},X_{j,k})$ 
-  is a multinomial random vector with parameters 
+  For $j=0$ and 1, let $X_{j,i}$ be the number of runs of $j$'s of
+  length $i$ for $i = 1,\dots,k-1$, and let $X_{j,k}$
+  be the number of runs of $j$'s of length $\ge k$.
+  Under $\cH_0$, for each $j$, $(X_{j,1},\dots,X_{j,k-1},X_{j,k})$
+  is a multinomial random vector with parameters
   $(n, p_1, p_2, \dots, p_{k-1}, p_k)$, where
   $p_i = 2^{-i}$ for $1\le i < k$ and $p_k = p_{k-1} = 2^{-k+1}$.
-  Then, if $n p_k$ is large enough, the chi-square statistic 
+  Then, if $n p_k$ is large enough, the chi-square statistic
 $$
   X_j^2 = \sum_{i=1}^k \frac{(X_{j,i} - n p_i)^2}{n p_i(1-p_i)}
 $$
@@ -481,7 +481,7 @@ $$
 %  Moreover, $X_0^1$ and $X_{0,2}$ are independent,
 %  so $X^2 = X_0^1 + X_{0,2}$ should be approximately chi-square with
 %  $2(k-1)$ degrees of freedom.
-  The test is based on the statistic $X^2$ and uses 
+  The test is based on the statistic $X^2$ and uses
   $k = 1 + \lfloor \log_2 (n / \mbox{\tt gofs\_MinExpected}) \rfloor$.
 
   Another test, applied simultaneously, looks at the total number
@@ -496,20 +496,20 @@ $$
 %  Recommendation: use $n$ large enough so that $k$ is not too small.
 \endtab
 \iffalse  %%%%%%%%%%%%%%%%%%%
- \tab  This test, taken from \cite{rRUK01a}, considers whether the runs of 
+ \tab  This test, taken from \cite{rRUK01a}, considers whether the runs of
   0's and 1's in a sequence of bits is as expected for a random sequence.
  \index{Test!Run!bits}%
-  A run of length $\ell$ is an uninterrupted sequence of 
+  A run of length $\ell$ is an uninterrupted sequence of
   $\ell$ identical bits, preceded and followed by a bit of opposite value.
-  The test decomposes a sequence of $n$ bits into runs of identical bits 
+  The test decomposes a sequence of $n$ bits into runs of identical bits
   and counts the total number of runs $R$.
-%  (total number of 1 runs + total number of 0 runs). 
+%  (total number of 1 runs + total number of 0 runs).
 
-  Under $\cH_0$, the standardized test statistic 
+  Under $\cH_0$, the standardized test statistic
 $$
   Z = \frac{R - 2nf_1(1 - f_1)}{2\sqrt n f_1(1 - f_1)},
 $$
- where $f_1$ is the proportion of 1's amongst the $n$ bits, 
+ where $f_1$ is the proportion of 1's amongst the $n$ bits,
  has the standard normal distribution in the limit as $n\to\infty$
  (see \cite{rRUK01a} for a reference).
  The test compares the value of $Z$ to the standard normal.
@@ -523,7 +523,7 @@ $$
 void sstring_AutoCor (unif01_Gen *gen, sres_Basic *res,
                       long N, long n, int r, int s, int d);
 \endcode
- \tab 
+ \tab
  This test measures the autocorrelation between bits with lag $d$ \cite{rERD92a}.
  It generates a $n$-bit string and computes
  \index{Test!AutoCor}%
@@ -532,16 +532,16 @@ $$
   A_d = \sum_{i=1}^{n-d} b_i \oplus b_{i+d},
 $$
   where $b_i$ is the $i$th bit in the string and
-  $\oplus$ denotes the exclusive-or operation. 
-  Under $\cH_0$, $A_d$ has the binomial distribution 
-  with parameters $(n-d, 1/2)$, so that 
+  $\oplus$ denotes the exclusive-or operation.
+  Under $\cH_0$, $A_d$ has the binomial distribution
+  with parameters $(n-d, 1/2)$, so that
 $$
   \frac{2 A_d - (n-d)}{\sqrt{n-d}}
 $$
   should be approximately standard normal for large $n-d$.
-  Restrictions: $r + s \le 32$, $1 \le d \le \lfloor n/2 \rfloor$, $n-d$ 
+  Restrictions: $r + s \le 32$, $1 \le d \le \lfloor n/2 \rfloor$, $n-d$
   large enough for the normal approximation to be valid.
- \endtab 
+ \endtab
 \code
 
 \hide

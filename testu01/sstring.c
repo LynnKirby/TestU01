@@ -101,8 +101,8 @@ typedef struct {
 
 /*----------------------------- Variables --------------------------------*/
 
-lebool sstring_CorrFlag = FALSE;
-lebool sstring_Counters = FALSE;
+bool sstring_CorrFlag = false;
+bool sstring_Counters = false;
 
 
 
@@ -114,7 +114,7 @@ static void InitRes3 (
    long N,                    /* Number of replications */
    int jmax                   /* Max class index for chi2 */
 )
-/* 
+/*
  * Initializes the sstring_Res3 structure
  */
 {
@@ -162,7 +162,7 @@ static void InitRes2 (
    long N,                    /* Number of replications */
    int jhigh                  /* Max class index for chi2 */
 )
-/* 
+/*
  * Initializes the sstring_Res2 structure
  */
 {
@@ -206,7 +206,7 @@ static void InitRes (
    int d,                     /* Parameter for sub-matrices */
    char *nam
 )
-/* 
+/*
  * Initializes res
  */
 {
@@ -278,7 +278,7 @@ void sstring_DeleteRes (sstring_Res *res)
 static long Psi (
    bitset_BitSet C,      /* Correlation making up tail of correlation k */
    long j,               /* Length of correlation C */
-   long k                /* Correlation made up of 1 followed by 0's 
+   long k                /* Correlation made up of 1 followed by 0's
                             until C, i.e. k = 100...000C */
 )
 {
@@ -430,7 +430,7 @@ static void sstring_WriteCorr (sstring_Corr *corr, int s)
    char str [LEN1 + 1];
 
    if (corr == NULL) {
-      util_Warning (TRUE,
+      util_Warning (true,
          "sstring_WriteCorr:   corr is a NULL pointer");
       return;
    }
@@ -533,7 +533,7 @@ void sstring_PeriodsInStrings (unif01_Gen *gen, sres_Chi2 *res,
    char str [LEN1 + 1];
    double NbExp [DIM + 1];
    long Loca [DIM + 1];
-   lebool localRes = FALSE;
+   bool localRes = false;
    chrono_Chrono *Timer;
    char *TestName = "sstring_PeriodsInStrings test";
 
@@ -551,7 +551,7 @@ void sstring_PeriodsInStrings (unif01_Gen *gen, sres_Chi2 *res,
 
    Fraction = n / num_TwoExp[s];
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = sres_CreateChi2 ();
    }
    corr = CreateCorr (s);
@@ -707,7 +707,7 @@ void sstring_LongestHeadRun (unif01_Gen *gen, sstring_Res2 *res,
    char str [LEN1 + 1];
    double NbExp [DIM + 1];         /* Expected numbers */
    double CDF [DIM + 1];           /* Cumulative probabilities */
-   lebool localRes = FALSE;
+   bool localRes = false;
    chrono_Chrono *Timer;
    char *TestName = "sstring_LongestHeadRun test";
    sres_Chi2 *Chi;
@@ -719,7 +719,7 @@ void sstring_LongestHeadRun (unif01_Gen *gen, sstring_Res2 *res,
       WriteDataLongHead (gen, TestName, N, n, r, s, L);
    util_Assert (L >= LMIN, "sstring_LongestHeadRun:   L < 1000");
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = sstring_CreateRes2 ();
    }
    jhigh = DIM;
@@ -886,7 +886,7 @@ void sstring_LongestHeadRun (unif01_Gen *gen, sstring_Res2 *res,
 static void HammingWeight2_L (unif01_Gen * gen, sres_Basic * res,
    long N, int r, int s, long L, long K)
 /*
- * Generate all the n bits for the HammingWeight2 test in the case L > s. 
+ * Generate all the n bits for the HammingWeight2 test in the case L > s.
  * For the last number generated in a block of L bits, we keep its first
  * LMods bits and discard the other bits.
  */
@@ -932,7 +932,7 @@ static void HammingWeight2_L (unif01_Gen * gen, sres_Basic * res,
 static void HammingWeight2_S (unif01_Gen * gen, sres_Basic * res,
    long N, int r, int s, long L, long K)
 /*
- * Generate all the n bits for the HammingWeight2 test in the case L <= s. 
+ * Generate all the n bits for the HammingWeight2 test in the case L <= s.
  * A number generates sDivL blocks. If s % L == 0, we use all s bits of the
  * number.
  */
@@ -979,7 +979,7 @@ void sstring_HammingWeight2 (unif01_Gen * gen, sres_Basic * res,
    double V[1];                   /* Number of Chi2 degrees of freedom */
    char chaine[LEN1 + 1] = "";
    char str[LEN2 + 1] = "";
-   lebool localRes = FALSE;
+   bool localRes = false;
    chrono_Chrono *Timer;
    char *TestName = "sstring_HammingWeight2 test";
 
@@ -991,7 +991,7 @@ void sstring_HammingWeight2 (unif01_Gen * gen, sres_Basic * res,
    util_Assert (L >= 2, "sstring_HammingWeight2:   L < 2");
 
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = sres_CreateBasic ();
    }
    sres_InitBasic (res, N, "sstring_HammingWeight2");
@@ -1033,7 +1033,7 @@ void sstring_HammingWeight2 (unif01_Gen * gen, sres_Basic * res,
 static void HammingWeight_L (unif01_Gen * gen, sres_Chi2 * res,
    long N, long n, int r, int s, long L)
 /*
- * Generate all the n*L bits for the HammingWeight test in the case L > s. 
+ * Generate all the n*L bits for the HammingWeight test in the case L > s.
  * For the last number generated in a block of L bits, we keep its first
  * LMods bits and discard the other bits.
  */
@@ -1084,7 +1084,7 @@ static void HammingWeight_L (unif01_Gen * gen, sres_Chi2 * res,
 static void HammingWeight_S (unif01_Gen * gen, sres_Chi2 * res,
    long N, long n, int r, int s, long L)
 /*
- * Generate all the n*L bits for the HammingWeight test in the case L <= s. 
+ * Generate all the n*L bits for the HammingWeight test in the case L <= s.
  * A number generates sDivL blocks. If s % L == 0, we use all s bits of the
  * number.
  */
@@ -1152,7 +1152,7 @@ void sstring_HammingWeight (unif01_Gen * gen, sres_Chi2 * res,
    double V[1];                   /* Number of Chi2 degrees of freedom */
    char str[LEN1 + 1] = "";
    fmass_INFO Q;
-   lebool localRes = FALSE;
+   bool localRes = false;
    chrono_Chrono *Timer;
    long jlow, jhigh;
    long NbGroups;                 /* Number of classes */
@@ -1165,7 +1165,7 @@ void sstring_HammingWeight (unif01_Gen * gen, sres_Chi2 * res,
    util_Assert (L >= 2, "sstring_HammingWeight:   L < 2");
 
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = sres_CreateChi2 ();
    }
    sres_InitChi2 (res, N, L, "sstring_HammingWeight");
@@ -1225,7 +1225,7 @@ void sstring_HammingWeight (unif01_Gen * gen, sres_Chi2 * res,
 void sstring_Run0 (unif01_Gen * gen, sres_Basic * res,
    long N, long n, int r, int s)
 {
-   const long K = n / s;          /* If n % s != 0, a string will contain 
+   const long K = n / s;          /* If n % s != 0, a string will contain
                                      K * s bits instead of n */
    const unsigned long SBIT = 1UL << (s - 1);
    unsigned long jBit;            /* Position of current bit in Z */
@@ -1235,7 +1235,7 @@ void sstring_Run0 (unif01_Gen * gen, sres_Basic * res,
    long cor;                      /* Counter for number of runs */
    unsigned long Z;
    double X, f1;
-   lebool localRes = FALSE;
+   bool localRes = false;
    chrono_Chrono *Timer;
    char *TestName = "sstring_Run test";
 
@@ -1248,7 +1248,7 @@ void sstring_Run0 (unif01_Gen * gen, sres_Basic * res,
    /*   util_Assert (100 <= n, "sstring_Run:   n < 100"); */
 
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = sres_CreateBasic ();
    }
    sres_InitBasic (res, N, "sstring_Run");
@@ -1318,7 +1318,7 @@ void sstring_Run (unif01_Gen * gen, sstring_Res3 *res,
    unsigned long Z;
    double X2, X, temp;
    char str[LEN1 + 1];
-   lebool localRes = FALSE;
+   bool localRes = false;
    chrono_Chrono *Timer;
    char *TestName = "sstring_Run test";
    sres_Basic *NBits;
@@ -1335,7 +1335,7 @@ void sstring_Run (unif01_Gen * gen, sstring_Res3 *res,
    /*   util_Assert (100 <= n, "sstring_Run:   n < 100"); */
 
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = sstring_CreateRes3 ();
    }
    InitRes3 (res, N, k);
@@ -1353,10 +1353,10 @@ void sstring_Run (unif01_Gen * gen, sstring_Res3 *res,
    Prob = util_Calloc (1 + (size_t) k, sizeof (double));
    Prob[0] = 1.0;
    for (j = 1; j < k; j++) {
-      Prob[j] = Prob[j - 1] / 2.0; 
+      Prob[j] = Prob[j - 1] / 2.0;
       NRuns->NbExp[j] = n * Prob[j];
    }
-   Prob[k] = Prob[k - 1]; 
+   Prob[k] = Prob[k - 1];
    NRuns->NbExp[k] = n * Prob[k];
    util_Assert (NRuns->NbExp[k] >= gofs_MinExpected,
         "sstring_Run:   NRuns->NbExp[k] < gofs_MinExpected");
@@ -1367,7 +1367,7 @@ void sstring_Run (unif01_Gen * gen, sstring_Res3 *res,
    NRuns->jmin = 1;
    NRuns->degFree = 2*(k - 1);
    if (NRuns->degFree < 1) {
-      util_Warning (TRUE, "Chi-square with 0 degree of freedom.");
+      util_Warning (true, "Chi-square with 0 degree of freedom.");
       if (localRes)
          sstring_DeleteRes3 (res);
       return;
@@ -1387,7 +1387,7 @@ void sstring_Run (unif01_Gen * gen, sstring_Res3 *res,
          jBit = SBIT;
          cob += sr;
          if (len >= n) {
-	    util_Warning (TRUE, "sstring_Run:   all bits are 0 !");
+	    util_Warning (true, "sstring_Run:   all bits are 0 !");
             util_Free (Prob);
             if (localRes)
                sstring_DeleteRes3 (res);
@@ -1524,7 +1524,7 @@ void sstring_AutoCor (unif01_Gen * gen, sres_Basic * res,
    double X;
    long i, Seq;
    int j1, j2;
-   lebool localRes = FALSE;
+   bool localRes = false;
    chrono_Chrono *Timer;
    char *TestName = "sstring_AutoCor test";
 
@@ -1539,7 +1539,7 @@ void sstring_AutoCor (unif01_Gen * gen, sres_Basic * res,
    util_Assert (d > 0, "sstring_AutoCor:   d < 1");
 
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = sres_CreateBasic ();
    }
    sres_InitBasic (res, N, "sstring_AutoCor");
@@ -1615,7 +1615,7 @@ static void WriteDataHammingCorr (unif01_Gen *gen, char *TestName,
 static void HammingCorr_L (unif01_Gen *gen, sstring_Res * res,
    long n, int r, int s, int L)
 /*
- * Generate all the n bits for the HammingCorr test in the case L > s. 
+ * Generate all the n bits for the HammingCorr test in the case L > s.
  * For the last number generated in a block of L bits, we keep its first
  * LMods bits and discard the other bits.
  */
@@ -1660,7 +1660,7 @@ static void HammingCorr_L (unif01_Gen *gen, sstring_Res * res,
 static void HammingCorr_S (unif01_Gen *gen, sstring_Res * res,
    long n, int r, int s, int L)
 /*
- * Generate all the n bits for the HammingCorr test in the case L <= s. 
+ * Generate all the n bits for the HammingCorr test in the case L <= s.
  * A number generates sDivL blocks. If s % L == 0, we use all s bits of the
  * number.
  */
@@ -1719,7 +1719,7 @@ void sstring_HammingCorr (unif01_Gen * gen, sstring_Res * res,
    int i, j;
    long Seq;
    double Sum;
-   lebool localRes = FALSE;
+   bool localRes = false;
    chrono_Chrono *Timer;
    char *TestName = "sstring_HammingCorr test";
 
@@ -1732,7 +1732,7 @@ void sstring_HammingCorr (unif01_Gen * gen, sstring_Res * res,
                 "sstring_HammingCorr:   s too large");
 
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = sstring_CreateRes ();
    }
    InitRes (res, N, L, -1, "sstring_HammingCorr");
@@ -1798,7 +1798,7 @@ static void WriteDataHammingIndep (unif01_Gen * gen, char *TestName,
 static void HammingIndep_L (unif01_Gen *gen, sstring_Res * res,
    long n, int r, int s, int L)
 /*
- * Generate all the n bits for the HammingIndep test in the case L > s. 
+ * Generate all the n bits for the HammingIndep test in the case L > s.
  * For the last number generated in a block of L bits, we keep its first
  * LMods bits and discard the other bits.
  */
@@ -1848,7 +1848,7 @@ static void HammingIndep_L (unif01_Gen *gen, sstring_Res * res,
 static void HammingIndep_S (unif01_Gen *gen, sstring_Res * res,
    long n, int r, int s, int L)
 /*
- * Generate all the n bits for the HammingIndep test in the case L <= s. 
+ * Generate all the n bits for the HammingIndep test in the case L <= s.
  * A number generates sDivL blocks. If s % L == 0, we use all s bits of the
  * number.
  */
@@ -1966,7 +1966,7 @@ static void WriteBlocs (
    sstring_Res *res,
    int d                 /* Rank of rows-columns */
    )
-/* 
+/*
  * Print the sum of counters in the diagonal blocks for different d
  */
 {
@@ -2004,7 +2004,7 @@ void sstring_HammingIndep (unif01_Gen * gen, sstring_Res * res,
    long *Count5;
    double V[1];
    fmass_INFO Q;
-   lebool localRes = FALSE;
+   bool localRes = false;
    chrono_Chrono *Timer;
    char *TestName = "sstring_HammingIndep test";
    char chaine[LEN1 + 1] = "";
@@ -2015,7 +2015,7 @@ void sstring_HammingIndep (unif01_Gen * gen, sstring_Res * res,
       WriteDataHammingIndep (gen, TestName, N, n, r, s, L, d);
 
    if (n < 2.0 * gofs_MinExpected) {
-      util_Warning (TRUE, "sstring_HammingIndep:   n < 20");
+      util_Warning (true, "sstring_HammingIndep:   n < 20");
       return;
    }
    /*  util_Assert (n >= 30, "sstring_HammingIndep:   n < 30"); */
@@ -2026,7 +2026,7 @@ void sstring_HammingIndep (unif01_Gen * gen, sstring_Res * res,
       "sstring_HammingIndep:   s too large");
 
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = sstring_CreateRes ();
    }
    InitRes (res, N, L, d, "sstring_HammingIndep");

@@ -81,16 +81,14 @@ typedef struct {
 } CombTaus3_state;
 
 
-#ifdef USE_LONGLONG
 /* The 64 bits Tausworthe */
 typedef struct {
-   ulonglong M1, S1, Q1, K1mS1;
+   uint64_t M1, S1, Q1, K1mS1;
 } LongTaus_param;
 
 typedef struct {
-   ulonglong ST1;
+   uint64_t ST1;
 } LongTaus_state;
-#endif
 
 
 /*============================= Functions ===============================*/
@@ -245,10 +243,9 @@ unif01_Gen *utaus_CreateTausJ (unsigned int k, unsigned int q,
 
 
 /**************************************************************************/
-#ifdef USE_LONGLONG
 
 static unsigned long LongTaus_Bits (void *vpar, void *vsta)
-/* 
+/*
  * Implementation of a Tausworthe generator for k <= 64. However, bits
  * 33 to 64 will be right-shifted 32 bits before being returned in an
  * unsigned int of 32 bits. This is to satisfy the return type
@@ -257,7 +254,7 @@ static unsigned long LongTaus_Bits (void *vpar, void *vsta)
 {
    LongTaus_param *param = vpar;
    LongTaus_state *state = vsta;
-   ulonglong A, B;
+   uint64_t A, B;
    A = (state->ST1 & param->M1) << param->S1;
    B = ((state->ST1 << param->Q1) ^ state->ST1) >> param->K1mS1;
    state->ST1 = A ^ B;
@@ -280,14 +277,14 @@ static void WrLongTaus (void *vsta)
 /*-------------------------------------------------------------------------*/
 
 unif01_Gen * utaus_CreateLongTaus (unsigned int k, unsigned int q,
-                                   unsigned int s, ulonglong Y)
+                                   unsigned int s, uint64_t Y)
 {
    unif01_Gen *gen;
    LongTaus_param *param;
    LongTaus_state *state;
    size_t len;
    char name[LEN0 + 1];
-   ulonglong B;
+   uint64_t B;
 
    util_Assert ((k <= 64) && (k > 2 * q) && (s <= k - q) && (s >= 1) &&
       (q >= 1), "utaus_CreateLongTaus:   Invalid Parameter");
@@ -329,8 +326,6 @@ unif01_Gen * utaus_CreateLongTaus (unsigned int k, unsigned int q,
    gen->state   = state;
    return gen;
 }
-
-#endif
 
 /**************************************************************************/
 
@@ -623,7 +618,7 @@ unif01_Gen * utaus_CreateCombTaus3T (unsigned int k1, unsigned int k2,
    mystr_Insert (gen->name, "T", (unsigned int) j);
    gen->GetU01  = &CombTaus3T_U01;
    gen->GetBits = &CombTaus3T_Bits;
- 
+
    return gen;
 }
 

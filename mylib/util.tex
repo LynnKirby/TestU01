@@ -1,7 +1,7 @@
 \defmodule {util}
 
 Safe functions to open and close files, to allocate dynamic memory,
-to read/write booleans, and to print error messages. 
+to read/write booleans, and to print error messages.
 Some of the ``functions'' are actually implemented as macros, in the
 interest of speed.
 
@@ -23,7 +23,7 @@ interest of speed.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \guisec{Macros}
 
-\noindent 
+\noindent
 {\tt util\_Error (S)};
 
  \tab  Prints the string {\tt S}, then stops the program.
@@ -39,10 +39,10 @@ interest of speed.
 \endhide
 \endcode
 
-\noindent 
+\noindent
 {\tt util\_Assert (Assertion, S)};
 
- \tab  If {\tt lebool Assertion} is {\tt FALSE} (= 0), 
+ \tab  If {\tt bool Assertion} is {\tt false} (= 0),
   then prints the string {\tt S} and stops the program.
  \endtab
 \code
@@ -51,10 +51,10 @@ interest of speed.
 \endhide
 \endcode
 
-\noindent 
+\noindent
 {\tt util\_Warning (Condition, S)};
 
- \tab  If {\tt lebool Condition} is {\tt TRUE} ($\not = 0$),
+ \tab  If {\tt bool Condition} is {\tt true} ($\not = 0$),
  then prints the string {\tt S}.
  \endtab
 \code
@@ -69,7 +69,7 @@ interest of speed.
 \endcode
 
 
-\noindent 
+\noindent
 {\tt util\_Max (x, y)};
 
  \tab  Returns the largest of the two numbers {\tt  x}, {\tt y}.
@@ -81,7 +81,7 @@ interest of speed.
 \endcode
 
 
-\noindent 
+\noindent
 {\tt util\_Min (x, y)};
 
  \tab  Returns the smallest of the two numbers {\tt  x}, {\tt y}.
@@ -100,26 +100,26 @@ interest of speed.
 
 FILE * util_Fopen (const char *name, const char *mode);
 \endcode
-  \tab 
-  Calls {\tt fopen} (from {\tt stdio.h}) with same arguments, but checks 
+  \tab
+  Calls {\tt fopen} (from {\tt stdio.h}) with same arguments, but checks
   for errors.
-  Opens or creates file with name {\tt name} in mode {\tt mode}. Returns a 
-  pointer to 
-  FILE that is associated with the stream. If {\tt name} cannot be accessed, 
+  Opens or creates file with name {\tt name} in mode {\tt mode}. Returns a
+  pointer to
+  FILE that is associated with the stream. If {\tt name} cannot be accessed,
   the program
-  stops. 
+  stops.
  \endtab
 \code
 
 
 int util_Fclose (FILE *stream);
 \endcode
-  \tab 
-   Calls {\tt fclose} (from {\tt stdio.h}) with same arguments, but checks 
+  \tab
+   Calls {\tt fclose} (from {\tt stdio.h}) with same arguments, but checks
    for errors.
-   Closes the file associated with {\tt stream}. If the file is successfully 
+   Closes the file associated with {\tt stream}. If the file is successfully
    closed, {\tt 0}
-   is returned. If an error occurs or the file was already closed, {\tt EOF} 
+   is returned. If an error occurs or the file was already closed, {\tt EOF}
    is returned.
  \endtab
 \code
@@ -131,27 +131,27 @@ int util_GetLine (FILE *file, char *Line, char c);
   Reads a line of data from {\tt file}. Blank lines and comments are
   ignored. A comment is any line whose first non-whitespace character
   is {\tt c}. If the character {\tt c} appears anywhere on a line that is
-  not a comment, then  {\tt c} and the rest of the line are ignored too. 
+  not a comment, then  {\tt c} and the rest of the line are ignored too.
   The function returns $-1$ if end-of-file or an error is encountered,
   otherwise it returns 0.
   \endtab
 \code
 
 
-void util_ReadBool (char S[], lebool *x);
+void util_ReadBool (char S[], bool *x);
 \endcode
   \tab
-  Reads a {\tt lebool} value from string {\tt S} and returns it in  $x$.
-  The possible values are  {\tt TRUE} and  {\tt FALSE}.
+  Reads a {\tt bool} value from string {\tt S} and returns it in  $x$.
+  The possible values are  {\tt true} and  {\tt false}.
   \endtab
 \code
 
 
-void util_WriteBool (lebool x, int d);
+void util_WriteBool (bool x, int d);
 \endcode
   \tab
-  Writes the value of $x$ in a field of width $d$. If $d < 0$, 
-  $x$ is left-justified, otherwise right-justified. 
+  Writes the value of $x$ in a field of width $d$. If $d < 0$,
+  $x$ is left-justified, otherwise right-justified.
   \endtab
 \code
 
@@ -159,11 +159,11 @@ void util_WriteBool (lebool x, int d);
 void * util_Malloc (size_t size);
 \endcode
   \tab
-  Calls {\tt malloc} (from {\tt stdlib.h}) with same arguments, but checks 
+  Calls {\tt malloc} (from {\tt stdlib.h}) with same arguments, but checks
   for errors.
-  Allocates memory large enough to hold an object of size {\tt size}. A 
+  Allocates memory large enough to hold an object of size {\tt size}. A
   successful call
-  returns the base address of the allocated space, otherwise the 
+  returns the base address of the allocated space, otherwise the
   programs stops. The standard type {\tt size\_t} is defined in {\tt stdio.h}.
  \endtab
 \code
@@ -171,12 +171,12 @@ void * util_Malloc (size_t size);
 
 void * util_Calloc (size_t dim, size_t size);
 \endcode
-  \tab 
-  Calls {\tt calloc} (from {\tt stdlib.h}) with same arguments, but checks 
+  \tab
+  Calls {\tt calloc} (from {\tt stdlib.h}) with same arguments, but checks
   for errors.
-  Allocates memory large enough to hold an array of {\tt dim} 
+  Allocates memory large enough to hold an array of {\tt dim}
   objects each of size {\tt size}. A successful call
-  returns the base address of the allocated space, otherwise the programs 
+  returns the base address of the allocated space, otherwise the programs
   stops. The standard type {\tt size\_t} is defined in {\tt stdio.h}.
  \endtab
 \code
@@ -184,16 +184,16 @@ void * util_Calloc (size_t dim, size_t size);
 
 void * util_Realloc (void *ptr, size_t size);
 \endcode
-  \tab Calls {\tt realloc} (from {\tt stdlib.h}) with same arguments, but 
+  \tab Calls {\tt realloc} (from {\tt stdlib.h}) with same arguments, but
   checks for errors.
   Takes a pointer to a memory region previously allocated and referenced by
   {\tt ptr}, then changes its
   size to {\tt size} while preserving its content.
-% The function attempts to  keep the same base address for the block, 
-% but if it is not possible, it allocates a new block of  memory, 
-% copying the relevant portion of the old block and deallocating it. 
+% The function attempts to  keep the same base address for the block,
+% but if it is not possible, it allocates a new block of  memory,
+% copying the relevant portion of the old block and deallocating it.
   A successful call
-  returns the base address of the resized (or new) space, otherwise the 
+  returns the base address of the resized (or new) space, otherwise the
   programs stops. The standard type {\tt size\_t} is defined in {\tt stdio.h}.
  \endtab
 \code

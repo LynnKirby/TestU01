@@ -72,8 +72,7 @@ void  addstr_Ulong (char *to, const char *add, unsigned long n)
    strcat (to, str);
 }
 
-#ifdef USE_LONGLONG
-void  addstr_LONG (char *to, const char *add, longlong n)
+void  addstr_LONG (char *to, const char *add, int64_t n)
 {
    char str[LEN1 + 1];
    strcat (to, add);
@@ -81,14 +80,13 @@ void  addstr_LONG (char *to, const char *add, longlong n)
    strcat (to, str);
 }
 
-void  addstr_ULONG (char *to, const char *add, ulonglong n)
+void  addstr_ULONG (char *to, const char *add, uint64_t n)
 {
    char str[LEN1 + 1];
    strcat (to, add);
    sprintf (str, "%1" PRIuLEAST64, n);
    strcat (to, str);
 }
-#endif
 
 void  addstr_Char (char *to, const char *add, char c)
 {
@@ -110,9 +108,9 @@ void  addstr_Bool (char *to, const char *add, int b)
 {
    strcat (to, add);
    if (b)
-      strcat (to, "TRUE");
+      strcat (to, "true");
    else
-      strcat (to, "FALSE");
+      strcat (to, "false");
 }
 
 void  addstr_ArrayLong (char *to, const char *add, int high, long val[])
@@ -128,7 +126,7 @@ void  addstr_ArrayLong (char *to, const char *add, int high, long val[])
       strcat (to, ")");
 }
 
-void  addstr_ArrayUlong (char *to, const char *add, 
+void  addstr_ArrayUlong (char *to, const char *add,
                          int high, unsigned long val[])
 {
    int j;
@@ -142,7 +140,7 @@ void  addstr_ArrayUlong (char *to, const char *add,
       strcat (to, ")");
 }
 
-void  addstr_ArrayUint (char *to, const char *add, int high, 
+void  addstr_ArrayUint (char *to, const char *add, int high,
 		        unsigned int val[])
 {
    int j;
@@ -169,7 +167,7 @@ void  addstr_ArrayInt (char *to, const char *add, int high, int val[])
       strcat (to, ")");
 }
 
-void  addstr_ArrayDouble (char *to, const char *add, 
+void  addstr_ArrayDouble (char *to, const char *add,
                           int high, double val[])
 {
    int j;

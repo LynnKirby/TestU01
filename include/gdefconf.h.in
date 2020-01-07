@@ -6,7 +6,6 @@
 #ifndef GDEFCONF_H
 #define GDEFCONF_H
 
-#define HAVE_LONG_LONG
 #cmakedefine HAVE_ERF
 #cmakedefine HAVE_RANDOM
 #cmakedefine HAVE_LGAMMA
@@ -14,8 +13,5 @@
 #undef HAVE_MATHEMATICA
 #cmakedefine HAVE_SYS_UTSNAME_H
 #cmakedefine HAVE_UNISTD_H
-#define HAVE_STDINT_H
-#define HAVE_UINT32_T
-#define HAVE_UINT8_T
 
 #endif

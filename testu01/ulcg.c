@@ -151,21 +151,17 @@ typedef struct {
 
 /*-------------------------------------------------------------------------*/
 
-#ifdef USE_LONGLONG
-
 typedef struct {
-   ulonglong A, C;
-   ulonglong Mask, Shift;
+   uint64_t A, C;
+   uint64_t Mask, Shift;
 } Pow2LCGL_param;
 
 typedef struct {
-   ulonglong S;
+   uint64_t S;
 } Pow2LCGL_state;
 
 typedef Pow2LCGL_param LCG2e48L_param;
 typedef Pow2LCGL_state LCG2e48L_state;
-
-#endif
 
 /*-------------------------------------------------------------------------*/
 
@@ -426,7 +422,7 @@ static void WrBigLCG (void *vsta)
 {
    BigLCG_state *state = vsta;
    printf (" s = ");
-   mpz_out_str (NULL, 10, state->S); 
+   mpz_out_str (NULL, 10, state->S);
    printf ("\n");
 }
 
@@ -632,7 +628,7 @@ static void WrBigPow2LCG (void *vsta)
 {
    BigPow2LCG_state *state = vsta;
    printf (" s = ");
-   mpz_out_str (stdout, 10, state->S); 
+   mpz_out_str (stdout, 10, state->S);
    printf ("\n");
 }
 
@@ -908,13 +904,8 @@ static double LCGPayne_U01 (void *vpar, void *vsta)
    LCGPayne_param *param = vpar;
    LCGPayne_state *state = vsta;
    unsigned long q;
-#ifdef USE_LONGLONG
-   ulonglong res;
-   res = state->S * (ulonglong) param->a + param->c;
-#else
-   unsigned long res;
-   res = state->S * param->a + param->c;
-#endif
+   uint64_t res;
+   res = state->S * (uint64_t) param->a + param->c;
    q = (res & MASK31) + (res >> 31);
    if (q >= DeuxExp31m1)
       q -= DeuxExp31m1;
@@ -944,11 +935,6 @@ unif01_Gen *ulcg_CreateLCGPayne (long a, long c, long s)
    size_t leng;
    char name[LEN + 1];
 
-#ifndef USE_LONGLONG
-#ifdef IS_ULONG32
-    util_Error ("ulcg_CreateLCGPayne will not work");
-#endif
-#endif
    if ((a < 1) || (s < 0) || (s >= DeuxExp31m1))
       util_Error ("ulcg_CreateLCGPayne:   Invalid parameter");
 
@@ -1047,7 +1033,6 @@ unif01_Gen *ulcg_CreateLCG2e31m1HD (long a, long s)
 
 
 /**************************************************************************/
-#ifdef USE_LONGLONG
 
 static unsigned long LCG2e48L_Bits (void *vpar, void *vsta)
 {
@@ -1070,7 +1055,7 @@ static void WrLCG2e48L (void *vsta)
    printf (" s = %" PRIuLEAST64 "\n\n", state->S);
 }
 
-unif01_Gen *ulcg_CreateLCG2e48L (ulonglong a, ulonglong c, ulonglong s)
+unif01_Gen *ulcg_CreateLCG2e48L (uint64_t a, uint64_t c, uint64_t s)
 {
    unif01_Gen *gen;
    LCG2e48L_param *param;
@@ -1141,7 +1126,7 @@ static void WrPow2LCGL (void *vsta)
    printf (" s = %1" PRIuLEAST64 "\n", state->S);
 }
 
-unif01_Gen *ulcg_CreatePow2LCGL (int e, ulonglong a, ulonglong c, ulonglong s)
+unif01_Gen *ulcg_CreatePow2LCGL (int e, uint64_t a, uint64_t c, uint64_t s)
 {
    unif01_Gen *gen;
    Pow2LCGL_param *param;
@@ -1188,8 +1173,6 @@ unif01_Gen *ulcg_CreatePow2LCGL (int e, ulonglong a, ulonglong c, ulonglong s)
    gen->Write = &WrPow2LCGL;
    return gen;
 }
-
-#endif
 
 
 /**************************************************************************/
@@ -1339,7 +1322,7 @@ unif01_Gen *ulcg_CreateLCGWu2 (long m, char o1, unsigned int q, char o2,
    util_Assert (w < 2.0 * m, "ulcg_CreateLCGWu2:   parameters (Q)");
    w = num_TwoExp[E] - num_TwoExp[r] + param->H * ((m - 1) >> (E - r));
    util_Assert (w < 2.0 * m, "ulcg_CreateLCGWu2:   parameters (R)");
- 
+
    if (o1 == '-') {
       if (o2 == '-') {
          gen->GetBits = &Wu2mm_Bits;
@@ -1381,7 +1364,7 @@ unif01_Gen *ulcg_CreateLCGWu2 (long m, char o1, unsigned int q, char o2,
  * Combined generators LCG following L'Ecuyer's method (1988).
  * The state of each generator is in {1, 2, ..., Mi-1}.
  * The returned values are in {1/M1, 2/M1, ..., (M1-1)/M1}.
- * 
+ *
  **********************************************************************/
 
 static double SmallCombLEC2_U01 (void *vpar, void *vsta)

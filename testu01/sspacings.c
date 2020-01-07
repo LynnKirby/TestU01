@@ -155,7 +155,7 @@ static void InitRes (
    int Nbm,                   /* Number of values of m to consider */
    char *nam                  /* Test name */
 )
-/* 
+/*
  * Initializes res
  */
 {
@@ -447,7 +447,7 @@ static void InitAllSpacings (unif01_Gen * gen, char *TestName, Param * par,
          (-2 * m + 1);
       util_Assert (x > 0.0, "Negative Sig [m, 2]");
       par->Sig[m][LOG_ASYMP_CIRC] = sqrt (nLR * x);
-      par->Sig[m][LOG_ASYMP_LIN] = par->Sig[m][LOG_ASYMP_CIRC]; /* See Holst 
+      par->Sig[m][LOG_ASYMP_LIN] = par->Sig[m][LOG_ASYMP_CIRC]; /* See Holst
                                                                    1979 */
 
       x = Qmn[m] + nLR * Qmn[1] - 2.0 * (mLR - 1.0) * (mLR * Qm1 + 1.0) +
@@ -610,7 +610,7 @@ void sspacings_AllSpacings (unif01_Gen * gen, sspacings_Res * res,
    double SumSq;
    int NbMinus[MAXM];             /* Number of spacings < Eps */
    Param par;
-   lebool localRes = FALSE;
+   bool localRes = false;
    chrono_Chrono *Timer;
    char *TestName = "sspacings_AllSpacings test";
 
@@ -621,7 +621,7 @@ void sspacings_AllSpacings (unif01_Gen * gen, sspacings_Res * res,
    Eps = 1.0 / num_TwoExp[LgEps];
 
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = sspacings_CreateRes ();
    }
    InitRes (res, N, par.Nbm, "sspacings_AllSpacings");
@@ -744,7 +744,7 @@ void sspacings_AllSpacings2 (unif01_Gen * gen, sspacings_Res * res,
    double SumSq;
    int NbMinus[MAXM];             /* Number of spacings < Eps */
    Param par;
-   lebool localRes = FALSE;
+   bool localRes = false;
    chrono_Chrono *Timer;
    char *TestName = "sspacings_AllSpacings2 test";
 
@@ -755,7 +755,7 @@ void sspacings_AllSpacings2 (unif01_Gen * gen, sspacings_Res * res,
    Eps = 1.0 / num_TwoExp[LgEps];
 
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = sspacings_CreateRes ();
    }
    InitRes (res, N, par.Nbm, "sspacings_AllSpacings2");

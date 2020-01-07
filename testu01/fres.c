@@ -74,7 +74,7 @@ void fres_InitCont (ffam_Fam *fam, fres_Cont *res, int N,
       }
    }
    if (N > 1)
-      bitset_ClearBit (res->Active, gofw_Mean);   
+      bitset_ClearBit (res->Active, gofw_Mean);
 }
 
 
@@ -174,7 +174,7 @@ void fres_InitDisc (ffam_Fam *fam, fres_Disc *res,
    strcpy (res->name, nam);
    strncpy (str, nam, (size_t) LEN);
    len1 = strlen (nam);
- 
+
    Nr = util_Min (Nr, fam->Ng);
 
    ftab_DeleteTable (res->PVal2);
@@ -237,7 +237,7 @@ void fres_DeleteDisc (fres_Disc *res)
 
 /*=========================================================================*/
 
-void fres_PrintDisc (fres_Disc *res, lebool LR)
+void fres_PrintDisc (fres_Disc *res, bool LR)
 {
    if (LR) {
       ftab_PrintTable (res->PLeft);
@@ -275,7 +275,7 @@ void fres_InitPoisson (ffam_Fam *fam, fres_Poisson *res,
    strcpy (res->name, nam);
    strncpy (str, nam, (size_t) LEN);
    len1 = strlen (nam);
- 
+
    Nr = util_Min (Nr, fam->Ng);
 
    ftab_DeleteTable (res->Obs);
@@ -356,7 +356,7 @@ void fres_DeletePoisson (fres_Poisson *res)
 
 /*=========================================================================*/
 
-void fres_PrintPoisson (fres_Poisson *res, lebool LR, lebool Ratio)
+void fres_PrintPoisson (fres_Poisson *res, bool LR, bool Ratio)
 {
    ftab_PrintTable2 (res->Exp, res->Obs, Ratio);
    if (LR) {

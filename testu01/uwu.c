@@ -21,18 +21,13 @@
 #define LEN  200                  /* Max length of strings */
 
 
-#ifdef USE_LONGLONG
-
 typedef struct {
-   ulonglong S;
+   uint64_t S;
 } LCGWu61_state;
-
-#endif
 
 
 
 /*=========================================================================*/
-#ifdef USE_LONGLONG
 
 #define LOG_W 64
 #define LOG_M 61
@@ -43,8 +38,8 @@ typedef struct {
 static double LCGWu61a_U01 (void *junk, void *vsta)
 {
    LCGWu61_state *state = vsta;
-   ulonglong w1, w2;
-   longlong x1;
+   uint64_t w1, w2;
+   int64_t x1;
 
    w1 = (state->S >> (LOG_M - K1)) +
       ((state->S << (K1 + LOG_W - LOG_M)) >> (LOG_W - LOG_M));
@@ -75,7 +70,7 @@ static void WrLCGWu61 (void *vsta)
 
 /*-----------------------------------------------------------------------*/
 
-unif01_Gen * uwu_CreateLCGWu61a (longlong s)
+unif01_Gen * uwu_CreateLCGWu61a (int64_t s)
 {
    unif01_Gen *gen;
    LCGWu61_state *state;
@@ -112,8 +107,8 @@ unif01_Gen * uwu_CreateLCGWu61a (longlong s)
 static double LCGWu61b_U01 (void *junk, void *vsta)
 {
    LCGWu61_state *state = vsta;
-   ulonglong w1, w2;
-   longlong x1;
+   uint64_t w1, w2;
+   int64_t x1;
 
    w1 = (state->S >> (LOG_M - K1)) +
       ((state->S << (K1 + LOG_W - LOG_M)) >> (LOG_W - LOG_M));
@@ -136,7 +131,7 @@ static unsigned long LCGWu61b_Bits (void *vpar, void *vsta)
 
 /*-----------------------------------------------------------------------*/
 
-unif01_Gen * uwu_CreateLCGWu61b (longlong s)
+unif01_Gen * uwu_CreateLCGWu61b (int64_t s)
 {
    unif01_Gen *gen;
    LCGWu61_state *state;
@@ -145,7 +140,7 @@ unif01_Gen * uwu_CreateLCGWu61b (longlong s)
 
    gen = util_Malloc (sizeof (unif01_Gen));
    state = util_Malloc (sizeof (LCGWu61_state));
-   strcpy (name, 
+   strcpy (name,
       "uwu_CreateLCGWu61b:   m = 2^61 - 1,   a = 2^42 - 2^31,   c = 0");
    addstr_LONG (name, ",   s = ", s);
    leng = strlen (name);
@@ -160,8 +155,6 @@ unif01_Gen * uwu_CreateLCGWu61b (longlong s)
    gen->state   = state;
    return gen;
 }
-
-#endif /* USE_LONGLONG */
 
 
 /*=========================================================================*/

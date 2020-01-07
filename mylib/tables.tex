@@ -53,7 +53,7 @@ long ** tables_CreateMatrixL  (int M, int N);
 unsigned long ** tables_CreateMatrixUL (int M, int N);
 double ** tables_CreateMatrixD  (int M, int N);
 \endcode
-  \tab Allocates contiguous memory for a dynamic 
+  \tab Allocates contiguous memory for a dynamic
   matrix of {\tt M} rows and {\tt N} columns. Returns the base
   address of the allocated space.
   \endtab
@@ -66,7 +66,7 @@ void tables_DeleteMatrixD  (double *** T);
 \endcode
   \tab Releases the memory used by the matrix {\tt T}
   (see {\tt tables\_CreateMatrix}) passed by
-  reference, that is, using the {\tt \&} symbol. 
+  reference, that is, using the {\tt \&} symbol.
   {\tt T} is set to {\tt NULL}.
   \endtab
 \code
@@ -83,10 +83,8 @@ void tables_CopyTabD (double T1[], double T2[], int n1, int n2);
 void tables_QuickSortL (long T[], int n1, int n2);
 void tables_QuickSortD (double T[], int n1, int n2);
 
-#ifdef USE_LONGLONG
-   void tables_QuickSortLL (longlong T[], int n1, int n2);
-   void tables_QuickSortULL (ulonglong T[], int n1, int n2);
-#endif
+void tables_QuickSortLL (int64_t T[], int n1, int n2);
+void tables_QuickSortULL (uint64_t T[], int n1, int n2);
 \endcode
  \tab Sort the tables {\tt T[n1..n2]} in increasing order.
  \endtab
@@ -95,12 +93,10 @@ void tables_QuickSortD (double T[], int n1, int n2);
 
 void tables_WriteTabL (long V[], int n1, int n2, int k, int p, char Desc[]);
 
-#ifdef USE_LONGLONG
-   void tables_WriteTabLL (longlong V[], int n1, int n2, int k, int p,
-                           char Desc[]);
-   void tables_WriteTabULL (ulonglong V[], int n1, int n2, int k, int p,
-                            char Desc[]);
-#endif
+void tables_WriteTabLL (int64_t V[], int n1, int n2, int k, int p,
+                        char Desc[]);
+void tables_WriteTabULL (uint64_t V[], int n1, int n2, int k, int p,
+                        char Desc[]);
 \endcode
  \tab  Write the elements {\tt n1} to {\tt n2} of table {\tt V},
   {\tt k} per line, {\tt p} positions per element.
@@ -127,13 +123,13 @@ void tables_WriteMatrixD (double** Mat, int i1, int i2, int j1, int j2,
                           int w, int p, tables_StyleType style,
                           char Name[]);
 \endcode
- \tab Writes the submatrix with lines 
-   {\tt i1} $\le i \le $ {\tt i2} and columns 
+ \tab Writes the submatrix with lines
+   {\tt i1} $\le i \le $ {\tt i2} and columns
    {\tt j1} $\le j \le $ {\tt j2} of the matrix {\tt Mat} with format
    {\tt style}. The elements are printed in {\tt w}
    positions with a precision of {\tt p} digits. {\tt Name} is
    an identifier for the submatrix.
-  
+
    For {\tt Matlab}, the file containing the matrix must have
    the extension {\tt .m}.
    For example, if it is named {\tt poil.m}, it will be accessed by the
@@ -154,7 +150,7 @@ void tables_WriteMatrixL (long** Mat, int i1, int i2, int j1, int j2, int w,
 
 long tables_HashPrime (long n, double load);
 \endcode
-  \tab Returns a prime number $M$ to be used as the size 
+  \tab Returns a prime number $M$ to be used as the size
    (the number of elements) of a hashing table.
    $M$ will be such that the load factor $n/M$ do not exceed {\tt load}.
    If {\tt load} is small, an important part of the table will be unused; that

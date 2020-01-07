@@ -62,7 +62,7 @@ static void InitRes (
    long jmax,
    char *nam
 )
-/* 
+/*
  * Initializes the sspectral_Res structure
  */
 {
@@ -135,7 +135,7 @@ void sspectral_Fourier1 (unif01_Gen *gen, sspectral_Res *res,
    double x, NbExp, h, per;
    long co;
    double *A;
-   lebool localRes = FALSE;
+   bool localRes = false;
    chrono_Chrono *Timer;
    char *TestName = "sspectral_Fourier1 test";
 
@@ -145,7 +145,7 @@ void sspectral_Fourier1 (unif01_Gen *gen, sspectral_Res *res,
    if (swrite_Basic)
       WriteDataFour (gen, TestName, N, t, r, s);
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = sspectral_CreateRes ();
    }
    n = num_TwoExp[t];
@@ -175,14 +175,14 @@ void sspectral_Fourier1 (unif01_Gen *gen, sspectral_Res *res,
             i++;
          }
       }
-      /* 
+      /*
        * Compute the Fourier transform of A and return the result in A. The
        * first half of the array, (from 0 to n/2) is filled with the real
        * components of the FFT. The second half of the array (from n/2+1 to
        * n-1) is filled with the imaginary components of the FFT.
        * The n new elements of A are thus:
        *      [Re(0), Re(1), ...., Re(n/2), Im(n/2-1), ..., Im(1)]
-       * The procedure is due to H.V. Sorensen, University of Pennsylvania 
+       * The procedure is due to H.V. Sorensen, University of Pennsylvania
        * and is found in file fftc.c.
        */
       rsrfft (A, t);
@@ -236,7 +236,7 @@ void sspectral_Fourier3 (unif01_Gen *gen, sspectral_Res *res,
    unsigned long Z;
    long k, KALL, Seq, n, i;
    double *A, *B;
-   lebool localRes = FALSE;
+   bool localRes = false;
    chrono_Chrono *Timer;
    char *TestName = "sspectral_Fourier3 test";
 
@@ -247,7 +247,7 @@ void sspectral_Fourier3 (unif01_Gen *gen, sspectral_Res *res,
    util_Assert (t <= 26, "sspectral_Fourier3:   k > 26");
    util_Assert (t >= 2, "sspectral_Fourier3:   k < 2");
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = sspectral_CreateRes ();
    }
    n = num_TwoExp[t];
@@ -274,14 +274,14 @@ void sspectral_Fourier3 (unif01_Gen *gen, sspectral_Res *res,
             i++;
          }
       }
-      /* 
+      /*
        * Compute the Fourier transform of A and return the result in A. The
        * first half of the array, (from 0 to n/2) is filled with the real
        * components of the FFT. The second half of the array (from n/2+1 to
        * n-1) is filled with the imaginary components of the FFT.
        * The n new elements of A are thus:
        *      [Re(0), Re(1), ...., Re(n/2), Im(n/2-1), ..., Im(1)]
-       * The procedure is due to H.V. Sorensen, University of Pennsylvania 
+       * The procedure is due to H.V. Sorensen, University of Pennsylvania
        * and is found in file fftc.c.
        */
       rsrfft (A, t);
@@ -337,7 +337,7 @@ void sspectral_Fourier2 (unif01_Gen *gen, sspectral_Res *res,
    long k, KALL, Seq, n, i;
    double *A;
    double x, sum;
-   lebool localRes = FALSE;
+   bool localRes = false;
    chrono_Chrono *Timer;
    char *TestName = "sspectral_Fourier2 test";
 
@@ -348,7 +348,7 @@ void sspectral_Fourier2 (unif01_Gen *gen, sspectral_Res *res,
    util_Assert (t <= 26, "sspectral_Fourier2:   k > 26");
    util_Assert (t >= 2, "sspectral_Fourier2:   k < 2");
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = sspectral_CreateRes ();
    }
    n = num_TwoExp[t];
@@ -372,14 +372,14 @@ void sspectral_Fourier2 (unif01_Gen *gen, sspectral_Res *res,
             i++;
          }
       }
-      /* 
+      /*
        * Compute the Fourier transform of A and return the result in A. The
        * first half of the array, (from 0 to n/2) is filled with the real
        * components of the FFT. The second half of the array (from n/2+1 to
        * n-1) is filled with the imaginary components of the FFT.
        * The n new elements of A are thus:
        *      [Re(0), Re(1), ...., Re(n/2), Im(n/2-1), ..., Im(1)]
-       * The procedure is due to H.V. Sorensen, University of Pennsylvania 
+       * The procedure is due to H.V. Sorensen, University of Pennsylvania
        * and is found in file fftc.c.
        */
       rsrfft (A, t);

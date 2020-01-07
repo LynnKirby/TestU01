@@ -100,7 +100,7 @@ double finv_Weibull (double c, double u)
       util_Warning (1, "finv_Weibull:   u --> 1");
       return fdist_XINF;
    }
-   
+
    return pow (t, 1.0 / c);
 }
 
@@ -292,7 +292,7 @@ double finv_Normal1 (double x)
 {
    int i, negatif;
    double z, v, numer, denom;
-  
+
    util_Assert (x >= 0.0, "finv_Normal1:   u < 0");
    util_Assert (x <= 1.0, "finv_Normal1:   u > 1");
    if (x <= 0.0) {
@@ -1053,7 +1053,7 @@ double finv_Normal2 (double u)
 };
 
    int n;
-   lebool negatif;
+   bool negatif;
    Uvalue uval, wval;
    double v, x;
 
@@ -1069,10 +1069,10 @@ double finv_Normal2 (double u)
       return -fdist_XBIG;
    }
    if (u < 0.5) {
-      negatif = TRUE;
+      negatif = true;
       uval.u = 2.0*u;
    } else {
-      negatif = FALSE;
+      negatif = false;
       uval.u = 2.0*(1.0 - u);
    }
    wval.i = uval.i & 2147221504;
@@ -1092,7 +1092,7 @@ double finv_Normal2 (double u)
             2.0 * A[n] * A[n]) * v));
    if (negatif)
       return -x;
-   else 
+   else
       return x;
 }
 
@@ -1478,7 +1478,7 @@ static double inverse1 (
    double alpha,                  /* Shape parameter */
    double bu                      /* u * Beta(alpha, alpha) */
    )
-/* 
+/*
  * This method is used for alpha < 1 and x close to 0.
  */
 {
@@ -1528,7 +1528,7 @@ static double inverse2 (
    double alpha,                  /* Shape parameter */
    double w                       /* (0.5 - u)B/pow(4, 1 - alpha) */
    )
-/* 
+/*
  * This method is used for alpha < 1 and x close to 1/2.
  */
 {
@@ -1577,7 +1577,7 @@ static double bisect (
    double a,                      /* x is presumed in [a, b] */
    double b)
 /*
- * Bisection method to find a solution x.  This method is used for alpha > 1 and 
+ * Bisection method to find a solution x.  This method is used for alpha > 1 and
  * u very close to 0. It will rarely be called.
  */
 {
@@ -1627,7 +1627,7 @@ static double inverse3 (
    double alpha,                  /* Shape parameter */
    double logBua                  /* Ln(alpha * u * Beta(alpha, alpha)) */
    )
-/* 
+/*
  * This method is used for alpha > 1 and x close to 0.
  */
 {
@@ -1698,7 +1698,7 @@ static double inverse4 (
    double alpha,                  /* Shape parameter */
    double logBva                  /* Ln(B) + Ln(1/2 - u) + (alpha - 1)*Ln(4) */
    )
-/* 
+/*
  * This method is used for alpha > 1 and x close to 1/2.
  */
 {
@@ -1765,7 +1765,7 @@ static double PeizerInverse (double alpha, double u)
 /*------------------------------------------------------------------------*/
 
 double finv_BetaSymmetric (double alpha, double u)
-/* 
+/*
  * Compute the inverse of the symmetrical beta distribution.
  * Returns a negative value on error, otherwise returns x in [0, 1].
  */

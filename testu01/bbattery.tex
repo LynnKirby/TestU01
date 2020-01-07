@@ -27,7 +27,7 @@ followed by a summary  report of the suspect $p$-values obtained from the
  specific tests included in the batteries.
 It is also possible to get only the summary report in the output,
 with no detailed output from the tests,
-by setting the boolean switch {\tt swrite\_Basic} to {\tt FALSE}.
+by setting the boolean switch {\tt swrite\_Basic} to {\tt false}.
 
 Some of the tests compute more than one statistic using the same stream of
 random numbers and these statistics are thus not independent.
@@ -274,9 +274,9 @@ void bbattery_Crush (unif01_Gen *gen);
   \item {\tt sknuth\_Gap} with $N=1$, $n=5*10^6$, $r=22$, {\tt Alpha} $=0$,
     {\tt Beta} $=1/256$.
 
-  \item {\tt sknuth\_Run}  with $N=1$, $n=5*10^8$, $r=0$, {\tt Up = TRUE}.
+  \item {\tt sknuth\_Run}  with $N=1$, $n=5*10^8$, $r=0$, {\tt Up = true}.
 
-  \item {\tt sknuth\_Run}  with $N=1$, $n=5*10^8$, $r=15$, {\tt Up = FALSE}.
+  \item {\tt sknuth\_Run}  with $N=1$, $n=5*10^8$, $r=15$, {\tt Up = false}.
 
   \item {\tt sknuth\_Permutation} with $N=1$, $n=5*10^7$, $r=0$, $t=10$.
 
@@ -572,9 +572,9 @@ void bbattery_BigCrush (unif01_Gen *gen);
   \item {\tt sknuth\_Gap} with $N=1$, $n=10^7$, $r=20$, {\tt Alpha} $=0$,
    {\tt Beta} $=1/1024$.
 
-  \item {\tt sknuth\_Run}  with $N=5$, $n=10^9$, $r=0$, {\tt Up = FALSE}.
+  \item {\tt sknuth\_Run}  with $N=5$, $n=10^9$, $r=0$, {\tt Up = false}.
 
-  \item {\tt sknuth\_Run}  with $N=5$, $n=10^9$, $r=15$, {\tt Up = TRUE}.
+  \item {\tt sknuth\_Run}  with $N=5$, $n=10^9$, $r=15$, {\tt Up = true}.
 
   \item {\tt sknuth\_Permutation} with $N=1$, $n=10^9$, $r=0$, $t=3$.
 

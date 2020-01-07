@@ -88,7 +88,7 @@ void gofs_DiscUnifTransform (double V[], long N, wdist_DFUNC F,
 
 /*-------------------------------------------------------------------------*/
 
-void gofs_DiffD (double U[], double D[], long N1, long N2, 
+void gofs_DiffD (double U[], double D[], long N1, long N2,
                  double a, double b)
 {
    long i;
@@ -99,10 +99,9 @@ void gofs_DiffD (double U[], double D[], long N1, long N2,
 }
 
 /*-------------------------------------------------------------------------*/
-#ifdef USE_LONGLONG
 
-void gofs_DiffLL (longlong U[], longlong D[], long N1, long N2,
-                  longlong a, longlong b)
+void gofs_DiffLL (int64_t U[], int64_t D[], long N1, long N2,
+                  int64_t a, int64_t b)
 {
    long i;
    D[N1 - 1] = U[N1] - a;
@@ -113,8 +112,8 @@ void gofs_DiffLL (longlong U[], longlong D[], long N1, long N2,
 
 /*-------------------------------------------------------------------------*/
 
-void gofs_DiffULL (ulonglong U[], ulonglong D[], long N1, long N2,
-                   ulonglong a, ulonglong b)
+void gofs_DiffULL (uint64_t U[], uint64_t D[], long N1, long N2,
+                   uint64_t a, uint64_t b)
 {
    long i;
    D[N1 - 1] = U[N1] - a;
@@ -123,7 +122,6 @@ void gofs_DiffULL (ulonglong U[], ulonglong D[], long N1, long N2,
    D[N2] = b - U[N2];
 }
 
-#endif
 /*-------------------------------------------------------------------------*/
 
 void gofs_DiffL (long U[], long D[], long N1, long N2, long a, long b)
@@ -219,7 +217,7 @@ void gofs_MergeClasses (double NbExp[], long Loc[],
 
 /*-------------------------------------------------------------------------*/
 
-void gofs_WriteClasses (double NbExp[], long Loc[], 
+void gofs_WriteClasses (double NbExp[], long Loc[],
                         long smin, long smax, long NbClasses)
 {
    /* Writes the groupings of cells before or after a merging that has */
@@ -306,7 +304,7 @@ void gofs_WriteClasses (double NbExp[], long Loc[],
 
 /*******************************\
 
-  Computing EDF test statistics 
+  Computing EDF test statistics
 
 \*******************************/
 
@@ -374,7 +372,7 @@ double gofs_CramerMises (double U[], long N)
    double W, W2;
 
    if (N <= 0) {
-      util_Warning (TRUE, "gofs_CramerMises:   N <= 0");
+      util_Warning (true, "gofs_CramerMises:   N <= 0");
       return 0.0;
    }
 
@@ -398,7 +396,7 @@ double gofs_WatsonG (double U[], long N)
    double UnSurN = 1.0 / N;
 
    if (N <= 0) {
-      util_Warning (TRUE, "gofs_WatsonG:   N <= 0");
+      util_Warning (true, "gofs_WatsonG:   N <= 0");
       return 0.0;
    }
 
@@ -428,7 +426,7 @@ double gofs_WatsonU (double U[], long N)
    double SumZ, W, W2, U2;
 
    if (N <= 0) {
-      util_Warning (TRUE, "gofs_WatsonU:   N <= 0");
+      util_Warning (true, "gofs_WatsonU:   N <= 0");
       return 0.0;
    }
 
@@ -459,7 +457,7 @@ double gofs_AndersonDarling (double V[], long N)
    double U, A2;
 
    if (N <= 0) {
-      util_Warning (TRUE, "gofs_AndersonDarling:   N <= 0");
+      util_Warning (true, "gofs_AndersonDarling:   N <= 0");
       return 0.0;
    }
 
@@ -488,7 +486,7 @@ void gofs_KSJumpOne (double U[], long N, double a, double *DP, double *DM)
 
    if (N <= 0) {
       *DP = *DM = 0.0;
-      util_Warning (TRUE, "gofs_KSJumpOne:   N <= 0");
+      util_Warning (true, "gofs_KSJumpOne:   N <= 0");
       return;
    }
 
@@ -518,7 +516,7 @@ void gofs_KS (double U[], long N, double *DP, double *DM, double *D)
 {
    if (N <= 0) {
       *DP = *DM = *D = 0.0;
-      util_Warning (TRUE, "gofs_KS:   N <= 0");
+      util_Warning (true, "gofs_KS:   N <= 0");
       return;
    }
 
@@ -543,7 +541,7 @@ void gofs_KSJumpsMany (double X[], int N, wdist_CFUNC F, double W[],
 
    if (N <= 0) {
       *DP = *DM = 0.0;
-      util_Warning (TRUE, "gofs_KSJumpsMany:   N <= 0");
+      util_Warning (true, "gofs_KSJumpsMany:   N <= 0");
       return;
    }
 

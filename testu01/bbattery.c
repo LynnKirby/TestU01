@@ -82,7 +82,7 @@ int bbattery_NTests;
 static char CharTemp[LEN + 1];
 
 /* Gives the test number as enumerated in bbattery.tex. Some test applies
-   more than one test, so the array of p-values does not correspond with 
+   more than one test, so the array of p-values does not correspond with
    the test number in the doc. */
 static int TestNumber[1 + NDIM] = { 0 };
 
@@ -162,8 +162,8 @@ static void WriteReport (
    int N,                         /* Max. number of tests */
    double pVal[],                 /* p-values of the tests */
    chrono_Chrono * Timer,         /* Timer */
-   lebool Flag,                  /* = TRUE for a file, FALSE for a gen */
-   lebool VersionFlag,           /* = TRUE: write the version number */
+   bool Flag,                  /* = true for a file, false for a gen */
+   bool VersionFlag,           /* = true: write the version number */
    double nb                      /* Number of bits in the random file */
    )
 {
@@ -411,7 +411,7 @@ static void InitBat (void)
 
 static void SmallCrush (unif01_Gen * gen, char *filename, int Rep[])
 /*
- * A small battery of statistical tests for Random Number Generators 
+ * A small battery of statistical tests for Random Number Generators
  * used in simulation.
  * Rep[i] gives the number of times that test i will be done. The default
  * values are Rep[i] = 1 for all i.
@@ -429,7 +429,7 @@ static void SmallCrush (unif01_Gen * gen, char *filename, int Rep[])
    swalk_Res *res4;
    sknuth_Res1 *res5;
    sstring_Res *res6;
-   lebool fileFlag;
+   bool fileFlag;
 
    Timer = chrono_Create ();
    InitBat ();
@@ -443,21 +443,17 @@ static void SmallCrush (unif01_Gen * gen, char *filename, int Rep[])
 
    if (NULL == gen) {
       gen = ufile_CreateReadText (filename, 10 * MILLION);
-      fileFlag = TRUE;
+      fileFlag = true;
    } else
-      fileFlag = FALSE;
+      fileFlag = false;
 
    ++j2;
    if (fileFlag)
       ufile_InitReadText ();
    res1 = sres_CreatePoisson ();
    for (i = 0; i < Rep[j2]; ++i) {
-#ifdef USE_LONGLONG
       smarsa_BirthdaySpacings (gen, res1, 1, 5 * MILLION, r, 1073741824,
          2, 1);
-#else
-      smarsa_BirthdaySpacings (gen, res1, 10, MILLION / 2, r, 67108864, 2, 1);
-#endif
       bbattery_pVal[++j] = res1->pVal2;
       TestNumber[j] = j2;
       strcpy (bbattery_TestNames[j], "BirthdaySpacings");
@@ -569,12 +565,12 @@ static void SmallCrush (unif01_Gen * gen, char *filename, int Rep[])
    bbattery_NTests = ++j;
    if (fileFlag) {
       WriteReport (filename, "SmallCrush", bbattery_NTests, bbattery_pVal,
-         Timer, TRUE, TRUE, 0.0);
+         Timer, true, true, 0.0);
       ufile_DeleteReadBin (gen);
    } else {
       GetName (gen, genName);
       WriteReport (genName, "SmallCrush", bbattery_NTests, bbattery_pVal,
-         Timer, FALSE, TRUE, 0.0);
+         Timer, false, true, 0.0);
    }
    chrono_Delete (Timer);
 }
@@ -731,7 +727,6 @@ static void Crush (unif01_Gen * gen, int Rep[])
       sres_Poisson *res;
       res = sres_CreatePoisson ();
 
-#ifdef USE_LONGLONG
       ++j2;
       for (i = 0; i < Rep[j2]; ++i) {
          long d;
@@ -796,86 +791,21 @@ static void Crush (unif01_Gen * gen, int Rep[])
          strcpy (bbattery_TestNames[j], "BirthdaySpacings, t = 8");
       }
 
-#else
-      ++j2;
-      for (i = 0; i < Rep[j2]; ++i) {
-         smarsa_BirthdaySpacings (gen, res, 200, 4 * MILLION / 10, 0,
-            67108864, 2, 1);
-         bbattery_pVal[++j] = res->pVal2;
-         TestNumber[j] = j2;
-         strcpy (bbattery_TestNames[j], "BirthdaySpacings, t = 2");
-      }
-
-      ++j2;
-      for (i = 0; i < Rep[j2]; ++i) {
-         smarsa_BirthdaySpacings (gen, res, 100, 4 * MILLION / 10, 0, 131072,
-            3, 1);
-         bbattery_pVal[++j] = res->pVal2;
-         TestNumber[j] = j2;
-         strcpy (bbattery_TestNames[j], "BirthdaySpacings, t = 3");
-      }
-
-      ++j2;
-      for (i = 0; i < Rep[j2]; ++i) {
-         smarsa_BirthdaySpacings (gen, res, 200, 4 * MILLION / 10, 0,
-            1024 * 8, 4, 1);
-         bbattery_pVal[++j] = res->pVal2;
-         TestNumber[j] = j2;
-         strcpy (bbattery_TestNames[j], "BirthdaySpacings, t = 4");
-      }
-
-      ++j2;
-      for (i = 0; i < Rep[j2]; ++i) {
-         smarsa_BirthdaySpacings (gen, res, 100, 4 * MILLION / 10, 0, 16, 13,
-            1);
-         bbattery_pVal[++j] = res->pVal2;
-         TestNumber[j] = j2;
-         strcpy (bbattery_TestNames[j], "BirthdaySpacings, t = 13");
-      }
-
-      ++j2;
-      for (i = 0; i < Rep[j2]; ++i) {
-         smarsa_BirthdaySpacings (gen, res, 100, 4 * MILLION / 10, 10, 16,
-            13, 1);
-         bbattery_pVal[++j] = res->pVal2;
-         TestNumber[j] = j2;
-         strcpy (bbattery_TestNames[j], "BirthdaySpacings, t = 13");
-      }
-
-      ++j2;
-      for (i = 0; i < Rep[j2]; ++i) {
-         smarsa_BirthdaySpacings (gen, res, 100, 4 * MILLION / 10, 20, 16,
-            13, 1);
-         bbattery_pVal[++j] = res->pVal2;
-         TestNumber[j] = j2;
-         strcpy (bbattery_TestNames[j], "BirthdaySpacings, t = 13");
-      }
-
-      ++j2;
-      for (i = 0; i < Rep[j2]; ++i) {
-         smarsa_BirthdaySpacings (gen, res, 100, 4 * MILLION / 10, 26, 16,
-            13, 1);
-         bbattery_pVal[++j] = res->pVal2;
-         TestNumber[j] = j2;
-         strcpy (bbattery_TestNames[j], "BirthdaySpacings, t = 13");
-      }
-#endif
-
       sres_DeletePoisson (res);
    }
    {
-      lebool flag = snpair_mNP2S_Flag;
+      bool flag = snpair_mNP2S_Flag;
       snpair_Res *res;
       res = snpair_CreateRes ();
 
-      snpair_mNP2S_Flag = FALSE;
+      snpair_mNP2S_Flag = false;
       ++j2;
       for (i = 0; i < Rep[j2]; ++i) {
          snpair_ClosePairs (gen, res, 10, 2 * MILLION, 0, 2, 0, 30);
          GetPVal_CPairs (10, res, &j, ", t = 2", j2);
       }
 
-      snpair_mNP2S_Flag = TRUE;
+      snpair_mNP2S_Flag = true;
       ++j2;
       for (i = 0; i < Rep[j2]; ++i) {
          snpair_ClosePairs (gen, res, 10, 2 * MILLION, 0, 3, 0, 30);
@@ -1008,7 +938,7 @@ static void Crush (unif01_Gen * gen, int Rep[])
 
       ++j2;
       for (i = 0; i < Rep[j2]; ++i) {
-         sknuth_Run (gen, res, 1, 500 * MILLION, 0, TRUE);
+         sknuth_Run (gen, res, 1, 500 * MILLION, 0, true);
          bbattery_pVal[++j] = res->pVal2[gofw_Mean];
          TestNumber[j] = j2;
          strcpy (bbattery_TestNames[j], "Run of U01, r = 0");
@@ -1016,7 +946,7 @@ static void Crush (unif01_Gen * gen, int Rep[])
 
       ++j2;
       for (i = 0; i < Rep[j2]; ++i) {
-         sknuth_Run (gen, res, 1, 500 * MILLION, 15, FALSE);
+         sknuth_Run (gen, res, 1, 500 * MILLION, 15, false);
          bbattery_pVal[++j] = res->pVal2[gofw_Mean];
          TestNumber[j] = j2;
          strcpy (bbattery_TestNames[j], "Run of U01, r = 15");
@@ -1593,7 +1523,7 @@ static void Crush (unif01_Gen * gen, int Rep[])
    bbattery_NTests = ++j;
    GetName (gen, genName);
    WriteReport (genName, "Crush", bbattery_NTests,
-      bbattery_pVal, Timer, FALSE, TRUE, 0.0);
+      bbattery_pVal, Timer, false, true, 0.0);
    chrono_Delete (Timer);
 }
 
@@ -1752,7 +1682,6 @@ static void BigCrush (unif01_Gen * gen, int Rep[])
    {
       sres_Poisson *res;
       res = sres_CreatePoisson ();
-#ifdef USE_LONGLONG
       ++j2;
       for (i = 0; i < Rep[j2]; ++i) {
          long d;
@@ -1832,97 +1761,14 @@ static void BigCrush (unif01_Gen * gen, int Rep[])
          TestNumber[j] = j2;
          strcpy (bbattery_TestNames[j], "BirthdaySpacings, t = 16");
       }
-
-#else
-      ++j2;
-      for (i = 0; i < Rep[j2]; ++i) {
-         smarsa_BirthdaySpacings (gen, res, 10 * THOUSAND, MILLION / 10, 0,
-            67108864, 2, 1);
-         bbattery_pVal[++j] = res->pVal2;
-         TestNumber[j] = j2;
-         strcpy (bbattery_TestNames[j], "BirthdaySpacings, t = 2");
-      }
-
-      ++j2;
-      for (i = 0; i < Rep[j2]; ++i) {
-         smarsa_BirthdaySpacings (gen, res, 10 * THOUSAND, MILLION / 10, 0,
-            1024 * 8, 4, 1);
-         bbattery_pVal[++j] = res->pVal2;
-         TestNumber[j] = j2;
-         strcpy (bbattery_TestNames[j], "BirthdaySpacings, t = 4");
-      }
-
-      ++j2;
-      for (i = 0; i < Rep[j2]; ++i) {
-         smarsa_BirthdaySpacings (gen, res, 10 * THOUSAND, MILLION / 10, 16,
-            1024 * 8, 4, 1);
-         bbattery_pVal[++j] = res->pVal2;
-         TestNumber[j] = j2;
-         strcpy (bbattery_TestNames[j], "BirthdaySpacings, t = 4");
-      }
-
-      ++j2;
-      for (i = 0; i < Rep[j2]; ++i) {
-         smarsa_BirthdaySpacings (gen, res, 10 * THOUSAND, MILLION / 10, 0, 16,
-            13, 1);
-         bbattery_pVal[++j] = res->pVal2;
-         TestNumber[j] = j2;
-         strcpy (bbattery_TestNames[j], "BirthdaySpacings, t = 13");
-      }
-
-      ++j2;
-      for (i = 0; i < Rep[j2]; ++i) {
-         smarsa_BirthdaySpacings (gen, res, 10 * THOUSAND, MILLION / 10, 5, 16,
-            13, 1);
-         bbattery_pVal[++j] = res->pVal2;
-         TestNumber[j] = j2;
-         strcpy (bbattery_TestNames[j], "BirthdaySpacings, t = 13");
-      }
-
-      ++j2;
-      for (i = 0; i < Rep[j2]; ++i) {
-         smarsa_BirthdaySpacings (gen, res, 10 * THOUSAND, MILLION / 10, 10,
-            16, 13, 1);
-         bbattery_pVal[++j] = res->pVal2;
-         TestNumber[j] = j2;
-         strcpy (bbattery_TestNames[j], "BirthdaySpacings, t = 13");
-      }
-
-      ++j2;
-      for (i = 0; i < Rep[j2]; ++i) {
-         smarsa_BirthdaySpacings (gen, res, 10 * THOUSAND, MILLION / 10, 15,
-            16, 13, 1);
-         bbattery_pVal[++j] = res->pVal2;
-         TestNumber[j] = j2;
-         strcpy (bbattery_TestNames[j], "BirthdaySpacings, t = 13");
-      }
-
-      ++j2;
-      for (i = 0; i < Rep[j2]; ++i) {
-         smarsa_BirthdaySpacings (gen, res, 10 * THOUSAND, MILLION / 10, 20,
-            16, 13, 1);
-         bbattery_pVal[++j] = res->pVal2;
-         TestNumber[j] = j2;
-         strcpy (bbattery_TestNames[j], "BirthdaySpacings, t = 13");
-      }
-
-      ++j2;
-      for (i = 0; i < Rep[j2]; ++i) {
-         smarsa_BirthdaySpacings (gen, res, 10 * THOUSAND, MILLION / 10, 26,
-            16, 13, 1);
-         bbattery_pVal[++j] = res->pVal2;
-         TestNumber[j] = j2;
-         strcpy (bbattery_TestNames[j], "BirthdaySpacings, t = 13");
-      }
-#endif
       sres_DeletePoisson (res);
    }
    {
-      lebool flag = snpair_mNP2S_Flag;
+      bool flag = snpair_mNP2S_Flag;
       snpair_Res *res;
       res = snpair_CreateRes ();
 
-      snpair_mNP2S_Flag = TRUE;
+      snpair_mNP2S_Flag = true;
       ++j2;
       for (i = 0; i < Rep[j2]; ++i) {
          snpair_ClosePairs (gen, res, 30, 6 * MILLION, 0, 3, 0, 30);
@@ -2051,7 +1897,7 @@ static void BigCrush (unif01_Gen * gen, int Rep[])
 
       ++j2;
       for (i = 0; i < Rep[j2]; ++i) {
-         sknuth_Run (gen, res, 5, BILLION, 0, FALSE);
+         sknuth_Run (gen, res, 5, BILLION, 0, false);
          bbattery_pVal[++j] = res->pVal2[gofw_Sum];
          TestNumber[j] = j2;
          strcpy (bbattery_TestNames[j], "Run, r = 0");
@@ -2059,7 +1905,7 @@ static void BigCrush (unif01_Gen * gen, int Rep[])
 
       ++j2;
       for (i = 0; i < Rep[j2]; ++i) {
-         sknuth_Run (gen, res, 10, BILLION, 15, TRUE);
+         sknuth_Run (gen, res, 10, BILLION, 15, true);
          bbattery_pVal[++j] = res->pVal2[gofw_Sum];
          TestNumber[j] = j2;
          strcpy (bbattery_TestNames[j], "Run, r = 15");
@@ -2686,7 +2532,7 @@ static void BigCrush (unif01_Gen * gen, int Rep[])
    bbattery_NTests = ++j;
    GetName (gen, genName);
    WriteReport (genName, "BigCrush", bbattery_NTests, bbattery_pVal,
-      Timer, FALSE, TRUE, 0.0);
+      Timer, false, true, 0.0);
    chrono_Delete (Timer);
 }
 
@@ -2734,7 +2580,7 @@ static void WriteTime (time_t t0, time_t t1)
 /*-------------------------------------------------------------------------*/
 
 static void Alphabit (unif01_Gen * gen, char *fname, double nb, int r, int s,
-   lebool blocFlag, int w, int Rep[])
+   bool blocFlag, int w, int Rep[])
 {
    chrono_Chrono *Timer;
  /*  time_t t0, t1; */
@@ -2745,7 +2591,7 @@ static void Alphabit (unif01_Gen * gen, char *fname, double nb, int r, int s,
    int j = 0;
    int j2 = 0;
    int i;
-   lebool fileFlag;
+   bool fileFlag;
    long bufsiz;
    char genName[LEN + 1] = "";
    double z;
@@ -2770,12 +2616,12 @@ static void Alphabit (unif01_Gen * gen, char *fname, double nb, int r, int s,
       gen0 = ufile_CreateReadBin (fname, bufsiz);
       gen = unif01_CreateBitBlockGen (gen0, r, s, w);
       nb -= fmod (nb, 1024.0 / w);
-      fileFlag = TRUE;
+      fileFlag = true;
    } else if (NULL == gen) {
       gen = ufile_CreateReadBin (fname, bufsiz);
-      fileFlag = TRUE;
+      fileFlag = true;
    } else {
-      fileFlag = FALSE;
+      fileFlag = false;
    }
 
    {
@@ -2797,7 +2643,7 @@ static void Alphabit (unif01_Gen * gen, char *fname, double nb, int r, int s,
       j = -1;
       ++j2;
       for (i = 0; i < Rep[j2]; ++i) {
-         smultin_MultinomialBitsOver (gen, par, res, N, n, r, s, 2, FALSE);
+         smultin_MultinomialBitsOver (gen, par, res, N, n, r, s, 2, false);
          strcpy (bbattery_TestNames[++j], "MultinomialBitsOver, L = 2");
          if (N == 1)
             bbattery_pVal[j] = res->pVal2[0][gofw_Mean];
@@ -2810,7 +2656,7 @@ static void Alphabit (unif01_Gen * gen, char *fname, double nb, int r, int s,
          ufile_InitReadBin ();
       ++j2;
       for (i = 0; i < Rep[j2]; ++i) {
-         smultin_MultinomialBitsOver (gen, par, res, N, n, r, s, 4, FALSE);
+         smultin_MultinomialBitsOver (gen, par, res, N, n, r, s, 4, false);
          strcpy (bbattery_TestNames[++j], "MultinomialBitsOver, L = 4");
          if (N == 1)
             bbattery_pVal[j] = res->pVal2[0][gofw_Mean];
@@ -2824,7 +2670,7 @@ static void Alphabit (unif01_Gen * gen, char *fname, double nb, int r, int s,
          if (fileFlag)
             ufile_InitReadBin ();
          for (i = 0; i < Rep[j2]; ++i) {
-            smultin_MultinomialBitsOver (gen, par, res, N, n, r, s, 8, FALSE);
+            smultin_MultinomialBitsOver (gen, par, res, N, n, r, s, 8, false);
             strcpy (bbattery_TestNames[++j], "MultinomialBitsOver, L = 8");
             if (N == 1)
                bbattery_pVal[j] = res->pVal2[0][gofw_Mean];
@@ -2839,7 +2685,7 @@ static void Alphabit (unif01_Gen * gen, char *fname, double nb, int r, int s,
          if (fileFlag)
             ufile_InitReadBin ();
          for (i = 0; i < Rep[j2]; ++i) {
-            smultin_MultinomialBitsOver (gen, par, res, N, n, r, s, 16, FALSE);
+            smultin_MultinomialBitsOver (gen, par, res, N, n, r, s, 16, false);
             strcpy (bbattery_TestNames[++j], "MultinomialBitsOver, L = 16");
             if (N == 1)
                bbattery_pVal[j] = res->pVal2[0][gofw_Mean];
@@ -2951,12 +2797,12 @@ static void Alphabit (unif01_Gen * gen, char *fname, double nb, int r, int s,
    }
    if (fileFlag) {
       WriteReport (fname, "Alphabit", bbattery_NTests,
-         bbattery_pVal, Timer, TRUE, TRUE, nb);
+         bbattery_pVal, Timer, true, true, nb);
       ufile_DeleteReadBin (gen);
    } else {
       GetName (gen, genName);
       WriteReport (genName, "Alphabit", bbattery_NTests, bbattery_pVal,
-         Timer, FALSE, TRUE, nb);
+         Timer, false, true, nb);
    }
 
    chrono_Delete (Timer);
@@ -2973,7 +2819,7 @@ void bbattery_Alphabit (unif01_Gen * gen, double nb, int r, int s)
    int Rep[NDIM + 1] = {0};
    for (i = 1; i <= ALPHABIT_NUM; ++i)
       Rep[i] = 1;
-   Alphabit (gen, NULL, nb, r, s, FALSE, 0, Rep);
+   Alphabit (gen, NULL, nb, r, s, false, 0, Rep);
 }
 
 
@@ -2985,7 +2831,7 @@ void bbattery_AlphabitFile (char *filename, double nb)
    int Rep[NDIM + 1] = {0};
    for (i = 1; i <= ALPHABIT_NUM; ++i)
       Rep[i] = 1;
-   Alphabit (NULL, filename, nb, 0, 32, FALSE, 0, Rep);
+   Alphabit (NULL, filename, nb, 0, 32, false, 0, Rep);
 }
 
 
@@ -2994,7 +2840,7 @@ void bbattery_AlphabitFile (char *filename, double nb)
 void bbattery_RepeatAlphabit (unif01_Gen * gen, double nb, int r, int s,
    int Rep[])
 {
-   Alphabit (gen, NULL, nb, r, s, FALSE, 0, Rep);
+   Alphabit (gen, NULL, nb, r, s, false, 0, Rep);
 }
 
 
@@ -3010,7 +2856,7 @@ void bbattery_BlockAlphabit (unif01_Gen * gen, double n, int r, int s)
       Rep[i] = 1;
    while ((L <= 32) && (L <= s)) {
       gen2 = unif01_CreateBitBlockGen (gen, r, s, L);
-      Alphabit (gen2, NULL, n, r, s, FALSE, 0, Rep);
+      Alphabit (gen2, NULL, n, r, s, false, 0, Rep);
       unif01_DeleteBitBlockGen (gen2);
       L *= 2;
    }
@@ -3025,7 +2871,7 @@ void bbattery_RepeatBlockAlphabit (unif01_Gen * gen, double nb, int r, int s,
    if ((L <= 32) && (L <= s)) {
       unif01_Gen *gen2;
       gen2 = unif01_CreateBitBlockGen (gen, r, s, L);
-      Alphabit (gen2, NULL, nb, r, s, FALSE, 0, Rep);
+      Alphabit (gen2, NULL, nb, r, s, false, 0, Rep);
       unif01_DeleteBitBlockGen (gen2);
    }
 }
@@ -3041,7 +2887,7 @@ void bbattery_BlockAlphabitFile (char *filename, double nb)
    for (i = 1; i <= ALPHABIT_NUM; ++i)
       Rep[i] = 1;
    while (w <= 32) {
-      Alphabit (NULL, filename, nb, 0, 32, TRUE, w, Rep);
+      Alphabit (NULL, filename, nb, 0, 32, true, w, Rep);
       w *= 2;
    }
 }
@@ -3049,7 +2895,7 @@ void bbattery_BlockAlphabitFile (char *filename, double nb)
 
 /*=========================================================================*/
 
-static void DoMultinom (lebool fileFlag, /* */
+static void DoMultinom (bool fileFlag, /* */
    unif01_Gen * gen,              /* */
    double nb,                     /* Number of bits */
    int *pj,                       /* j */
@@ -3076,7 +2922,6 @@ static void DoMultinom (lebool fileFlag, /* */
    if (fileFlag)
       ufile_InitReadBin ();
 
-#ifdef USE_LONGLONG
    /* Limit sample size n to NLIM because of memory limitations. */
    /* Determine number of replications N from this. */
    N = 1 + nb / NLIM;
@@ -3088,43 +2933,12 @@ static void DoMultinom (lebool fileFlag, /* */
    L = num_Log2 (n / 200.0 * n);
    L = util_Max (4, L);
    for (i = 0; i < Rep[j2]; ++i) {
-      smultin_MultinomialBitsOver (gen, par, res, N, n, 0, 32, L, TRUE);
+      smultin_MultinomialBitsOver (gen, par, res, N, n, 0, 32, L, true);
       strcpy (bbattery_TestNames[++j], "MultinomialBitsOver");
       bbattery_pVal[j] = res->pColl;
       TestNumber[j] = j2;
    }
-
-#else
-   x = nb / 32.0;
-   N = 1 + x / NLIM;
-   n = x / N;
-   N = util_Min (30, N);
-   L = 16;
-   t = 32 / L;
-   /* We want a number of collisions >= 2 */
-   while ((L > 1) && (n / num_TwoExp[L] * n * t * t < 2.0)) {
-      L /= 2;
-      t = 32 / L;
-   }
-   n = n * (32 / L);
-   /* We want a density n / k < 2 to use case Sparse = TRUE */
-   if (n > 2 * num_TwoExp[L]) {
-      N = n / num_TwoExp[L] * N;
-      n /= N;
-      while ((double) N * n * L > nb)
-         n--;
-   }
-   while (n * L % 32 > 0)
-      n--;
-   if (n > 3) {
-      for (i = 0; i < Rep[j2]; ++i) {
-         smultin_MultinomialBits (gen, par, res, N, n, 0, 32, L, TRUE);
-         strcpy (bbattery_TestNames[++j], "MultinomialBits");
-         bbattery_pVal[j] = res->pColl;
-         TestNumber[j] = j2;
-      }
-   }
-#endif
+   
    *pj = j;
    smultin_DeleteRes (res);
    smultin_DeleteParam (par);
@@ -3133,7 +2947,7 @@ static void DoMultinom (lebool fileFlag, /* */
 
 /*-------------------------------------------------------------------------*/
 
-static void DoAppear (lebool fileFlag, /* */
+static void DoAppear (bool fileFlag, /* */
    unif01_Gen * gen, double nb,   /* Number of bits to test */
    int *pj,                       /* j */
    int j2,                        /* Test number in the battery */
@@ -3194,7 +3008,7 @@ static void DoAppear (lebool fileFlag, /* */
 
 /*-------------------------------------------------------------------------*/
 
-static void DoWalk (lebool fileFlag, /* */
+static void DoWalk (bool fileFlag, /* */
    unif01_Gen * gen,              /* */
    double nb,                     /* Number of bits to test */
    int *pj,                       /* j */
@@ -3296,7 +3110,7 @@ static void Rabbit (unif01_Gen * gen, char *fname, double nb, int Rep[])
    double nw, x;
    chrono_Chrono *Timer;
    long bufsiz;
-   lebool fileFlag;
+   bool fileFlag;
    char genName[LEN + 1] = "";
 
    Timer = chrono_Create ();
@@ -3317,9 +3131,9 @@ static void Rabbit (unif01_Gen * gen, char *fname, double nb, int Rep[])
 
    if (NULL == gen) {
       gen = ufile_CreateReadBin (fname, bufsiz);
-      fileFlag = TRUE;
+      fileFlag = true;
    } else
-      fileFlag = FALSE;
+      fileFlag = false;
 
    j = -1;
    ++j2;
@@ -3781,12 +3595,12 @@ static void Rabbit (unif01_Gen * gen, char *fname, double nb, int Rep[])
    bbattery_NTests = ++j;
    if (fileFlag) {
       WriteReport (fname, "Rabbit", bbattery_NTests,
-         bbattery_pVal, Timer, TRUE, TRUE, nb);
+         bbattery_pVal, Timer, true, true, nb);
       ufile_DeleteReadBin (gen);
    } else {
       GetName (gen, genName);
       WriteReport (genName, "Rabbit", bbattery_NTests, bbattery_pVal,
-         Timer, FALSE, TRUE, nb);
+         Timer, false, true, nb);
    }
    chrono_Delete (Timer);
 }
@@ -3858,7 +3672,7 @@ void bbattery_pseudoDIEHARD (unif01_Gen * gen)
       res = sres_CreatePoisson ();
       printf ("smarsa_BirthdaySpacings test with r = 0, 1, 2, 3, 4, 5,"
          " 6, 7, 8,\n .....\n\n");
-      swrite_Basic = FALSE;
+      swrite_Basic = false;
       ++j2;
       for (i = 0; i <= 8; i++) {
          printf (" r = %d\n", i);
@@ -3881,7 +3695,7 @@ void bbattery_pseudoDIEHARD (unif01_Gen * gen)
       printf ("\n\n\n\n");
       sres_DeletePoisson (res);
       sres_DeleteChi2 (Chi);
-      swrite_Basic = TRUE;
+      swrite_Basic = true;
    }
    ++j2;
    {
@@ -3910,7 +3724,7 @@ void bbattery_pseudoDIEHARD (unif01_Gen * gen)
       par = smultin_CreateParam (1, ValDelta, smultin_GenerCellSerial, 0);
       res = smultin_CreateRes (par);
       smultin_MultinomialBitsOver (gen, par, res, 20, 2097152, 0, 32, 20,
-         TRUE);
+         true);
       bbattery_pVal[++j] = res->pVal2[0][gofw_AD];
       TestNumber[j] = ++j2;
       strcpy (bbattery_TestNames[j], "MultinomialBitsOver");
@@ -3974,22 +3788,22 @@ void bbattery_pseudoDIEHARD (unif01_Gen * gen)
       strcpy (bbattery_TestNames[j], "Savir2");
 
       ++j2;
-      sknuth_Run (gen, res, 10, 10000, 0, TRUE);
+      sknuth_Run (gen, res, 10, 10000, 0, true);
       bbattery_pVal[++j] = res->pVal2[gofw_Sum];
       TestNumber[j] = ++j2;
       strcpy (bbattery_TestNames[j], "Run of U01");
 
-      sknuth_Run (gen, res, 10, 10000, 0, FALSE);
+      sknuth_Run (gen, res, 10, 10000, 0, false);
       bbattery_pVal[++j] = res->pVal2[gofw_Sum];
       TestNumber[j] = j2;
       strcpy (bbattery_TestNames[j], "Run of U01");
 
-      sknuth_Run (gen, res, 10, 10000, 0, TRUE);
+      sknuth_Run (gen, res, 10, 10000, 0, true);
       bbattery_pVal[++j] = res->pVal2[gofw_Sum];
       TestNumber[j] = j2;
       strcpy (bbattery_TestNames[j], "Run of U01");
 
-      sknuth_Run (gen, res, 10, 10000, 0, FALSE);
+      sknuth_Run (gen, res, 10, 10000, 0, false);
       bbattery_pVal[++j] = res->pVal2[gofw_Sum];
       strcpy (bbattery_TestNames[j], "Run of U01");
       TestNumber[j] = j2;
@@ -3999,7 +3813,7 @@ void bbattery_pseudoDIEHARD (unif01_Gen * gen)
    bbattery_NTests = ++j;
    GetName (gen, genName);
    WriteReport (genName, "pseudoDIEHARD", bbattery_NTests, bbattery_pVal,
-      Timer, FALSE, FALSE, 0.0);
+      Timer, false, false, 0.0);
    chrono_Delete (Timer);
 }
 
@@ -4045,7 +3859,7 @@ static double GetPLongest (int longest)
 
 static void WriteReportFIPS_140_2 (
    char *genName,                 /* Generator or file name */
-   lebool Flag,                  /* = TRUE for a file, FALSE for a gen */
+   bool Flag,                  /* = true for a file, false for a gen */
    int nbit,                      /* Number of bits */
    int longest0,                  /* Longest string of 0 */
    int longest1,                  /* Longest string of 1 */
@@ -4058,7 +3872,7 @@ static void WriteReportFIPS_140_2 (
    double X;
    fmass_INFO Q;
    double p, pLeft, pRight;
-   lebool failFlag = FALSE;
+   bool failFlag = false;
 
    printf
       ("\n============== Summary results of FIPS-140-2 ==============\n\n");
@@ -4085,7 +3899,7 @@ static void WriteReportFIPS_140_2 (
    gofw_Writep0 (p);
    if ((nbit <= 9725) || nbit >= 10275) {
       printf (" %10s", "Fail");
-      failFlag = TRUE;
+      failFlag = true;
    } else
       printf (" %10s", "Pass");
 
@@ -4103,7 +3917,7 @@ static void WriteReportFIPS_140_2 (
    gofw_Writep0 (p);
    if ((X <= 2.16) || X >= 46.17) {
       printf (" %10s", "Fail");
-      failFlag = TRUE;
+      failFlag = true;
    } else
       printf (" %10s", "Pass");
    printf ("\n\n");
@@ -4113,7 +3927,7 @@ static void WriteReportFIPS_140_2 (
    printf (" %5d", nrun0[1]);
    if ((nrun0[1] <= 2315) || nrun0[1] >= 2685) {
       printf (" %25s", "Fail");
-      failFlag = TRUE;
+      failFlag = true;
    } else
       printf (" %25s", "Pass");
    printf ("\n");
@@ -4122,7 +3936,7 @@ static void WriteReportFIPS_140_2 (
    printf (" %5d", nrun0[2]);
    if ((nrun0[2] <= 1114) || nrun0[2] >= 1386) {
       printf (" %25s", "Fail");
-      failFlag = TRUE;
+      failFlag = true;
    } else
       printf (" %25s", "Pass");
    printf ("\n");
@@ -4131,7 +3945,7 @@ static void WriteReportFIPS_140_2 (
    printf (" %5d", nrun0[3]);
    if ((nrun0[3] <= 527) || nrun0[3] >= 723) {
       printf (" %25s", "Fail");
-      failFlag = TRUE;
+      failFlag = true;
    } else
       printf (" %25s", "Pass");
    printf ("\n");
@@ -4140,7 +3954,7 @@ static void WriteReportFIPS_140_2 (
    printf (" %5d", nrun0[4]);
    if ((nrun0[4] <= 240) || nrun0[4] >= 384) {
       printf (" %25s", "Fail");
-      failFlag = TRUE;
+      failFlag = true;
    } else
       printf (" %25s", "Pass");
    printf ("\n");
@@ -4148,7 +3962,7 @@ static void WriteReportFIPS_140_2 (
    printf (" %-20s", bbattery_TestNames[++j]);
    printf (" %5d", nrun0[5]);
    if ((nrun0[5] <= 103) || nrun0[5] >= 209) {
-      failFlag = TRUE;
+      failFlag = true;
       printf (" %25s", "Fail");
    } else
       printf (" %25s", "Pass");
@@ -4158,7 +3972,7 @@ static void WriteReportFIPS_140_2 (
    printf (" %5d", nrun0[6]);
    if ((nrun0[6] <= 103) || nrun0[6] >= 209) {
       printf (" %25s", "Fail");
-      failFlag = TRUE;
+      failFlag = true;
    } else
       printf (" %25s", "Pass");
    printf ("\n\n");
@@ -4167,7 +3981,7 @@ static void WriteReportFIPS_140_2 (
    printf (" %5d", nrun1[1]);
    if ((nrun1[1] <= 2315) || nrun1[1] >= 2685) {
       printf (" %25s", "Fail");
-      failFlag = TRUE;
+      failFlag = true;
    } else
       printf (" %25s", "Pass");
    printf ("\n");
@@ -4176,7 +3990,7 @@ static void WriteReportFIPS_140_2 (
    printf (" %5d", nrun1[2]);
    if ((nrun1[2] <= 1114) || nrun1[2] >= 1386) {
       printf (" %25s", "Fail");
-      failFlag = TRUE;
+      failFlag = true;
    } else
       printf (" %25s", "Pass");
    printf ("\n");
@@ -4185,7 +3999,7 @@ static void WriteReportFIPS_140_2 (
    printf (" %5d", nrun1[3]);
    if ((nrun1[3] <= 527) || nrun1[3] >= 723) {
       printf (" %25s", "Fail");
-      failFlag = TRUE;
+      failFlag = true;
    } else
       printf (" %25s", "Pass");
    printf ("\n");
@@ -4194,7 +4008,7 @@ static void WriteReportFIPS_140_2 (
    printf (" %5d", nrun1[4]);
    if ((nrun1[4] <= 240) || nrun1[4] >= 384) {
       printf (" %25s", "Fail");
-      failFlag = TRUE;
+      failFlag = true;
    } else
       printf (" %25s", "Pass");
    printf ("\n");
@@ -4203,7 +4017,7 @@ static void WriteReportFIPS_140_2 (
    printf (" %5d", nrun1[5]);
    if ((nrun1[5] <= 103) || nrun1[5] >= 209) {
       printf (" %25s", "Fail");
-      failFlag = TRUE;
+      failFlag = true;
    } else
       printf (" %25s", "Pass");
    printf ("\n");
@@ -4212,7 +4026,7 @@ static void WriteReportFIPS_140_2 (
    printf (" %5d", nrun1[6]);
    if ((nrun1[6] <= 103) || nrun1[6] >= 209) {
       printf (" %25s", "Fail");
-      failFlag = TRUE;
+      failFlag = true;
    } else
       printf (" %25s", "Pass");
    printf ("\n\n");
@@ -4224,7 +4038,7 @@ static void WriteReportFIPS_140_2 (
    gofw_Writep0 (p);
    if (longest0 >= 26) {
       printf (" %10s", "Fail");
-      failFlag = TRUE;
+      failFlag = true;
    } else
       printf (" %10s", "Pass");
    printf ("\n");
@@ -4235,7 +4049,7 @@ static void WriteReportFIPS_140_2 (
    gofw_Writep0 (p);
    if (longest1 >= 26) {
       printf (" %10s", "Fail");
-      failFlag = TRUE;
+      failFlag = true;
    } else
       printf (" %10s", "Pass");
    printf ("\n");
@@ -4267,7 +4081,7 @@ static void FIPS_140_2 (unif01_Gen * gen, char *filename)
    unsigned long jBit;            /* Current bit */
    unsigned long Z;               /* Block of 32 bits */
    unsigned long Bits[SAMPLE + 1];
-   lebool fileFlag = FALSE;
+   bool fileFlag = false;
    char genName[LEN + 1] = "";
 
    InitBat ();
@@ -4285,7 +4099,7 @@ static void FIPS_140_2 (unif01_Gen * gen, char *filename)
 
    if ((NULL == gen) && filename && strcmp (filename, "")) {
       gen = ufile_CreateReadBin (filename, SAMPLE);
-      fileFlag = TRUE;
+      fileFlag = true;
    }
 
    for (j = 0; j < SAMPLE; j++)

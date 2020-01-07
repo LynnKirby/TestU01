@@ -67,7 +67,7 @@ static void InitRes1 (
    char *name1,
    char *name2
 )
-/* 
+/*
  * Initializes the fknuth_Res1 structure
  */
 {
@@ -179,7 +179,7 @@ void fknuth_Gap1 (ffam_Fam *fam, fres_Cont *res, fcho_Cho *cho,
                  int Nr, int j1, int j2, int jstep)
 {
    double Par[4];
-   lebool localRes;
+   bool localRes;
 
    Par[0] = N;
    Par[1] = r;
@@ -187,10 +187,10 @@ void fknuth_Gap1 (ffam_Fam *fam, fres_Cont *res, fcho_Cho *cho,
    Par[3] = Beta;
 
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = fres_CreateCont ();
    } else
-      localRes = FALSE;
+      localRes = false;
 
    PrintHead ("fknuth_Gap1", fam, A_GAP, Par, Nr, j1, j2, jstep);
    fres_InitCont (fam, res, N, Nr, j1, j2, jstep, "fknuth_Gap1");
@@ -236,7 +236,7 @@ void fknuth_SimpPoker1 (ffam_Fam *fam, fres_Cont *res, fcho_Cho *cho,
                        int Nr, int j1, int j2, int jstep)
 {
    long Par[4];
-   lebool localRes;
+   bool localRes;
 
    Par[0] = N;
    Par[1] = r;
@@ -244,10 +244,10 @@ void fknuth_SimpPoker1 (ffam_Fam *fam, fres_Cont *res, fcho_Cho *cho,
    Par[3] = k;
 
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = fres_CreateCont ();
    } else
-      localRes = FALSE;
+      localRes = false;
 
    PrintHead ("fknuth_SimpPoker1", fam, A_SIMPPOKER, Par, Nr, j1, j2, jstep);
    fres_InitCont (fam, res, N, Nr, j1, j2, jstep, "fknuth_SimpPoker1");
@@ -292,16 +292,16 @@ void fknuth_CouponCollector1 (ffam_Fam *fam, fres_Cont *res, fcho_Cho *cho,
                              int Nr, int j1, int j2, int jstep)
 {
    long Par[3];
-   lebool localRes;
+   bool localRes;
 
    Par[0] = N;
    Par[1] = r;
    Par[2] = d;
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = fres_CreateCont ();
    } else
-      localRes = FALSE;
+      localRes = false;
 
    PrintHead ("fknuth_CouponCollector1",
       fam, A_COUPONCOLLECTOR, Par, Nr, j1, j2, jstep);
@@ -319,7 +319,7 @@ static void TabRun (ffam_Fam *fam, void *res1, void *cho,
   void *par1, int i, int j, int irow, int icol)
 {
    int r;
-   lebool Up, Indep;
+   bool Up, Indep;
    long N, n;
    long *Par = par1;
    fres_Cont *fres = res1;
@@ -352,11 +352,11 @@ static void TabRun (ffam_Fam *fam, void *res1, void *cho,
 /*========================================================================*/
 
 void fknuth_Run1 (ffam_Fam *fam, fres_Cont *res, fcho_Cho *cho,
-                 long N, int r, lebool Up, lebool Indep,
+                 long N, int r, bool Up, bool Indep,
                  int Nr, int j1, int j2, int jstep)
 {
    long Par[4];
-   lebool localRes;
+   bool localRes;
    char Name[30];
 
    Par[0] = N;
@@ -370,10 +370,10 @@ void fknuth_Run1 (ffam_Fam *fam, fres_Cont *res, fcho_Cho *cho,
       strcpy (Name, "fknuth_Run1");
 
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = fres_CreateCont ();
    } else
-      localRes = FALSE;
+      localRes = false;
 
    PrintHead (Name, fam, A_RUN, Par, Nr, j1, j2, jstep);
    fres_InitCont (fam, res, N, Nr, j1, j2, jstep, Name);
@@ -420,17 +420,17 @@ void fknuth_MaxOft1 (ffam_Fam *fam, fknuth_Res1 *res, fcho_Cho *cho,
                     int Nr, int j1, int j2, int jstep)
 {
    long Par[4];
-   lebool localRes;
+   bool localRes;
 
    Par[0] = N;
    Par[1] = r;
    Par[2] = d;
    Par[3] = t;
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = fknuth_CreateRes1 ();
    } else
-      localRes = FALSE;
+      localRes = false;
 
    PrintHead ("fknuth_MaxOft1", fam, A_MAXOFT, Par, Nr, j1, j2, jstep);
    InitRes1 (fam, res, N, Nr, j1, j2, jstep, "fknuth_MaxOft1, Chi",

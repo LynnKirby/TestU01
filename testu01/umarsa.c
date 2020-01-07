@@ -55,7 +55,7 @@
 
 #define INV32L  2.32830643653869628906250E-10L   /* 1 / 2^32 */
 #define INV32   2.3283064365386963E-10           /* 1 / 2^32 */
-#define INV32m1 2.3283064370807973E-10           /* 1 / (2^32 - 1) */ 
+#define INV32m1 2.3283064370807973E-10           /* 1 / (2^32 - 1) */
 
 
 
@@ -86,12 +86,11 @@ typedef struct {
 } RANMAR_state;
 
 
-#ifdef USE_LONGLONG
 typedef struct {
-   ulonglong S1, S2, S3, S4;    /* State */
-   ulonglong C;                 /* Carry */
+   uint64_t S1, S2, S3, S4;    /* State */
+   uint64_t C;                 /* Carry */
 } Mother0_state;
-#endif
+
 
 typedef struct {
    unsigned long X1, X2, Y1;
@@ -127,16 +126,14 @@ typedef struct {
 } ULTRA_state;
 
 
-#ifdef USE_LONGLONG
 typedef struct{
-   ulonglong x, y;
+   uint64_t x, y;
 } SupDup64_state;
 
 typedef struct{
-   ulonglong a, c;
+   uint64_t a, c;
    unsigned int s1, s2, s3;
 } SupDup64_param;
-#endif
 
 
 typedef MWC97R_state FIB_99_state;
@@ -394,7 +391,7 @@ static void WrULTRA (void *junk)
 /*-----------------------------------------------------------------------*/
 /*
  * I believe there are errors in that gen, but I have chosen to make it
- * output the same numbers as those from the ULTRA in Diehard. The 
+ * output the same numbers as those from the ULTRA in Diehard. The
  * Lag Fib is supposed to be of order 99, but the programmed version in
  * Diehard uses only 97 elements of the array.
  */
@@ -560,7 +557,7 @@ static unif01_Gen *CreateSupDup96 (unsigned int x, unsigned int y,
 {
    unif01_Gen *gen;
    SupDup96_state *state;
-   unsigned int *p;   
+   unsigned int *p;
    size_t leng;
    char name[LEN + 1];
 
@@ -610,13 +607,12 @@ unif01_Gen * umarsa_CreateSupDup96Xor (unsigned int x0, unsigned int y0,
 }
 
 /**************************************************************************/
-#ifdef USE_LONGLONG
 
 static unsigned long SupDup64ADD_Bits (void *vpar, void *vsta)
 {
    SupDup64_state *state = vsta;
    SupDup64_param *param = vpar;
-   ulonglong b;
+   uint64_t b;
 
    state->x = param->a * state->x + param->c;
    b = state->y ^ (state->y << param->s1);
@@ -638,7 +634,7 @@ static unsigned long SupDup64XOR_Bits (void *vpar, void *vsta)
 {
    SupDup64_state *state = vsta;
    SupDup64_param *param = vpar;
-   ulonglong b;
+   uint64_t b;
 
    state->x = param->a * state->x + param->c;
    b = state->y ^ (state->y << param->s1);
@@ -665,8 +661,8 @@ static void WrSupDup64 (void *vsta)
 
 /*-----------------------------------------------------------------------*/
 
-static unif01_Gen *CreateSupDup64 (ulonglong x, ulonglong y, ulonglong a,
-    ulonglong c, int s1, int s2, int s3, char op)
+static unif01_Gen *CreateSupDup64 (uint64_t x, uint64_t y, uint64_t a,
+    uint64_t c, int s1, int s2, int s3, char op)
 {
    unif01_Gen *gen;
    SupDup64_state *state;
@@ -715,19 +711,18 @@ static unif01_Gen *CreateSupDup64 (ulonglong x, ulonglong y, ulonglong a,
    return gen;
 }
 
-unif01_Gen * umarsa_CreateSupDup64Add (ulonglong x, ulonglong y, ulonglong a,
-    ulonglong c, int s1, int s2, int s3)
+unif01_Gen * umarsa_CreateSupDup64Add (uint64_t x, uint64_t y, uint64_t a,
+    uint64_t c, int s1, int s2, int s3)
 {
    return CreateSupDup64 (x, y, a, c, s1, s2, s3, '+');
 }
 
-unif01_Gen * umarsa_CreateSupDup64Xor (ulonglong x, ulonglong y, ulonglong a,
-    ulonglong c, int s1, int s2, int s3)
+unif01_Gen * umarsa_CreateSupDup64Xor (uint64_t x, uint64_t y, uint64_t a,
+    uint64_t c, int s1, int s2, int s3)
 {
    return CreateSupDup64 (x, y, a, c, s1, s2, s3, 'x');
 }
 
-#endif
 /**************************************************************************/
 
 static unsigned long Marsa90a_Bits (void *junk, void *vsta)
@@ -908,7 +903,7 @@ static void WrRANMAR (void *vsta)
 unif01_Gen *umarsa_CreateRANMAR (int s1, int s2, int s3, int s4)
 /*
  * For the generation of its 97 first values, Marsa90 uses
- * a combination of a 3-Lag Fib. gen. with a LCG gen. 
+ * a combination of a 3-Lag Fib. gen. with a LCG gen.
  */
 {
    unif01_Gen *gen;
@@ -970,12 +965,11 @@ unif01_Gen *umarsa_CreateRANMAR (int s1, int s2, int s3, int s4)
 
 
 /**************************************************************************/
-#ifdef USE_LONGLONG
 
 static unsigned long Mother0_Bits (void *junk, void *vsta)
 {
    Mother0_state *state = vsta;
-   ulonglong V;
+   uint64_t V;
 
    V = 2111111111ULL * state->S1 + 1492ULL * state->S2 + 1776ULL * state->S3 +
        5115ULL * state->S4 + state->C;
@@ -1048,7 +1042,6 @@ unif01_Gen *umarsa_CreateMother0 (unsigned long s1, unsigned long s2,
 }
 
 
-#endif
 /*****************************************************************************/
 
 static unsigned long Combo_Bits (void *junk, void *vsta)

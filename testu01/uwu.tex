@@ -17,25 +17,23 @@ This module collects some generators from Pei-Chi Wu.
 #include "unif01.h"
 
 
-#ifdef USE_LONGLONG
-   unif01_Gen * uwu_CreateLCGWu61a (longlong s);
+unif01_Gen * uwu_CreateLCGWu61a (int64_t s);
 \endcode
   \tab  Implements a LCG proposed by Wu \cite{rWU97a},
   with $m= 2^{61}-1$, $a = 2^{30} - 2^{19}$, $c=0$.
   Uses a fast implementation with shifts rather than
-  multiplications.  
+  multiplications.
   It uses 64-bits integers. % which must be available.
  \endtab
 \code
 
 
-   unif01_Gen * uwu_CreateLCGWu61b (longlong s);
+unif01_Gen * uwu_CreateLCGWu61b (int64_t s);
 \endcode
   \tab   Similar to {\tt uwu\_CreateLCGWu61a},
-   but with  $a = 2^{42} - 2^{31}$. 
+   but with  $a = 2^{42} - 2^{31}$.
  \endtab
 \code
-#endif
 \endcode
 
 
@@ -48,7 +46,7 @@ This module collects some generators from Pei-Chi Wu.
 void uwu_DeleteGen (unif01_Gen *gen);
 \endcode
  \tab Frees the dynamic memory used by any generator of this module
-  that does not have an explicit {\tt Delete} function. 
+  that does not have an explicit {\tt Delete} function.
   This function should be called to clean up a generator object
   when it is no longer in use.
  \endtab

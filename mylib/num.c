@@ -74,21 +74,21 @@ double num_TwoExp[num_MaxTwoExp + 1] = {
 
 double num_TENNEGPOW[] = {
    1.0, 1.0e-1, 1.0e-2, 1.0e-3, 1.0e-4, 1.0e-5, 1.0e-6, 1.0e-7, 1.0e-8,
-   1.0e-9, 1.0e-10, 1.0e-11, 1.0e-12, 1.0e-13, 1.0e-14, 1.0e-15, 1.0e-16 
+   1.0e-9, 1.0e-10, 1.0e-11, 1.0e-12, 1.0e-13, 1.0e-14, 1.0e-15, 1.0e-16
 };
 
 
 
 int num_IsNumber (char S[])
 /*********************************************************
- *  Returns TRUE if the string S begin with a number     *
+ *  Returns true if the string S begin with a number     *
  *  (with the possibility of spaces and a + or - sign    *
  *  before the number).                                  *
  *  e.g.                                                 *
- *        '  + 2'   returns TRUE                         *
- *         '-+ 2'   returns FALSE                        *
- *       '4hello'   returns TRUE                         *
- *        'hello'   returns FALSE                        *
+ *        '  + 2'   returns true                         *
+ *         '-+ 2'   returns false                        *
+ *       '4hello'   returns true                         *
+ *        'hello'   returns false                        *
  *********************************************************/
 {
    int Max;
@@ -118,7 +118,7 @@ int num_IsNumber (char S[])
 
 void num_IntToStrBase (long k, long b, char S[])
 {
-   int Sign;                        /* insert a '-' if TRUE */
+   int Sign;                        /* insert a '-' if true */
    long Char0;
    long i;
    long total;
@@ -163,7 +163,7 @@ void num_IntToStrBase (long k, long b, char S[])
 void num_Uint2Uchar (unsigned char *output, unsigned int *input, int L)
 {
    int i, j;
-   
+
    for (i = 0, j = 0; i < L; i++, j += 4) {
       output[j + 3] = (unsigned char) (input[i] & 0xff);
       output[j + 2] = (unsigned char) ((input[i] >> 8) & 0xff);
@@ -225,7 +225,7 @@ void num_WriteBits (unsigned long x, int k)
    int i, n = CHAR_BIT * sizeof (unsigned long);
    unsigned long mask = (unsigned long) 1 << (n - 1);
    int spaces;
-   lebool flag = FALSE;
+   bool flag = false;
 
    if (k > 0) {
       spaces = k - n;
@@ -235,7 +235,7 @@ void num_WriteBits (unsigned long x, int k)
    for (i = 0; i < n; i++) {
       if (x & mask) {
          printf ("1");
-         flag = TRUE;
+         flag = true;
       } else if (flag)
          printf ("0");
       else
@@ -255,7 +255,7 @@ void num_WriteBits (unsigned long x, int k)
 #if LONG_MAX == 2147483647L
 #define H   32768                    /* = 2^d  used in MultModL. */
 #else
-#define H   2147483648L  
+#define H   2147483648L
 #endif
 
 long num_MultModL (long a, long s, long c, long m)

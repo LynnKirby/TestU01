@@ -146,15 +146,15 @@ void fvaria_SampleMean1 (ffam_Fam *fam, fres_Cont *res, fcho_Cho *cho,
                          int Nr, int j1, int j2, int jstep)
 {
    long Par[2];
-   lebool localRes;
+   bool localRes;
 
    Par[0] = n;
    Par[1] = r;
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = fres_CreateCont ();
    } else
-      localRes = FALSE;
+      localRes = false;
 
    PrintHead ("fvaria_SampleMean1",
               fam, A_SAMPLEMEAN, Par, Nr, j1, j2, jstep);
@@ -199,16 +199,16 @@ void fvaria_SampleCorr1 (ffam_Fam *fam, fres_Cont *res, fcho_Cho *cho,
                          int Nr, int j1, int j2, int jstep)
 {
    long Par[3];
-   lebool localRes;
+   bool localRes;
 
    Par[0] = N;
    Par[1] = r;
    Par[2] = k;
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = fres_CreateCont ();
    } else
-      localRes = FALSE;
+      localRes = false;
 
    PrintHead ("fvaria_SampleCorr1",
               fam, A_SAMPLECORR, Par, Nr, j1, j2, jstep);
@@ -253,16 +253,16 @@ void fvaria_SampleProd1 (ffam_Fam *fam, fres_Cont *res, fcho_Cho *cho,
                          int Nr, int j1, int j2, int jstep)
 {
    long Par[3];
-   lebool localRes;
+   bool localRes;
 
    Par[0] = N;
    Par[1] = r;
    Par[2] = t;
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = fres_CreateCont ();
    } else
-      localRes = FALSE;
+      localRes = false;
 
    PrintHead ("fvaria_SampleProd1",
               fam, A_SAMPLEPROD, Par, Nr, j1, j2, jstep);
@@ -306,15 +306,15 @@ void fvaria_SumLogs1 (ffam_Fam *fam, fres_Cont *res, fcho_Cho *cho,
                       int Nr, int j1, int j2, int jstep)
 {
    long Par[2];
-   lebool localRes;
+   bool localRes;
 
    Par[0] = N;
    Par[1] = r;
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = fres_CreateCont ();
    } else
-      localRes = FALSE;
+      localRes = false;
 
    PrintHead ("fvaria_SumLogs1",
               fam, A_SUMLOGS, Par, Nr, j1, j2, jstep);
@@ -361,16 +361,16 @@ void fvaria_SumCollector1 (ffam_Fam *fam, fres_Cont *res, fcho_Cho *cho,
                            int Nr, int j1, int j2, int jstep)
 {
    double Par[3];
-   lebool localRes;
+   bool localRes;
 
    Par[0] = N;
    Par[1] = r;
    Par[2] = g;
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = fres_CreateCont ();
    } else
-      localRes = FALSE;
+      localRes = false;
 
    PrintHead ("fvaria_SumCollector1",
               fam, A_SUMCOLLECTOR, Par, Nr, j1, j2, jstep);
@@ -426,17 +426,17 @@ void fvaria_Appearance1 (ffam_Fam *fam, fres_Cont *res, fcho_Cho *cho,
                          int Nr, int j1, int j2, int jstep)
 {
    long Par[4];
-   lebool localRes;
+   bool localRes;
 
    Par[0] = N;
    Par[1] = r;
    Par[2] = s;
    Par[3] = L;
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = fres_CreateCont ();
    } else
-      localRes = FALSE;
+      localRes = false;
 
    PrintHead ("fvaria_Appearance1",
               fam, A_APPEARANCE, Par, Nr, j1, j2, jstep);
@@ -506,7 +506,7 @@ void fvaria_WeightDistrib1 (ffam_Fam *fam, fres_Cont *res, fcho_Cho2 *cho,
                             int Nr, int j1, int j2, int jstep)
 {
    double Par[6];
-   lebool localRes;
+   bool localRes;
 
    Par[0] = N;
    Par[1] = n;
@@ -516,10 +516,10 @@ void fvaria_WeightDistrib1 (ffam_Fam *fam, fres_Cont *res, fcho_Cho2 *cho,
    Par[5] = beta;
 
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = fres_CreateCont ();
    } else
-      localRes = FALSE;
+      localRes = false;
 
    PrintHead ("fvaria_WeightDistrib1",
               fam, A_WEIGHTDISTRIB, Par, Nr, j1, j2, jstep);

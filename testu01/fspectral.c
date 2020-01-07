@@ -98,16 +98,16 @@ void fspectral_Fourier3 (ffam_Fam *fam, fres_Cont *res, fcho_Cho *cho,
                          int Nr, int j1, int j2, int jstep)
 {
    int Par[3];
-   lebool localRes;
+   bool localRes;
 
    Par[0] = k;
    Par[1] = r;
    Par[2] = s;
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = fres_CreateCont ();
    } else
-      localRes = FALSE;
+      localRes = false;
 
    PrintHead ("fspectral_Fourier3", fam, Par, Nr, j1, j2, jstep);
    fres_InitCont (fam, res, 2, Nr, j1, j2, jstep, "fspectral_Fourier3");

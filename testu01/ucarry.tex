@@ -80,12 +80,9 @@ unif01_Gen * ucarry_CreateRanlux (unsigned int L, long s);
   \endtab
 \code
 
-
-#ifdef USE_LONGLONG
-   unif01_Gen * ucarry_CreateMWC (unsigned int r, unsigned long c,
-                                  unsigned int w, unsigned long A[],
-                                  unsigned long S[]);
-#endif
+unif01_Gen * ucarry_CreateMWC (unsigned int r, unsigned long c,
+                               unsigned int w, unsigned long A[],
+                               unsigned long S[]);
 \endcode
   \tab  Implements the {\em multiply-with-carry\/} (MWC) generator, 
  defined by \cite{rCOU97a}:
@@ -124,9 +121,7 @@ unif01_Gen * ucarry_CreateMWCFloat (unsigned int r, unsigned long c,
 \code
 
 
-#ifdef USE_LONGLONG
-   unif01_Gen * ucarry_CreateMWCfix8r4 (unsigned long c, unsigned long S[]);
-#endif
+unif01_Gen * ucarry_CreateMWCfix8r4 (unsigned long c, unsigned long S[]);
 \endcode
  \tab Implements a specific MWC with $k = 8$, $w = 32$,
    and with 4 (fixed) nonzero $a_i$'s.
@@ -135,9 +130,7 @@ unif01_Gen * ucarry_CreateMWCFloat (unsigned int r, unsigned long c,
 \code
 
 
-#ifdef USE_LONGLONG
-   unif01_Gen * ucarry_CreateMWCfix8r8 (unsigned long c, unsigned long S[]);
-#endif
+unif01_Gen * ucarry_CreateMWCfix8r8 (unsigned long c, unsigned long S[]);
 \endcode
  \tab Implements a specific MWC with $k = 8$, $w = 32$,
   and with 8 (fixed) nonzero $a_i$'s.

@@ -1,18 +1,18 @@
 \defmodule {swrite}
 
-This module contains some functions used in writing statistical 
+This module contains some functions used in writing statistical
 test results, inside the implementation of other modules.
 
 Each testing function in the {\tt s} modules normally
-writes a report (on standard output, by default) 
+writes a report (on standard output, by default)
 that contains the description of the generator being tested,
 the name of the experiment, the name of the test and its parameters,
 the values and significance levels of statistics,
 and the CPU time used by each test.
 This report may contain additional information specific to a given test.
-More detailed results in the printouts can be obtained by setting 
-the {\tt lebool} variables below to {\tt TRUE} before
-calling the test. If all {\tt lebool} flags below are set to {\tt FALSE}, then
+More detailed results in the printouts can be obtained by setting
+the {\tt bool} variables below to {\tt true} before
+calling the test. If all {\tt bool} flags below are set to {\tt false}, then
 no output will be printed.
 
 
@@ -34,36 +34,36 @@ no output will be printed.
 
 \code
 
-extern lebool swrite_Basic;           /* Prints basic results           */
-extern lebool swrite_Parameters;      /* Prints details on parameters   */
-extern lebool swrite_Collectors;      /* Prints statistical collectors  */
-extern lebool swrite_Classes;         /* Prints classes for ChiSquare   */
-extern lebool swrite_Counters;        /* Prints counters                */
+extern bool swrite_Basic;           /* Prints basic results           */
+extern bool swrite_Parameters;      /* Prints details on parameters   */
+extern bool swrite_Collectors;      /* Prints statistical collectors  */
+extern bool swrite_Classes;         /* Prints classes for ChiSquare   */
+extern bool swrite_Counters;        /* Prints counters                */
 \endcode
- \tab These environment variables (which are {\em boolean switches\/}) are used to 
-  control the level of detail in the output printed by the tests. 
-  By default, all are set to {\tt FALSE}, except for
-  {\tt swrite\_Basic} which is set to {\tt TRUE}.
-  When {\tt swrite\_Basic} is {\tt TRUE}, the test results are printed
-  with a standard level of detail. 
-  If it is {\tt FALSE}, then nothing from the  {\tt u} or  {\tt s}
+ \tab These environment variables (which are {\em boolean switches\/}) are used to
+  control the level of detail in the output printed by the tests.
+  By default, all are set to {\tt false}, except for
+  {\tt swrite\_Basic} which is set to {\tt true}.
+  When {\tt swrite\_Basic} is {\tt true}, the test results are printed
+  with a standard level of detail.
+  If it is {\tt false}, then nothing from the  {\tt u} or  {\tt s}
   modules is printed.
 
-  The other switches permit one to obtain more detailed information than 
-  usual, in a selective way.  The details are printed when the 
-  corresponding switch is set to {\tt TRUE}.
+  The other switches permit one to obtain more detailed information than
+  usual, in a selective way.  The details are printed when the
+  corresponding switch is set to {\tt true}.
   This could be useful, for example, to examine more closely the kind of
   defect exhibited by a random number generator that fails a test.
-  
+
   The switch {\tt swrite\_Parameters}  controls the printing of
   internal parameters that are specific to each test.
-  The switch {\tt swrite\_Collectors} controls the printing of the 
-  statistical collectors holding the $N$ values of the main statistics 
+  The switch {\tt swrite\_Collectors} controls the printing of the
+  statistical collectors holding the $N$ values of the main statistics
   $Y$ of the test.
-  The switch {\tt swrite\_Classes} controls the printing of details 
+  The switch {\tt swrite\_Classes} controls the printing of details
   concerning the regroupings into classes (or categories),
   with the expected numbers of observations in each class,
-  in the situations where such regrouping is performed in order 
+  in the situations where such regrouping is performed in order
   to apply a  chi-square test (see function  {\tt gofs\_MergeClasses}
   in module {\tt gofs} of library ProbDist).
   The switch {\tt swrite\_Counters} controls the printing of the different
@@ -72,9 +72,9 @@ extern lebool swrite_Counters;        /* Prints counters                */
 \code
 
 
-extern lebool swrite_Host;
+extern bool swrite_Host;
 \endcode
- \tab If this variable is {\tt TRUE}, the name of the machine on which
+ \tab If this variable is {\tt true}, the name of the machine on which
 the tests are run is printed before each test; otherwise it is not
 printed.
  \endtab
@@ -89,7 +89,7 @@ printed.
 extern char swrite_ExperimentName[];
 \endcode
  \tab This environment variable is the name of the current experiment
-   (a series of tests). It is set by the procedure 
+   (a series of tests). It is set by the procedure
    {\tt swrite\_SetExperimentName} below.
  \endtab
 \code
@@ -99,7 +99,7 @@ void swrite_SetExperimentName (char Name[]);
 \endcode
  \tab Sets the name of an experiment to {\tt Name} (keeps the name in the
   global environment variable {\tt swrite\_ExperimentName}).
-  This character string will be written at the beginning of the 
+  This character string will be written at the beginning of the
   report for each test.
 \endtab
 \code
@@ -108,9 +108,9 @@ void swrite_SetExperimentName (char Name[]);
 void swrite_Head (unif01_Gen *gen, char *TestName, long N, long n, int r);
 \endcode
  \tab
- Prints a header that contains the name of the current machine, 
+ Prints a header that contains the name of the current machine,
  the name of the generator {\tt gen},
- the name of the experiment, the name of the test being applied, 
+ the name of the experiment, the name of the test being applied,
  and the values of $N$, $n$, and $r$.  Called at the beginning of each test.
 \endtab
 \code
@@ -153,8 +153,8 @@ void swrite_Chi2SumTest (long N, sres_Chi2 *res);
 
 void swrite_Chi2SumTestb (long N, double sval, double pval, long deg);
 \endcode
-\tab  Writes the $s$-value {\tt sval} and the $p$-value {\tt pval} for the 
-  sample sum of all $N>1$ observations in the case of a {\em chi-square\/} 
+\tab  Writes the $s$-value {\tt sval} and the $p$-value {\tt pval} for the
+  sample sum of all $N>1$ observations in the case of a {\em chi-square\/}
   distribution with {\tt deg} degrees of freedom. For $N=1$, does nothing.
 \endtab
 \fi

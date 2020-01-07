@@ -31,12 +31,12 @@ A \emph{xorshift generator} is defined by a recurrence of the form
 \label{eq:MRMMprime}
  \bv_i = \sum_{j=1}^p \tilde{\bA}_j \bv_{i-m_j} \bmod 2
 \end{equation}
-where $p$ is a positive integer, the $\bv_i$'s are $w$-bit vectors, 
+where $p$ is a positive integer, the $\bv_i$'s are $w$-bit vectors,
 the $m_j$'s are integers,
-and $\tilde{\bA}_j$ is either the identity or the product of 
-$\nu_j$ xorshift matrices for some $\nu_j\ge 0$, 
+and $\tilde{\bA}_j$ is either the identity or the product of
+$\nu_j$ xorshift matrices for some $\nu_j\ge 0$,
 for each $j$ ($\tilde{\bA}_j$ is the zero matrix if $\nu_j = 0$).
-The generator's state at step $i$ is 
+The generator's state at step $i$ is
 $\bx_i = (\bv_i\tpose,\ldots,\bv_{i-r+1}\tpose)\tpose$ and
 the output is $u_i = \sum_{\ell=1}^w v_{i,\ell-1} 2^{-\ell}$
 where $\bv_i = (v_{i,0},\dots,v_{i,w-1})\tpose$.
@@ -65,7 +65,7 @@ unif01_Gen* uxorshift_CreateXorshift32 (int a, int b, int c, unsigned int x);
 \index{Generator!Xorshift}%
    where the operators $\OP_1$, $\OP_2$ and $\OP_3$ may be either
    the left bit-shift  operator $\ll$ or the right bit-shift operator $\gg$,
-   depending on whether the corresponding parameter ($a$, $b$ or $c$) 
+   depending on whether the corresponding parameter ($a$, $b$ or $c$)
    is positive (left shift) or  negative (right shift).
    The initial seed is {\tt x} and the generator returns $y_{n}/2^{32}$.
    Restrictions: $-32 < a, b, c < 32$.
@@ -73,13 +73,11 @@ unif01_Gen* uxorshift_CreateXorshift32 (int a, int b, int c, unsigned int x);
 \code
 
 
-#ifdef USE_LONGLONG
-  unif01_Gen* uxorshift_CreateXorshift64 (int a, int b, int c, ulonglong x);
-#endif
+unif01_Gen* uxorshift_CreateXorshift64 (int a, int b, int c, uint64_t x);
 \endcode
  \tab  Similar to {\tt uxorshift\_CreateXorshift32} but using 64-bit integers
  (see \cite[page 3]{rMAR03a}).
-  Only the 32 most significant bits of each 
+  Only the 32 most significant bits of each
   generated number are returned, though the generator does
   all its calculations with 64 bits.   Restrictions: $-64 < a, b, c < 64$.
   \endtab
@@ -102,10 +100,10 @@ unif01_Gen * uxorshift_CreateXorshiftC (int a, int b, int c, int r,
   \end {eqnarray*}
    where the operators $\OP_1$, $\OP_2$ and $\OP_3$ may be either
    the left bit-shift  operator $\ll$ or the right bit-shift operator $\gg$,
-   depending on whether the corresponding parameter ($a$, $b$ or $c$) 
+   depending on whether the corresponding parameter ($a$, $b$ or $c$)
    is positive (left shift) or  negative (right shift).
    The initial state $x_i$ is obtained from the seed {\tt X} as
-    $x_i = {\tt X} [i - 1],   i = 1,2,\ldots, r$ and 
+    $x_i = {\tt X} [i - 1],   i = 1,2,\ldots, r$ and
    the generator returns $x_{r}/2^{32}$.
    Restrictions: $-32 < a, b, c < 32$.
   \endtab
@@ -122,14 +120,14 @@ unif01_Gen * uxorshift_CreateXorshiftD (int r, int a[], unsigned int X[]);
    $a_i$,\  $i = 1,2,\ldots, r$, the next
   state is obtained through:
   \begin {eqnarray*}
-    t  &= & x_1 \oplus (x_1 \OP_1 a_1) \oplus x_2 \oplus (x_2 \OP_2 a_2) 
+    t  &= & x_1 \oplus (x_1 \OP_1 a_1) \oplus x_2 \oplus (x_2 \OP_2 a_2)
    \oplus \cdots  \oplus x_r \oplus (x_r \OP_r a_r)  \\
     x_i &=& x_{i+1}, \qquad i = 1,2,\ldots, r-1 \\
     x_r   &=& t
   \end {eqnarray*}
    where the operators $\OP_i$ may be either
    the left bit-shift  operator $\ll$ or the right bit-shift operator $\gg$,
-   depending on whether the corresponding parameter $a_i$ 
+   depending on whether the corresponding parameter $a_i$
    is positive (left shift) or  negative (right shift).
    The initial state $x_i$ is obtained from the seed {\tt X}  as
     $x_i = {\tt X} [i - 1],   i = 1,2,\ldots, r$ and the shift parameters are
@@ -144,14 +142,14 @@ unif01_Gen* uxorshift_CreateXorshift7 (unsigned int S[8]);
 \endcode
   \tab Creates a full-period \texttt{Xorshift} generator%
   \index{Generator!Xorshift7}
-  of  order $8$ with $7$ xorshifts, proposed in \cite{rPAN04c}. 
+  of  order $8$ with $7$ xorshifts, proposed in \cite{rPAN04c}.
   It has a period length of
   $2^{256}-1$, its state $\bv$ is made up of eight 32-bit integers, and it
    satisfies the recurrence
 \begin{eqnarray*}
 \bv_{n} &=& (\bI + \bL^9)(\bI + \bL^{13})\bv_{n-1}
 + (\bI+\bL^{7})\bv_{n-4}  + (\bI+\bR^{3})\bv_{n-5} + \\[6pt]
- &&  (\bI+\bR^{10})\bv_{n-7} + 
+ &&  (\bI+\bR^{10})\bv_{n-7} +
 (\bI+\bL^{24})(\bI+\bR^{7})\bv_{n-8}
 \end{eqnarray*}
  where $\bL^j$ stands for a $j$-bits left shift, $\bR^j$ stands for
@@ -172,11 +170,11 @@ unif01_Gen* uxorshift_CreateXorshift13 (unsigned int S[8]);
 \bv_{n} &=& (\bI+\bL^{17})\bv_{n-1}
 +(\bI+\bL^{10})\bv_{n-2}
 +(\bI+\bR^{9})(\bI+\bL^{17})\bv_{n-4}
-+ (\bI+\bR^{3})\bv_{n-4} + \\[6pt] 
++ (\bI+\bR^{3})\bv_{n-4} + \\[6pt]
  &&  (\bI+\bR^{12})\bv_{n-5}
-+ (\bI+\bR^{25})\bv_{n-5} 
++ (\bI+\bR^{25})\bv_{n-5}
 +  (\bI+\bR^{3})(\bI+\bR^{2})\bv_{n-6}
-+(\bI+\bR^{22})\bv_{n-7} + \\[6pt] 
++(\bI+\bR^{22})\bv_{n-7} + \\[6pt]
  && (\bI+\bL^{24})(\bI+\bR^{3})\bv_{n-8}.
 \end{eqnarray*}
  \endtab
@@ -203,7 +201,7 @@ void uxorshift_DeleteXorshiftD (unif01_Gen * gen);
 void uxorshift_DeleteGen (unif01_Gen * gen);
 \endcode
   \tab Frees the dynamic memory used by any generator of this module.
-%  that does not have an explicit {\tt Delete} function. 
+%  that does not have an explicit {\tt Delete} function.
   This function should be called when a generator
   is no longer in use.
  \endtab

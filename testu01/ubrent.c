@@ -11,7 +11,7 @@
  *    and from xorgens304 for the version 2006.
  *
  * Richard P. Brent kindly gave us the explicit permission to include
- *    his code in TestU01 and distribute it. (Richard Simard)     
+ *    his code in TestU01 and distribute it. (Richard Simard)
  *
 \*************************************************************************/
 
@@ -30,7 +30,7 @@ typedef struct {
    unsigned int r, s, a, b, c, d;
    unsigned int Mask;
    unsigned int weil;
-   lebool hasWeyl;
+   bool hasWeyl;
 } Xorgen32_param;
 
 
@@ -41,22 +41,20 @@ typedef struct {
 } Xorgen32_state;
 
 
-#ifdef USE_LONGLONG
 typedef struct {
    unsigned int r, s, a, b, c, d;
    unsigned int Mask;
-   ulonglong weil;
-   lebool hasWeyl;
+   uint64_t weil;
+   bool hasWeyl;
 } Xorgen64_param;
 
 
 typedef struct {
-   ulonglong *x;
-   ulonglong w;
+   uint64_t *x;
+   uint64_t w;
    unsigned int r2;
    int i;
 } Xorgen64_state;
-#endif
 
 
 static int co1 = 0, co2 = 0, co3 = 0, co4 = 0, co5 = 0;      /* Counters */
@@ -81,14 +79,14 @@ static int co1 = 0, co2 = 0, co3 = 0, co4 = 0, co5 = 0;      /* Counters */
 ==========================================================================
 */
 /*
- 
+
 Author:         Richard P. Brent (random@rpbrent.co.uk)
 
 Version:        2.01
 
 Contents:       xor4096s        "unsigned long" 32-bit integer RNG,
                                 period (2^4096 - 1)*2^32.
-                                
+
                 xor4096f        "float" 32-bit real RNG (based on xor4096s).
 
                 xor4096l        "unsigned long long" 64-bit integer RNG,
@@ -102,13 +100,13 @@ Comments:       Some fast RNGs with very long periods, using minimal
                 same as) the xorshift RNGs described by Marsaglia[4].  The
                 output is combined with a "Weil generator" although
                 this extra precaution is probably unnecessary.
-                
+
                 The generators are fast, although quality has not been
                 sacrificed for speed.  To speed them up further, the code
                 could easily be modified to return an array of random numbers
                 instead of a single number, thus reducing function call
                 overheads. For the sake of simplicity I have not done this.
-                
+
                 The generators are believed to be of high quality, and have
                 passed Marsaglia's DIEHARD tests. Of course, users should
                 apply their own tests.  Please inform the author if you
@@ -137,7 +135,7 @@ unsigned long xor4096s (unsigned long seed)
       We choose r > 1, 0 < s < r, n = 32*r, and (a, b, c, d) such that the n
       times n matrix T defining the recurrence has minimal polynomial P which
       is of degree n and primitive over GF(2).  Thus the period is 2^n-1 and
-      all possible n-bit sequences (except all zeros) occur in the output over 
+      all possible n-bit sequences (except all zeros) occur in the output over
       a full period.  Storage is (r + constant) 32-bit words.
 
       Our generalisation is:
@@ -348,7 +346,7 @@ static void WrXorgen32 (void *vsta)
 /*-----------------------------------------------------------------------*/
 
 unif01_Gen * ubrent_CreateXorgen32 (int r, int s, int a, int b, int c, int d,
-                                    lebool hasWeyl, unsigned int seed)
+                                    bool hasWeyl, unsigned int seed)
 {
    unif01_Gen *gen;
    Xorgen32_param *param;
@@ -382,9 +380,9 @@ unif01_Gen * ubrent_CreateXorgen32 (int r, int s, int a, int b, int c, int d,
    addstr_Int (name, ",  c = ", c);
    addstr_Int (name, ",  d = ", d);
    if (hasWeyl)
-      strncat (name, ",  hasWeyl = TRUE", 20);
+      strncat (name, ",  hasWeyl = true", 20);
    else
-      strncat (name, ",  hasWeyl = FALSE", 20);
+      strncat (name, ",  hasWeyl = false", 20);
    addstr_Uint (name, ",  seed = ", seed);
    leng = strlen (name);
    gen->name = util_Calloc (leng + 1, sizeof (char));
@@ -398,12 +396,12 @@ unif01_Gen * ubrent_CreateXorgen32 (int r, int s, int a, int b, int c, int d,
    gen->Write = &WrXorgen32;
    gen->param = param;
    gen->state = state;
-   
+
    param->hasWeyl = hasWeyl;
    param->Mask = r - 1;
    state->r2 = r;
    state->x = util_Calloc ((size_t) r, sizeof (unsigned int));
-   
+
    v = (seed != 0) ? seed : ~seed; /* v must be nonzero */
 
    for (k = wlen; k > 0; k--)  /* Avoid correlations for close seeds */
@@ -459,7 +457,6 @@ void ubrent_DeleteXorgen32 (unif01_Gen *gen)
 
 
 /*========================================================================*/
-#ifdef USE_LONGLONG
 
 /* unsigned long long xor4096l (unsigned long long seed)
 
@@ -480,7 +477,7 @@ void ubrent_DeleteXorgen32 (unif01_Gen *gen)
       We choose r > 1, 0 < s < r, n = 64*r, and (a, b, c, d) such that the n
       times n matrix T defining the recurrence has minimal polynomial P which
       is of degree n and primitive over GF(2).  Thus the period is 2^n-1 and
-      all possible n-bit sequences (except all zeros) occur in the output over 
+      all possible n-bit sequences (except all zeros) occur in the output over
       a full period.  Storage is (r + constant) 64-bit words.
 
       Our generalisation is:
@@ -524,13 +521,13 @@ void ubrent_DeleteXorgen32 (unif01_Gen *gen)
 
 static unsigned long xor4096l_Bits (void *junk, void *vsta)
 {
-   static ulonglong w, x[r],
-      weil = ((longlong) 0x61c88646 << 32) + (longlong) 0x80b583eb;
-   ulonglong t, v;
+   static uint64_t w, x[r],
+      weil = ((int64_t) 0x61c88646 << 32) + (int64_t) 0x80b583eb;
+   uint64_t t, v;
    static int i = -1;             /* i < 0 indicates first call */
    int k;
    if (i < 0) {  /* Initialisation necessary */
-      int seed = *((ulonglong *) vsta);
+      int seed = *((uint64_t *) vsta);
       v = (seed != 0) ? seed : ~seed; /* v must be nonzero */
 
       for (k = wlen; k > 0; k--)  /* Avoid correlations for close seeds */
@@ -579,10 +576,10 @@ static double xor4096l_U01 (void *vpar, void *vsta)
 
 /*-----------------------------------------------------------------------*/
 
-unif01_Gen * ubrent_CreateXor4096l (ulonglong seed)
+unif01_Gen * ubrent_CreateXor4096l (uint64_t seed)
 {
    unif01_Gen *gen;
-   ulonglong *pseed;
+   uint64_t *pseed;
    size_t leng;
    char name[LEN + 1];
 
@@ -591,7 +588,7 @@ unif01_Gen * ubrent_CreateXor4096l (ulonglong seed)
    co2++;
 
    gen = util_Malloc (sizeof (unif01_Gen));
-   pseed = util_Malloc (sizeof (ulonglong));
+   pseed = util_Malloc (sizeof (uint64_t));
    *pseed = seed;
    strcpy (name, "ubrent_CreateXor4096l:");
    addstr_ULONG (name, "   seed = ", seed);
@@ -629,7 +626,7 @@ static unsigned long Xorgen64_Bits (void *vpar, void *vsta)
 {
    Xorgen64_param *param = vpar;
    Xorgen64_state *state = vsta;
-   ulonglong t, v;
+   uint64_t t, v;
 
    /* Increment i mod r */
    t = state->x[state->i = (state->i + 1) & param->Mask];
@@ -687,14 +684,14 @@ static void WrXorgen64 (void *vsta)
 /*-----------------------------------------------------------------------*/
 
 unif01_Gen * ubrent_CreateXorgen64 (int r, int s, int a, int b, int c, int d,
-                                    lebool hasWeyl, ulonglong seed)
+                                    bool hasWeyl, uint64_t seed)
 {
    unif01_Gen *gen;
    Xorgen64_param *param;
    Xorgen64_state *state;
    size_t leng;
    char name[LEN + 1];
-   ulonglong t, v;
+   uint64_t t, v;
    const unsigned int wlen = 64;
    int i, k;
 
@@ -721,9 +718,9 @@ unif01_Gen * ubrent_CreateXorgen64 (int r, int s, int a, int b, int c, int d,
    addstr_Int (name, ",  d = ", d);
    strncat (name, ",  hasWeyl = ", 20);
    if (hasWeyl)
-      strncat (name, "TRUE", 5);
+      strncat (name, "true", 5);
    else
-      strncat (name, "FALSE", 5);
+      strncat (name, "false", 5);
    addstr_ULONG (name, ",  seed = ", seed);
    leng = strlen (name);
    gen->name = util_Calloc (leng + 1, sizeof (char));
@@ -737,18 +734,18 @@ unif01_Gen * ubrent_CreateXorgen64 (int r, int s, int a, int b, int c, int d,
    gen->Write = &WrXorgen64;
    gen->param = param;
    gen->state = state;
-   
+
    param->hasWeyl = hasWeyl;
    state->r2 = r;
    param->Mask = state->r2 - 1;
-   state->x = util_Calloc ((size_t) state->r2, sizeof (ulonglong));
+   state->x = util_Calloc ((size_t) state->r2, sizeof (uint64_t));
 
-   v = (seed != 0) ? seed : ~seed; /* v must be nonzero */ 
+   v = (seed != 0) ? seed : ~seed; /* v must be nonzero */
    for (k = wlen; k > 0; k--)  /* Avoid correlations for close seeds */
       v ^= (v ^= v << 7) >> 9; /* This recurrence has period 2^64-1 */
 
    if (hasWeyl) {
-      param->weil = ((longlong) 0x61c88646 << 32) + (longlong) 0x80b583eb;
+      param->weil = ((int64_t) 0x61c88646 << 32) + (int64_t) 0x80b583eb;
       for (state->w = v, k = 0; k < r; k++)
          /* Initialise circular array */
          state->x[k] = (v ^= (v ^= v << 7) >> 9) + (state->w += param->weil);
@@ -798,16 +795,16 @@ void ubrent_DeleteXorgen64 (unif01_Gen *gen)
 
 
 /*========================================================================*/
-/* 
+/*
 double xor4096d (unsigned long long seed)
 
     64-bit real random number generator with period at least 2^4096-1.
 
-    Is is assumed that "unsigned long long" is a 64-bit integer and "double" 
+    Is is assumed that "unsigned long long" is a 64-bit integer and "double"
       is an IEEE standard 64-bit floating-point number with 52 explicit + 1
       implicit bits in the fraction.
 
-      The method used is as for the 64-bit integer RNG xor4096l, then the high 
+      The method used is as for the 64-bit integer RNG xor4096l, then the high
       53 bits (if nonzero) are scaled to (0.0, 1.0).
 
       Should be called once with nonzero seed, thereafter with zero seed.
@@ -829,14 +826,14 @@ double xor4096d (unsigned long long seed)
 
 static double xor4096d_U01 (void *junk, void *vsta)
 {
-   static ulonglong w, x[r],
-      weil = ((longlong) 0x61c88646 << 32) + (longlong) 0x80b583eb;
-   ulonglong t, v;
-   static double t53 = (double) 1 / (double)((longlong) 1 << 53); /* 0.5**53*/
+   static uint64_t w, x[r],
+      weil = ((int64_t) 0x61c88646 << 32) + (int64_t) 0x80b583eb;
+   uint64_t t, v;
+   static double t53 = (double) 1 / (double)((int64_t) 1 << 53); /* 0.5**53*/
    static int i = -1;             /* i < 0 indicates first call */
    int k;
    if (i < 0) {  /* Initialisation necessary */
-      int seed = *((ulonglong *) vsta);
+      int seed = *((uint64_t *) vsta);
       v = (seed != 0) ? seed : ~seed; /* v must be nonzero */
 
       for (k = wlen; k > 0; k--)  /* Avoid correlations for close seeds */
@@ -859,7 +856,7 @@ static double xor4096d_U01 (void *junk, void *vsta)
    /* Apart from initialisation (above), this is the generator */
 
    v = 0;                         /* Usually execute while loop once */
-   while (v == (longlong) 0) {    /* Loop until result nonzero */
+   while (v == (int64_t) 0) {    /* Loop until result nonzero */
       t = x[i = (i + 1) & (r - 1)]; /* Increment i mod r (r = power of 2) */
       v = x[(i + (r - s)) & (r - 1)]; /* Index is (i - s) mod r */
       t ^= (t ^= t << a) >> b;    /* (I + L^a)(I + R^b) */
@@ -888,10 +885,10 @@ static unsigned long xor4096d_Bits (void *vpar, void *vsta)
 
 /*-----------------------------------------------------------------------*/
 
-unif01_Gen * ubrent_CreateXor4096d (ulonglong seed)
+unif01_Gen * ubrent_CreateXor4096d (uint64_t seed)
 {
    unif01_Gen *gen;
-   ulonglong *pseed;
+   uint64_t *pseed;
    size_t leng;
    char name[LEN + 1];
 
@@ -900,7 +897,7 @@ unif01_Gen * ubrent_CreateXor4096d (ulonglong seed)
    co3++;
 
    gen = util_Malloc (sizeof (unif01_Gen));
-   pseed = util_Malloc (sizeof (ulonglong));
+   pseed = util_Malloc (sizeof (uint64_t));
    *pseed = seed;
    strcpy (name, "ubrent_CreateXor4096d:");
    addstr_ULONG (name, "   seed = ", seed);
@@ -933,7 +930,6 @@ void ubrent_DeleteXor4096d (unif01_Gen *gen)
 
 
 /*========================================================================*/
-#endif
 
 
 /**************************************************************************/
@@ -959,7 +955,7 @@ static UINT xor4096i (UINT seed)
       It is assumed that "UINT" is a 32-bit or 64-bit integer (see typedef
       statements in xorgens.h).
 
-      xor4096i should be called exactly once with nonzero seed, and thereafter 
+      xor4096i should be called exactly once with nonzero seed, and thereafter
       with zero seed.
 
       One random number uniformly distributed in [0..2**wlen) is returned,
@@ -967,7 +963,7 @@ static UINT xor4096i (UINT seed)
 
       R. P. Brent, 20060628. */
 
-   /* UINT64 is TRUE if 64-bit UINT, UINT32 is TRUE otherwise (assumed to be
+   /* UINT64 is true if 64-bit UINT, UINT32 is true otherwise (assumed to be
       32-bit UINT). */
 
 #define UINT64 (sizeof(UINT)>>3)
@@ -1118,20 +1114,20 @@ static UREAL xor4096r (UINT seed)
       2**4096-1.
 
       It is assumed that "UINT" is a 32-bit or 64-bit integer and "UREAL" is
-      "double" or "float". If "double" this is an IEEE standard floating-point 
+      "double" or "float". If "double" this is an IEEE standard floating-point
       number with 53 bits in the fraction; if "single" it has 24 bits in the
       fraction (including 1 implicit bit in each case).
 
       In the 64-bit integer case, the method used is to call xor4096i to get
-      64 random bits, then the high 53 (for double) or 24 bits (for float) are 
+      64 random bits, then the high 53 (for double) or 24 bits (for float) are
       scaled to the open interval (0.0, 1.0), except that they are discarded
       if all zero.
 
-      In the 32-bit integer case, one or two calls to xor4096i are made to get 
+      In the 32-bit integer case, one or two calls to xor4096i are made to get
       32 or 64 random bits, some are discarded, and the remaining bits (if
       nonzero) are scaled to the open interval (0.0, 1.0).
 
-      xor4096r should be called exactly once with nonzero seed, and thereafter 
+      xor4096r should be called exactly once with nonzero seed, and thereafter
       with zero seed.
 
       One random number of type UREAL is returned per call.

@@ -63,7 +63,7 @@ static void InitRes2 (
    char *name1,
    char *name2
 )
-/* 
+/*
  * Initializes the fmarsa_Res2 structure
  */
 {
@@ -210,7 +210,7 @@ void fmarsa_MatrixR1 (ffam_Fam * fam, fres_Cont * res, fcho_Cho2 * cho,
    long N, long n, int r, int s, int L, int Nr, int j1, int j2, int jstep)
 {
    long Par[5] = { 0 };
-   lebool localRes;
+   bool localRes;
 
    Par[0] = N;
    Par[1] = n;
@@ -218,12 +218,12 @@ void fmarsa_MatrixR1 (ffam_Fam * fam, fres_Cont * res, fcho_Cho2 * cho,
    Par[3] = s;
    Par[4] = L;
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = fres_CreateCont ();
    } else
-      localRes = FALSE;
+      localRes = false;
 
-   util_Assert (n < 0 || L < 0, 
+   util_Assert (n < 0 || L < 0,
       "fmarsa_MatrixR1:   Either n or L must be < 0" );
    PrintHead ("fmarsa_MatrixR1", fam, N, n, r, s, L, 0, 0, Nr, j1, j2,
       jstep);
@@ -382,7 +382,7 @@ void fmarsa_BirthdayS1 (ffam_Fam * fam, fres_Poisson * res, fcho_Cho2 * cho,
    long N, int r, int t, int p, int Nr, int j1, int j2, int jstep)
 {
    long Par[4] = { 0 };
-   lebool localRes;
+   bool localRes;
 
    Par[0] = N;
    Par[1] = r;
@@ -390,16 +390,16 @@ void fmarsa_BirthdayS1 (ffam_Fam * fam, fres_Poisson * res, fcho_Cho2 * cho,
    Par[3] = p;
 
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = fres_CreatePoisson ();
    } else
-      localRes = FALSE;
+      localRes = false;
 
    PrintHead ("fmarsa_BirthdayS1",
       fam, N, 0, r, 0, 0, t, p, Nr, j1, j2, jstep);
    fres_InitPoisson (fam, res, Nr, j1, j2, jstep, "fmarsa_BirthdayS1");
    ftab_MakeTables (fam, res, cho, Par, TabBirthdayS, Nr, j1, j2, jstep);
-   ftab_PrintTable2 (res->Exp, res->Obs, FALSE);
+   ftab_PrintTable2 (res->Exp, res->Obs, false);
    ftab_PrintTable (res->PVal2);
    if (localRes)
       fres_DeletePoisson (res);
@@ -458,16 +458,16 @@ void fmarsa_GCD1 (ffam_Fam *fam, fmarsa_Res2 *res, fcho_Cho *cho,
    long N, int r, int s, int Nr, int j1, int j2, int jstep)
 {
    long Par[3] = { 0 };
-   lebool localRes;
+   bool localRes;
 
    Par[0] = N;
    Par[1] = r;
    Par[2] = s;
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = fmarsa_CreateRes2 ();
    } else
-      localRes = FALSE;
+      localRes = false;
 
    PrintHead ("fmarsa_GCD1", fam, N, 0, r, s, 0, 0, 0, Nr, j1, j2, jstep);
    InitRes2 (fam, res, N, Nr, j1, j2, jstep,

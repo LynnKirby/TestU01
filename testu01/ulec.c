@@ -98,16 +98,14 @@ typedef struct {
 } MRG32k5_state;
 
 
-#ifdef USE_LONGLONG
 typedef struct {
-   longlong S10, S11, S12, S20, S21, S22;
+   int64_t S10, S11, S12, S20, S21, S22;
 } MRG63k3_state;
 
 
 typedef struct {
-   ulonglong y1, y2, y3, y4, y5;
+   uint64_t y1, y2, y3, y4, y5;
 } lfsr258_state;
-#endif
 
 
 typedef struct {
@@ -862,7 +860,7 @@ unif01_Gen *ulec_CreateCombMRG96Float (long S11, long S12, long S13,
 
 
 /***************************************************************************/
-              
+
 #define FAC24  0.59604644775390625e-7         /* 1 / 2^24 */
 
 static double CombMRG96D_U01 (void *vpar, void *vsta)
@@ -988,7 +986,7 @@ static void WrMRG32k3_L (void *vsta)
 
 /*-------------------------------------------------------------------------*/
 
-static unif01_Gen *CreateMRG32k3ii_L (long x10, long x11, long x12, 
+static unif01_Gen *CreateMRG32k3ii_L (long x10, long x11, long x12,
    long x20, long x21, long x22, char *nom)
 {
    unif01_Gen *gen;
@@ -1513,7 +1511,6 @@ unif01_Gen *ulec_CreateMRG32k5b (double x10, double x11, double x12,
 
 
 /***************************************************************************/
-#ifdef USE_LONGLONG
 
 #undef norm1
 #undef norm2
@@ -1553,7 +1550,7 @@ unif01_Gen *ulec_CreateMRG32k5b (double x10, double x11, double x12,
 static double MRG63k3a_U01 (void *junk, void *vsta)
 {
    MRG63k3_state *state = vsta;
-   longlong h, p12, p13, p21, p23;
+   int64_t h, p12, p13, p21, p23;
 
    /* Component 1 */
    h = state->S10 / q13;
@@ -1604,7 +1601,7 @@ static unsigned long MRG63k3a_Bits (void *vpar, void *vsta)
 static double MRG63k3b_U01 (void *junk, void *vsta)
 {
    MRG63k3_state *state = vsta;
-   longlong h, p12, p13, p21, p23;
+   int64_t h, p12, p13, p21, p23;
    double p;
 
    /* Component 1 */
@@ -1667,8 +1664,8 @@ static void WrMRG63k3 (void *vsta)
 
 /*-------------------------------------------------------------------------*/
 
-unif01_Gen *ulec_CreateMRG63k3a (longlong s10, longlong s11, longlong s12,
-   longlong s20, longlong s21, longlong s22)
+unif01_Gen *ulec_CreateMRG63k3a (int64_t s10, int64_t s11, int64_t s12,
+   int64_t s20, int64_t s21, int64_t s22)
 {
    unif01_Gen *gen;
    MRG63k3_state *state;
@@ -1704,8 +1701,8 @@ unif01_Gen *ulec_CreateMRG63k3a (longlong s10, longlong s11, longlong s12,
    return gen;
 }
 
-unif01_Gen *ulec_CreateMRG63k3b (longlong s10, longlong s11, longlong s12,
-   longlong s20, longlong s21, longlong s22)
+unif01_Gen *ulec_CreateMRG63k3b (int64_t s10, int64_t s11, int64_t s12,
+   int64_t s20, int64_t s21, int64_t s22)
 {
    unif01_Gen *gen;
    MRG63k3_state *state;
@@ -1741,8 +1738,6 @@ unif01_Gen *ulec_CreateMRG63k3b (longlong s10, longlong s11, longlong s12,
    return gen;
 }
 
-
-#endif                            /* USE_LONGLONG */
 
 /**************************************************************************/
 /*  LFSR Generators.  */
@@ -1934,12 +1929,11 @@ unif01_Gen *ulec_Createlfsr113 (unsigned int us1, unsigned int us2,
 
 
 /*======================================================================= */
-#ifdef USE_LONGLONG
 
 static unsigned long lfsr258_Bits (void *junk, void *vsta)
 {
    lfsr258_state *state = vsta;
-   ulonglong b;
+   uint64_t b;
 
    b = ((state->y1 << 1) ^ state->y1) >> 53;
    state->y1 = ((state->y1 & 18446744073709551614ULL) << 10) ^ b;
@@ -1975,8 +1969,8 @@ static void Wrlfsr258 (void *vsta)
 
 /*-------------------------------------------------------------------------*/
 
-unif01_Gen *ulec_Createlfsr258 (ulonglong us1, ulonglong us2,
-   ulonglong us3, ulonglong us4, ulonglong us5)
+unif01_Gen *ulec_Createlfsr258 (uint64_t us1, uint64_t us2,
+   uint64_t us3, uint64_t us4, uint64_t us5)
 {
    unif01_Gen *gen;
    lfsr258_state *state;
@@ -2015,8 +2009,6 @@ unif01_Gen *ulec_Createlfsr258 (ulonglong us1, ulonglong us2,
    gen->state = state;
    return gen;
 }
-
-#endif                            /* USE_LONGLONG */
 
 
 /***************************************************************************/
@@ -2151,7 +2143,7 @@ static void WrMRG31k3p (void *vsta)
 
 /*-------------------------------------------------------------------------*/
 
-unif01_Gen * ulec_CreateMRG31k3p (long x10, long x11, 
+unif01_Gen * ulec_CreateMRG31k3p (long x10, long x11,
   long x12, long x20, long x21, long x22)
 {
    unif01_Gen *gen;

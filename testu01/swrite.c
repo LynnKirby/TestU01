@@ -46,14 +46,14 @@
 #define LEN 100
 
 
-lebool swrite_Basic = TRUE;
-lebool swrite_Parameters = FALSE;
-lebool swrite_Collectors = FALSE;
-lebool swrite_Counters = FALSE;
-lebool swrite_Classes = FALSE;
-lebool swrite_Others = FALSE;
+bool swrite_Basic = true;
+bool swrite_Parameters = false;
+bool swrite_Collectors = false;
+bool swrite_Counters = false;
+bool swrite_Classes = false;
+bool swrite_Others = false;
 
-lebool swrite_Host = TRUE;
+bool swrite_Host = true;
 
 char swrite_ExperimentName[LEN + 1] = "";
 

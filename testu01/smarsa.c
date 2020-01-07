@@ -63,12 +63,7 @@
 
 /*---------------------------- Extern variables ---------------------------*/
 
-#ifdef USE_LONGLONG
-double smarsa_Maxk = 18446744073709551616.0;   /* 2^64 */ 
-#else
-double smarsa_Maxk = num_MaxIntDouble;        /* 2^53 */
-#endif
-
+double smarsa_Maxk = 18446744073709551616.0;   /* 2^64 */
 
 
 
@@ -94,7 +89,7 @@ static void InitRes (
    double Lambda,              /* Poisson mean */
    char *nam                   /* Test name */
 )
-/* 
+/*
  * Initializes res
  */
 {
@@ -137,7 +132,7 @@ static void InitRes2 (
    int jmax,                  /* Max class index for GCD */
    int tmax                   /* Max class index for NumIter */
 )
-/* 
+/*
  * Initializes the smarsa_Res2 structure
  */
 {
@@ -184,11 +179,11 @@ void smarsa_SerialOver (unif01_Gen *gen, sres_Basic *res,
 
    par = smultin_CreateParam (1, ValDelta, smultin_GenerCellSerial, 0);
    if (NULL == res) {
-      smultin_MultinomialOver (gen, par, NULL, N, n, r, d, t, FALSE);
+      smultin_MultinomialOver (gen, par, NULL, N, n, r, d, t, false);
    } else {
       smultin_Res *resm;
       resm = smultin_CreateRes (par);
-      smultin_MultinomialOver (gen, par, resm, N, n, r, d, t, FALSE);
+      smultin_MultinomialOver (gen, par, resm, N, n, r, d, t, false);
       sres_InitBasic (res, N, "smarsa_SerialOver");
       statcoll_SetDesc (res->sVal1, "SerialOver sVal1");
       res->sVal1->NObs = resm->Collector[0]->NObs;
@@ -215,11 +210,11 @@ void smarsa_CollisionOver (unif01_Gen *gen, smarsa_Res *res,
 
    par = smultin_CreateParam (1, ValDelta, smultin_GenerCellSerial, 3);
    if (NULL == res) {
-      smultin_MultinomialOver (gen, par, NULL, N, n, r, d, t, TRUE);
+      smultin_MultinomialOver (gen, par, NULL, N, n, r, d, t, true);
    } else {
       smultin_Res *resm;
       resm = smultin_CreateRes (par);
-      smultin_MultinomialOver (gen, par, resm, N, n, r, d, t, TRUE);
+      smultin_MultinomialOver (gen, par, resm, N, n, r, d, t, true);
       InitRes (res, N, resm->Mu[0], "smarsa_CollisionOver");
       statcoll_SetDesc (res->Bas->sVal1, "CollisionOver sVal1");
       statcoll_SetDesc (res->Pois->sVal1, "CollisionOver sVal1");
@@ -299,14 +294,10 @@ static void WriteDataBirth (unif01_Gen * gen, char *TestName, long N, long n,
 {
    swrite_Head (gen, TestName, N, n, r);
    printf (",    d = %1ld,    t = %1d,    p = %1d\n\n", d, t, p);
-#ifdef USE_LONGLONG
    if (kc == 0 && d > 1)    /* kc = 2^64 */
       printf ("\n      Number of cells = d^t = " STR_MAXK "\n");
    else
       printf ("\n      Number of cells = d^t = %18" PRIuLEAST64 "\n", kc);
-#else
-   printf ("\n      Number of cells = d^t = %16.0f\n", k);
-#endif
    printf ("      Lambda = Poisson mean = ");
    num_WriteD (Lambda, 12, 4, 2);
    printf ("\n\n");
@@ -328,7 +319,7 @@ void smarsa_BirthdaySpacings (unif01_Gen *gen, sres_Poisson *res,
    smultin_CellType *Dates, *DatDiff;
    fmass_INFO Mass;
    char str[LENGTH + 1];
-   lebool localRes = FALSE;
+   bool localRes = false;
    chrono_Chrono *Timer;
    char *TestName = "smarsa_BirthdaySpacings test";
 
@@ -344,22 +335,22 @@ void smarsa_BirthdaySpacings (unif01_Gen *gen, sres_Poisson *res,
       WriteDataBirth (gen, TestName, N, n, r, d, t, Order, k, kc, Lambda);
 
    if (d <= 1) {
-      util_Warning (TRUE,
+      util_Warning (true,
                     "smarsa_BirthdaySpacings:   d <= 1.  The test is not done.");
       return;
    }
    if (k > smarsa_Maxk) {
-      util_Warning (TRUE,
+      util_Warning (true,
         "smarsa_BirthdaySpacings:   d^t > smarsa_Maxk.  The test is not done.");
       return;
    }
    if (8.0 * N * Lambda > sqrt (sqrt (k))) {
-      util_Warning (TRUE,
+      util_Warning (true,
         "smarsa_BirthdaySpacings:   8N Lambda > k^(1/4).  The test is not done.");
       return;
    }
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = sres_CreatePoisson ();
    }
    sres_InitPoisson (res, N, Lambda, "smarsa_BirthdaySpacings");
@@ -382,21 +373,12 @@ void smarsa_BirthdaySpacings (unif01_Gen *gen, sres_Poisson *res,
             Dates[j] = smultin_GenerCellSerial (gen, r, t, d);
          }
       }
-#ifdef USE_LONGLONG 
       tables_QuickSortULL (Dates, 1, n);
       /* Compute the differences between adjacent dates */
       gofs_DiffULL (Dates, DatDiff, 1, n, 0ULL, 1ULL);
       /* The last cell is a special case */
       DatDiff[n] = kc - Dates[n] + Dates[1];
       tables_QuickSortULL (DatDiff, 1, n);
-#else
-      tables_QuickSortD (Dates, 1, n);
-      /* Compute the differences between adjacent dates */
-      gofs_DiffD (Dates, DatDiff, 1, n, 0.0, 1.0);
-      /* The last cell is a special case */
-      DatDiff[n] = kc - Dates[n] + Dates[1];
-      tables_QuickSortD (DatDiff, 1, n);
-#endif
 
       /* Count the number of collisions in DatDiff */
       Y = 0.0;
@@ -407,14 +389,8 @@ void smarsa_BirthdaySpacings (unif01_Gen *gen, sres_Poisson *res,
       Sum += Y;
       statcoll_AddObs (res->sVal1, Y);
       if (swrite_Counters) {
-#ifdef USE_LONGLONG
          tables_WriteTabULL (Dates, 1, n, 3, 21, "Birthdates:");
          tables_WriteTabULL (DatDiff, 1, n, 3, 21, "Birthdate differences:");
-#else
-         tables_WriteTabD (Dates, 1, n, 4, 17, 0, 0, "Birthdates:");
-         tables_WriteTabD (DatDiff, 1, n, 4, 17, 0, 0,
-            "Birthdate differences:");
-#endif
       }
    }
 
@@ -485,7 +461,7 @@ static void TestCATData (long d, int t, long S1[])
 /*-------------------------------------------------------------------------*/
 #if 0
 static void CATGenere1 (
-   unif01_Gen *gen, 
+   unif01_Gen *gen,
    long n,               /* Number of points */
    int r,                /* Drop the first r bits of each U01 */
    long d,               /* Number of segments on the 1-dim. line */
@@ -546,7 +522,7 @@ static void CATGenere1 (
 /*-------------------------------------------------------------------------*/
 
 static void CATGenere (
-   unif01_Gen *gen, 
+   unif01_Gen *gen,
    long n,               /* Number of points */
    int r,                /* Drop the first r bits of each U01 */
    long d,               /* Number of segments on the 1-dim. line */
@@ -606,7 +582,7 @@ void smarsa_CAT (unif01_Gen *gen, sres_Poisson *res,
    long Co;
    fmass_INFO Mass;
    char str[LENGTH + 1];
-   lebool localRes = FALSE;
+   bool localRes = false;
    chrono_Chrono *Timer;
    char *TestName = "smarsa_CAT test";
 
@@ -629,7 +605,7 @@ void smarsa_CAT (unif01_Gen *gen, sres_Poisson *res,
    }
    TestCATData (d, t, S);
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = sres_CreatePoisson ();
    }
    sres_InitPoisson (res, N, Lambda, "smarsa_CAT");
@@ -700,7 +676,7 @@ static void TestCATBitsData (int L, unsigned long Key)
 
 /*-------------------------------------------------------------------------*/
 
-static void CATGenerBits (unif01_Gen *gen, long n, int r, int s, 
+static void CATGenerBits (unif01_Gen *gen, long n, int r, int s,
    int L, unsigned long KEY0, long *Count)
 {
 /*
@@ -770,10 +746,9 @@ static void CATGenerBits (unif01_Gen *gen, long n, int r, int s,
       }
 
    } else if (s >= L) {
-#ifdef USE_LONGLONG
-      const ulonglong MASK0 = num_TwoExp[L] - 1.0;
-      ulonglong Z, Z0;
-      ulonglong Mask, Key;
+      const uint64_t MASK0 = num_TwoExp[L] - 1.0;
+      uint64_t Z, Z0;
+      uint64_t Mask, Key;
       const int q = s - L;
 
       /* Make sure to skip the first half of the loop for the first number
@@ -823,10 +798,6 @@ static void CATGenerBits (unif01_Gen *gen, long n, int r, int s,
          j0 = j - q;
          Z = Z0 << L;
       }
-#else
-      if (L <= s)
-         util_Error ("CATGenerBits:   L <= s and L > 16");
-#endif
 
    } else if ((s < L) && (L + s <= 32)) {
       const int t = L / s;
@@ -865,11 +836,10 @@ static void CATGenerBits (unif01_Gen *gen, long n, int r, int s,
       }
 
    } else {
-#ifdef USE_LONGLONG
-      const ulonglong MASK0 = num_TwoExp[L] - 1.0;
+      const uint64_t MASK0 = num_TwoExp[L] - 1.0;
       const int t = L / s;
-      ulonglong Z;
-      ulonglong Mask, Key, Key0 = KEY0;
+      uint64_t Z;
+      uint64_t Mask, Key, Key0 = KEY0;
 
       if (L > s) {
          util_Assert (L % s == 0, "CATBits:   L > s but L % s not 0");
@@ -906,12 +876,6 @@ static void CATGenerBits (unif01_Gen *gen, long n, int r, int s,
          }
          j0 = j % s;
       }
-#else
-      if (L == s)
-         util_Error ("CATGenereBits:   L = s and s > 16");
-      else
-         util_Error ("CATGenereBits:   L > s and L + s > 32");
-#endif
    }
 
    *Count = co;
@@ -929,7 +893,7 @@ void smarsa_CATBits (unif01_Gen *gen, sres_Poisson *res,
    long Co;
    fmass_INFO Mass;
    char str[LENGTH + 1];
-   lebool localRes = FALSE;
+   bool localRes = false;
    chrono_Chrono *Timer;
    char *TestName = "smarsa_CATBits test";
 
@@ -941,7 +905,7 @@ void smarsa_CATBits (unif01_Gen *gen, sres_Poisson *res,
 
    TestCATBitsData (L, Key);
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = sres_CreatePoisson ();
    }
    sres_InitPoisson (res, N, Lambda, "smarsa_CATBits");
@@ -1058,7 +1022,7 @@ void smarsa_MatrixRank (unif01_Gen *gen, sres_Chi2 *res,
    bitset_BitSet M[lmax];         /* Matrix */
    double V[1];                   /* Number of degrees of freedom for Chi2 */
    char str[LENGTH + 1];
-   lebool localRes = FALSE;
+   bool localRes = false;
    chrono_Chrono *Timer;
    char *TestName = "smarsa_MatrixRank test";
 
@@ -1075,7 +1039,7 @@ void smarsa_MatrixRank (unif01_Gen *gen, sres_Chi2 *res,
    else
       Minkl = l;
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = sres_CreateChi2 ();
    }
    sres_InitChi2 (res, N, Minkl, "smarsa_MatrixRank");
@@ -1206,7 +1170,7 @@ void smarsa_MatrixRank (unif01_Gen *gen, sres_Chi2 *res,
    double *NbExp;                 /* Expected numbers */
    double Par[1];                 /* Number of degrees of freedom for Chi2 */
    char str[LENGTH + 1];
-   lebool localRes = FALSE;
+   bool localRes = false;
    chrono_Chrono *Timer;
    char *TestName = "smarsa_MatrixRank test";
    Matrix *M;
@@ -1227,7 +1191,7 @@ void smarsa_MatrixRank (unif01_Gen *gen, sres_Chi2 *res,
       WriteDataMatRank (gen, TestName, N, n, r, s, l, k);
    Minkl = util_Min (k, l);
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = sres_CreateChi2 ();
    }
    sres_InitChi2 (res, N, Minkl, "smarsa_MatrixRank");
@@ -1362,7 +1326,7 @@ void smarsa_Savir2 (unif01_Gen *gen, sres_Chi2 *res,
    long *Loca;
    double V[1];                   /* Number degrees of freedom for Chi2 */
    char str[LENGTH + 1];
-   lebool localRes = FALSE;
+   bool localRes = false;
    chrono_Chrono *Timer;
    char *TestName = "smarsa_Savir2 test";
 
@@ -1384,7 +1348,7 @@ void smarsa_Savir2 (unif01_Gen *gen, sres_Chi2 *res,
    msup = j - 1;
 
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = sres_CreateChi2 ();
    }
    sres_InitChi2 (res, N, msup, "smarsa_Savir2");
@@ -1487,7 +1451,7 @@ void smarsa_GCD (unif01_Gen *gen, smarsa_Res2 *res,
    double X;
    double Param[1];
    char str[LENGTH + 1];
-   lebool localRes = FALSE;
+   bool localRes = false;
    chrono_Chrono *Timer;
    char *TestName = "smarsa_GCD test";
    sres_Chi2 *GCD;
@@ -1503,15 +1467,15 @@ void smarsa_GCD (unif01_Gen *gen, smarsa_Res2 *res,
    if (swrite_Basic)
       WriteDataGCD (gen, TestName, N, n, r, s);
    if (n < 30) {
-      util_Warning (TRUE, "n < 30");
+      util_Warning (true, "n < 30");
       return;
    }
    if (n > pow (2.0, 1.5*s)) {
-      util_Warning (TRUE, "n > 2^(1.5s)");
+      util_Warning (true, "n > 2^(1.5s)");
       return;
-   } 
+   }
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = smarsa_CreateRes2 ();
    }
    jmax = 1 + sqrt (C1 * n / gofs_MinExpected);
@@ -1646,7 +1610,7 @@ void smarsa_GCD (unif01_Gen *gen, smarsa_Res2 *res,
       } else {
 	 printf ("Test results for NumIter:\n");
 	 gofw_WriteActiveTests0 (N, NumIter->sVal2, NumIter->pVal2);
-         swrite_SumTest (N, NumIter->sVal2[gofw_Sum], NumIter->pVal2[gofw_Sum], 
+         swrite_SumTest (N, NumIter->sVal2[gofw_Sum], NumIter->pVal2[gofw_Sum],
                          N*NumIter->degFree);
       }
       */

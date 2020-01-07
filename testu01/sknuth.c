@@ -60,7 +60,7 @@ static void InitRes1 (
    long N,                    /* Number of replications */
    int d                      /* Max class index for chi2 */
 )
-/* 
+/*
  * Initializes the sknuth_Res structure
  */
 {
@@ -101,7 +101,7 @@ static void InitRes2 (
    double Lambda,              /* Poisson mean */
    char *nam                   /* Test name */
 )
-/* 
+/*
  * Initializes res
  */
 {
@@ -150,11 +150,11 @@ void sknuth_Serial (unif01_Gen *gen, sres_Chi2 *res,
 
    par = smultin_CreateParam (1, ValDelta, smultin_GenerCellSerial, 3);
    if (NULL == res) {
-      smultin_Multinomial (gen, par, NULL, N, n, r, d, t, FALSE);
+      smultin_Multinomial (gen, par, NULL, N, n, r, d, t, false);
    } else {
       smultin_Res *resm;
       resm = smultin_CreateRes (par);
-      smultin_Multinomial (gen, par, resm, N, n, r, d, t, FALSE);
+      smultin_Multinomial (gen, par, resm, N, n, r, d, t, false);
       sres_InitChi2 (res, N, -1, "sknuth_Serial");
       statcoll_SetDesc (res->sVal1, "Serial sVal1");
       res->sVal1->NObs = resm->Collector[0]->NObs;
@@ -181,11 +181,11 @@ void sknuth_SerialSparse (unif01_Gen *gen, sres_Chi2 *res,
 
    par = smultin_CreateParam (1, ValDelta, smultin_GenerCellSerial, 3);
    if (NULL == res) {
-      smultin_Multinomial (gen, par, NULL, N, n, r, d, t, TRUE);
+      smultin_Multinomial (gen, par, NULL, N, n, r, d, t, true);
    } else {
       smultin_Res *resm;
       resm = smultin_CreateRes (par);
-      smultin_Multinomial (gen, par, resm, N, n, r, d, t, TRUE);
+      smultin_Multinomial (gen, par, resm, N, n, r, d, t, true);
       sres_InitChi2 (res, N, -1, "sknuth_SerialSparse");
       statcoll_SetDesc (res->sVal1, "Serial sVal1");
       res->sVal1->NObs = resm->Collector[0]->NObs;
@@ -223,7 +223,7 @@ void sknuth_Gap (unif01_Gen *gen, sres_Chi2 *res,
    double Mult;
    double V[1];                   /* Number of degrees of freedom for Chi2 */
    char str[LENGTH + 1];
-   lebool localRes = FALSE;
+   bool localRes = false;
    chrono_Chrono *Timer;
    char *TestName = "sknuth_Gap test";
 
@@ -244,7 +244,7 @@ void sknuth_Gap (unif01_Gen *gen, sres_Chi2 *res,
                 "sknuth_Gap:   Beta outside interval (Alpha..1]");
 
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = sres_CreateChi2 ();
    }
    sres_InitChi2 (res, N, t, "sknuth_Gap");
@@ -254,7 +254,7 @@ void sknuth_Gap (unif01_Gen *gen, sres_Chi2 *res,
    statcoll_SetDesc (res->sVal1, str);
    res->degFree = t;
    if (res->degFree < 1) {
-      util_Warning (TRUE, "Chi-square with 0 degree of freedom.");
+      util_Warning (true, "Chi-square with 0 degree of freedom.");
       if (localRes)
          sres_DeleteChi2 (res);
       chrono_Delete (Timer);
@@ -287,7 +287,7 @@ void sknuth_Gap (unif01_Gen *gen, sres_Chi2 *res,
             U = unif01_StripD (gen, r);
          }
          if (len >= n) {
-            util_Warning (TRUE,
+            util_Warning (true,
    "sknuth_Gap:   one gap of length > n\n*********  Interrupting the test\n");
             printf ("\n\n");
             res->pVal2[gofw_Mean] = res->pVal2[gofw_AD]
@@ -359,11 +359,11 @@ void sknuth_SimpPoker (unif01_Gen *gen, sres_Chi2 *res,
    double *NbExp;
    long *Loca;
    long *Nb;
-   lebool Occurs[1 + Maxkd];
+   bool Occurs[1 + Maxkd];
    double **M;
    double V[1];                   /* Number degrees of freedom for Chi2 */
    char str[LENGTH + 1];
-   lebool localRes = FALSE;
+   bool localRes = false;
    chrono_Chrono *Timer;
    char *TestName = "sknuth_SimpPoker test";
 
@@ -383,7 +383,7 @@ void sknuth_SimpPoker (unif01_Gen *gen, sres_Chi2 *res,
    num2_CalcMatStirling (&M, Minkd, k);
 
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = sres_CreateChi2 ();
    }
    sres_InitChi2 (res, N, Minkd, "sknuth_SimpPoker");
@@ -422,12 +422,12 @@ void sknuth_SimpPoker (unif01_Gen *gen, sres_Chi2 *res,
       for (Groupe = 1; Groupe <= n; Groupe++) {
          /* Draw one poker hand */
          for (j = 0; j < d; j++)
-            Occurs[j] = FALSE;
+            Occurs[j] = false;
          s = 0;                   /* s = number of different values */
          for (j = 1; j <= k; j++) {
             L = unif01_StripL (gen, r, d);
             if (!Occurs[L]) {
-               Occurs[L] = TRUE;
+               Occurs[L] = true;
                ++s;
             }
          }
@@ -477,10 +477,10 @@ static void WriteDataCoupCol (unif01_Gen *gen, char *TestName,
 /*-------------------------------------------------------------------------*/
 
 static long NRepet (
-   unif01_Gen *gen, 
+   unif01_Gen *gen,
    int dInt,                  /* d */
    int r,
-   lebool Occurs[]
+   bool Occurs[]
    )
 /*
  * Used by CouponCollector. Counts the number of values generated before
@@ -497,7 +497,7 @@ static long NRepet (
             return MAXT;
          u = unif01_StripL (gen, r, dInt);
       } while (Occurs[u]);
-      Occurs[u] = TRUE;
+      Occurs[u] = true;
    }
    /* j is the number of different values observed up to now */
    return s;
@@ -524,11 +524,11 @@ void sknuth_CouponCollector (unif01_Gen * gen, sres_Chi2 * res,
    double *NbExp;
    long *Loca;
    long *Nb;
-   lebool Occurs[1 + MAXT];
+   bool Occurs[1 + MAXT];
    double X2;
    double V[1];                   /* Number degrees of freedom for Chi2 */
    char str[LENGTH + 1];
-   lebool localRes = FALSE;
+   bool localRes = false;
    chrono_Chrono *Timer;
    char *TestName = "sknuth_CouponCollector test";
 
@@ -540,7 +540,7 @@ void sknuth_CouponCollector (unif01_Gen * gen, sres_Chi2 * res,
    util_Assert (d > 1, "sknuth_CouponCollector:  d < 2");
 
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = sres_CreateChi2 ();
    }
    sres_InitChi2 (res, N, MAXT, "sknuth_CouponCollector");
@@ -567,7 +567,7 @@ void sknuth_CouponCollector (unif01_Gen * gen, sres_Chi2 * res,
    NbExp[t] = n - Mult * M[d][t - 1];
    Moydes += t * NbExp[t];
    Moydes /= n;
- /* 
+ /*
    if (swrite_Basic) {
        printf ("   Expected value of s = ");
 	   num_WriteD (Moydes, 10, 2, 2);
@@ -599,7 +599,7 @@ void sknuth_CouponCollector (unif01_Gen * gen, sres_Chi2 * res,
       for (Segm = 1; Segm <= n; Segm++) {
          /* One collection of values. */
          for (k = 0; k < dInt; k++)
-            Occurs[k] = FALSE;
+            Occurs[k] = false;
          ++Nb[Loca[NRepet (gen, dInt, r, Occurs)]];
       }
       if (swrite_Counters)
@@ -645,11 +645,11 @@ void sknuth_Permutation (unif01_Gen * gen, sres_Chi2 * res,
 
    par = smultin_CreateParam (1, ValDelta, smultin_GenerCellPermut, 3);
    if (NULL == res) {
-      smultin_Multinomial (gen, par, NULL, N, n, r, 1, t, FALSE);
+      smultin_Multinomial (gen, par, NULL, N, n, r, 1, t, false);
    } else {
       smultin_Res *resm;
       resm = smultin_CreateRes (par);
-      smultin_Multinomial (gen, par, resm, N, n, r, 1, t, FALSE);
+      smultin_Multinomial (gen, par, resm, N, n, r, 1, t, false);
       sres_InitChi2 (res, N, -1, "sknuth_Permutation");
       statcoll_SetDesc (res->sVal1, "Serial sVal1");
       res->sVal1->NObs = resm->Collector[0]->NObs;
@@ -665,17 +665,17 @@ void sknuth_Permutation (unif01_Gen * gen, sres_Chi2 * res,
 /*=========================================================================*/
 
 static void WriteDataRun (unif01_Gen * gen, char *TestName,
-   long N, long n, int r, lebool Up)
+   long N, long n, int r, bool Up)
 {
    swrite_Head (gen, TestName, N, n, r);
-   printf (",   Up = %5s\n\n", Up ? "TRUE" : "FALSE");
+   printf (",   Up = %5s\n\n", Up ? "true" : "false");
 }
 
 
 /*-------------------------------------------------------------------------*/
 
 void sknuth_Run (unif01_Gen * gen, sres_Chi2 * res,
-   long N, long n, int r, lebool Up)
+   long N, long n, int r, bool Up)
 {
    long Seq;                      /* Replication number */
    double U;
@@ -691,7 +691,7 @@ void sknuth_Run (unif01_Gen * gen, sres_Chi2 * res,
    long *Count;
    char str[LENGTH + 1];
    double V[1];                   /* Number degrees of freedom for Chi2 */
-   lebool localRes = FALSE;
+   bool localRes = false;
    chrono_Chrono *Timer;
    char *TestName = "sknuth_Run test";
 
@@ -702,7 +702,7 @@ void sknuth_Run (unif01_Gen * gen, sres_Chi2 * res,
    if (n < 600)
       return;
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = sres_CreateChi2 ();
    }
    sres_InitChi2 (res, N, 6, "sknuth_Run");
@@ -813,7 +813,7 @@ void sknuth_Run (unif01_Gen * gen, sres_Chi2 * res,
 /*=========================================================================*/
 
 void sknuth_RunIndep (unif01_Gen * gen, sres_Chi2 * res,
-   long N, long n, int r, lebool Up)
+   long N, long n, int r, bool Up)
 {
    long Seq;                      /* Replication number */
    double U;
@@ -828,7 +828,7 @@ void sknuth_RunIndep (unif01_Gen * gen, sres_Chi2 * res,
    double Prob[7];
    char str[LENGTH + 1];
    double V[1];                   /* Number degrees of freedom for Chi2 */
-   lebool localRes = FALSE;
+   bool localRes = false;
    chrono_Chrono *Timer;
    char *TestName = "sknuth_RunIndep test";
 
@@ -837,7 +837,7 @@ void sknuth_RunIndep (unif01_Gen * gen, sres_Chi2 * res,
       WriteDataRun (gen, TestName, N, n, r, Up);
 
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = sres_CreateChi2 ();
    }
    sres_InitChi2 (res, N, 6, "sknuth_RunIndep");
@@ -969,7 +969,7 @@ void sknuth_MaxOft (unif01_Gen * gen, sknuth_Res1 * res,
    double X2;
    double V[1];                   /* Number degrees of freedom for Chi2 */
    char str[LENGTH + 1];
-   lebool localRes = FALSE;
+   bool localRes = false;
    chrono_Chrono *Timer;
    char *TestName = "sknuth_MaxOft test";
    sres_Basic *Bas;
@@ -984,7 +984,7 @@ void sknuth_MaxOft (unif01_Gen * gen, sknuth_Res1 * res,
    util_Assert (NbExp >= gofs_MinExpected,
       "MaxOft:   NbExp < gofs_MinExpected");
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = sknuth_CreateRes1 ();
    }
    InitRes1 (res, N, d);
@@ -1093,11 +1093,11 @@ void sknuth_Collision (unif01_Gen * gen, sknuth_Res2 * res,
 
    par = smultin_CreateParam (1, ValDelta, smultin_GenerCellSerial, -3);
    if (NULL == res) {
-      smultin_Multinomial (gen, par, NULL, N, n, r, d, t, TRUE);
+      smultin_Multinomial (gen, par, NULL, N, n, r, d, t, true);
    } else {
       smultin_Res *resm;
       resm = smultin_CreateRes (par);
-      smultin_Multinomial (gen, par, resm, N, n, r, d, t, TRUE);
+      smultin_Multinomial (gen, par, resm, N, n, r, d, t, true);
       InitRes2 (res, N, resm->Mu[0], "sknuth_Collision");
       statcoll_SetDesc (res->Bas->sVal1, "Collision sVal1");
       statcoll_SetDesc (res->Pois->sVal1, "Collision sVal1");
@@ -1133,11 +1133,11 @@ void sknuth_CollisionPermut (unif01_Gen * gen, sknuth_Res2 * res,
 
    par = smultin_CreateParam (1, ValDelta, smultin_GenerCellPermut, -3);
    if (NULL == res) {
-      smultin_Multinomial (gen, par, NULL, N, n, r, 0, t, TRUE);
+      smultin_Multinomial (gen, par, NULL, N, n, r, 0, t, true);
    } else {
       smultin_Res *resm;
       resm = smultin_CreateRes (par);
-      smultin_Multinomial (gen, par, resm, N, n, r, 0, t, TRUE);
+      smultin_Multinomial (gen, par, resm, N, n, r, 0, t, true);
       InitRes2 (res, N, resm->Mu[0], "sknuth_CollisionPermut");
       statcoll_SetDesc (res->Bas->sVal1, "CollisionPermut sVal1");
       statcoll_SetDesc (res->Pois->sVal1, "CollisionPermut sVal1");

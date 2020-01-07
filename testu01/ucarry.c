@@ -64,7 +64,7 @@
 typedef struct {
    unsigned long M;                /* Modulus */
    double Norm;                    /* 1 / M */
-   lebool rFlag;                  /* = TRUE if r >= s, FALSE if r < s */
+   bool rFlag;                  /* = true if r >= s, false if r < s */
    int skip;                       /* For luxury: skip = Lux - S numbers */
 } AWC_param;
 
@@ -96,23 +96,21 @@ typedef struct {
 } Ranlux_state;
 
 /*-----------------------------------------------------------------------*/
-#ifdef USE_LONGLONG
 
 typedef struct {
    unsigned long *A;
    unsigned int W;
    unsigned int shift;
-   ulonglong mask;
+   uint64_t mask;
 } MWC_param;
 
 typedef struct {
    unsigned long *X;               /* State */
-   ulonglong C;                    /* Carry */
+   uint64_t C;                    /* Carry */
    unsigned int R;
    unsigned int Order;             /* Order */
 } MWC_state;
 
-#endif
 /*-----------------------------------------------------------------------*/
 
 typedef struct {
@@ -194,11 +192,11 @@ static unif01_Gen *Create_AWC_SWB (unsigned int r, unsigned int s,
    param = util_Malloc (sizeof (AWC_param));
    state = util_Malloc (sizeof (AWC_state));
    if (r > s) {
-      param->rFlag = TRUE;
+      param->rFlag = true;
       rs = r;
    } else {
       rs = s;
-      param->rFlag = FALSE;
+      param->rFlag = false;
    }
 /*   param->skip = Lux - rs; */
    state->X = util_Calloc ((size_t) rs + 1, sizeof (unsigned long));
@@ -223,7 +221,7 @@ static unif01_Gen *Create_AWC_SWB (unsigned int r, unsigned int s,
    } else
       for (j = 0; j < rs; j++)
          state->X[j] = S[j] % m;
-   
+
    if (param->rFlag)
       state->S = r - s;
    else
@@ -375,7 +373,7 @@ static double SWB_U01 (void *vpar, void *vsta)
          state->R++;
          if (state->R == state->Order)
             state->R = 0;
-      }   
+      }
       state->n = 0;
    }
 #endif
@@ -540,7 +538,6 @@ void ucarry_DeleteRanlux (unif01_Gen * gen)
 
 
 /************************************************************************/
-#ifdef USE_LONGLONG
 
 static unsigned long MWC_Bits (void *vpar, void *vsta)
 {
@@ -554,7 +551,7 @@ static unsigned long MWC_Bits (void *vpar, void *vsta)
          i = j + state->R;
          if (i >= state->Order)
             i -= state->Order;
-         state->C += param->A[j] * (ulonglong) state->X[i];
+         state->C += param->A[j] * (uint64_t) state->X[i];
       }
    }
    SomC = state->C & param->mask;
@@ -599,7 +596,7 @@ unif01_Gen *ucarry_CreateMWC (unsigned int r, unsigned long c,
    size_t leng;
    char name[LEN + 1];
    unsigned int j;
-   ulonglong Suma;
+   uint64_t Suma;
 
    if (w > 32)
       util_Error ("ucarry_CreateMWC:   w > 32");
@@ -629,19 +626,19 @@ unif01_Gen *ucarry_CreateMWC (unsigned int r, unsigned long c,
       Suma += A[j];
    }
    /* so that carry c doesn't lose digits of precision */
-   Suma = Suma * ((ulonglong) num_TwoExp[w] - 1) + c;
+   Suma = Suma * ((uint64_t) num_TwoExp[w] - 1) + c;
    if (Suma >= num_TwoExp[64])
       util_Error ("ucarry_CreateMWC:   Sum over A[i] is too big");
 
-   state->C = (ulonglong) c;
+   state->C = (uint64_t) c;
    state->R = 0;
    state->Order = r;
    param->W = w;
    param->shift = 32 - w;
    if (w < 32) {
-      param->mask = (ulonglong) num_TwoExp[w] - 1;
+      param->mask = (uint64_t) num_TwoExp[w] - 1;
    } else {
-      param->mask = (ulonglong) 0xffffffffUL;
+      param->mask = (uint64_t) 0xffffffffUL;
    }
 
    for (j = 0; j < r; j++) {
@@ -675,7 +672,6 @@ void ucarry_DeleteMWC (unif01_Gen * gen)
 }
 
 
-#endif  /* USE_LONGLONG */
 /**************************************************************************/
 
 static unsigned long MWCFloat_Bits (void *vpar, void *vsta)
@@ -827,9 +823,9 @@ void ucarry_DeleteMWCFloat (unif01_Gen * gen)
 
 static double MWCfix8r4 (void)
 {
-   ulonglong S2 = UCA;
-   S2 += 2736 * ((ulonglong) x1) + 7456 * ((ulonglong) x2)
-      + 76438 * ((ulonglong) x5) + 84739 * ((ulonglong) x7);
+   uint64_t S2 = UCA;
+   S2 += 2736 * ((uint64_t) x1) + 7456 * ((uint64_t) x2)
+      + 76438 * ((uint64_t) x5) + 84739 * ((uint64_t) x7);
    x1 = x2;
    x2 = x3;
    x3 = x4;
@@ -872,11 +868,11 @@ unif01_Gen *ucarry_CreateMWCfix8r4 (unsigned long c, unsigned long S[])
 static double MWCfix8r8 (void)
 {
    unsigned long S1;
-   ulonglong S2 = UCA;
-   S2 += 2736 * ((ulonglong) x1) + 7456 * ((ulonglong) x2)
-      + 76438 * ((ulonglong) x5) + 84739 * ((ulonglong) x7)
-      + 2736 * ((ulonglong) x3) + 7456 * ((ulonglong) x4)
-      + 76438 * ((ulonglong) x6) + 84739 * ((ulonglong) x8);
+   uint64_t S2 = UCA;
+   S2 += 2736 * ((uint64_t) x1) + 7456 * ((uint64_t) x2)
+      + 76438 * ((uint64_t) x5) + 84739 * ((uint64_t) x7)
+      + 2736 * ((uint64_t) x3) + 7456 * ((uint64_t) x4)
+      + 76438 * ((uint64_t) x6) + 84739 * ((uint64_t) x8);
    S1 = S2 & e32m1;
    UCA = S2 >> 32;
    x1 = x2;

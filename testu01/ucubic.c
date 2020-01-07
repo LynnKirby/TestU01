@@ -58,30 +58,17 @@ typedef struct {
 
 
 /*---------------*/
-#ifdef USE_LONGLONG
 
 typedef struct {
-   ulonglong m, a, b, c, d;
+   uint64_t m, a, b, c, d;
    double Norm;
 } CubicL_param;
 
 typedef struct {
-   ulonglong X;
+   uint64_t X;
 } CubicL_state;
 
-/*---------------*/
-#else
 
-typedef struct {
-   long m, a, b, c, d;
-   double Norm;
-} CubicL_param;
-
-typedef struct {
-   long X;
-} CubicL_state;
-
-#endif
 /*---------------*/
 
 
@@ -196,7 +183,6 @@ static double Cubic_U01 (void *vpar, void *vsta)
 
 
 /*---------------*/
-#ifdef USE_LONGLONG
 
 static double CubicL_U01 (void *vpar, void *vsta)
 /*
@@ -211,25 +197,6 @@ static double CubicL_U01 (void *vpar, void *vsta)
    return state->X * param->Norm;
 }
 
-/*---------------*/
-#else
-
-static double CubicL_U01 (void *vpar, void *vsta)
-/*
- * Implementation of Cubic used in the general case. Very slow.
- */
-{
-   CubicL_param *param = vpar;
-   CubicL_state *state = vsta;
-   long k;
-
-   k = num_MultModL (param->a, state->X, param->b, param->m);
-   k = num_MultModL (k, state->X, param->c, param->m);
-   state->X = num_MultModL (k, state->X, param->d, param->m);
-   return state->X * param->Norm;
-}
-
-#endif
 /*---------------*/
 
 
@@ -624,7 +591,7 @@ static void WrCubic1Float (void *vsta)
 
 static double Cubic1FloatA_U01 (void *vpar, void *vsta)
 /*
- * Used when condition 1 + a*(m-1)^3/m < 2^31; 
+ * Used when condition 1 + a*(m-1)^3/m < 2^31;
  * else k may not hold in a long.
  */
 {
@@ -756,7 +723,7 @@ static void WrCombCubic2 (void *vsta)
 static double CombCubic2_U01 (void *vpar, void *vsta)
 /*
  * Implementation used when all intermediary results hold in an int of 32
- * bits. This is the case when  M < 2^{16}. 
+ * bits. This is the case when  M < 2^{16}.
  */
 {
    CombCubic2_param *param = vpar;
@@ -1091,7 +1058,7 @@ unif01_Gen *ucubic_CreateCubicOutFloat (long m, long a, long c, long s)
    } else {
       gen->GetU01  = CubicOutFloatC_U01;
       gen->GetBits = CubicOutFloatC_Bits;
-   } 
+   }
 
    gen->Write = &WrCubicOutFloat;
    gen->param = param;

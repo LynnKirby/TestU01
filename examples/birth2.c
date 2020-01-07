@@ -9,7 +9,7 @@ int main (void)
 {
    unif01_Gen *gen;
    sres_Poisson *res;
-   swrite_Basic = FALSE;
+   swrite_Basic = false;
 
    gen = ulcg_CreateLCG (2147483647, 397204094, 0, 12345);
    res = sres_CreatePoisson ();

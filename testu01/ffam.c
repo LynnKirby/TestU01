@@ -80,7 +80,7 @@ void ffam_PrintFam (ffam_Fam *fam)
 {
    int i;
    if (fam == NULL) {
-      util_Warning (TRUE, "ffam_PrintFam:   fam is NULL");
+      util_Warning (true, "ffam_PrintFam:   fam is NULL");
       return;
    }
    printf ("-------------------------------------------------\n");

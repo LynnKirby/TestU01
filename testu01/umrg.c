@@ -154,7 +154,7 @@ typedef struct {
 typedef struct {
    mpz_t M, *A, W, T;
    mpf_t F, Norm;
-   lebool *AnonZero;
+   bool *AnonZero;
 } BigMRG_param;
 
 typedef struct {
@@ -165,7 +165,7 @@ typedef struct {
 typedef struct {
    mpz_t M1, M2, *A1, *A2, W, T1, T2;
    mpf_t F1, F2, Norm1, Norm2;
-   lebool *A1nonZero, *A2nonZero;
+   bool *A1nonZero, *A2nonZero;
 } BigC2MRG_param;
 
 typedef struct {
@@ -177,7 +177,7 @@ typedef struct {
 /*-------------------------------------------------------------------------*/
 
 typedef struct {
-   lebool Flag;         /* TRUE if k > r, FALSE if k < r */
+   bool Flag;         /* true if k > r, false if k < r */
    int Skip;
 } LagFibFloat_param;
 
@@ -192,8 +192,8 @@ typedef struct {
 typedef struct {
    unsigned long Mask;   /* 2^t - 1 */
    int b;                /* shift |t - 32| bits, right or left */
-   lebool LeftShift;    /* TRUE for left shift, FALSE for right shift */
-   lebool Flag;         /* TRUE if k > r, FALSE if k < r */
+   bool LeftShift;    /* true for left shift, false for right shift */
+   bool Flag;         /* true if k > r, false if k < r */
    int Skip;
 } LagFib_param;
 
@@ -239,7 +239,7 @@ static void AddArrayString (char *name, const char *add, int high, char *A[])
 /**************************************************************************/
 
 static double MRG2_U01 (void *vpar, void *vsta)
-/* 
+/*
  * Implementation used for k = 2,  a1 > 0,  a2 > 0
  */
 {
@@ -284,7 +284,7 @@ static void WrMRG2 (void *vsta)
 /**************************************************************************/
 
 static double MRG3_U01 (void *vpar, void *vsta)
-/* 
+/*
  * Implementation used for k = 3,  a1 > 0,  a3 > 0 and a2 = 0
  */
 {
@@ -330,7 +330,7 @@ static void WrMRG3 (void *vsta)
 /**************************************************************************/
 
 static double MRG5_U01 (void *vpar, void *vsta)
-/* 
+/*
  * Implementation used for k = 5, a1 > 0, a5 > 0 and a2 = a3 = a4 = 0
  */
 {
@@ -379,7 +379,7 @@ static void WrMRG5 (void *vsta)
 /**************************************************************************/
 
 static double MRG7_U01 (void *vpar, void *vsta)
-/* 
+/*
  * Implementation used for k = 7, a1 > 0, a7 > 0, a2 = a3 = a4 = a5 = a6 = 0
  */
 {
@@ -434,7 +434,7 @@ static void WrMRG7 (void *vsta)
 static double MRG_U01 (void *vpar, void *vsta)
 /*
  * Generator MRG of order k when R[i] < Q[i] for all i. The values returned
- * by the generator MRG are in the set { 0, 1/m, 2/m, ..., (m-1)/m } 
+ * by the generator MRG are in the set { 0, 1/m, 2/m, ..., (m-1)/m }
  */
 {
    MRG_param *param = vpar;
@@ -1138,7 +1138,7 @@ unif01_Gen *umrg_CreateBigMRG (char *m, int k, char *A[], char *S[])
    state = util_Malloc (sizeof (BigMRG_state));
 
    /* These flags are set to 0 if the corresponding element is 0 */
-   param->AnonZero = util_Calloc ((size_t) k + 1, sizeof (lebool));
+   param->AnonZero = util_Calloc ((size_t) k + 1, sizeof (bool));
 
    strncpy (name, "umrg_CreateBigMRG:", (size_t) LEN);
    strcat (name, "   m = ");
@@ -1150,10 +1150,10 @@ unif01_Gen *umrg_CreateBigMRG (char *m, int k, char *A[], char *S[])
    for (i = 0; i < k; i++) {
       if (A[i]) {
          len2 += strlen (A[i]);
-         param->AnonZero[i + 1] = TRUE;
+         param->AnonZero[i + 1] = true;
       } else
          /* If NULL pointer, set corresponding element to 0 */
-         param->AnonZero[i + 1] = FALSE;
+         param->AnonZero[i + 1] = false;
 
       if (S[i])
          len2 += strlen (S[i]);
@@ -1184,7 +1184,7 @@ unif01_Gen *umrg_CreateBigMRG (char *m, int k, char *A[], char *S[])
          util_Assert (flag < 0, "umrg_CreateBigMRG:   one A >= m");
          /* Check if element is 0 */
          if (mpz_sgn (param->A[i]) == 0) {
-            param->AnonZero[i] = FALSE;
+            param->AnonZero[i] = false;
             mpz_clear (param->A[i]);
          }
       }
@@ -1308,7 +1308,7 @@ static double BigC2MRG_U01 (void *vpar, void *vsta)
    mpf_mul (param->F2, param->F2, param->Norm2);       /* F2 = F2 * Norm2 */
    U = mpf_get_d (param->F1);                          /* U  = F1 */
    U2 = mpf_get_d (param->F2);                         /* U2 = F2 */
-   
+
    U = U - U2;
    if (U < 0.0)
       return U + 1.0;
@@ -1341,8 +1341,8 @@ unif01_Gen *umrg_CreateBigC2MRG (char *m1, char *m2, int k,
    state = util_Malloc (sizeof (BigC2MRG_state));
 
    /* These flags are set to 0 if the corresponding element is 0 */
-   param->A1nonZero = util_Calloc ((size_t) k + 1, sizeof (lebool));
-   param->A2nonZero = util_Calloc ((size_t) k + 1, sizeof (lebool));
+   param->A1nonZero = util_Calloc ((size_t) k + 1, sizeof (bool));
+   param->A2nonZero = util_Calloc ((size_t) k + 1, sizeof (bool));
 
    strncpy (name, "umrg_CreateBigC2MRG:", (size_t) LEN);
    strcat (name, "   m1 = ");
@@ -1356,16 +1356,16 @@ unif01_Gen *umrg_CreateBigC2MRG (char *m1, char *m2, int k,
    for (i = 0; i < k; i++) {
       if (A1[i]) {
          len2 += strlen (A1[i]);
-         param->A1nonZero[i + 1] = TRUE;
+         param->A1nonZero[i + 1] = true;
       } else
          /* If NULL pointer, set corresponding element to 0 */
-         param->A1nonZero[i + 1] = FALSE;
+         param->A1nonZero[i + 1] = false;
 
       if (A2[i]) {
          len2 += strlen (A2[i]);
-         param->A2nonZero[i + 1] = TRUE;
+         param->A2nonZero[i + 1] = true;
       } else
-         param->A2nonZero[i + 1] = FALSE;
+         param->A2nonZero[i + 1] = false;
 
       if (S1[i])
          len2 += strlen (S1[i]);
@@ -1406,7 +1406,7 @@ unif01_Gen *umrg_CreateBigC2MRG (char *m1, char *m2, int k,
          util_Assert (flag < 0, "umrg_CreateBigC2MRG:   one A1 >= m1");
          /* Check if element is 0 */
          if (mpz_sgn (param->A1[i]) == 0) {
-            param->A1nonZero[i] = FALSE;
+            param->A1nonZero[i] = false;
             mpz_clear (param->A1[i]);
          }
       }
@@ -1417,7 +1417,7 @@ unif01_Gen *umrg_CreateBigC2MRG (char *m1, char *m2, int k,
          flag = mpz_cmp (param->T1, param->M2);
          util_Assert (flag < 0, "umrg_CreateBigC2MRG:   one A2 >= m2");
          if (mpz_sgn (param->A2[i]) == 0) {
-            param->A2nonZero[i] = FALSE;
+            param->A2nonZero[i] = false;
             mpz_clear (param->A2[i]);
          }
       }
@@ -1707,12 +1707,12 @@ unif01_Gen * umrg_CreateLagFibFloat (int k, int r, char Op, int Lux,
       state->Lag = k;
       state->r = k;
       state->s = r;
-      param->Flag = TRUE;
+      param->Flag = true;
    } else {
       state->Lag = r;
       state->r = r;
       state->s = k;
-      param->Flag = FALSE;
+      param->Flag = false;
    }
    param->Skip = Lux - state->Lag;
 
@@ -2109,12 +2109,12 @@ unif01_Gen * umrg_CreateLagFib (int t, int k, int r, char Op, int Lux,
       state->Lag = k;
       state->r = k;
       state->s = r;
-      param->Flag = TRUE;
+      param->Flag = true;
    } else {
       state->Lag = r;
       state->r = r;
       state->s = k;
-      param->Flag = FALSE;
+      param->Flag = false;
    }
    param->Skip = Lux - state->Lag;
 
@@ -2126,9 +2126,9 @@ unif01_Gen * umrg_CreateLagFib (int t, int k, int r, char Op, int Lux,
    param->b = t - 32;
    if (param->b <= 0) {
       param->b = -param->b;
-      param->LeftShift = TRUE;
+      param->LeftShift = true;
    } else {
-      param->LeftShift = FALSE;
+      param->LeftShift = false;
    }
    param->Mask = (1UL << t) - 1;
 #ifndef IS_ULONG32
@@ -2191,7 +2191,7 @@ unif01_Gen * umrg_CreateLagFib (int t, int k, int r, char Op, int Lux,
             flag = 1;
       }
       /* Make sure that not all seeds are = 1 mod 4 */
-      if (!flag) 
+      if (!flag)
          X[1] = (X[1] + 2) & param->Mask;
    } else {
       for (j = 0; j < state->Lag; j++)

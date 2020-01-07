@@ -79,16 +79,16 @@ typedef struct {
 
 fmultin_Res * fmultin_CreateRes (smultin_Param *par);
 \endcode
- \tab 
+ \tab
   Creates and returns a structure that will hold the results
-  of a  {\tt fmultin} test. 
+  of a  {\tt fmultin} test.
  \endtab
 \code
 
 
 void fmultin_DeleteRes (fmultin_Res *res);
 \endcode
- \tab 
+ \tab
   Frees the memory allocated by {\tt fmultin\_CreateRes}.
  \endtab
 
@@ -101,7 +101,7 @@ void fmultin_DeleteRes (fmultin_Res *res);
   how the number of cells $k$ is chosen according to different criteria.
   This will determine the other varying parameter of the tests besides $n$.
   The returned structure must be passed as the second member in the
-  argument {\tt cho} of the test, the first member of {\tt cho} being always 
+  argument {\tt cho} of the test, the first member of {\tt cho} being always
   the function that chooses the sample size $n$.
 \code
 
@@ -111,12 +111,12 @@ fcho_Cho * fmultin_CreateEC_2HT (long N, int t, double EC);
 fcho_Cho * fmultin_CreateEC_2L (long N, double EC);
 fcho_Cho * fmultin_CreateEC_T (long N, double EC);
 \endcode
- \tab 
+ \tab
   Given the number of replications $N$, the sample size $n$, these
   functions choose the number of cells $k$ so that the expected
   number of collisions is approximately $EC$, i.e. $EC \approx Nn^2/2k$.
   Given the dimension $t$, the function {\tt fmultin\_CreateEC\_DT}
-  chooses the one-dimensional interval $d$ so that $k= d^t$, and 
+  chooses the one-dimensional interval $d$ so that $k= d^t$, and
   {\tt fmultin\_CreateEC\_2HT} chooses $d=2^h$
   so that $k= 2^{ht}$ ($d$ is a power of 2 with $h$ integer).
   These two cases apply to the tests {\tt fmultin\_Serial1} and
@@ -133,7 +133,7 @@ fcho_Cho * fmultin_CreateEC_T (long N, double EC);
 
 void fmultin_DeleteEC (fcho_Cho *cho);
 \endcode
- \tab 
+ \tab
   Frees the memory allocated by the create functions
  {\tt fmultin\_CreateEC...}
  \endtab
@@ -154,7 +154,7 @@ fcho_Cho * fmultin_CreateDens_T (double R);
 
 void fmultin_DeleteDens (fcho_Cho *cho);
 \endcode
- \tab 
+ \tab
   Frees the memory allocated by {\tt fmultin\_CreateDens...}
  \endtab
 \code
@@ -174,7 +174,7 @@ fcho_Cho * fmultin_CreatePer_T (double R);
 
 void fmultin_DeletePer (fcho_Cho *cho);
 \endcode
- \tab 
+ \tab
   Frees the memory allocated by {\tt fmultin\_CreatePer...}
  \endtab
 
@@ -187,24 +187,24 @@ void fmultin_DeletePer (fcho_Cho *cho);
 
 void fmultin_Serial1 (ffam_Fam *fam, smultin_Param *par,
                       fmultin_Res *res, fcho_Cho2 *cho,
-                      long N, int r, int t, lebool Sparse,
+                      long N, int r, int t, bool Sparse,
                       int Nr, int j1, int j2, int jstep);
 \endcode
 \tab
  Applies the same tests as in {\tt smultin\_Multinomial}
  with {\tt smultin\_GenerCellSerial},
- with parameters $N$ and $r$, in 
+ with parameters $N$ and $r$, in
   dimension $t$ and with the same parameter {\tt Sparse}, for the
   first {\tt Nr} generators of family {\tt fam}, for $j$ going from
   {\tt j1} to {\tt j2} by steps of {\tt jstep}.
  The sample size $n$ is chosen by the function
  {\tt cho->Chon} while the number of cells $k$ is chosen by {\tt cho->Chop2}.
- This last must have been initialized by one of 
+ This last must have been initialized by one of
  the method for choosing cells described above.
- Whenever $n$ exceeds {\tt fmultin\_Maxn} or $k$ exceeds 
+ Whenever $n$ exceeds {\tt fmultin\_Maxn} or $k$ exceeds
  {\tt smultin\_Maxk}, the test is not run.
 %% \ifdetailed %%%
-%% The results are put in {\tt res->Coll}, 
+%% The results are put in {\tt res->Coll},
 %% {\tt res->Empty},  {\tt res->Balls},  {\tt  res->PowDiv}.
 %% \fi  %%%
 \endtab
@@ -213,7 +213,7 @@ void fmultin_Serial1 (ffam_Fam *fam, smultin_Param *par,
 
 void fmultin_SerialOver1 (ffam_Fam *fam, smultin_Param *par,
                           fmultin_Res *res, fcho_Cho2 *cho,
-                          long N, int r, int t, lebool Sparse,
+                          long N, int r, int t, bool Sparse,
                           int Nr, int j1, int j2, int jstep);
 \endcode
 \tab
@@ -225,7 +225,7 @@ void fmultin_SerialOver1 (ffam_Fam *fam, smultin_Param *par,
 
 void fmultin_SerialBits1 (ffam_Fam *fam, smultin_Param *par,
                           fmultin_Res *res, fcho_Cho2 *cho,
-                          long N, int r, int s, lebool Sparse,
+                          long N, int r, int s, bool Sparse,
                           int Nr, int j1, int j2, int jstep);
 \endcode
 \tab
@@ -237,7 +237,7 @@ void fmultin_SerialBits1 (ffam_Fam *fam, smultin_Param *par,
 
 void fmultin_SerialBitsOver1 (ffam_Fam *fam, smultin_Param *par,
                               fmultin_Res *res, fcho_Cho2 *cho,
-                              long N, int r, int s, lebool Sparse,
+                              long N, int r, int s, bool Sparse,
                               int Nr, int j1, int j2, int jstep);
 \endcode
 \tab
@@ -249,7 +249,7 @@ void fmultin_SerialBitsOver1 (ffam_Fam *fam, smultin_Param *par,
 
 void fmultin_Permut1 (ffam_Fam *fam, smultin_Param *par,
                       fmultin_Res *res, fcho_Cho2 *cho,
-                      long N, int r, lebool Sparse,
+                      long N, int r, bool Sparse,
                       int Nr, int j1, int j2, int jstep);
 \endcode
 \tab

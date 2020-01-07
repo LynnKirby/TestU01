@@ -50,12 +50,12 @@
 
 long scatter_N;
 int scatter_t;
-lebool scatter_Over;
+bool scatter_Over;
 int scatter_x;
 int scatter_y;
 double scatter_L [scatter_MAXDIM + 1];
 double scatter_H [scatter_MAXDIM + 1];
-lebool scatter_Lacunary;
+bool scatter_Lacunary;
 long scatter_LacI [scatter_MAXDIM + 1];
 double scatter_Width = -1.0;
 double scatter_Height = -1.0;
@@ -208,12 +208,12 @@ static unif01_Gen * scatter_ReadDataInterac (
 {
    char rep;
    int i, j;
-   lebool erreur;
+   bool erreur;
    char format[12];
    unif01_Gen *genL;
 
    do {
-      erreur = FALSE;
+      erreur = false;
       printf ("What kind of output?\n"
               "latex:     (l)\n"
               "gnu_ps:    (p)\n"
@@ -237,7 +237,7 @@ static unif01_Gen * scatter_ReadDataInterac (
          break;
       default:
 	 printf ("Please, answer with one letter amongst l, p, t.\n");
-         erreur = TRUE;
+         erreur = true;
          break;
       }
    } while (erreur);
@@ -261,13 +261,13 @@ static unif01_Gen * scatter_ReadDataInterac (
    j = sscanf (S, " %d", &scatter_t);
    util_Assert (j > 0, "scatter_ReadDataInterac");
 
-   printf ("Overlapping:\n TRUE (t)\n FALSE (f)\n  ");
+   printf ("Overlapping:\n true (t)\n false (f)\n  ");
    fgets (S, NUM_CHAR, stdin);
    j = sscanf (S, " %1s", str);
    if (str[0] == 't')
-      scatter_Over = TRUE;
+      scatter_Over = true;
    else
-      scatter_Over = FALSE;
+      scatter_Over = false;
 
    printf ("Which dimension for the x-axis: ");
    fgets (S, NUM_CHAR, stdin);
@@ -300,13 +300,13 @@ static unif01_Gen * scatter_ReadDataInterac (
    scatter_Width = 13.0;
 
 
-   printf ("Lacunary:\n TRUE (t)\n FALSE (f)\n  ");
+   printf ("Lacunary:\n true (t)\n false (f)\n  ");
    fgets (S, NUM_CHAR, stdin);
    j = sscanf (S, " %1s", str);
    if (str[0] == 't')
-      scatter_Lacunary = TRUE;
+      scatter_Lacunary = true;
    else
-      scatter_Lacunary = FALSE;
+      scatter_Lacunary = false;
 
    if (scatter_Lacunary) {
       for (i = 0; i < scatter_t; i++) {
@@ -330,18 +330,18 @@ static unif01_Gen * scatter_ReadDataInterac (
 
 /*=========================================================================*/
 
-static lebool Retenu (void)
+static bool Retenu (void)
 /*
- * Returns TRUE if the point with coordinates V[1],..., V[scatter_t] is
- * inside the bounds to be plotted; FALSE otherwise.
+ * Returns true if the point with coordinates V[1],..., V[scatter_t] is
+ * inside the bounds to be plotted; false otherwise.
  */
 {
    int j;
    for (j = 1; j <= scatter_t; j++) {
       if (V[j] < scatter_L[j] || V[j] > scatter_H[j])
-         return FALSE;
+         return false;
    }
-   return TRUE;
+   return true;
 }
 
 
@@ -430,9 +430,9 @@ static void BottomGraphTex (
    fprintf (f, "\n\nHypercube in %1d dimensions.\\\\\n", scatter_t);
    fprintf (f, " Over = ");
    if (scatter_Over)
-      fprintf (f, "TRUE");
+      fprintf (f, "true");
    else
-      fprintf (f, "FALSE");
+      fprintf (f, "false");
 
    fprintf (f, "\\\\\n");
    for (j = 1; j <= scatter_t; j++) {
@@ -545,7 +545,7 @@ static void HeadGraphGnu (
       strncpy (Title, gen->name, (size_t) len);
       Title[len] = '\0';
    }
-   /* Search for '\n' in title. If it is there, it will not be understood by 
+   /* Search for '\n' in title. If it is there, it will not be understood by
       gnuplot. Process it specially to print the generator name */
    p = strchr (gen->name, '\n');
    if (p) {
@@ -701,9 +701,9 @@ void scatter_PlotUnifInterac (unif01_Gen *gen)
 
 /*=========================================================================*/
 
-void scatter_PlotUnif1 (unif01_Gen * gen, long N, int Dim, lebool Over,
+void scatter_PlotUnif1 (unif01_Gen * gen, long N, int Dim, bool Over,
    int Proj[2], double Lower[], double Upper[], scatter_OutputType Output,
-   int Prec, lebool Lac, long LacI[], char *Name)
+   int Prec, bool Lac, long LacI[], char *Name)
 {
    int j;
    unif01_Gen *genL;

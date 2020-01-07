@@ -55,7 +55,7 @@
 
 
 
-lebool svaria_Timer = FALSE;
+bool svaria_Timer = false;
 
 
 
@@ -84,7 +84,7 @@ lebool svaria_Timer = FALSE;
 
 static void InitFDistMeans (int n, double Coef[])
 /*
- * Initializes the distribution for svaria_SampleMean by computing the 
+ * Initializes the distribution for svaria_SampleMean by computing the
  * coefficients. We shall keep the value of n in element Coef[SAM_LIM],
  * since we shall need it to get the value of the distribution at x.
  */
@@ -117,7 +117,7 @@ static double FDistMeans (
    double C[],               /* Coefficients and sample size n */
    double x                  /* Argument */
    )
-/* 
+/*
  * Distribution function of sample mean as in Stephens (1966), p.235.
  * This function is not very precise: the normal approximation is poor
  * for small x, and the computation of the exact function is numerically
@@ -165,7 +165,7 @@ void svaria_SampleMean (unif01_Gen * gen, sres_Basic * res,
    long Seq;
    double Sum;
    double Coef[SAM_LIM + 1];
-   lebool localRes = FALSE;
+   bool localRes = false;
    chrono_Chrono *Timer;
    char *TestName = "svaria_SampleMean test";
 
@@ -177,7 +177,7 @@ void svaria_SampleMean (unif01_Gen * gen, sres_Basic * res,
    util_Assert (n > 1, "svaria_SampleMean:   n < 2");
 
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = sres_CreateBasic ();
    }
    sres_InitBasic (res, N, "svaria_SampleMean");
@@ -235,7 +235,7 @@ void svaria_SampleCorr (unif01_Gen * gen, sres_Basic * res,
    double Sum;
    double *Pre;                   /* Previous k generated numbers */
    int pos;                       /* Circular index to element at lag k */
-   lebool localRes = FALSE;
+   bool localRes = false;
    chrono_Chrono *Timer;
    char *TestName = "svaria_SampleCorr test";
 
@@ -247,7 +247,7 @@ void svaria_SampleCorr (unif01_Gen * gen, sres_Basic * res,
    util_Assert (n > 2, "svaria_SampleCorr:   n <= 2");
 
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = sres_CreateBasic ();
    }
    sres_InitBasic (res, N, "svaria_SampleCorr");
@@ -304,7 +304,7 @@ static double FDistProd (
    )
 /*
  * Compute the distribution function F for the product of t random variables
- * U[0, 1], where 
+ * U[0, 1], where
  *                          t - 1
  *                           __            j
  *  F[u1*u2*...ut <= x] = x \      (-ln(x))
@@ -348,7 +348,7 @@ void svaria_SampleProd (unif01_Gen * gen, sres_Basic * res,
    double *P;
    double temp;
    double Par[1];
-   lebool localRes = FALSE;
+   bool localRes = false;
    chrono_Chrono *Timer;
    char *TestName = "svaria_SampleProd test";
 
@@ -359,7 +359,7 @@ void svaria_SampleProd (unif01_Gen * gen, sres_Basic * res,
    }
 
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = sres_CreateBasic ();
    }
    sres_InitBasic (res, N, "svaria_SampleProd");
@@ -411,7 +411,7 @@ void svaria_SumLogs (unif01_Gen * gen, sres_Chi2 * res,
    double Prod;
    double Sum;
    double V[1];
-   lebool localRes = FALSE;
+   bool localRes = false;
    chrono_Chrono *Timer;
    char *TestName = "svaria_SumLogs test";
    char chaine[LEN1 + 1] = "";
@@ -424,7 +424,7 @@ void svaria_SumLogs (unif01_Gen * gen, sres_Chi2 * res,
    }
    util_Assert (n < LONG_MAX/2, "2n > LONG_MAX");
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = sres_CreateChi2 ();
    }
    sres_InitChi2 (res, N, -1, "svaria_SumLogs");
@@ -436,7 +436,7 @@ void svaria_SumLogs (unif01_Gen * gen, sres_Chi2 * res,
    statcoll_SetDesc (res->sVal1, chaine);
    res->degFree = 2 * n;
    if (res->degFree < 1) {
-      util_Warning (TRUE, "Chi-square with 0 degree of freedom.");
+      util_Warning (true, "Chi-square with 0 degree of freedom.");
       if (localRes)
          sres_DeleteChi2 (res);
       return;
@@ -507,7 +507,7 @@ void svaria_WeightDistrib (unif01_Gen * gen, sres_Chi2 * res,
    long NbClasses;
    long *Loc;
    fmass_INFO Q;
-   lebool localRes = FALSE;
+   bool localRes = false;
    chrono_Chrono *Timer;
    char *TestName = "svaria_WeightDistrib test";
    char chaine[LEN1 + 1] = "";
@@ -526,7 +526,7 @@ void svaria_WeightDistrib (unif01_Gen * gen, sres_Chi2 * res,
    p = Beta - Alpha;
 
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = sres_CreateChi2 ();
    }
    sres_InitChi2 (res, N, k, "svaria_WeightDistrib");
@@ -644,7 +644,7 @@ static int svaria_CollisionArgMax_00 (unif01_Gen *gen, sres_Chi2 *res,
    int *Urne;
    double V[1];
    fmass_INFO Q;
-   lebool localRes = FALSE;
+   bool localRes = false;
    chrono_Chrono *chro, *Timer;
    char *TestName = "svaria_CollisionArgMax test";
    char chaine[LEN1 + 1] = "";
@@ -659,7 +659,7 @@ static int svaria_CollisionArgMax_00 (unif01_Gen *gen, sres_Chi2 *res,
 	"svaria_CollisionArgMax:    m <= 2*gofs_MinExpected"); */
 
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = sres_CreateChi2 ();
    }
    sres_InitChi2 (res, N, n, "svaria_CollisionArgMax");
@@ -755,7 +755,7 @@ static int svaria_CollisionArgMax_00 (unif01_Gen *gen, sres_Chi2 *res,
                       res->sVal2, res->pVal2);
    res->pVal1->NObs = N;
    sres_GetChi2SumStat (res);
-   
+
    if (swrite_Collectors)
       statcoll_Write (res->sVal1, 5, 14, 4, 3);
 
@@ -792,11 +792,11 @@ void svaria_CollisionArgMax (unif01_Gen * gen, sres_Chi2 * res,
       }
       par = smultin_CreateParam (1, ValDelta, smultin_GenerCellMax, -3);
       if (NULL == res) {
-         smultin_Multinomial (gen, par, NULL, N, n, r, 0, k, TRUE);
+         smultin_Multinomial (gen, par, NULL, N, n, r, 0, k, true);
       } else {
          smultin_Res *resm;
          resm = smultin_CreateRes (par);
-         smultin_Multinomial (gen, par, resm, N, n, r, 0, k, TRUE);
+         smultin_Multinomial (gen, par, resm, N, n, r, 0, k, true);
          sres_InitChi2 (res, N, -1, "svaria_CollisionArgMax");
          statcoll_SetDesc (res->sVal1, "CollisionArgMax sVal1");
          res->sVal1->NObs = resm->Collector[0]->NObs;
@@ -824,7 +824,7 @@ static void WriteDataSumColl (unif01_Gen * gen, char *TestName,
 /*-------------------------------------------------------------------------*/
 
 static double ProbabiliteG (int jmin, int j, double g)
-/* 
+/*
  * Returns the probability that the minimum number of random U(0,1) whose
  * sum is larger than g is j+1. g cannot be too large because the
  * calculation here becomes numerically unstable.
@@ -865,7 +865,7 @@ void svaria_SumCollector (unif01_Gen * gen, sres_Chi2 * res,
    long NbClasses;
    long *Loc;
    double V[1];
-   lebool localRes = FALSE;
+   bool localRes = false;
    chrono_Chrono *Timer;
    char *TestName = "svaria_SumCollector test";
    char chaine[LEN1 + 1] = "";
@@ -879,7 +879,7 @@ void svaria_SumCollector (unif01_Gen * gen, sres_Chi2 * res,
       util_Error ("svaria_SumCollector:   g < 1.0 or g > 10.0");
    }
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = sres_CreateChi2 ();
    }
    sres_InitChi2 (res, N, jmax, "svaria_SumCollector");
@@ -941,7 +941,7 @@ void svaria_SumCollector (unif01_Gen * gen, sres_Chi2 * res,
                       res->sVal2, res->pVal2);
    res->pVal1->NObs = N;
    sres_GetChi2SumStat (res);
-   
+
    if (swrite_Collectors)
       statcoll_Write (res->sVal1, 5, 14, 4, 3);
 
@@ -1049,7 +1049,7 @@ static double CalcSigma (int L, long K, double KV[])
    else
       temp = dCor[L] + eCor [L] * num_TwoExp[L] / K;
    return sqrt (temp * KV[L] / K);
-   
+
 #endif
 }
 
@@ -1063,7 +1063,7 @@ static void WriteDataAppear (unif01_Gen * gen,
    if (swrite_Host) {
       gdef_WriteHostName ();
       printf ("\n");
-   } else 
+   } else
       printf ("\n\n");
    unif01_WriteNameGen (gen);
    printf ("\n");
@@ -1113,7 +1113,7 @@ void svaria_AppearanceSpacings (unif01_Gen * gen, sres_Basic * res,
    long *Count;                   /* Index of most recent occurrence of
                                      block */
    double FactMoy;
-   lebool localRes = FALSE;
+   bool localRes = false;
    chrono_Chrono *Timer;
 
    Timer = chrono_Create ();
@@ -1128,7 +1128,7 @@ void svaria_AppearanceSpacings (unif01_Gen * gen, sres_Basic * res,
    FactMoy = 1.0 / (num_Ln2 * K);
 
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = sres_CreateBasic ();
    }
    sres_InitBasic (res, N, "svaria_AppearanceSpacings");

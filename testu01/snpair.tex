@@ -2,14 +2,14 @@
 
 This module implements tests based on the distances between
 the closest points in a sample of $n$ uniformly distributed points in
-the unit torus in $t$ dimensions.\index{Test!nearest pairs}  
+the unit torus in $t$ dimensions.\index{Test!nearest pairs}
 These tests are studied by L'Ecuyer, Cordeau, and Simard \cite{rLEC00c}.
 
-Distances between points are measured using the $L_p$ norm 
-$\Vert\cdot\Vert_p^o$ in the unit torus $[0,1)^t$, 
+Distances between points are measured using the $L_p$ norm
+$\Vert\cdot\Vert_p^o$ in the unit torus $[0,1)^t$,
 as defined in \cite{rLEC00c}.
-The unit torus is obtained by identifying (pairwise) the opposite 
-sides of the unit hypercube, so that points that are face to face on 
+The unit torus is obtained by identifying (pairwise) the opposite
+sides of the unit hypercube, so that points that are face to face on
 opposite sides are ``close'' to each other.
 Each point is generated using $t$ calls to the generator, for a total
 of $nt$ calls to get the $n$ points $X_1,\dots,X_n$.
@@ -25,12 +25,12 @@ of points $(X_i, X_j)$, with $i<j$, such that
 $D_{n,i,j} \le (\tau/\lambda(n))^{1/t}$.
 The following is proved in \cite{rLEC00c}:
 
-\begin {proposition}                      \label{prop:Poisson} 
-Under $\cH_0$, for any fixed $\tau_1 > 0$ and $n\to\infty$, 
+\begin {proposition}                      \label{prop:Poisson}
+Under $\cH_0$, for any fixed $\tau_1 > 0$ and $n\to\infty$,
 the truncated process $\{Y_n(\tau), 0\le \tau\le \tau_1\}$
 converges weakly to a Poisson process with unit rate.
 % truncated to the interval $[0, \tau_1]$.
-Moreover, for $\tau\le \lambda(n) /2^{t}$, one has 
+Moreover, for $\tau\le \lambda(n) /2^{t}$, one has
 $E[Y_n(\tau)] = \tau$ and $\Var[Y_n(\tau)] = \tau - {2\tau^2 / (n(n-1))}$.
 \end {proposition}
 
@@ -41,18 +41,18 @@ spacings between these jump times.
 Proposition~\ref{prop:Poisson} implies that for any fixed integer $m > 0$,
 for large enough $n$, the random variables $W^*_{n,1},\dots,W^*_{n,m}$
 are approximately i.i.d.\ $U(0,1)$.
-The function {\tt snpair\_ClosePairs} applies the 
+The function {\tt snpair\_ClosePairs} applies the
 {\em $m$-nearest-pairs\/} ({$m$-NP}) test,
 which simply compares the empirical distribution of these random
-variables with the uniform distribution, 
+variables with the uniform distribution,
 using the Anderson-Darling test statistic (see module {\tt gofs}).
 Why Anderson-Darling?  Because typically, when a generator has too
 much structure, the jump times of $Y_n$ tend to cluster, so there tends
 to be several $W^*_{n,i}$'s near zero, and the Anderson-Darling test
 is particularly sensitive to detect that type of behavior.
 
-For a two-level test, when $N>1$, the standard approach is to 
-apply a goodness-of-fit test to the $N$ values of the 
+For a two-level test, when $N>1$, the standard approach is to
+apply a goodness-of-fit test to the $N$ values of the
 Anderson-Darling statistic. A second approach is to pool the $N$ batches
 of $m$ observations $W^*_{n,i}$ in a single sample of size $Nm$ and apply
 the Anderson-Darling test to it.
@@ -61,23 +61,23 @@ These two possibilities are referred to by the acronyms
 
 A third one is to superpose the $N$ copies of the process $Y_n$,
 to obtain a process $Y$ defined as the sum of the $n$ copies of $Y_n$.
-Fix a constant $\tau_1> 0$ and let $J$ be the number of jumps of $Y$ in the 
+Fix a constant $\tau_1> 0$ and let $J$ be the number of jumps of $Y$ in the
 interval $[0,\tau_1]$. Set $T_0 = 0$
-and let $T_1,\dots,T_{J}$ be the sorted times of these jumps. 
+and let $T_1,\dots,T_{J}$ be the sorted times of these jumps.
 Under $\cH_0$, $J$ is approximately Poisson with mean $N \tau_1$,
-and conditionally on $J$, the jump times $T_j$ are distributed 
+and conditionally on $J$, the jump times $T_j$ are distributed
 as $J$ independent uniforms over $[0,\tau_1]$ sorted in increasing order.
 We can test this uniformity with an AD test on the $J$ observations and
 this  is called the {$m$-NP2} test.
 It is also worthwhile to compare the realization of $J$ with the Poisson
-distribution and this is the {NJumps} test. 
+distribution and this is the {NJumps} test.
 
 In yet another variant of the uniformity test conditional on $J$,
 we apply a ``spacings'' transformation to the uniforms before applying the
-AD test (this is called the  {$m$-NP2S} test).  
-This latter test is very powerful but it also turns out to be very sensitive 
+AD test (this is called the  {$m$-NP2S} test).
+This latter test is very powerful but it also turns out to be very sensitive
 to the number of bits of ``precision'' in the output of the generator.
-For example, in dimension $t=2$, for $N=20$, $n=10^6$ and $m=20$, 
+For example, in dimension $t=2$, for $N=20$, $n=10^6$ and $m=20$,
 all generators returning less than 32 bits of precision will fail this test.
 
 We can finally apply a ``spacings'' transformation to the $N$ closest distances
@@ -85,10 +85,10 @@ $W^*_{n,1}$ and to the $mN$ nearest pairs $W^*_{n,i}$ before applying the
 AD test, and these are called the {NPS} and the {$m$-NP1S} tests, respectively.
 
 \iffalse
- A third approach is to pool all the 
-jump times of the $N$ copies $Y_n$ that occur in the interval $[0,m]$, 
-say $T_1,\dots,T_{n'}$, define $W^*_{i} = 1 -\exp[-N(T_i - T_{i-1})]$ 
-for $1\le i\le n'$, where $T_0=0$, and compare the distribution 
+ A third approach is to pool all the
+jump times of the $N$ copies $Y_n$ that occur in the interval $[0,m]$,
+say $T_1,\dots,T_{n'}$, define $W^*_{i} = 1 -\exp[-N(T_i - T_{i-1})]$
+for $1\le i\le n'$, where $T_0=0$, and compare the distribution
 of these $W^*_i$ to the uniform one by an Anderson-Darling test.
 Here, $n'$ is a Poisson
  random variable with mean $Nm$.
@@ -158,7 +158,7 @@ also based on distances between nearest points.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \guisec{Environment variables}
 
-The structure {\tt snpair\_Envir} contains global parameters 
+The structure {\tt snpair\_Envir} contains global parameters
 that are usually fixed once and for all.
 These parameters can be used to fine-tune the performance of
 the algorithms that compute the close-pair distances.
@@ -175,7 +175,7 @@ typedef struct {
  \tabb
   Different thresholds used in computing close pairs.
   The default values of these parameters are respectively:
-  20, 30, 30, 1000.  These values have been chosen based on 
+  20, 30, 30, 1000.  These values have been chosen based on
   empirical  tests on the speed of execution.
   See the code for more details.
  \endtabb
@@ -215,7 +215,7 @@ extern long snpair_MaxNumPoints;
 typedef double * snpair_PointType;
 \endcode
  \tab
-  A point (a $t$-component vector) in the $t$-dimensional unit hypercube 
+  A point (a $t$-component vector) in the $t$-dimensional unit hypercube
   or torus.
  \endtab
 \code
@@ -246,9 +246,9 @@ typedef void (*snpair_DistanceType) (snpair_Res *res, snpair_PointType,
 typedef void (*snpair_VerifPairsType) (snpair_Res *res, snpair_PointType [],
                                        long, long, int, int);
 \endcode
- \tab  Type of function for verifying the distance between all pairs 
+ \tab  Type of function for verifying the distance between all pairs
   of points in a given set, and updating {\tt res} accordingly.
-  Specific instances are {\tt snpair\_VerifPairs0} and 
+  Specific instances are {\tt snpair\_VerifPairs0} and
   {\tt snpair\_VerifPairs1}.
  \endtab
 \code
@@ -257,7 +257,7 @@ typedef void (*snpair_VerifPairsType) (snpair_Res *res, snpair_PointType [],
 typedef void (*snpair_MiniProcType) (snpair_Res *res, snpair_PointType [],
                                      long, long, long, long, int, int);
 \endcode
- \tab  Type of function for verifying the distance between all the 
+ \tab  Type of function for verifying the distance between all the
   points of a set with those of a second set, and updating {\tt res}
   accordingly.  See {\tt snpair\_MiniProc1} and {\tt snpair\_MiniProc0})
   for specific instances.
@@ -285,10 +285,10 @@ enum snpair_StatType {
 \endcode
  \tab  Types of statistics that may be computed in the tests.
   The names  correspond to the test names in the  description of
-  {\tt snpair\_ClosePairs}, {\tt snpair\_BickelBreiman} and  
+  {\tt snpair\_ClosePairs}, {\tt snpair\_BickelBreiman} and
   {\tt snpair\_ClosePairs\-Bit\-Match}.
   The test {\tt snpair\_ClosePairs} computes {\tt snpair\_NP}, {\tt snpair\_mNP},
-  {\tt snpair\_mNP1}, {\tt snpair\_mNP2} and {\tt snpair\_NJumps}; this last 
+  {\tt snpair\_mNP1}, {\tt snpair\_mNP2} and {\tt snpair\_NJumps}; this last
   corresponds to a test on the total number of jumps.
   The test {\tt snpair\_BickelBreiman} computes {\tt snpair\_BB}, and
   the test {\tt snpair\_Clo\-se\-Pairs\-Bit\-Match} computes {\tt snpair\_BM}.
@@ -310,15 +310,15 @@ struct snpair_Res {
 
    long n;
 \endcode
- \tabb The number of points.   
+ \tabb The number of points.
  \endtabb
 \fi
 \hide  %%%%
 \code
-   lebool CleanFlag;               /* If TRUE, free all memory */
+   bool CleanFlag;               /* If true, free all memory */
    void *work;
 \endcode
- \tabb Working variables used internally.   
+ \tabb Working variables used internally.
  \endtabb
 \endhide
 \ifdetailed
@@ -330,13 +330,13 @@ struct snpair_Res {
    level of recursion on the dimensions.
    For {\tt snpair\_BickelBreiman}, {\tt Points[1][i][0]}
    will keep the distance from each
-   point $i$ to its nearest neighbour. 
+   point $i$ to its nearest neighbour.
  \endtabb
 \code
 
    int NumClose;
 \endcode
- \tabb  Number of close pairs of points kept for computing the different 
+ \tabb  Number of close pairs of points kept for computing the different
    statistics.
  \endtabb
 \code
@@ -390,7 +390,7 @@ struct snpair_Res {
 
   For the {\tt snpair\_BickelBreiman} test, {\tt ThepValAD}
   contains the $N$ $p$-values of the AD statistics and the other
-  collectors are unused. 
+  collectors are unused.
 
   For the {\tt snpair\_ClosePairsBitMatch} test, {\tt BitMax}
   contains the $N$ values of the statistic and the other
@@ -404,7 +404,7 @@ struct snpair_Res {
  \tabb
   Arrays used to hold the value of the
   statistics and their significance level after a test.
-  The statistic values will be in 
+  The statistic values will be in
   {\tt sVal} and their significance level
   ($p$-values) in {\tt pVal}.
  \endtabb
@@ -413,7 +413,7 @@ struct snpair_Res {
 };
 \endcode
  \tab
-  This structure is used to keep the results of 
+  This structure is used to keep the results of
   the tests of this module.
  \endtab
 \code
@@ -421,7 +421,7 @@ struct snpair_Res {
 
 snpair_Res * snpair_CreateRes (void);
 \endcode
- \tab 
+ \tab
   Function creating and returning a structure to hold the test results.
  \endtab
 \code
@@ -429,7 +429,7 @@ snpair_Res * snpair_CreateRes (void);
 
 void snpair_DeleteRes (snpair_Res *res);
 \endcode
- \tab 
+ \tab
   Frees the memory allocated by {\tt snpair\_CreateRes}.
  \endtab
 \fi
@@ -452,7 +452,7 @@ void snpair_VerifPairs0 (snpair_Res *res, snpair_PointType A[], long r, long s,
 \endcode
  \tab The simplest version of {\tt snpair\_VerifPairs}.
   Computes the distance between all pairs of points with indices in the
-  interval {\tt [r..s]} for the array {\tt A}. 
+  interval {\tt [r..s]} for the array {\tt A}.
   Assumes that the points are sorted with respect to coordinate {\tt c}.
 \endtab
 \code
@@ -474,7 +474,7 @@ void snpair_MiniProc0 (snpair_Res *res, snpair_PointType A[], long r, long s,
 \endcode
  \tab The simplest version of {\tt snpair\_MiniProc}.
   Computes the distance between each point of {\tt A[r..s]} and each point
-  of {\tt A[u..v]}. 
+  of {\tt A[u..v]}.
 \endtab
 \code
 
@@ -482,7 +482,7 @@ void snpair_MiniProc0 (snpair_Res *res, snpair_PointType A[], long r, long s,
 void snpair_MiniProc1 (snpair_Res *res, snpair_PointType A[], long r, long s,
                        long u, long v, int np, int c);
 \endcode
- \tab A more sophisticated version of {\tt snpair\_MiniProc}. 
+ \tab A more sophisticated version of {\tt snpair\_MiniProc}.
  Computes the distance between each point of {\tt A[r..s]} and each point
   of {\tt A[u..v]}. Assume the points are sorted with respect to
   coordinate {\tt c}.
@@ -509,7 +509,7 @@ void snpair_FindClosePairs (snpair_Res *res, long r, long s, int nr,
  \tab Verifies if the minimal distance between the two nearest points,
    amongst those with indices in {\tt [r..s]} in the table at level
    {\tt np}, is less than the current bound {\tt dlim}. If so,
-   updates {\tt dlim} and {\tt dlimp}.  
+   updates {\tt dlim} and {\tt dlimp}.
    Assumes that {\tt snpair\_Points [np]} is sorted with respect to
    coordinate {\tt c}.
  \endtab
@@ -538,7 +538,7 @@ void snpair_DistanceCP (snpair_Res *res, snpair_PointType, snpair_PointType);
 
 
 void snpair_WriteDataCP (unif01_Gen *gen, char *TestName, long N, long n,
-                         int r, int t, int p, int m, lebool Torus);
+                         int r, int t, int p, int m, bool Torus);
 \endcode
  \tab Prints the data and parameters for the test {\tt snpair\_ClosePairs}.
  \endtab
@@ -554,13 +554,13 @@ void snpair_WriteResultsCP (unif01_Gen *gen, chrono_Chrono *Timer,
 \code
 
 
-extern lebool snpair_mNP2S_Flag;
+extern bool snpair_mNP2S_Flag;
 \endcode
- \tab If this flag is set {\tt TRUE}, the {\tt mNP2S} statistic in 
+ \tab If this flag is set {\tt true}, the {\tt mNP2S} statistic in
  {\tt snpair\_ClosePairs} will be printed as well as its $p$-value, otherwise not.
-  The default value is {\tt TRUE}.
+  The default value is {\tt true}.
  This statistic requires many bits of resolution and for large enough values of
-  $N, n$ and $m$ in 2 dimensions, all generators with less than 32 bits of 
+  $N, n$ and $m$ in 2 dimensions, all generators with less than 32 bits of
   resolution will fail the {\tt mNP2S} test.
   For example, for $N=20$, $n=10^6$, $m=20$, $t=2$, all generators returning
   less than 32  bits of resolution will fail the test. \endtab
@@ -574,7 +574,7 @@ void snpair_ClosePairs (unif01_Gen *gen, snpair_Res *res,
    and $m$-NP2S
    by generating $n$ points in the $t$-dimensional unit torus
    and computing the $m$ nearest distinct pairs of points, where
-   the distances between the points are measured using the 
+   the distances between the points are measured using the
    $L_p$ norm if $p \ge 1$, and the $L_\infty$ norm if $p=0$.
    Recommendation:  $n \ge 4m^2 \sqrt{N}$ for $t\le 8$.
    Restrictions:\index{Test!ClosePairs}  $m\le$ {\tt snpair\_MAXM}.
@@ -601,7 +601,7 @@ void snpair_ClosePairs1 (unif01_Gen *gen, snpair_Res *res,
    {\tt gofs\_IterateSpacings} and  {\tt gofs\_PowerRatios}.
    The other tests will be done only if $m > 1$.
    The statistic {\tt snpair\_mNP} corresponds to the $m$-NP test.
-   When $N > 1$, it is a two-levels test, which does an AD test 
+   When $N > 1$, it is a two-levels test, which does an AD test
    on the distribution of the AD values at the first level.
    {\tt snpair\_mNP1} is the result of an AD test on the distribution
    of the $Nm$ values of $W^*_{n,i}$ considered as a single sample.
@@ -616,7 +616,7 @@ void snpair_ClosePairs1 (unif01_Gen *gen, snpair_Res *res,
    this hypothesis is tested by applying AD, before and after applying the
    ``spacings'' transformation.
    Restriction: The test with the {\tt snpair\_mNP2S} statistic requires
-   many bits of precision.  As an example, for $N=20, n=10^6, m=20$, 
+   many bits of precision.  As an example, for $N=20, n=10^6, m=20$,
    generators returning less than 32 bits of precision will fail the
    test. In this case, use {\tt unif01\_DoubleGenerator} to test these
    generators.
@@ -626,11 +626,11 @@ void snpair_ClosePairs1 (unif01_Gen *gen, snpair_Res *res,
 
 void snpair_ReTestY (long N, long n, int m, double t0, double t1);
 \endcode
- \tab Useful when one wants to do more tests on $Y$ 
+ \tab Useful when one wants to do more tests on $Y$
   \pierre {Which ones?}
    after a call to  {\tt snpair\_ClosePairs1}. Before the call to
    {\tt snpair\_ClosePairs1}, the variable {\tt swrite\_AutoClean} must be
-   set to {\tt FALSE}. When the test is ended, one may free explicitly
+   set to {\tt false}. When the test is ended, one may free explicitly
   the memory used by the test by calling {\tt snpair\_CleanClosePairs1}.
 
   This procedure is not used anymore. It makes use of discontinuous
@@ -649,7 +649,7 @@ void snpair_DistanceCPBitM (snpair_Res *res, snpair_PointType,
                             snpair_PointType);
 
 \endcode
- \tab Another version of {\tt snpair\_Distance} which uses bit-match 
+ \tab Another version of {\tt snpair\_Distance} which uses bit-match
   distance defined in {\tt snpair\_Clo\-se\-Pairs\-Bit\-Match}.
 \endtab
 \fi %%%%
@@ -663,11 +663,11 @@ void snpair_ClosePairsBitMatch (unif01_Gen *gen, snpair_Res *res,
    as in {\tt snpair\_ClosePairs} and computes the closest pair,
    but using a different definition of distance.\index{Test!ClosePairsBitMatch}
    The distance between two points $X_i$ and $X_j$ is $2^{-b_{i,j}}$,
-   where $b_{i,j}$ is the maximal value of $b$ such that the first 
+   where $b_{i,j}$ is the maximal value of $b$ such that the first
    $b$ bits in the binary expansion of each coordinate are the same
    for both $X_i$ and $X_j$.  This means that if the unit hypercube
    is partitioned into $2^{tb}$ cubic boxes by dividing each axis into
-   $2^b$ equal parts, the two points are in the same box for 
+   $2^b$ equal parts, the two points are in the same box for
    $b\le b_{i,j}$, but they are in different boxes for $b > b_{i,j}$.
    Let $D = \min_{1\le i<j\le n} 2^{-b_{i,j}}$ be the minimal distance
    between any two points.
@@ -676,7 +676,7 @@ void snpair_ClosePairsBitMatch (unif01_Gen *gen, snpair_Res *res,
    For any two points, $P[b_{i,j} \ge b] = 2^{-tb}$.
    One has  $D\le 2^{-b}$ if and only if
    $-\log_2 D = \max_{1\le i<j\le n} b_{i,j} \ge b$, if and only if
-   at least $b$ bits agree for at least one pair, and the probability 
+   at least $b$ bits agree for at least one pair, and the probability
    that this happens is approximately
     $$ P[D\le 2^{-b}] \approx 1 - \left(1 - 2^{-tb}\right)^{n(n-1)/2}
         \eqdef q_b. $$
@@ -700,11 +700,11 @@ void snpair_ClosePairsBitMatch (unif01_Gen *gen, snpair_Res *res,
 \hide %%%%
 \code
 
-extern lebool snpair_TimeBB;
+extern bool snpair_TimeBB;
 \endcode
- \tab Used in the Bickel-Breiman test. If this flag is set to {\tt TRUE},
+ \tab Used in the Bickel-Breiman test. If this flag is set to {\tt true},
    an internal chronometer will measure the time needed to
-   compute the Bickel-Breiman statistic. 
+   compute the Bickel-Breiman statistic.
  \endtab
 \code
 
@@ -721,7 +721,7 @@ void snpair_DistanceBB (snpair_Res *res, snpair_PointType, snpair_PointType);
 
 
 void snpair_WriteDataBB (unif01_Gen *gen, char *TestName, long N, long n,
-                         int r, int t, int p, lebool Tor, int L1, int L2);
+                         int r, int t, int p, bool Tor, int L1, int L2);
 \endcode
  \tab Prints the data for the {\tt snpair\_BickelBreiman} test. The parameters
   are as defined in the test {\tt snpair\_BickelBreiman}.
@@ -740,17 +740,17 @@ void snpair_WriteResultsBB (unif01_Gen *gen, chrono_Chrono *Timer,
 
 
 void snpair_BickelBreiman (unif01_Gen *gen, snpair_Res *res, long N,
-                           long n, int r, int t, int p, lebool Torus);
+                           long n, int r, int t, int p, bool Torus);
 \endcode
 \tab
  Applies a test\index{Test!BickelBreiman} based on the statistic proposed by
  Bickel and Breiman \cite {tBIC83a} to test the fit of a set of
  points to a multidimensional density.
  The test is described in \cite{rLEC00c}.
- As for {\tt snpair\_ClosePairs}, $n$ points are generated in the 
+ As for {\tt snpair\_ClosePairs}, $n$ points are generated in the
  unit hypercube in $t$ dimensions.
- If {\tt Torus = FALSE}, the distances are computed in the hypercube 
- as usual, whereas if {\tt Torus = TRUE}, the hypercube is treated as a
+ If {\tt Torus = false}, the distances are computed in the hypercube
+ as usual, whereas if {\tt Torus = true}, the hypercube is treated as a
  torus for computing distances, so that two points near
  opposite  faces of the cube can be close to each other \cite{rLEC00c}.
 

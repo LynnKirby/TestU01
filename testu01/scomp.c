@@ -79,7 +79,7 @@ static const double LZSigma[] = {
 /* Bit trie used in Lempel-Ziv test. If left != NULL, this means a 0 bit.
    If right != NULL, this means a 1 bit. The word is the sequence obtained
    by following the tree until a NULL pointer is met. */
-   
+
 struct BitTrie_t {
    struct BitTrie_t *left;
    struct BitTrie_t *right;
@@ -110,7 +110,7 @@ static void InitRes (
    int jmax,                  /* Max class index for size of jumps */
    int tmax                   /* Max class index for linear complexity */
 )
-/* 
+/*
  * Initializes the scomp_Res structure
  */
 {
@@ -269,14 +269,14 @@ void scomp_LinearComp (unif01_Gen *gen, scomp_Res *res,
    int *PolycOld;
    double Param[1];
    char str[LENGTH + 1];
-   lebool localRes = FALSE;
+   bool localRes = false;
    chrono_Chrono *Timer;
    char *TestName = "scomp_LinearComp test";
    sres_Basic *resJN;
    sres_Chi2 *resJL;
    sres_Chi2 *resLC;
-   lebool JL_OK = TRUE;          /* If TRUE do the JL test, otherwise not */
-   lebool LC_OK = FALSE;         /* If TRUE do the LC test, otherwise not */
+   bool JL_OK = true;          /* If true do the JL test, otherwise not */
+   bool LC_OK = false;         /* If true do the LC test, otherwise not */
 
    Timer = chrono_Create ();
    n = K0 * s;
@@ -294,7 +294,7 @@ void scomp_LinearComp (unif01_Gen *gen, scomp_Res *res,
    M0 = num_Log2 (mu / gofs_MinExpected);
    if (M0 < 2) {
       /* 0 degree of freedom for the chi2, do not do the test JL. */
-      JL_OK = FALSE;
+      JL_OK = false;
    }
 
    if (swrite_Basic)
@@ -310,7 +310,7 @@ void scomp_LinearComp (unif01_Gen *gen, scomp_Res *res,
    PolycOld = util_Calloc ((size_t) n + 1, sizeof (int));
 
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = scomp_CreateRes ();
    }
    M0 = util_Max (M0, 1);
@@ -346,9 +346,9 @@ void scomp_LinearComp (unif01_Gen *gen, scomp_Res *res,
       resLC->degFree = NbClasses - 1;
       if (NbClasses < 2) {
 	 /* 0 degree of freedom for the chi2, do not do the test LC. */
-	 LC_OK = FALSE;
+	 LC_OK = false;
       } else
-	 LC_OK = TRUE;
+	 LC_OK = true;
    }
 
    statcoll_SetDesc (resJN->sVal1,
@@ -422,7 +422,7 @@ void scomp_LinearComp (unif01_Gen *gen, scomp_Res *res,
 
    if (JL_OK) {
       Param[0] = M0 - 1;
-      gofw_ActiveTests2 (resJL->sVal1->V, resJL->pVal1->V, N, 
+      gofw_ActiveTests2 (resJL->sVal1->V, resJL->pVal1->V, N,
          wdist_ChiSquare, Param, resJL->sVal2, resJL->pVal2);
       resJL->pVal1->NObs = N;
       sres_GetChi2SumStat (resJL);
@@ -524,7 +524,7 @@ static long LZ78 (unif01_Gen * gen, long n, int r, int s)
    unsigned long Y, k;
    long i;                        /* Count the number of bits overall */
    long W;                        /* Count the number of words */
-   lebool done = FALSE;          /* Start a new word */
+   bool done = false;          /* Start a new word */
    BitTrie_t *trie, *root;
 
    W = i = 0;
@@ -535,7 +535,7 @@ static long LZ78 (unif01_Gen * gen, long n, int r, int s)
 
    while (i < n) {
       /* Start a new word: match it as far as possible in the trie */
-      done = FALSE;
+      done = false;
       trie = root;
       while (!done) {
          if ((Y & k) == 0) {      /* Bit 0 */
@@ -545,7 +545,7 @@ static long LZ78 (unif01_Gen * gen, long n, int r, int s)
             } else {
 	       /* A leaf: this is a new word */
                W++;
-               done = TRUE;
+               done = true;
                trie->left = util_Malloc (sizeof (BitTrie_t));
                trie = trie->left;
                trie->left = trie->right = NULL;
@@ -556,7 +556,7 @@ static long LZ78 (unif01_Gen * gen, long n, int r, int s)
                trie = trie->right;
             } else {
                W++;
-               done = TRUE;
+               done = true;
                trie->right = util_Malloc (sizeof (BitTrie_t));
                trie = trie->right;
                trie->left = trie->right = NULL;
@@ -564,7 +564,7 @@ static long LZ78 (unif01_Gen * gen, long n, int r, int s)
          }
          i++;
          if (i >= n) {
-            done = TRUE;
+            done = true;
             if ((trie->left != NULL) || (trie->right != NULL))
                W++;
             break;
@@ -591,7 +591,7 @@ void scomp_LempelZiv (unif01_Gen *gen, sres_Basic *res,
    double X;
    /*   const double lg_n = num_Log2 ((double) n); */
    long W;
-   lebool localRes = FALSE;
+   bool localRes = false;
    chrono_Chrono *Timer;
    char *TestName = "scomp_LempelZiv test";
 
@@ -601,7 +601,7 @@ void scomp_LempelZiv (unif01_Gen *gen, sres_Basic *res,
    util_Assert (r + s <= 32, "scomp_LempelZiv:   r + s > 32");
    util_Assert (t <= 28, "scomp_LempelZiv:   k > 28");
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = sres_CreateBasic ();
    }
    n = num_TwoExp[t];

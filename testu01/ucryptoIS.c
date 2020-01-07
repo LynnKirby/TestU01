@@ -12,6 +12,7 @@
 #include "ucrypto.h"
 #include "unif01.h"
 
+#include <stddef.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -44,37 +45,7 @@ xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 Standard definitions and types, Bob Jenkins
 ------------------------------------------------------------------------------
 */
-#ifndef STANDARD
-# define STANDARD
-# ifndef STDIO
-#  include <stdio.h>
-#  define STDIO
-# endif
-# ifndef STDDEF
-#  include <stddef.h>
-#  define STDDEF
-# endif
-typedef  unsigned long long  ub8;
-#define UB8MAXVAL 0xffffffffffffffffLL
-#define UB8BITS 64
-typedef    signed long long  sb8;
-#define SB8MAXVAL 0x7fffffffffffffffLL
-typedef  unsigned  int  ub4;   /* unsigned 4-byte quantities */
-#define UB4MAXVAL 0xffffffff
-typedef    signed  int  sb4;
-#define UB4BITS 32
-#define SB4MAXVAL 0x7fffffff
-typedef  unsigned short int  ub2;
-#define UB2MAXVAL 0xffff
-#define UB2BITS 16
-typedef    signed short int  sb2;
-#define SB2MAXVAL 0x7fff
-typedef  unsigned       char ub1;
-#define UB1MAXVAL 0xff
-#define UB1BITS 8
-typedef    signed       char sb1;   /* signed 1-byte quantities */
-#define SB1MAXVAL 0x7f
-typedef                 int  word;  /* fastest type available */
+typedef int word;  /* fastest type available */
 
 #define bis(target,mask)  ((target) |=  (mask))
 #define bic(target,mask)  ((target) &= ~(mask))
@@ -86,22 +57,18 @@ typedef                 int  word;  /* fastest type available */
 # define max(a,b) (((a)<(b)) ? (b) : (a))
 #endif /* max */
 #ifndef align
-# define align(a) (((ub4)a+(sizeof(void *)-1))&(~(sizeof(void *)-1)))
+# define align(a) (((uint32_t)a+(sizeof(void *)-1))&(~(sizeof(void *)-1)))
 #endif /* align */
 #ifndef abs
 # define abs(a)   (((a)>0) ? (a) : -(a))
 #endif
-#define TRUE  1
-#define FALSE 0
 #define SUCCESS 0  /* 1 on VAX */
-
-#endif /* STANDARD */
 
 
 /*
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 x
-x  File rand.h, from Bob Jenkins web page, for his generator ISAAC 
+x  File rand.h, from Bob Jenkins web page, for his generator ISAAC
 x
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 */
@@ -129,18 +96,18 @@ MODIFIED:
 /* context of random number generator */
 struct randctx
 {
-  ub4 randcnt;
-  ub4 randrsl[RANDSIZ];
-  ub4 randmem[RANDSIZ];
-  ub4 randa;
-  ub4 randb;
-  ub4 randc;
+  uint32_t randcnt;
+  uint32_t randrsl[RANDSIZ];
+  uint32_t randmem[RANDSIZ];
+  uint32_t randa;
+  uint32_t randb;
+  uint32_t randc;
 };
 typedef  struct randctx  randctx;
 
 /*
 ------------------------------------------------------------------------------
- If (flag==TRUE), then use the contents of randrsl[0..RANDSIZ-1] as the seed.
+ If (flag==true), then use the contents of randrsl[0..RANDSIZ-1] as the seed.
 ------------------------------------------------------------------------------
 */
 static void randinit(/*_ randctx *r, word flag _*/);
@@ -165,7 +132,7 @@ static void isaac(/*_ randctx *r _*/);
 /*
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 x
-x  File rand.c, from Bob Jenkins web page, for his generator ISAAC 
+x  File rand.c, from Bob Jenkins web page, for his generator ISAAC
 x
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 */
@@ -187,7 +154,7 @@ MODIFIED:
 #endif
 */
 
-#define ind(mm,x)  (*(ub4 *)((ub1 *)(mm) + ((x) & ((RANDSIZ-1)<<2))))
+#define ind(mm,x)  (*(uint32_t *)((uint8_t *)(mm) + ((x) & ((RANDSIZ-1)<<2))))
 #define rngstep(mix,a,b,mm,m,m2,r,x) \
 { \
   x = *m;  \
@@ -199,7 +166,7 @@ MODIFIED:
 static void     isaac(ctx)
 randctx *ctx;
 {
-   register ub4 a,b,x,y,*m,*mm,*m2,*r,*mend;
+   register uint32_t a,b,x,y,*m,*mm,*m2,*r,*mend;
    mm=ctx->randmem; r=ctx->randrsl;
    a = ctx->randa; b = ctx->randb + (++ctx->randc);
    for (m = mm, mend = m2 = m+(RANDSIZ/2); m<mend; )
@@ -232,14 +199,14 @@ randctx *ctx;
    h^=a>>9;  c+=h; a+=b; \
 }
 
-/* if (flag==TRUE), then use the contents of randrsl[] to initialize mm[]. */
+/* if (flag==true), then use the contents of randrsl[] to initialize mm[]. */
 static void randinit(ctx, flag)
 randctx *ctx;
 word     flag;
 {
    word i;
-   ub4 a,b,c,d,e,f,g,h;
-   ub4 *m,*r;
+   uint32_t a,b,c,d,e,f,g,h;
+   uint32_t *m,*r;
    ctx->randa = ctx->randb = ctx->randc = 0;
    m=ctx->randmem;
    r=ctx->randrsl;
@@ -250,7 +217,7 @@ word     flag;
      mix(a,b,c,d,e,f,g,h);
    }
 
-   if (flag) 
+   if (flag)
    {
      /* initialize using the contents of r[] as the seed */
      for (i=0; i<RANDSIZ; i+=8)
@@ -307,7 +274,7 @@ static double ISAAC_U01 (void *vpar, void *vsta)
 /*-----------------------------------------------------------------------*/
 
 static void WrISAAC (void *junk) {
-   ub4 i;
+   uint32_t i;
    if (!unif01_WrLongStateFlag) {
       unif01_WrLongStateDef ();
       return;
@@ -326,7 +293,7 @@ static void WrISAAC (void *junk) {
 /*-----------------------------------------------------------------------*/
 
 unif01_Gen * ucrypto_CreateISAAC (int flag, unsigned int A[]) {
-   ub4 i;
+   uint32_t i;
    unif01_Gen *gen;
    size_t leng;
    char name[LEN + 1];
@@ -350,17 +317,17 @@ unif01_Gen * ucrypto_CreateISAAC (int flag, unsigned int A[]) {
       for (i=0; i<RANDSIZ; ++i) ctx.randrsl[i] = A[i];
       break;
    case 1:
-      ctx.randa = ctx.randb = ctx.randc = (ub4)0;
+      ctx.randa = ctx.randb = ctx.randc = (uint32_t)0;
       for (i=0; i<RANDSIZ; ++i) ctx.randrsl[i] = A[i];
-      randinit(&ctx, TRUE);
+      randinit(&ctx, true);
       break;
    case 0:
      /* this is Jenkins' original version without outside initialization.
         However, in his rand.c programm, Jenkins prints the numbers from
         i = 0 to RANDSIZ-1, while we use them in the reverse order. */
-      ctx.randa = ctx.randb = ctx.randc = (ub4)0;
-      for (i=0; i<RANDSIZ; ++i) ctx.randrsl[i] = (ub4)0;
-      randinit(&ctx, TRUE);
+      ctx.randa = ctx.randb = ctx.randc = (uint32_t)0;
+      for (i=0; i<RANDSIZ; ++i) ctx.randrsl[i] = (uint32_t)0;
+      randinit(&ctx, true);
       break;
    default:
       util_Error ("ucrypto_CreateISAAC:   flag must be in {0, 1, 2}");

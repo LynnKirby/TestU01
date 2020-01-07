@@ -119,7 +119,7 @@ static void InitRes (
    int jmax,                  /* Maximal index for Count */
    char *nam
 )
-/* 
+/*
  * Initializes res
  */
 {
@@ -165,7 +165,7 @@ static void InitExactOver (
    double *Mu,                /* Mean */
    double *Sigma              /* Standard deviation */
    )
-/* 
+/*
  * Initializes the exact values of the mean and the standard deviation
  * for the entropy, if these are known (precomputed). Otherwise, sets
  * the standard deviation to -1.
@@ -284,7 +284,7 @@ void sentrop_EntropyDiscOver (unif01_Gen * gen, sentrop_Res * res,
    double xLgx[NLIM + 1];         /* = -i/n * Lg (i/n) */
    double NLR = N;
    double temp, E1;
-   lebool localRes = FALSE;
+   bool localRes = false;
    chrono_Chrono *Timer;
    char *TestName = "sentrop_EntropyDiscOver test";
 
@@ -305,7 +305,7 @@ void sentrop_EntropyDiscOver (unif01_Gen * gen, sentrop_Res * res,
    nSurs = n / s;
 
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = sentrop_CreateRes ();
    }
    InitRes (res, N, C - 1, "sentrop_EntropyDiscOver");
@@ -384,7 +384,7 @@ void sentrop_EntropyDiscOver (unif01_Gen * gen, sentrop_Res * res,
    Corr = SumSq / (NLR - 1.0) - temp - Mean * Mean;
    if (Var <= 0.0) {
       Corr = 1.0e100;
-      util_Warning (TRUE,
+      util_Warning (true,
          "Empirical variance <= 0.   Correlation set to 1e100.");
    } else
       Corr /= Var;
@@ -444,7 +444,7 @@ void sentrop_EntropyDiscOver2 (unif01_Gen * gen, sentrop_Res * res,
    double xLgx[NLIM + 1];         /* = -i/n * Lg (i/n) */
    double NLR = N;
    double temp, E1;
-   lebool localRes = FALSE;
+   bool localRes = false;
    chrono_Chrono *Timer;
    char *TestName = "sentrop_EntropyDiscOver2 test";
 
@@ -471,7 +471,7 @@ void sentrop_EntropyDiscOver2 (unif01_Gen * gen, sentrop_Res * res,
    CLC = num_TwoExp[L];
 
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = sentrop_CreateRes ();
    }
    InitRes (res, N, C - 1, "sentrop_EntropyDiscOver2");
@@ -569,7 +569,7 @@ void sentrop_EntropyDiscOver2 (unif01_Gen * gen, sentrop_Res * res,
    Corr = SumSq / (NLR - 1.0) - temp - Mean * Mean;
    if (Var <= 0.0) {
       Corr = 1.0e100;
-      util_Warning (TRUE,
+      util_Warning (true,
          "Empirical variance <= 0.   Correlation set to 1e100.");
    } else
       Corr /= Var;
@@ -647,7 +647,7 @@ static void EntropyDisc00 (unif01_Gen * gen, sentrop_Res * res,
    unsigned long Block;
    unsigned long Number;
    unsigned int LL = L;
-   lebool localRes = FALSE;
+   bool localRes = false;
    chrono_Chrono *Timer;
    char *TestName = "sentrop_EntropyDisc test";
 
@@ -680,7 +680,7 @@ static void EntropyDisc00 (unif01_Gen * gen, sentrop_Res * res,
       WriteDataDisc (gen, TestName, N, n, r, s, L, Mu, Sigma);
 
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = sentrop_CreateRes ();
    }
    InitRes (res, N, C - 1, "sentrop_EntropyDisc");
@@ -809,16 +809,16 @@ void sentrop_EntropyDisc (unif01_Gen * gen, sentrop_Res * res,
    par = smultin_CreateParam (1, ValDelta, smultin_GenerCellSerial, 3);
    if (NULL == res) {
       if (n / x <= 8.0)
-         smultin_Multinomial (gen, par, NULL, N, n, r, d, t, TRUE);
+         smultin_Multinomial (gen, par, NULL, N, n, r, d, t, true);
       else
-         smultin_Multinomial (gen, par, NULL, N, n, r, d, t, FALSE);
+         smultin_Multinomial (gen, par, NULL, N, n, r, d, t, false);
    } else {
       smultin_Res *resm;
       resm = smultin_CreateRes (par);
       if (n / x <= 8.0)
-         smultin_Multinomial (gen, par, resm, N, n, r, d, t, TRUE);
+         smultin_Multinomial (gen, par, resm, N, n, r, d, t, true);
       else
-         smultin_Multinomial (gen, par, resm, N, n, r, d, t, FALSE);
+         smultin_Multinomial (gen, par, resm, N, n, r, d, t, false);
       InitRes (res, N, 0, "sentrop_EntropyDisc");
       statcoll_SetDesc (res->Bas->sVal1, "EntropyDisc sVal1");
       res->Bas->sVal1->NObs = resm->Collector[0]->NObs;
@@ -855,7 +855,7 @@ void sentrop_EntropyDM (unif01_Gen * gen, sres_Basic * res,
    double nLR = n;
    double Twom;                   /* 2m */
    double *AU;
-   lebool localRes = FALSE;
+   bool localRes = false;
    chrono_Chrono *Timer;
    char *TestName = "sentrop_EntropyDM test";
 
@@ -872,7 +872,7 @@ void sentrop_EntropyDM (unif01_Gen * gen, sres_Basic * res,
    }
 
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = sres_CreateBasic ();
    }
    sres_InitBasic (res, N, "sentrop_EntropyDM");
@@ -948,7 +948,7 @@ void sentrop_EntropyDMCirc (unif01_Gen * gen, sres_Basic * res,
    double nLR = n;
    double Twom;                   /* 2m */
    double *AU;
-   lebool localRes = FALSE;
+   bool localRes = false;
    chrono_Chrono *Timer;
    char *TestName = "sentrop_EntropyDMCirc test";
 
@@ -965,7 +965,7 @@ void sentrop_EntropyDMCirc (unif01_Gen * gen, sres_Basic * res,
    }
 
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = sres_CreateBasic ();
    }
    sres_InitBasic (res, N, "sentrop_EntropyDMCirc");

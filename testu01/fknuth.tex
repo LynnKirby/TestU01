@@ -1,7 +1,7 @@
 \defmodule {fknuth}
 
 This module applies tests from the module {\tt sknuth}
-to families of generators of different sizes, 
+to families of generators of different sizes,
 and prints tables of the corresponding $p$-values.
 % The results are placed in tables of $p$-values.
 
@@ -26,7 +26,7 @@ extern long fknuth_Maxn;
   A test is called only when $n$ does not exceed this value.
   Default value: $2^{22}$.
  \hpierre {Pourquoi $2^{22}$ ici et $2^{20}$ ailleurs? }
- \hrichard {Il n'y a pas de raison sp\'eciale. Je ne sais pas quelle valeur 
+ \hrichard {Il n'y a pas de raison sp\'eciale. Je ne sais pas quelle valeur
     mettre par d\'efaut.}
  \hpierre {Alors il me semble qu'il faut mettre la m\^eme valeur partout.
    Peut-\^etre $2^{22}$, ou plus. }
@@ -57,16 +57,16 @@ typedef struct {
 
 fknuth_Res1 * fknuth_CreateRes1 (void);
 \endcode
- \tab 
+ \tab
   Creates and returns a structure that will hold the results
-  of a  {\tt fknuth\_MaxOft} test. 
+  of a  {\tt fknuth\_MaxOft} test.
  \endtab
 \code
 
 
 void fknuth_DeleteRes1 (fknuth_Res1 *res);
 \endcode
- \tab 
+ \tab
   Frees the memory allocated by {\tt fknuth\_CreateRes1}.
  \endtab
 
@@ -79,8 +79,8 @@ void fknuth_DeleteRes1 (fknuth_Res1 *res);
 
 void fknuth_Serial1 (void);
 \endcode
-\tab This is equivalent to calling 
- {\tt fmultin\_Serial1} with {\tt Sparse = FALSE}, 
+\tab This is equivalent to calling
+ {\tt fmultin\_Serial1} with {\tt Sparse = false},
   {\tt NbDelta = 1}, and {\tt Val\-Delta[0] = 1}.
  \endtab
 \code
@@ -88,24 +88,24 @@ void fknuth_Serial1 (void);
 
 void fknuth_SerialSparse1 (void);
 \endcode
-\tab This is equivalent to calling {\tt fmultin\_Serial1} with 
-  {\tt Sparse = TRUE},  {\tt NbDelta = 1}, and {\tt Val\-Delta[0] = 1}.
+\tab This is equivalent to calling {\tt fmultin\_Serial1} with
+  {\tt Sparse = true},  {\tt NbDelta = 1}, and {\tt Val\-Delta[0] = 1}.
  \endtab
 \code
 
 
 void fknuth_Collision1 (void);
 \endcode
-\tab This is equivalent to calling {\tt fmultin\_Serial1} with 
-  {\tt Sparse = TRUE, NbDelta = 1}, and {\tt Val\-Delta[0] = -1}.
+\tab This is equivalent to calling {\tt fmultin\_Serial1} with
+  {\tt Sparse = true, NbDelta = 1}, and {\tt Val\-Delta[0] = -1}.
  \endtab
 \code
 
 
 void fknuth_Permutation1 (void);
 \endcode
-\tab This is equivalent to  calling {\tt fmultin\_Permut1} with 
-  {\tt Sparse = FALSE, NbDelta = 1}, and
+\tab This is equivalent to  calling {\tt fmultin\_Permut1} with
+  {\tt Sparse = false, NbDelta = 1}, and
   {\tt Val\-Delta[0] = 1}.
  \endtab
 \code
@@ -113,8 +113,8 @@ void fknuth_Permutation1 (void);
 
 void fknuth_CollisionPermut1 (void);
 \endcode
-\tab This is equivalent to  calling {\tt fmultin\_Permut1} with 
-  {\tt Sparse = TRUE},  {\tt NbDelta = 1},  and {\tt Val\-Delta[0] = -1}.
+\tab This is equivalent to  calling {\tt fmultin\_Permut1} with
+  {\tt Sparse = true},  {\tt NbDelta = 1},  and {\tt Val\-Delta[0] = -1}.
  \endtab
 \code
 
@@ -155,12 +155,12 @@ void fknuth_CouponCollector1 (ffam_Fam *fam, fres_Cont *res, fcho_Cho *cho,
 
 
 void fknuth_Run1 (ffam_Fam *fam, fres_Cont *res, fcho_Cho *cho,
-                  long N, int r, lebool Up, lebool Indep,
+                  long N, int r, bool Up, bool Indep,
                   int Nr, int j1, int j2, int jstep);
 
 \endcode
   \tab Similar to {\tt fknuth\_Gap} but with {\tt sknuth\_RunIndep}
-  if {\tt Indep = TRUE}, and {\tt sknuth\_Run} otherwise.
+  if {\tt Indep = true}, and {\tt sknuth\_Run} otherwise.
  \endtab
 \code
 

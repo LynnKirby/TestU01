@@ -215,7 +215,7 @@ static void PrintTexName (char *nam)
 static void PrintLog2 (double d)
 /*
  * Prints the logarithm (rounded) of d in base 2, when d is outside the
- * interval [SuspectLog2pval, 1 - SuspectLog2pval]; otherwise prints 
+ * interval [SuspectLog2pval, 1 - SuspectLog2pval]; otherwise prints
  * nothing.
  */
 {
@@ -272,7 +272,7 @@ static void PrintLog2Tex (double d)
 static void PrintLog10 (double d)
 /*
  * Prints the logarithm (rounded) of d in base 10, when d is outside the
- * interval [ftab_Suspectp, 1 - ftab_Suspectp]; otherwise prints 
+ * interval [ftab_Suspectp, 1 - ftab_Suspectp]; otherwise prints
  * nothing.
  */
 {
@@ -333,7 +333,7 @@ static void PrintVal (ftab_Table * T, double d, ftab_FormType Form)
  */
 {
    int s;
-   /* All Table tables are initialized to -1; thus the test was not done for 
+   /* All Table tables are initialized to -1; thus the test was not done for
       this pair (e, f) if d = -1. */
    if (d < -0.9) {
       printf ("      ---  ");
@@ -509,7 +509,7 @@ void ftab_PrintTable (ftab_Table * T)
 
 /*=========================================================================*/
 
-static void PrintTable2Tex (ftab_Table * T1, ftab_Table * T2, lebool Flag)
+static void PrintTable2Tex (ftab_Table * T1, ftab_Table * T2, bool Flag)
 /*
  * Prints tables in Latex style, T1 according to format Form1,
  * T2 according to format Form2.
@@ -565,7 +565,7 @@ static void PrintTable2Tex (ftab_Table * T1, ftab_Table * T2, lebool Flag)
 
 /*=========================================================================*/
 
-static void PrintTable2Plain (ftab_Table * T1, ftab_Table * T2, lebool Flag)
+static void PrintTable2Plain (ftab_Table * T1, ftab_Table * T2, bool Flag)
 /*
  * Prints tables in plain text style, T1 according to format Form1,
  * T2 according to format Form2.
@@ -614,7 +614,7 @@ static void PrintTable2Plain (ftab_Table * T1, ftab_Table * T2, lebool Flag)
 
 /*=========================================================================*/
 
-void ftab_PrintTable2 (ftab_Table * T1, ftab_Table * T2, lebool Flag)
+void ftab_PrintTable2 (ftab_Table * T1, ftab_Table * T2, bool Flag)
 {
    if (NULL == T1 || NULL == T2)
       return;

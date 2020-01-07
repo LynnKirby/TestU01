@@ -1,13 +1,13 @@
 \defmodule {addstr}
 
 The functions described here are convenient tools for constructing
-character strings that contain a series of numeric parameters, 
+character strings that contain a series of numeric parameters,
 with their values.
-For example, suppose one wishes to put 
-``{\tt LCG with m = 101, a = 12, s = 1}'' in the string {\tt str}, 
-where the actual 
+For example, suppose one wishes to put
+``{\tt LCG with m = 101, a = 12, s = 1}'' in the string {\tt str},
+where the actual
 numbers 101, 12, and 1 must be taken as the values of {\tt long}
-integer variables {\tt m}, {\tt a}, and {\tt s}.  
+integer variables {\tt m}, {\tt a}, and {\tt s}.
 This can be achieved by the instructions:
 \vcode
 
@@ -19,7 +19,7 @@ This can be achieved by the instructions:
 
 Each function {\tt addstr\_... (char *to, const char *add, ...)}
 first appends the string {\tt add} to the string {\tt to}, then
-appends to it a character string representation of the number 
+appends to it a character string representation of the number
 (or array of numbers) specified by its last parameter.
 In the case of an array of numbers (e.g., {\tt addstr\_ArrayLong}),
 the parameter {\tt high} specifies the size of the array, and the
@@ -59,11 +59,9 @@ void  addstr_Bool (char *to, const char *add, int b);
 \endcode
 \code
 
-#ifdef USE_LONGLONG
-void  addstr_LONG (char *to, const char *add, longlong n);
+void  addstr_LONG (char *to, const char *add, int64_t n);
 
-void  addstr_ULONG (char *to, const char *add, ulonglong n);
-#endif
+void  addstr_ULONG (char *to, const char *add, uint64_t n);
 \endcode
 \code
 

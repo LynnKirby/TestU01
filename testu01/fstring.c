@@ -65,7 +65,7 @@ static void InitRes1 (
    char *name1,
    char *name2
 )
-/* 
+/*
  * Initializes the fstring_Res1 structure
  */
 {
@@ -109,7 +109,7 @@ static void InitRes2 (
    char *name1,
    char *name2
 )
-/* 
+/*
  * Initializes the fstring_Res2 structure
  */
 {
@@ -145,7 +145,7 @@ void fstring_DeleteRes2 (fstring_Res2 *res)
 /*=========================================================================*/
 
 static void PrintHead (char *test, ffam_Fam *fam,
-   long N, long n, int r, int s, long L, int d, 
+   long N, long n, int r, int s, long L, int d,
    int Nr, int j1, int j2, int jstep)
 {
    printf
@@ -186,7 +186,7 @@ static int ChooseParam (int prec, void *cho, cho_Type ver,
       util_Assert (cho2, "fstring:   cho2 is NULL");
       chon = cho2->Chon;
       choL = cho2->Chop2;
-      util_Assert (*pn < 0 || *pL < 0, 
+      util_Assert (*pn < 0 || *pL < 0,
          "fstring:   Either n or L must be < 0" );
       break;
    case CHO_CHO:
@@ -265,17 +265,17 @@ void fstring_Period1 (ffam_Fam *fam, fres_Cont *res, fcho_Cho *cho,
    int Nr, int j1, int j2, int jstep)
 {
    long Par[5] = { 0 };
-   lebool localRes;
+   bool localRes;
 
    Par[0] = N;
    Par[1] = -1;
    Par[2] = r;
    Par[3] = s;
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = fres_CreateCont ();
    } else
-      localRes = FALSE;
+      localRes = false;
 
    PrintHead ("fstring_Period1", fam, N, 0, r, s, 0, 0, Nr, j1, j2, jstep);
    fres_InitCont (fam, res, N, Nr, j1, j2, jstep, "fstring_Period1");
@@ -320,17 +320,17 @@ void fstring_Run1 (ffam_Fam *fam, fstring_Res2 *res, fcho_Cho *cho,
    int Nr, int j1, int j2, int jstep)
 {
    long Par[5] = {0};
-   lebool localRes;
+   bool localRes;
 
    Par[0] = N;
    Par[1] = -1;
    Par[2] = r;
    Par[3] = s;
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = fstring_CreateRes2 ();
    } else
-      localRes = FALSE;
+      localRes = false;
 
    PrintHead ("fstring_Run1", fam, N, 0, r, s, 0, 0, Nr, j1, j2, jstep);
    InitRes2 (fam, res, N, Nr, j1, j2, jstep, "fstring_Run1, Number of Bits",
@@ -377,7 +377,7 @@ void fstring_AutoCor1 (ffam_Fam *fam, fres_Cont *res, fcho_Cho *cho,
    int Nr, int j1, int j2, int jstep)
 {
    long Par[6] = {0};
-   lebool localRes;
+   bool localRes;
 
    Par[0] = N;
    Par[1] = -1;
@@ -385,10 +385,10 @@ void fstring_AutoCor1 (ffam_Fam *fam, fres_Cont *res, fcho_Cho *cho,
    Par[3] = s;
    Par[5] = d;
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = fres_CreateCont ();
    } else
-      localRes = FALSE;
+      localRes = false;
 
    PrintHead ("fstring_AutoCor1", fam, N, 0, r, s, 0, d, Nr, j1, j2, jstep);
    fres_InitCont (fam, res, N, Nr, j1, j2, jstep, "fstring_AutoCor1");
@@ -438,7 +438,7 @@ void fstring_LongHead1 (ffam_Fam *fam, fstring_Res1 *res, fcho_Cho2 *cho,
    int Nr, int j1, int j2, int jstep)
 {
    long Par[5] = {0};
-   lebool localRes;
+   bool localRes;
 
    Par[0] = N;
    Par[1] = n;
@@ -446,10 +446,10 @@ void fstring_LongHead1 (ffam_Fam *fam, fstring_Res1 *res, fcho_Cho2 *cho,
    Par[3] = s;
    Par[4] = L;
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = fstring_CreateRes1 ();
    } else
-      localRes = FALSE;
+      localRes = false;
 
    PrintHead ("fstring_LongHead1", fam, N, n, r, s, L, 0, Nr, j1, j2, jstep);
    InitRes1 (fam, res, N, Nr, j1, j2, jstep,
@@ -513,7 +513,7 @@ static void Ver_HamWeight (ffam_Fam *fam, fres_Cont *res,
    int Nr, int j1, int j2, int jstep, int ver)
 {
    long Par[6] = {0};
-   lebool localRes;
+   bool localRes;
    char Name[60];
 
    Par[0] = N;
@@ -523,10 +523,10 @@ static void Ver_HamWeight (ffam_Fam *fam, fres_Cont *res,
    Par[4] = L;
    Par[5] = ver;
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = fres_CreateCont ();
    } else
-      localRes = FALSE;
+      localRes = false;
 
    if (ver == 2)
      strcpy (Name, "fstring_HamWeight2");
@@ -594,7 +594,7 @@ void fstring_HamCorr1 (ffam_Fam *fam, fres_Cont *res, fcho_Cho2 *cho,
    int Nr, int j1, int j2, int jstep)
 {
    long Par[5];
-   lebool localRes;
+   bool localRes;
 
    Par[0] = N;
    Par[1] = n;
@@ -602,10 +602,10 @@ void fstring_HamCorr1 (ffam_Fam *fam, fres_Cont *res, fcho_Cho2 *cho,
    Par[3] = s;
    Par[4] = L;
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = fres_CreateCont ();
    } else
-      localRes = FALSE;
+      localRes = false;
 
    PrintHead ("fstring_HamCorr1", fam, N, n, r, s, L, 0, Nr, j1, j2, jstep);
    fres_InitCont (fam, res, N, Nr, j1, j2, jstep, "fstring_HamCorr1");
@@ -650,7 +650,7 @@ void fstring_HamIndep1 (ffam_Fam *fam, fres_Cont *res, fcho_Cho2 *cho,
    int Nr, int j1, int j2, int jstep)
 {
    long Par[5];
-   lebool localRes;
+   bool localRes;
 
    Par[0] = N;
    Par[1] = n;
@@ -658,10 +658,10 @@ void fstring_HamIndep1 (ffam_Fam *fam, fres_Cont *res, fcho_Cho2 *cho,
    Par[3] = s;
    Par[4] = L;
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = fres_CreateCont ();
    } else
-      localRes = FALSE;
+      localRes = false;
 
    PrintHead ("fstring_HamIndep1", fam, N, n, r, s, L, 0, Nr, j1, j2, jstep);
    fres_InitCont (fam, res, N, Nr, j1, j2, jstep, "fstring_HamIndep1");

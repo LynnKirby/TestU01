@@ -302,12 +302,11 @@ unif01_Gen *uxorshift_CreateXorshift32 (int a, int b, int c, unsigned int y)
 
 
 /***************************************************************************/
-#ifdef USE_LONGLONG
 
 static unsigned long Shift64RLL_Bits (void *vpar, void *vsta)
 {
-   ulonglong *state = vsta;
-   ulonglong t = *state;
+   uint64_t *state = vsta;
+   uint64_t t = *state;
    Shift3_param *param = vpar;
 
    t ^= t >> param->a;
@@ -327,8 +326,8 @@ static double Shift64RLL_U01 (void *par, void *sta)
 /* LRL */
 static unsigned long Shift64LRL_Bits (void *vpar, void *vsta)
 {
-   ulonglong *state = vsta;
-   ulonglong t = *state;
+   uint64_t *state = vsta;
+   uint64_t t = *state;
    Shift3_param *param = vpar;
 
    t ^= t << param->a;
@@ -348,8 +347,8 @@ static double Shift64LRL_U01 (void *par, void *sta)
 /* LLR */
 static unsigned long Shift64LLR_Bits (void *vpar, void *vsta)
 {
-   ulonglong *state = vsta;
-   ulonglong t = *state;
+   uint64_t *state = vsta;
+   uint64_t t = *state;
    Shift3_param *param = vpar;
 
    t ^= t << param->a;
@@ -369,8 +368,8 @@ static double Shift64LLR_U01 (void *par, void *sta)
 /* RRL */
 static unsigned long Shift64RRL_Bits (void *vpar, void *vsta)
 {
-   ulonglong *state = vsta;
-   ulonglong t = *state;
+   uint64_t *state = vsta;
+   uint64_t t = *state;
    Shift3_param *param = vpar;
 
    t ^= t >> param->a;
@@ -390,8 +389,8 @@ static double Shift64RRL_U01 (void *par, void *sta)
 /* RLR */
 static unsigned long Shift64RLR_Bits (void *vpar, void *vsta)
 {
-   ulonglong *state = vsta;
-   ulonglong t = *state;
+   uint64_t *state = vsta;
+   uint64_t t = *state;
    Shift3_param *param = vpar;
 
    t ^= t >> param->a;
@@ -411,8 +410,8 @@ static double Shift64RLR_U01 (void *par, void *sta)
 /* LRR */
 static unsigned long Shift64LRR_Bits (void *vpar, void *vsta)
 {
-   ulonglong *state = vsta;
-   ulonglong t = *state;
+   uint64_t *state = vsta;
+   uint64_t t = *state;
    Shift3_param *param = vpar;
 
    t ^= t << param->a;
@@ -432,19 +431,19 @@ static double Shift64LRR_U01 (void *par, void *sta)
 
 static void WrShift64 (void *sta)
 {
-   ulonglong *state = sta;
+   uint64_t *state = sta;
    printf (" S = %" PRIuLEAST64 "\n", *state);
 }
 
 /*-----------------------------------------------------------------------*/
 
-unif01_Gen *uxorshift_CreateXorshift64 (int a, int b, int c, ulonglong y)
+unif01_Gen *uxorshift_CreateXorshift64 (int a, int b, int c, uint64_t y)
 {
    unif01_Gen *gen;
    size_t leng;
    char name[LEN + 1];
    Shift3_param *param;
-   ulonglong *state;
+   uint64_t *state;
 
    util_Assert ((a < 64) && (a > -64),
        "uxorshift_CreateXorshift64:   a must be in [-64..64]");
@@ -454,7 +453,7 @@ unif01_Gen *uxorshift_CreateXorshift64 (int a, int b, int c, ulonglong y)
        "uxorshift_CreateXorshift64:   c must be in [-64..64]");
 
    gen = util_Malloc (sizeof (unif01_Gen));
-   state = util_Malloc (sizeof (ulonglong));
+   state = util_Malloc (sizeof (uint64_t));
    param = util_Malloc (sizeof (Shift3_param));
 
    *state = y;
@@ -515,7 +514,6 @@ unif01_Gen *uxorshift_CreateXorshift64 (int a, int b, int c, ulonglong y)
 }
 
 
-#endif
 /***************************************************************************/
 
 
@@ -538,7 +536,7 @@ static unsigned long XorshiftC_Bits (void *vpar, void *vsta)
    for (j = 1; j < state->N; j++)
       state->Z[j] = state->Z[j + 1];
 
-   if (param->b > 0) 
+   if (param->b > 0)
       t = t ^ (t << param->b);
    else {
 #ifndef IS_ULONG32
@@ -550,7 +548,7 @@ static unsigned long XorshiftC_Bits (void *vpar, void *vsta)
    if (param->c > 0)
       state->Z[state->N] = state->Z[state->N] ^
                            (state->Z[state->N] << param->c) ^ t;
-   else 
+   else
       state->Z[state->N] = state->Z[state->N] ^
                            (state->Z[state->N] >> -param->c) ^ t;
 
@@ -630,7 +628,7 @@ unif01_Gen *uxorshift_CreateXorshiftC (int a, int b, int c, int N,
 
    state->N = N;
    state->Z = util_Calloc ((size_t) N + 1, sizeof (unsigned long));
-   for (i = 0; i < N; i++) 
+   for (i = 0; i < N; i++)
       state->Z[i + 1] = S[i];
 
    gen->GetBits = &XorshiftC_Bits;

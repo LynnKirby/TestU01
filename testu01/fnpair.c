@@ -97,7 +97,7 @@ static void InitRes1 (
    int Nr,
    int j1, int j2, int jstep
 )
-/* 
+/*
  * Initializes the fnpair_Res1 structure
  */
 {
@@ -322,7 +322,7 @@ void fnpair_ClosePairs1 (ffam_Fam * fam, fnpair_Res1 * res, fcho_Cho2 * cho,
    long N, int r, int t, int p, int m, int Nr, int j1, int j2, int jstep)
 {
    long Par[5];
-   lebool localRes;
+   bool localRes;
 
    Par[0] = N;
    Par[1] = r;
@@ -330,10 +330,10 @@ void fnpair_ClosePairs1 (ffam_Fam * fam, fnpair_Res1 * res, fcho_Cho2 * cho,
    Par[3] = p;
    Par[4] = m;
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = fnpair_CreateRes1 ();
    } else
-      localRes = FALSE;
+      localRes = false;
 
    PrintHead ("fnpair_ClosePairs1",
       fam, A_CLOSEPAIRS, Par, Nr, j1, j2, jstep);
@@ -354,7 +354,7 @@ static void TabBickel (ffam_Fam * fam, void *res1, void *cho,
    void *par1, int i, int j, int irow, int icol)
 {
    int r, t, p;
-   lebool Torus;
+   bool Torus;
    long N, n;
    long *Par = par1;
    fnpair_Res1 *fres = res1;
@@ -380,11 +380,11 @@ static void TabBickel (ffam_Fam * fam, void *res1, void *cho,
 /*------------------------------------------------------------------------*/
 
 void fnpair_Bickel1 (ffam_Fam * fam, fnpair_Res1 * res, fcho_Cho * cho,
-   long N, int r, int t, int p, lebool Torus,
+   long N, int r, int t, int p, bool Torus,
    int Nr, int j1, int j2, int jstep)
 {
    long Par[5];
-   lebool localRes;
+   bool localRes;
 
    Par[0] = N;
    Par[1] = r;
@@ -392,10 +392,10 @@ void fnpair_Bickel1 (ffam_Fam * fam, fnpair_Res1 * res, fcho_Cho * cho,
    Par[3] = p;
    Par[4] = Torus;
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = fnpair_CreateRes1 ();
    } else
-      localRes = FALSE;
+      localRes = false;
 
    PrintHead ("fnpair_Bickel1", fam, A_BICKEL, Par, Nr, j1, j2, jstep);
    InitRes1 (fam, A_BICKEL, res, N, Nr, j1, j2, jstep);
@@ -438,16 +438,16 @@ void fnpair_BitMatch1 (ffam_Fam * fam, fnpair_Res1 * res, fcho_Cho * cho,
    long N, int r, int t, int Nr, int j1, int j2, int jstep)
 {
    long Par[3];
-   lebool localRes;
+   bool localRes;
 
    Par[0] = N;
    Par[1] = r;
    Par[2] = t;
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = fnpair_CreateRes1 ();
    } else
-      localRes = FALSE;
+      localRes = false;
 
    PrintHead ("fnpair_BitMatch1", fam, A_BITMATCH, Par, Nr, j1, j2, jstep);
    InitRes1 (fam, A_BITMATCH, res, N, Nr, j1, j2, jstep);

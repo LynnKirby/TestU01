@@ -106,7 +106,7 @@ static void CalcNbExp (
    long k,
    swalk_Res *res
    )
-/* 
+/*
  ************   IMPORTANT: we assume that L is even  ************
  * Compute the expected numbers for the different statistics in the
  * swalk_RandomWalk1 and swalk_RandomWalk1a tests. We start from the
@@ -208,7 +208,7 @@ static void WriteTabWalk (
  * Write the values of the statistics and their p-values in a table
  * for all values of the walk length L from L0 to L1. These values have
  * all been written before, but it is nice to have them all together.
- * When L0 = L1, it is not useful. When the number of replications N > 1, it 
+ * When L0 = L1, it is not useful. When the number of replications N > 1, it
  * is not called either because there would be so many statistics to write.
  */
 {
@@ -276,7 +276,7 @@ static void WriteResultWalk (
 /*
  * Write the basic results of the swalk_RandomWalk1 and swalk_RandomWalk1a
  * tests for all walks of length L between L0 and L1. May write the
- * statistical collectors too. 
+ * statistical collectors too.
  */
 {
    swalk_rwType m;
@@ -399,7 +399,7 @@ static void WriteDetailsWalk (
          iObs = iObs + Obs * i;   /* Observed mean of the statistic */
 
          /* If Esp = 0, this is a class that has been redirected to another
-            for the ChiSquare test; we shall not print it since the counters 
+            for the ChiSquare test; we shall not print it since the counters
             have been redirected also: they are necessarily 0. */
          if (Esp > 0.0) {
             printf ("%4ld", i);
@@ -553,7 +553,7 @@ static void InitRes (
 /*-------------------------------------------------------------------------*/
 
 static void Steps (
-   unif01_Gen *gen, 
+   unif01_Gen *gen,
    swalk_Res *res,
    long j,               /* will generate j-th random number */
    int r,                /* drop the first r bits of each random number */
@@ -619,7 +619,7 @@ void swalk_RandomWalk1 (unif01_Gen *gen, swalk_Res *res,
    double V[1];               /* Number degrees of freedom for ChiSquare */
    long NbClasses;
    char str[LENGTH + 1];
-   lebool localRes = FALSE;
+   bool localRes = false;
    chrono_Chrono *Timer;
    char *TestName = "swalk_RandomWalk1 test";
    WorkType work;
@@ -635,7 +635,7 @@ void swalk_RandomWalk1 (unif01_Gen *gen, swalk_Res *res,
    util_Assert (L1 >= L0,  "swalk_RandomWalk1:   L0 > L1");
    util_Assert (r + s <= PREC, "swalk_RandomWalk1:   r + s > 32");
    if (n < 3.0 * gofs_MinExpected) {
-      util_Warning (TRUE, "swalk_RandomWalk1:   n < 3*gofs_MinExpected");
+      util_Warning (true, "swalk_RandomWalk1:   n < 3*gofs_MinExpected");
       return;
    }
 
@@ -643,7 +643,7 @@ void swalk_RandomWalk1 (unif01_Gen *gen, swalk_Res *res,
    LDS = L1 / s;
    LMS = L1 % s;
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = swalk_CreateRes ();
    }
    InitRes (res, &work, N, L0, L1, "swalk_RandomWalk1");
@@ -829,7 +829,7 @@ void swalk_RandomWalk1a (unif01_Gen *gen, swalk_Res *res,
    double V[1];                   /* Number deg. of freedom for ChiSquare */
    long NbClasses;
    char str[LENGTH + 1];
-   lebool localRes = FALSE;
+   bool localRes = false;
    chrono_Chrono *Timer;
    char *TestName = "swalk_RandomWalk1a test";
    sres_Chi2 *Q;
@@ -843,11 +843,11 @@ void swalk_RandomWalk1a (unif01_Gen *gen, swalk_Res *res,
    util_Assert (r + s <= PREC, "swalk_RandomWalk1a:   r + s > 32");
    util_Assert (s <= PREC, "swalk_RandomWalk1a:   s > 32");
    if (n < 3.0 * gofs_MinExpected) {
-      util_Warning (TRUE, "swalk_RandomWalk1a:   n < 3*gofs_MinExpected");
+      util_Warning (true, "swalk_RandomWalk1a:   n < 3*gofs_MinExpected");
       return;
    }
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = swalk_CreateRes ();
    }
    InitRes (res, NULL, N, L, L, "swalk_RandomWalk1a");
@@ -1028,7 +1028,7 @@ void swalk_RandomWalk1a (unif01_Gen *gen, swalk_Res *res,
 
 /*=========================================================================*/
 
-static void WriteDataGeo (unif01_Gen *gen, char *TestName, 
+static void WriteDataGeo (unif01_Gen *gen, char *TestName,
    long N, long n, int r, double Mu, swalk_AlgoType Algo)
 {
    swrite_Head (gen, TestName, N, n, r);
@@ -1044,7 +1044,7 @@ static void WriteDataGeo (unif01_Gen *gen, char *TestName,
 /*-------------------------------------------------------------------------*/
 
 static void WriteNbExpCount (sres_Chi2 *res, double Prob[])
-/* 
+/*
  * Writes the expected numbers, the observed numbers, and the normalized
  * values in swalk_VarGeo.
  */
@@ -1154,7 +1154,7 @@ static void swalk_VarGeo (unif01_Gen *gen, sres_Chi2 *res,
    char str[LENGTH + 1];
    long tt;
    long NbClasses;
-   lebool localRes = FALSE;
+   bool localRes = false;
    chrono_Chrono *Timer;
    char *TestName = "swalk_VarGeo test";
    double *Prob;
@@ -1178,7 +1178,7 @@ static void swalk_VarGeo (unif01_Gen *gen, sres_Chi2 *res,
    Prob[tt] = fbar_Geometric (1.0 - Mu, tt);
 
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = sres_CreateChi2 ();
    }
    sres_InitChi2 (res, N, tt, "swalk_VarGeo");

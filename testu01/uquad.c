@@ -93,7 +93,7 @@ typedef struct {
 
 typedef struct {
    unsigned long A, B, C, Mask, Shift;
-   lebool Flag;
+   bool Flag;
 } Quad2_param;
 
 typedef struct {
@@ -193,7 +193,7 @@ static unsigned long LSQuad_Bits (void *vpar, void *vsta)
 /*-------------------------------------------------------------------------*/
 
 static double MLQuad_U01 (void *vpar, void *vsta)
-/* 
+/*
  * Implementation used when  a * (m % a) < m
  */
 {
@@ -678,10 +678,10 @@ unif01_Gen *uquad_CreateQuadratic2 (int e, unsigned long a, unsigned long b,
       param->Mask = M - 1;
    if (e <= 32) {
       param->Shift = 32 - e;
-      param->Flag = TRUE;
+      param->Flag = true;
    } else {
       param->Shift = e - 32;
-      param->Flag = FALSE;
+      param->Flag = false;
    }
    state->S = s;
 

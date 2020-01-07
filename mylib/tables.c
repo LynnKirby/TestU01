@@ -210,14 +210,13 @@ void tables_QuickSortL (long T[], int l, int r)
 
 
 /*=======================================================================*/
-#ifdef USE_LONGLONG
 
-void tables_QuickSortLL (longlong T[], int l, int r)
+void tables_QuickSortLL (int64_t T[], int l, int r)
 {
    int j;
    int i;
-   longlong w;
-   longlong x;
+   int64_t w;
+   int64_t x;
    i = l;
    j = r;
    x = T[(l + r) / 2];
@@ -240,12 +239,12 @@ void tables_QuickSortLL (longlong T[], int l, int r)
       tables_QuickSortLL (T, i, r);
 }
 
-void tables_QuickSortULL (ulonglong T[], int l, int r)
+void tables_QuickSortULL (uint64_t T[], int l, int r)
 {
    int j;
    int i;
-   ulonglong w;
-   ulonglong x;
+   uint64_t w;
+   uint64_t x;
    i = l;
    j = r;
    x = T[(l + r) / 2];
@@ -268,7 +267,6 @@ void tables_QuickSortULL (ulonglong T[], int l, int r)
       tables_QuickSortULL (T, i, r);
 }
 
-#endif
 /*=======================================================================*/
 
 void tables_WriteTabL (long V[], int n1, int n2, int k, int p, char Desc[])
@@ -321,9 +319,8 @@ void tables_WriteTabD (double V[], int n1, int n2, int k, int p1,
 
 
 /*=========================================================================*/
-#ifdef USE_LONGLONG
 
-void tables_WriteTabLL (longlong V[], int n1, int n2, int k, int p,
+void tables_WriteTabLL (int64_t V[], int n1, int n2, int k, int p,
     char Desc[])
 {
    int i;
@@ -345,7 +342,7 @@ void tables_WriteTabLL (longlong V[], int n1, int n2, int k, int p,
    printf ("\n");
 }
 
-void tables_WriteTabULL (ulonglong V[], int n1, int n2, int k, int p,
+void tables_WriteTabULL (uint64_t V[], int n1, int n2, int k, int p,
     char Desc[])
 {
    int i;
@@ -367,7 +364,6 @@ void tables_WriteTabULL (ulonglong V[], int n1, int n2, int k, int p,
    printf ("\n");
 }
 
-#endif
 /*=========================================================================*/
 
 

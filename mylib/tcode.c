@@ -176,7 +176,7 @@ static int ProcessLine (char *line)
 int main (int argc, char *argv[])
 {
    char *p, *q;
-   int isCode = 0;         /* If isCode == TRUE, we are in a region of
+   int isCode = 0;         /* If isCode == true, we are in a region of
                               valid code; otherwise not. */
 
    Init (argc, argv);
@@ -188,7 +188,7 @@ int main (int argc, char *argv[])
          /* search for "\def\code" and drop that line: it is not valid code
             but the definition of the TEX command \code */
          if (strstr (Line, "\\def\\code"))
-            ;                             
+            ;
          else if ((p = strstr (Line, "\\code"))) {
             /* search for "\code". If "\code" is found on a line with a %
                before it, then it is a TEX comment and we do not consider

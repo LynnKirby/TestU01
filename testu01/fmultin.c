@@ -116,9 +116,9 @@ static void InitRes (
    int Nr,
    int j1, int j2, int jstep,
    char *name,
-   lebool Over
+   bool Over
 )
-/* 
+/*
  * Initializes the fmultin_Res structure
  */
 {
@@ -274,7 +274,7 @@ static void PrintHead (char *name, TestType test, ffam_Fam * fam,
 
 /*=========================================================================*/
 
-static void PrintRes (fmultin_Res * res, lebool Over)
+static void PrintRes (fmultin_Res * res, bool Over)
 {
    int s, j;
    if (res == NULL)
@@ -283,11 +283,11 @@ static void PrintRes (fmultin_Res * res, lebool Over)
       if (fabs (res->Par->ValDelta[s] + 1.0) > EPSILON)
          fres_PrintCont (res->PowDiv[s]);
       if (fabs (res->Par->ValDelta[s] + 1.0) < EPSILON) {
-         fres_PrintPoisson (res->Coll, FALSE, FALSE);
+         fres_PrintPoisson (res->Coll, false, false);
          if (res->Par->bmax >= 0)
-            fres_PrintPoisson (res->Empty, FALSE, TRUE);
+            fres_PrintPoisson (res->Empty, false, true);
          for (j = 2; j <= res->Par->bmax; j++)
-            fres_PrintPoisson (res->Balls[j], FALSE, FALSE);
+            fres_PrintPoisson (res->Balls[j], false, false);
          /* ftab_PrintTable (res->CellRatio); */
          if (Over)
             ftab_PrintTable (res->COApprox);
@@ -368,7 +368,7 @@ static double CheckK1 (void *vpar, double K, long n)
       /* Choose t or (t-1) that gives t! closest to K */
       if ((x - K)/K > (K - x/t)/K)
 	 t--;
-      return t;      
+      return t;
       break;
 
    default:
@@ -670,7 +670,7 @@ fcho_Cho * fmultin_CreatePer_T (double R)
 /*=========================================================================*/
 
 static void FillTables (fmultin_Res *fres, smultin_Res *sres, long N,
-    int irow, int icol, lebool Over)
+    int irow, int icol, bool Over)
 {
   int i, j;
    for (i = 0; i < fres->Par->NbDelta; i++) {
@@ -697,7 +697,7 @@ static void TabMultin (ffam_Fam *fam, void *vres, void *vcho,
 {
    int r, t;
    long N, n, d;
-   lebool Sparse, Over;
+   bool Sparse, Over;
    smultin_Res *sres;
    fmultin_Res *fres = vres;
    fcho_Cho2 *cho = vcho;
@@ -794,7 +794,7 @@ static void TabSerialBits (ffam_Fam * fam, void *vres, void *vcho,
 {
    int r, s, s1, L;
    long N, n;
-   lebool Sparse, Over;
+   bool Sparse, Over;
    smultin_Res *sres;
    fmultin_Res *fres = vres;
    fcho_Cho2 *cho = vcho;
@@ -852,37 +852,37 @@ static void TabSerialBits (ffam_Fam * fam, void *vres, void *vcho,
 
 void fmultin_Serial1 (ffam_Fam *fam, smultin_Param *spar,
    fmultin_Res *res, fcho_Cho2 *cho, long N, int r, int t,
-   lebool Sparse, int Nr, int j1, int j2, int jstep)
+   bool Sparse, int Nr, int j1, int j2, int jstep)
 {
    long Par[7];
-   lebool localRes;
+   bool localRes;
 
    Par[0] = N;
    Par[1] = r;
    Par[2] = -1;
    Par[3] = t;
    Par[4] = Sparse;
-   Par[5] = FALSE;
+   Par[5] = false;
    Par[6] = A_MULT;
 
    if (spar == NULL)
       spar = &smultin_ParamDefault;
-   if ((spar->GenerCell != smultin_GenerCellSerial) 
+   if ((spar->GenerCell != smultin_GenerCellSerial)
         && (spar->GenerCell != smultin_GenerCellSerial2)) {
       spar->GenerCell = smultin_GenerCellSerial;
-      util_Warning (TRUE,
+      util_Warning (true,
    "fmultin_Serial1:   changing spar->GenerCell to smultin_GenerCellSerial");
    }
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = fmultin_CreateRes (spar);
    } else
-      localRes = FALSE;
+      localRes = false;
 
    PrintHead ("fmultin_Serial1", A_MULT, fam, spar, Par, Nr, j1, j2, jstep);
-   InitRes (fam, res, spar, N, Nr, j1, j2, jstep, "fmultin_Serial1", FALSE);
+   InitRes (fam, res, spar, N, Nr, j1, j2, jstep, "fmultin_Serial1", false);
    ftab_MakeTables (fam, res, cho, Par, TabMultin, Nr, j1, j2, jstep);
-   PrintRes (res, FALSE);
+   PrintRes (res, false);
    if (localRes)
       fmultin_DeleteRes (res);
 }
@@ -892,39 +892,39 @@ void fmultin_Serial1 (ffam_Fam *fam, smultin_Param *spar,
 
 void fmultin_SerialOver1 (ffam_Fam *fam, smultin_Param *spar,
    fmultin_Res *res, fcho_Cho2 *cho, long N, int r, int t,
-   lebool Sparse, int Nr, int j1, int j2, int jstep)
+   bool Sparse, int Nr, int j1, int j2, int jstep)
 {
    long Par[7];
-   lebool localRes;
+   bool localRes;
 
    Par[0] = N;
    Par[1] = r;
    Par[2] = -1;
    Par[3] = t;
    Par[4] = Sparse;
-   Par[5] = TRUE;
+   Par[5] = true;
    Par[6] = A_MULT;
 
    if (spar == NULL)
       spar = &smultin_ParamDefault;
-   if ((spar->GenerCell != smultin_GenerCellSerial) 
+   if ((spar->GenerCell != smultin_GenerCellSerial)
          && (spar->GenerCell != smultin_GenerCellSerial2)) {
       spar->GenerCell = smultin_GenerCellSerial;
-      util_Warning (TRUE,
+      util_Warning (true,
    "fmultin_SerialOver1:   changing spar->GenerCell to smultin_GenerCellSerial");
    }
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = fmultin_CreateRes (spar);
    } else
-      localRes = FALSE;
+      localRes = false;
 
    PrintHead ("fmultin_SerialOver1", A_MULT, fam, spar, Par, Nr,
       j1, j2, jstep);
    InitRes (fam, res, spar, N, Nr, j1, j2, jstep, "fmultin_SerialOver1",
-      TRUE);
+      true);
    ftab_MakeTables (fam, res, cho, Par, TabMultin, Nr, j1, j2, jstep);
-   PrintRes (res, TRUE);
+   PrintRes (res, true);
    if (localRes)
       fmultin_DeleteRes (res);
 }
@@ -933,39 +933,39 @@ void fmultin_SerialOver1 (ffam_Fam *fam, smultin_Param *spar,
 /*========================================================================*/
 
 void fmultin_SerialBits1 (ffam_Fam *fam, smultin_Param *spar,
-   fmultin_Res *res, fcho_Cho2 *cho, long N, int r, int s, lebool Sparse,
+   fmultin_Res *res, fcho_Cho2 *cho, long N, int r, int s, bool Sparse,
    int Nr, int j1, int j2, int jstep)
 {
    long Par[6];
-   lebool localRes;
+   bool localRes;
 
    Par[0] = N;
    Par[1] = r;
    Par[2] = s;
    Par[3] = 0;
    Par[4] = Sparse;
-   Par[5] = FALSE;
+   Par[5] = false;
 
    if (spar == NULL)
       spar = &smultin_ParamDefault;
-   if ((spar->GenerCell != smultin_GenerCellSerial) 
+   if ((spar->GenerCell != smultin_GenerCellSerial)
             && (spar->GenerCell != smultin_GenerCellSerial2)) {
       spar->GenerCell = smultin_GenerCellSerial;
-      util_Warning (TRUE,
+      util_Warning (true,
    "fmultin_SerialBits1:   changing spar->GenerCell to smultin_GenerCellSerial");
    }
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = fmultin_CreateRes (spar);
    } else
-      localRes = FALSE;
+      localRes = false;
 
    PrintHead ("fmultin_SerialBits1", A_BITS, fam, spar, Par, Nr,
       j1, j2, jstep);
    InitRes (fam, res, spar, N, Nr, j1, j2, jstep, "fmultin_SerialBits1",
-      FALSE);
+      false);
    ftab_MakeTables (fam, res, cho, Par, TabSerialBits, Nr, j1, j2, jstep);
-   PrintRes (res, FALSE);
+   PrintRes (res, false);
    if (localRes)
       fmultin_DeleteRes (res);
 }
@@ -974,39 +974,39 @@ void fmultin_SerialBits1 (ffam_Fam *fam, smultin_Param *spar,
 /*========================================================================*/
 
 void fmultin_SerialBitsOver1 (ffam_Fam *fam, smultin_Param *spar,
-   fmultin_Res *res, fcho_Cho2 *cho, long N, int r, int s, lebool Sparse,
+   fmultin_Res *res, fcho_Cho2 *cho, long N, int r, int s, bool Sparse,
    int Nr, int j1, int j2, int jstep)
 {
    long Par[6];
-   lebool localRes;
+   bool localRes;
 
    Par[0] = N;
    Par[1] = r;
    Par[2] = s;
    Par[3] = 0;
    Par[4] = Sparse;
-   Par[5] = TRUE;
+   Par[5] = true;
 
    if (spar == NULL)
       spar = &smultin_ParamDefault;
-   if ((spar->GenerCell != smultin_GenerCellSerial) 
+   if ((spar->GenerCell != smultin_GenerCellSerial)
             && (spar->GenerCell != smultin_GenerCellSerial2)) {
       spar->GenerCell = smultin_GenerCellSerial;
-      util_Warning (TRUE,
+      util_Warning (true,
    "fmultin_SerialBitsOver1:   changing spar->GenerCell to smultin_GenerCellSerial");
    }
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = fmultin_CreateRes (spar);
    } else
-      localRes = FALSE;
+      localRes = false;
 
    PrintHead ("fmultin_SerialBitsOver1", A_BITS, fam, spar, Par, Nr,
       j1, j2, jstep);
    InitRes (fam, res, spar, N, Nr, j1, j2, jstep, "fmultin_SerialBitsOver1",
-      TRUE);
+      true);
    ftab_MakeTables (fam, res, cho, Par, TabSerialBits, Nr, j1, j2, jstep);
-   PrintRes (res, TRUE);
+   PrintRes (res, true);
    if (localRes)
       fmultin_DeleteRes (res);
 }
@@ -1016,36 +1016,36 @@ void fmultin_SerialBitsOver1 (ffam_Fam *fam, smultin_Param *spar,
 
 void fmultin_Permut1 (ffam_Fam *fam, smultin_Param *spar,
    fmultin_Res *res, fcho_Cho2 *cho, long N, int r,
-   lebool Sparse, int Nr, int j1, int j2, int jstep)
+   bool Sparse, int Nr, int j1, int j2, int jstep)
 {
    long Par[7];
-   lebool localRes;
+   bool localRes;
 
    Par[0] = N;
    Par[1] = r;
    Par[2] = 1;
    Par[3] = -1;
    Par[4] = Sparse;
-   Par[5] = FALSE;
+   Par[5] = false;
    Par[6] = A_PERM;
 
    if (spar == NULL)
       spar = &smultin_ParamDefault;
    if ((spar->GenerCell != smultin_GenerCellPermut)) {
       spar->GenerCell = smultin_GenerCellPermut;
-      util_Warning (TRUE,
+      util_Warning (true,
    "fmultin_Permut1:   changing GenerCell to smultin_GenerCellPermut");
    }
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = fmultin_CreateRes (spar);
    } else
-      localRes = FALSE;
+      localRes = false;
 
    PrintHead ("fmultin_Permut1", A_PERM, fam, spar, Par, Nr, j1, j2, jstep);
-   InitRes (fam, res, spar, N, Nr, j1, j2, jstep, "fmultin_Permut1", FALSE);
+   InitRes (fam, res, spar, N, Nr, j1, j2, jstep, "fmultin_Permut1", false);
    ftab_MakeTables (fam, res, cho, Par, TabMultin, Nr, j1, j2, jstep);
-   PrintRes (res, FALSE);
+   PrintRes (res, false);
    if (localRes)
       fmultin_DeleteRes (res);
 }

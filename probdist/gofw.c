@@ -250,7 +250,7 @@ double gofw_pDisc (double pLeft, double pRight)
    else
       p = 1.0 - pLeft;
    /* Note: si p est tres proche de 1, on perd toute la precision ici! */
-   /* Note2: je ne pense pas que cela puisse se produire a cause des if (RS) 
+   /* Note2: je ne pense pas que cela puisse se produire a cause des if (RS)
     */
    return p;
 }
@@ -501,7 +501,7 @@ void gofw_Tests1 (double V[], long N, wdist_CFUNC F, double par[],
 
 /*-------------------------------------------------------------------------*/
 
-void gofw_ActiveTests0 (double U[], long N, 
+void gofw_ActiveTests0 (double U[], long N,
                         gofw_TestArray sVal, gofw_TestArray pVal)
 {
    util_Assert (N > 0, "gofw_ActiveTests0:   N <= 0");
@@ -637,7 +637,7 @@ void gofw_WriteActiveTests2 (long N, gofw_TestArray sVal,
 /*--------------------------------------------------------------------------*/
 
 void gofw_IterSpacingsTests0 (double U[], long N, int k,
-   lebool printval, lebool graph, FILE * f)
+   bool printval, bool graph, FILE * f)
    /* Assumes that U is sorted.  */
 {
    int j;
@@ -676,7 +676,7 @@ void gofw_IterSpacingsTests0 (double U[], long N, int k,
 
 
 void gofw_IterPowRatioTests0 (double U[], long N, int k,
-   lebool printval, lebool graph, FILE * f)
+   bool printval, bool graph, FILE * f)
 {
    int i;
    long j;

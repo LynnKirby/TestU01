@@ -66,7 +66,7 @@ enum {
 
 static void InitRes1 (ffam_Fam * fam, fwalk_Res1 * res, int N,
    int Nr, int j1, int j2, int jstep, char *name)
-/* 
+/*
  * Initializes the fwalk_Res1 structure
  */
 {
@@ -253,7 +253,7 @@ void fwalk_RWalk1 (ffam_Fam * fam, fwalk_Res1 * res, fcho_Cho2 * cho,
    long N, long n, int r, int s, long L, int Nr, int j1, int j2, int jstep)
 {
    long Par[5] = { 0 };
-   lebool localRes;
+   bool localRes;
 
    Par[0] = N;
    Par[1] = n;
@@ -261,10 +261,10 @@ void fwalk_RWalk1 (ffam_Fam * fam, fwalk_Res1 * res, fcho_Cho2 * cho,
    Par[3] = s;
    Par[4] = L;
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = fwalk_CreateRes1 ();
    } else
-      localRes = FALSE;
+      localRes = false;
 
    PrintHead ("fwalk_RWalk1", fam, A_RANDOMWALK1, Par, Nr, j1, j2, jstep);
 
@@ -355,7 +355,7 @@ static void InVarGeo (ffam_Fam * fam, fres_Cont * res, fcho_Cho2 * cho,
    int Nr, int j1, int j2, int jstep)
 {
    double Par[5];
-   lebool localRes;
+   bool localRes;
    char Name[30];
 
    Par[0] = N;
@@ -365,10 +365,10 @@ static void InVarGeo (ffam_Fam * fam, fres_Cont * res, fcho_Cho2 * cho,
    Par[4] = Algo;
 
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = fres_CreateCont ();
    } else
-      localRes = FALSE;
+      localRes = false;
 
    if (Algo == B_ALGOP)
       strcpy (Name, "fwalk_VarGeoP1");

@@ -49,7 +49,7 @@ double fmass_Epsilon = 1.0e-16;
 
 /* When we precompute probability terms until terms are smaller than
    fmass_Epsilon, the last few terms will not be very precise. Instead we
-   add terms as small as fmass_Epsilon * EPS_EXTRA to get a few correct digits 
+   add terms as small as fmass_Epsilon * EPS_EXTRA to get a few correct digits
    at the tails of the precomputed distributions. */
 static const double EPS_EXTRA = 1 / 100.0;
 
@@ -140,7 +140,7 @@ fmass_INFO fmass_CreatePoisson (double lam)
          Nmax *= 2;
          P = (double *) util_Realloc (P, (1 + Nmax) * sizeof (double));
          F = (double *) util_Realloc (F, (1 + Nmax) * sizeof (double));
-         /* util_Warning (TRUE, "fmass_CreatePoisson: Calling Realloc"); */
+         /* util_Warning (true, "fmass_CreatePoisson: Calling Realloc"); */
       }
    }
    W->smax = imax = i;
@@ -160,7 +160,7 @@ fmass_INFO fmass_CreatePoisson (double lam)
    }
    /* This is the boundary between F and 1 - F in the CDF */
    W->smed = i;
- 
+
    /* Compute the cumulative probabilities of the complementary distribution
       and keep them in the upper part of the array. i.e. F[s] contains all
       P[i] for i >= s */
@@ -175,13 +175,13 @@ fmass_INFO fmass_CreatePoisson (double lam)
       imin when we stop adding terms < epsilon. */
    i = imin;
    while (i < W->smed && F[i] < fmass_Epsilon)
-      i++; 
+      i++;
    W->smin = imin = i;
 
    /* Same thing with imax */
    i = imax;
    while (i > W->smed && F[i] < fmass_Epsilon)
-      i--; 
+      i--;
    W->smax = imax = i;
 
    W->pdf = (double *) util_Calloc ((size_t) (imax + 1 - imin), sizeof (double));
@@ -399,7 +399,7 @@ double fmass_BinomialTerm3 (long n, double p, long s)
 
 fmass_INFO fmass_CreateBinomial (long n, double p, double q)
 {
-/* 
+/*
  * Compute all probability terms of the binomial distribution; start near
  * the mean, and calculate probabilities on each side until they become
  * smaller than epsilon, then stop there.
@@ -494,13 +494,13 @@ fmass_INFO fmass_CreateBinomial (long n, double p, double q)
       imin when we stop adding terms < epsilon. */
    i = imin;
    while (i < W->smed && F[i] < fmass_Epsilon)
-      i++; 
+      i++;
    W->smin = imin = i;
 
    /* Same thing with imax */
    i = imax;
    while (i > W->smed && F[i] < fmass_Epsilon)
-      i--; 
+      i--;
    W->smax = imax = i;
 
    W->pdf = (double *) util_Calloc ((size_t) (imax + 1 - imin), sizeof (double));
@@ -609,7 +609,7 @@ double fmass_NegaBinTerm1 (long n, double p, long s)
 /*=========================================================================*/
 
 fmass_INFO fmass_CreateNegaBin (long n, double p)
-/* 
+/*
  * Compute all probability terms of the negative binomial distribution;
  * start at the mode, and calculate probabilities on each side until they
  * become smaller than epsilon. Set all others to 0.
@@ -678,7 +678,7 @@ fmass_INFO fmass_CreateNegaBin (long n, double p)
          Nmax *= 2;
          P = (double *) util_Realloc (P, (1 + Nmax) * sizeof (double));
          F = (double *) util_Realloc (F, (1 + Nmax) * sizeof (double));
-         /* util_Warning (TRUE, "fmass_CreateNegaBin: Calling Realloc"); */
+         /* util_Warning (true, "fmass_CreateNegaBin: Calling Realloc"); */
       }
    }
    imax = i;
@@ -714,13 +714,13 @@ fmass_INFO fmass_CreateNegaBin (long n, double p)
       imin when we stop adding terms < epsilon. */
    i = imin;
    while (i < W->smed && F[i] < fmass_Epsilon)
-      i++; 
+      i++;
    W->smin = imin = i;
 
    /* Same thing with imax */
    i = imax;
    while (i > W->smed && F[i] < fmass_Epsilon)
-      i--; 
+      i--;
    W->smax = imax = i;
 
    W->pdf = (double *) util_Calloc ((size_t) (imax + 1 - imin), sizeof (double));

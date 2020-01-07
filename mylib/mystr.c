@@ -118,7 +118,7 @@ static int mystr_Rmatch (char s[], unsigned int i, char p[], unsigned int j)
 
 int mystr_Match (char Source[], char Pattern[])
 /*
-   returns TRUE if the string in Source matches the string in Pattern
+   returns true if the string in Source matches the string in Pattern
    The pattern may contain any number of the wild characters '*' and '?'
    '?' matches any single character
    '*' matches any sequence of charcters (including a zero length sequence)

@@ -15,7 +15,7 @@ unsigned long MMC[WL] =
    MC >> 28, MC >> 29, MC >> 30, MC >> 31
 };
 
-lebool InverseMatrix (Matrix * InvM, Matrix * M)
+bool InverseMatrix (Matrix * InvM, Matrix * M)
 {
 
    Matrix Temp;
@@ -42,16 +42,16 @@ lebool InverseMatrix (Matrix * InvM, Matrix * M)
 
 
 /* ********************************************************************** */
-/* lebool Diag( Matrix m, int kg,				          */
+/* bool Diag( Matrix m, int kg,				          */
 /*               int t, int l, int *gr )                                  */
 /* Evalue si la matrice de travail m sur kg lignes est de plein rang en   */
 /* la diagonalisant.  On procede sur t BitVect en considerant les l       */
-/* premiers bits de chacun.  La fonction retourne TRUE si la matrice m    */
+/* premiers bits de chacun.  La fonction retourne true si la matrice m    */
 /* est de plein rang t*l et *gr est inchange. La fonction retourne        */
-/* FALSE sinon et *gr prend pour valeur le numero du BitVect ou il y a    */
+/* false sinon et *gr prend pour valeur le numero du BitVect ou il y a    */
 /* eu echec moins un ( = dimension pour laquelle on a resolution l ).     */
 /* ********************************************************************** */
-lebool Diag (Matrix * m, int kg, int t, int l, int *gr)
+bool Diag (Matrix * m, int kg, int t, int l, int *gr)
 {
    int i, j, cl, rang;
 
@@ -82,12 +82,12 @@ lebool Diag (Matrix * m, int kg, int t, int l, int *gr)
                                      rang ... */
 
             *gr = j;              /* no de groupe ou il y a echec moins un */
-            return FALSE;         /* c'est j car on indexe a partir de 0 .  */
+            return false;         /* c'est j car on indexe a partir de 0 .  */
          }
          cl++;
       }
    }
-   return TRUE;                   /* on a trouve tous les pivots ==> plein
+   return true;                   /* on a trouve tous les pivots ==> plein
                                      rang ! */
 }
 
@@ -332,10 +332,10 @@ void CopyBVPart (BitVect * A, BitVect * B, int l)
 
 /* ********************************************************************** */
 /* void EgalBV(BitVect A, BitVect B)       				  */
-/* Compare le contenu de B avec celui de A.  Retourne TRUE si les deux    */
+/* Compare le contenu de B avec celui de A.  Retourne true si les deux    */
 /* contiennent la meme information.       				  */
 /* ********************************************************************** */
-lebool CompareBV (BitVect * A, BitVect * B)
+bool CompareBV (BitVect * A, BitVect * B)
 {
 
    int i;
@@ -347,18 +347,18 @@ lebool CompareBV (BitVect * A, BitVect * B)
 
    for (i = 0; i < A->n; i++)
       if (A->vect[i] != B->vect[i])
-         return FALSE;
-   return TRUE;
+         return false;
+   return true;
 }
 
 
-lebool BVisZero (BitVect * A)
+bool BVisZero (BitVect * A)
 {
    int j = 0;
    while (j < A->n)
       if (A->vect[j++] != 0UL)
-         return FALSE;
-   return TRUE;
+         return false;
+   return true;
 }
 
 
@@ -673,10 +673,10 @@ void InverseBV (BitVect * A)
 
 
 /* ********************************************************************** */
-/* lebool CheckCD( BitVect ds1, BitVect ds2 )                            */
+/* bool CheckCD( BitVect ds1, BitVect ds2 )                            */
 /* Verifie si les ensembles ds1 et ds2 ont des bits communs.              */
 /* ********************************************************************** */
-lebool VerifBitsCommuns (BitVect * ds1, BitVect * ds2)
+bool VerifBitsCommuns (BitVect * ds1, BitVect * ds2)
 {
    int i;
    unsigned long temp = 0UL;
@@ -687,9 +687,9 @@ lebool VerifBitsCommuns (BitVect * ds1, BitVect * ds2)
    for (i = 0; i < ds1->n; i++)
       temp |= (ds1->vect[i] & ds2->vect[i]);
    if (temp)
-      return TRUE;
+      return true;
    else
-      return FALSE;
+      return false;
 }
 
 
@@ -895,7 +895,7 @@ void XorVect (Matrix * m, int r, int s, int min, int max)
 /* void displaymat(Matrix m, int t, int l, int kg)        */
 /* Affiche la matrice m sur kg lignes par t x l colonnes  		  */
 /* ********************************************************************** */
-void DispMat (Matrix * m, int t, int l, int kg, lebool mathematica)
+void DispMat (Matrix * m, int t, int l, int kg, bool mathematica)
 {
    int i, j;
 
@@ -1030,11 +1030,7 @@ void MatrixTwoPow (Matrix * A, Matrix * B, unsigned int e)
 /* Fait l'exponentiation : A = B^e               			  */
 /* ********************************************************************** */
 
-#ifdef USE_LONGLONG
-void MatrixPow (Matrix * A, Matrix * B, longlong e)
-#else
-void MatrixPow (Matrix * A, Matrix * B, long e)
-#endif
+void MatrixPow (Matrix * A, Matrix * B, int64_t e)
 {
    int i;
    Matrix C;

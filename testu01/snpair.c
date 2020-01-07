@@ -82,8 +82,8 @@ snpair_Envir snpair_env = {
 /* For now, we do not use it. Is used in the t modules */
 long snpair_MaxNumPoints = LONG_MAX;
 
-lebool snpair_TimeBB = FALSE;
-lebool snpair_mNP2S_Flag = TRUE;
+bool snpair_TimeBB = false;
+bool snpair_mNP2S_Flag = true;
 
 
 
@@ -107,8 +107,8 @@ typedef struct {
    double pLR;                 /* = p                                  */
    double Invp;                /* 1/p; ( = 1 if p = 0)                 */
    int Maxnp;                  /* Max level of recursion               */
-   lebool Torus;              /* TRUE if in Torus; FALSE if in cube   */
-   lebool BBFlag;             /* TRUE if BickelBreimann test          */
+   bool Torus;              /* true if in Torus; false if in cube   */
+   bool BBFlag;             /* true if BickelBreimann test          */
    wdist_CFUNC FDistBB;        /* BickelBreimann CDF                   */
 
 /* The largest distance for snpair_DistanceCPBitM: the largest number of
@@ -130,10 +130,10 @@ static double t0;
 
 #define xinf 1.0e50
 
-static lebool GPlusFlag  = FALSE;
-static lebool GMinusFlag = FALSE;
-static lebool HPlusFlag  = FALSE;
-static lebool HMinusFlag = FALSE;
+static bool GPlusFlag  = false;
+static bool GMinusFlag = false;
+static bool HPlusFlag  = false;
+static bool HMinusFlag = false;
 
 static double GPlust0  = -xinf;    /* = t0 for GPlus  */
 static double GMinust0 = -xinf;    /* = t0 for GMinus */
@@ -266,8 +266,8 @@ void snpair_DistanceCP (snpair_Res * res, snpair_PointType P1,
 #define NUM_JUMPS_LIM 50000
 /* I put this arbitrary limit on the size of res->CloseDist because for bad
    generators, there will be many pairs of points with 0 distances between
-   them, and res->CloseDist will otherwise eat up the whole memory. 
-   If the parameters N and m in ClosePairs should be such that 
+   them, and res->CloseDist will otherwise eat up the whole memory.
+   If the parameters N and m in ClosePairs should be such that
    N*m > NUM_JUMPS_LIM, then this limit will have to be increased. (RS) */
 
    if (distp < work->dlimp) {
@@ -429,23 +429,23 @@ void snpair_VerifPairs1 (snpair_Res * res, snpair_PointType A[], long r,
 /*=========================================================================*/
 
 static void dlimSlice (
-   snpair_Res *res, 
+   snpair_Res *res,
    snpair_PointType A[],
    long *r,
    long *imed,
    long *jmed,
    long *s,
    int c,
-   lebool Tor
+   bool Tor
    )
 /*
  * Let E1 = A [*r..*imed] and E2 = A [*jmed..*s] be two sets of points sorted
  * with respect to the c-th coordinate.
- * If Torus = FALSE, will reduce E1 to a slice of width dlim (in the direction
+ * If Torus = false, will reduce E1 to a slice of width dlim (in the direction
  * c) of the leftmost point of E2; and similarly for E2 with respect to the
  * rightmost point of E1 (always with respect to the c-th coordinate).
  * There will be thus a slice on each side of the boundary line.
- * If Torus = TRUE, we consider rather the points to the left of
+ * If Torus = true, we consider rather the points to the left of
  * (E1 + 1.0) as being close to those to the right of E2. This procedure
  * tries to decrease imed and to increase jmed.
  */
@@ -518,10 +518,10 @@ void snpair_MiniProc0 (snpair_Res * res, snpair_PointType T[], long r,
 
 void snpair_MiniProc1 (snpair_Res * res, snpair_PointType T[], long r,
    long s, long u, long v, int np, int c)
-/* 
- * Compute the distance between each point of the set E1 = T[r..s] and 
- * those of E2 = T[u..v]. We consider only the pairs for which the  
- * differences between the c-th coordinate is <= dlim.                  
+/*
+ * Compute the distance between each point of the set E1 = T[r..s] and
+ * those of E2 = T[u..v]. We consider only the pairs for which the
+ * differences between the c-th coordinate is <= dlim.
  * Assume that the points of E1 and those of E2 are sorted with respect to
  * coordinate c. If we have the case of snpair_DistanceCP, updates dlim and
  * dlimp whenever a shorter value is found.
@@ -567,7 +567,7 @@ void snpair_MiniProc1 (snpair_Res * res, snpair_PointType T[], long r,
          res->Distance (res, T[i], T[j]);
          ++j;
       }
-      if (work->Torus) {          /* AND (np <= kk): does not work with this 
+      if (work->Torus) {          /* AND (np <= kk): does not work with this
                                      cond. */
 
          /* Search for close points in the torus */
@@ -602,7 +602,7 @@ void snpair_CheckBoundary (snpair_Res * res, long r, long s, long u, long v,
    long jmed2, imed2;
    long jmed, imed;
    long nextc;
-   lebool newc;
+   bool newc;
    snpair_PointTableType B, A;
    WorkType *work = res->work;
 
@@ -659,13 +659,13 @@ void snpair_CheckBoundary (snpair_Res * res, long r, long s, long u, long v,
    if ((work->Torus && np <= work->kk) && newc) {
       imed2 = imed;
       jmed2 = jmed + 1;
-      dlimSlice (res, B, &r, &imed2, &jmed2, &v, nextc, TRUE);
+      dlimSlice (res, B, &r, &imed2, &jmed2, &v, nextc, true);
       snpair_CheckBoundary (res, r, imed2, jmed2, v, nr + 1, nrb + 1, np,
          nextc);
 
       imed2 = imed + 1;
       jmed2 = jmed;
-      dlimSlice (res, B, &u, &jmed2, &imed2, &s, nextc, TRUE);
+      dlimSlice (res, B, &u, &jmed2, &imed2, &s, nextc, true);
       snpair_CheckBoundary (res, u, jmed2, imed2, s, nr + 1, nrb + 1, np,
          nextc);
    }
@@ -673,11 +673,11 @@ void snpair_CheckBoundary (snpair_Res * res, long r, long s, long u, long v,
    jmed2 = jmed + 1;
    imed2 = imed + 1;
    if (newc)
-      dlimSlice (res, B, &r, &imed, &jmed2, &v, nextc, FALSE);
+      dlimSlice (res, B, &r, &imed, &jmed2, &v, nextc, false);
    snpair_CheckBoundary (res, r, imed, jmed + 1, v, nr + 1, nrb + 1, np,
       nextc);
    if (newc)
-      dlimSlice (res, B, &u, &jmed, &imed2, &s, nextc, FALSE);
+      dlimSlice (res, B, &u, &jmed, &imed2, &s, nextc, false);
    snpair_CheckBoundary (res, u, jmed, imed + 1, s, nr + 1, nrb + 1, np,
       nextc);
 }
@@ -686,7 +686,7 @@ void snpair_CheckBoundary (snpair_Res * res, long r, long s, long u, long v,
 /*=========================================================================*/
 
 static void Setdlim (snpair_Res *res, snpair_PointType A[], long r, long s)
-/* 
+/*
  * Used in snpair_BickelBreiman to update dlim
  */
 {
@@ -719,10 +719,10 @@ void snpair_FindClosePairs (snpair_Res * res, long r, long s,
    int nr, int np, int c)
 /*
  * Checks whether the minimal distance between the 2 nearest points,
- * amongst those with indices [r..s] in the table of level np, is < dlim.  
+ * amongst those with indices [r..s] in the table of level np, is < dlim.
  * If so, updates dlim and dlimp. A and B are always Points [np] and
- * Points [np+1].                   
- * Assume that A = Point [np] is sorted with respect to coordinate c.    
+ * Points [np+1].
+ * Assume that A = Point [np] is sorted with respect to coordinate c.
  */
 {
    long jmed2;
@@ -733,7 +733,7 @@ void snpair_FindClosePairs (snpair_Res * res, long r, long s,
    snpair_PointTableType A;
    WorkType *work = res->work;
 
-   /* IF (((nr-1) MOD L) = 0) THEN newc := TRUE ELSE newc := FALSE END; */
+   /* IF (((nr-1) MOD L) = 0) THEN newc := true ELSE newc := false END; */
 #ifdef DEBUG
    printf ("FindClosePairs:   ");
    printf (" %8ld %8ld %3d %3d %3d\n", r, s, nr, np, c);
@@ -791,12 +791,12 @@ void snpair_FindClosePairs (snpair_Res * res, long r, long s,
    if (work->Torus && np <= work->kk && (nr - 1) % work->L1 == 0) {
       imed2 = imed;
       jmed2 = imed + 1;
-      dlimSlice (res, A, &r, &imed2, &jmed2, &s, c, TRUE);
+      dlimSlice (res, A, &r, &imed2, &jmed2, &s, c, true);
       snpair_CheckBoundary (res, r, imed2, jmed2, s, nr, 1, np, c);
    }
 
    jmed2 = imed + 1;
-   dlimSlice (res, A, &r, &imed, &jmed2, &s, c, FALSE);
+   dlimSlice (res, A, &r, &imed, &jmed2, &s, c, false);
    snpair_CheckBoundary (res, r, imed, jmed2, s, nr, 1, np, c);
 }
 
@@ -829,7 +829,7 @@ static double Probsup (double b, double c, double x)
       msup = c * b;
       if (msup > 100) {
          msup = 100;
-         util_Warning (TRUE, "Probsup: msup > 100. Reset to 100");
+         util_Warning (true, "Probsup: msup > 100. Reset to 100");
       }
       for (m = 1; m <= msup; m++) {
          mLR = m;
@@ -846,7 +846,7 @@ static double Probsup (double b, double c, double x)
    msup = c * b + x;
    if (msup > 100) {
       msup = 100;
-      util_Warning (TRUE, "Probsup: msup > 100.  Reset to 100");
+      util_Warning (true, "Probsup: msup > 100.  Reset to 100");
    }
    while (m <= msup && Sum - Previous > Epsilon) {
       Previous = Sum;
@@ -856,7 +856,7 @@ static double Probsup (double b, double c, double x)
       jsup = x;
       if (jsup > m) {
          jsup = m;
-         util_Warning (TRUE, "Probsup: jsup > m.  Reset to m");
+         util_Warning (true, "Probsup: jsup > m.  Reset to m");
       }
       comb = 1.0;
       for (j = 0; j <= jsup; j++) {
@@ -890,7 +890,7 @@ static double Probinf (double b, double c, double x)
    msup = c * b + x;
    if (msup > 100) {
       msup = 100;
-      util_Warning (TRUE, "Probinf: msup > 100. Reset to 100");
+      util_Warning (true, "Probinf: msup > 100. Reset to 100");
    }
    Sum = 0.0;
    mFact = 1.0;
@@ -930,8 +930,8 @@ static double FDistGPlus (double Bidon, double c)
    if ((!GPlusFlag || GPlust0 != t0) || GPlust1 != t1) {
       GPlust0 = t0;
       GPlust1 = t1;
-      GPlusFlag = TRUE;
-      /* 
+      GPlusFlag = true;
+      /*
          fdist_FindJumps (W, Detail);
 
       FindJumpsKnown (Bidon, FDistGPlus, GPlust0, 20.0, 0.00001, &GPlusNJump,
@@ -981,7 +981,7 @@ static double FDistGMinus (double Bidon, double c)
    if ((!GMinusFlag || GMinust0 != t0) || GMinust1 != t1) {
       GMinust0 = t0;
       GMinust1 = t1;
-      GMinusFlag = TRUE;
+      GMinusFlag = true;
       /*
       FindJumpsKnown (Bidon, FDistGMinus, GMinust1, 20.0, 0.00001,
          &GMinusNJump, &GMinusJumpX, &GMinusJumpYBottom, &GMinusJumpYTop);
@@ -1037,7 +1037,7 @@ static double FDistHPlus (double b, double x)
       /* this function has a single jump at x = 0 */
       HPlust0 = t0;
       HPlust1 = t1;
-      HPlusFlag = TRUE;/*
+      HPlusFlag = true;/*
       FindJumpsKnown (b, FDistHPlus, 1.0, 0.00001, 1.E-6, &HPlusNJump,
       &HPlusJumpX, &HPlusJumpYBottom, &HPlusJumpYTop);*/
    }
@@ -1112,7 +1112,7 @@ static double FDistHMinus (double b, double x)
    if ((!HMinusFlag || HMinust0 != t0) || HMinust1 != t1) {
       HMinust0 = t0;
       HMinust1 = t1;
-      HMinusFlag = TRUE;
+      HMinusFlag = true;
       /*
       FindJumpsKnown (b, FDistHMinus, -b, 0.0001, 0.00001, &HMinusNJump,
       &HMinusJumpX, &HMinusJumpYBottom, &HMinusJumpYTop); */
@@ -1241,7 +1241,7 @@ static void InitRes (
    long n,                    /* Number of points */
    int m                      /* Number of closest distances kept */
    )
-/* 
+/*
  * Initializes the res structure
  */
 {
@@ -1249,7 +1249,7 @@ static void InitRes (
       CleanClosePairs (res);
    AllocClosePairs (res, N, n, m);
    res->n = n;
-   res->CleanFlag = TRUE;
+   res->CleanFlag = true;
 }
 
 
@@ -1261,7 +1261,7 @@ snpair_Res *snpair_CreateRes (void)
    res = util_Malloc (sizeof (snpair_Res));
    memset (res, 0, sizeof (snpair_Res));
    res->work = util_Malloc (sizeof (WorkType));
-   res->CleanFlag = FALSE;
+   res->CleanFlag = false;
    return res;
 }
 
@@ -1281,7 +1281,7 @@ void snpair_DeleteRes (snpair_Res * res)
 
 /*=========================================================================*/
 
-static void WriteSeuils (WorkType * work, lebool flag, double mu2,
+static void WriteSeuils (WorkType * work, bool flag, double mu2,
    double nLR, double kLR)
 {
    printf ("\n   Seuil1 = %2d\n   Seuil2 = %2d\n   "
@@ -1312,7 +1312,7 @@ static void WriteSeuils (WorkType * work, lebool flag, double mu2,
 
 /*=========================================================================*/
 
-static void CalcSeuils (WorkType * work, long k, long m, lebool flag,
+static void CalcSeuils (WorkType * work, long k, long m, bool flag,
    double mu2, double nLR, double kLR)
 {
    work->L1 = 1 + num_Log2 (nLR / snpair_env.Seuil3) / k;
@@ -1335,7 +1335,7 @@ static void CalcSeuils (WorkType * work, long k, long m, lebool flag,
 /*=========================================================================*/
 
 void snpair_WriteDataCP (unif01_Gen * gen, char *TestName,
-   long N, long n, int r, int t, int p, int m, lebool Torus)
+   long N, long n, int r, int t, int p, int m, bool Torus)
 {
    swrite_Head (gen, TestName, N, n, r);
    printf (",  t = %1d,", t);
@@ -1349,7 +1349,7 @@ void snpair_WriteDataCP (unif01_Gen * gen, char *TestName,
 
 /*=========================================================================*/
 #define SPACINGS_9
-/* 
+/*
  * La constante SPACINGS permet l'inclusion des 4 tests de ClosePairs suivants
  * qui sont mis en commentaire sinon: NP-S, NP-PR, mNP1-S, mNP2-S.
  */
@@ -1420,7 +1420,7 @@ void snpair_ClosePairs (unif01_Gen * gen, snpair_Res * res,
    long N, long n, int r, int k, int p, int m)
 /*
  * Looks at the m closest pairs in the torus and the first m jumps of the
- * process Y_n(t). A simplified version of snpair_ClosePairs.  
+ * process Y_n(t). A simplified version of snpair_ClosePairs.
  */
 {
    long j;
@@ -1440,13 +1440,13 @@ void snpair_ClosePairs (unif01_Gen * gen, snpair_Res * res,
    double pLeft, pRight;
    statcoll_Collector *Q;
    WorkType *work;
-   lebool localRes = FALSE;
+   bool localRes = false;
    chrono_Chrono *Timer;
    char *TestName = "snpair_ClosePairs test";
 
    Timer = chrono_Create ();
    if (swrite_Basic)
-      snpair_WriteDataCP (gen, TestName, N, n, r, k, p, m, TRUE);
+      snpair_WriteDataCP (gen, TestName, N, n, r, k, p, m, true);
 
    /* util_Assert (k <= snpair_MaxDim, "snpair_ClosePairs: k >
       snpair_MaxDim");
@@ -1455,11 +1455,11 @@ void snpair_ClosePairs (unif01_Gen * gen, snpair_Res * res,
    util_Assert (m > 0, "snpair_ClosePairs:   m <= 0");
    util_Assert (m <= snpair_MAXM, "snpair_ClosePairs:   m > snpair_MAXM");
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = snpair_CreateRes ();
    }
    work = res->work;
-   work->Torus = TRUE;
+   work->Torus = true;
    work->kk = k;
    work->pp = p;
    work->mm = m;
@@ -1476,13 +1476,13 @@ void snpair_ClosePairs (unif01_Gen * gen, snpair_Res * res,
       work->Maxnp = k;
    else
       work->Maxnp = snpair_MAXREC;
-   work->BBFlag = FALSE;           /* Bickel-Breiman Flag */
+   work->BBFlag = false;           /* Bickel-Breiman Flag */
 
    Vol = num2_VolumeSphere ((double) p, k);
    mu2 = 2.0 / (nLR * (nLR - 1.0) * Vol);
    t1 = mLR;
 
-   CalcSeuils (work, k, m, TRUE, mu2, nLR, kLR);
+   CalcSeuils (work, k, m, true, mu2, nLR, kLR);
    InitRes (res, N, n, m);
    res->Distance = snpair_DistanceCP;
    res->VerifPairs = snpair_VerifPairs1;
@@ -1594,7 +1594,7 @@ void snpair_ClosePairs (unif01_Gen * gen, snpair_Res * res,
             fbar_AndersonDarling (Q->NObs, res->sVal[snpair_mNP1S]);
 #endif
          /* Superposition process of all the jumps of Y_n in [0, t1].
-            Conditionnally on TotJumps = res->Y^.NObs, these jumps should be 
+            Conditionnally on TotJumps = res->Y^.NObs, these jumps should be
             uniformly distributed in [0, t1]. */
 
          Q = res->Y;
@@ -1678,7 +1678,7 @@ void snpair_ReTestY (long N, long n, int m, double tt0, double tt1)
 
    /* Calculate statistics G+, G-, H+, H- */
    util_Assert (!swrite_AutoClean,
-                "snpair_ReTestY:   swrite_AutoClean must be FALSE");
+                "snpair_ReTestY:   swrite_AutoClean must be false");
    util_Assert (res->Y != NULL,
                 "snpair_ReTestY:   res->Y is a NULL pointer");
 
@@ -1741,7 +1741,7 @@ void snpair_ReTestY (long N, long n, int m, double tt0, double tt1)
 /*=========================================================================*/
 
 static void InitBBp0k2 (void)
-/* 
+/*
  * Initialize Bickel-Breiman distribution with p = 0, k = 2
  */
 {
@@ -1883,7 +1883,7 @@ static void InitBBp0k2 (void)
 /*-------------------------------------------------------------------------*/
 
 static void InitBBp2k2 (void)
-/* 
+/*
  * Initialize Bickel-Breiman distribution with p = 2, k = 2
  */
 {
@@ -1959,7 +1959,7 @@ static void InitBBp2k2 (void)
 /*-------------------------------------------------------------------------*/
 
 static void InitBBp0k15 (void)
-/* 
+/*
  * Initialize Bickel-Breiman distribution with p = 0, k = 15
  */
 {
@@ -2093,18 +2093,18 @@ static void InitBBp0k15 (void)
 
 static double FDistBBp0k2 (double junk[], double x)
 /*
- * Bickel-Breiman distribution obtained by simulation with 
- *    N = 1000000,  n = 1000,  r = 0,  k =  2,  p = 0,  Torus =  TRUE
- * 
+ * Bickel-Breiman distribution obtained by simulation with
+ *    N = 1000000,  n = 1000,  r = 0,  k =  2,  p = 0,  Torus =  true
+ *
  * We first interpolated the empirical distribution on the points xs = j/100
  * (integer j) by building a parabola using a least-square fit with all
  * the points in [xs - 0.005, xs + 0.005], and then by computing ys(xs) on
- * the parabola, in order to reduce the noise. 
- * We use a Newton cubic interpolation with the 4 points closest to x to 
+ * the parabola, in order to reduce the noise.
+ * We use a Newton cubic interpolation with the 4 points closest to x to
  * compute the distribution y(x).
  */
 {
-   static lebool BBp0k2Flag = FALSE;
+   static bool BBp0k2Flag = false;
    int j;
    double q;
    double y;
@@ -2118,9 +2118,9 @@ static double FDistBBp0k2 (double junk[], double x)
       return -2.66337e-3 + x * (5.12234e-1 + x * (-32.8023 + 701.167 * x));
    }
 
-   if (FALSE == BBp0k2Flag) {
+   if (false == BBp0k2Flag) {
       InitBBp0k2 ();
-      BBp0k2Flag = TRUE;
+      BBp0k2Flag = true;
    }
 
    j = 100.0 * x + 2;             /* x is in [P(j-2), P(j-1)] */
@@ -2141,18 +2141,18 @@ static double FDistBBp0k2 (double junk[], double x)
 
 static double FDistBBp0k15 (double junk[], double x)
 /*
- * Bickel-Breiman distribution obtained by simulation with 
- *    N = 100000,  n = 1000,  r = 0,  k =  15,  p = 0,  Torus =  TRUE
- * 
+ * Bickel-Breiman distribution obtained by simulation with
+ *    N = 100000,  n = 1000,  r = 0,  k =  15,  p = 0,  Torus =  true
+ *
  * We first interpolated the empirical distribution on the points xs = j/100
  * (integer j) by building a parabola using a least-square fit with all
  * the points in [xs - 0.005, xs + 0.005], and then by computing ys(xs) on
- * the parabola, in order to reduce the noise. 
- * We use a Newton cubic interpolation with the 4 points closest to x to 
+ * the parabola, in order to reduce the noise.
+ * We use a Newton cubic interpolation with the 4 points closest to x to
  * compute the distribution y(x).
  */
 {
-   static lebool BBp0k15Flag = FALSE;
+   static bool BBp0k15Flag = false;
    int j;
    double q;
    double y;
@@ -2165,9 +2165,9 @@ static double FDistBBp0k15 (double junk[], double x)
    if (x >= 1.2)
       return 1.0 - exp (-3.15786 * x - 5.41639e-1);
 
-   if (FALSE == BBp0k15Flag) {
+   if (false == BBp0k15Flag) {
       InitBBp0k15 ();
-      BBp0k15Flag = TRUE;
+      BBp0k15Flag = true;
    }
 
    j = 100.0 * x + 2;             /* x is in [P(j-2), P(j-1)] */
@@ -2187,11 +2187,11 @@ static double FDistBBp0k15 (double junk[], double x)
 
 static double FDistBBp2k2 (double junk[], double x)
 /*
- * Bickel-Breiman distribution obtained by simulation with 
- *    N = 1000000,  n = 1000,  r = 0,  k =  2,  p = 2,  Torus =  TRUE
+ * Bickel-Breiman distribution obtained by simulation with
+ *    N = 1000000,  n = 1000,  r = 0,  k =  2,  p = 2,  Torus =  true
  */
 {
-   static lebool BBp2k2Flag = FALSE;
+   static bool BBp2k2Flag = false;
    int j;
    double q;
    double y;
@@ -2202,9 +2202,9 @@ static double FDistBBp2k2 (double junk[], double x)
    if (x >= 1.0)
       return 1.0 - exp ((0.1408724 * x - 4.485674) * x - 0.264116);
 
-   if (FALSE == BBp2k2Flag) {
+   if (false == BBp2k2Flag) {
       InitBBp2k2 ();
-      BBp2k2Flag = TRUE;
+      BBp2k2Flag = true;
    }
 
    if (x >= 0.2) {
@@ -2237,7 +2237,7 @@ static double FDistBBp2k2 (double junk[], double x)
 /*-------------------------------------------------------------------------*/
 
 void snpair_WriteDataBB (unif01_Gen * gen, char *TestName,
-   long N, long n, int r, int k, int p, lebool Torus, int L1, int L2)
+   long N, long n, int r, int k, int p, bool Torus, int L1, int L2)
 {
    double z;
 
@@ -2284,7 +2284,7 @@ void snpair_WriteResultsBB (unif01_Gen * gen, chrono_Chrono * Timer,
 /*=========================================================================*/
 
 void snpair_BickelBreiman (unif01_Gen * gen, snpair_Res * res,
-   long N, long n, int r, int k, int p, lebool Torus)
+   long N, long n, int r, int k, int p, bool Torus)
 {
    int j;
    long i;
@@ -2297,14 +2297,14 @@ void snpair_BickelBreiman (unif01_Gen * gen, snpair_Res * res,
    double Vol;                    /* Volume of unit sphere in k dimension */
    double x, nLR, kLR;
    WorkType *work;
-   lebool localRes = FALSE;
+   bool localRes = false;
    chrono_Chrono *Timer, *Time1;
    char *TestName = "snpair_BickelBreiman test";
 
    Timer = chrono_Create ();
 
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = snpair_CreateRes ();
    }
    work = res->work;
@@ -2334,7 +2334,7 @@ void snpair_BickelBreiman (unif01_Gen * gen, snpair_Res * res,
       work->Maxnp = snpair_MAXREC;
    Vol = num2_VolumeSphere ((double) p, k);
    mu1 = -nLR * Vol;
-   work->BBFlag = TRUE;
+   work->BBFlag = true;
    if (swrite_Basic)
       snpair_WriteDataBB (gen, TestName, N, n, r, k, p, Torus,
          work->L1, work->L2);
@@ -2459,7 +2459,7 @@ void snpair_DistanceCPBitM (snpair_Res * res, snpair_PointType P1,
                continue;
          }
       } else {
-         /* The first NBitsUL bits are equal, consider the NBitsUL next bits 
+         /* The first NBitsUL bits are equal, consider the NBitsUL next bits
           */
          x1 = Mul * (Mul * P1[i] - x1);
          x2 = Mul * (Mul * P2[i] - x2);
@@ -2526,7 +2526,7 @@ void snpair_ClosePairsBitMatch (unif01_Gen * gen, snpair_Res * res,
    int j;
    long i;
    double pLeft, pRight;
-   lebool localRes = FALSE;
+   bool localRes = false;
    chrono_Chrono *Timer;
    char *TestName = "snpair_ClosePairsBitMatch test";
    WorkType *work;
@@ -2539,11 +2539,11 @@ void snpair_ClosePairsBitMatch (unif01_Gen * gen, snpair_Res * res,
        "snpair_ClosePairsBitMatch:   n > snpair_MaxNumPoints"); */
    util_Assert (n > 1, "snpair_ClosePairsBitMatch:   n < 2");
    if (res == NULL) {
-      localRes = TRUE;
+      localRes = true;
       res = snpair_CreateRes ();
    }
    work = res->work;
-   work->Torus = FALSE;
+   work->Torus = false;
    work->kk = k;
    work->mm = m = 1;
    work->mcd = 2 * m;
@@ -2554,9 +2554,9 @@ void snpair_ClosePairsBitMatch (unif01_Gen * gen, snpair_Res * res,
       work->Maxnp = k;
    else
       work->Maxnp = snpair_MAXREC;
-   work->BBFlag = FALSE;           /* Bickel-Breiman Flag */
+   work->BBFlag = false;           /* Bickel-Breiman Flag */
 
-   CalcSeuils (work, k, m, FALSE, 0.0, nLR, (double) k);
+   CalcSeuils (work, k, m, false, 0.0, nLR, (double) k);
 
    InitRes (res, N, n, m);
    res->Distance = snpair_DistanceCPBitM;
@@ -2585,7 +2585,7 @@ void snpair_ClosePairsBitMatch (unif01_Gen * gen, snpair_Res * res,
       printf ("%12d", work->YLim);
       if (Seq % 5 == 0)
          printf ("\n");
-      swrite_Collectors = TRUE;
+      swrite_Collectors = true;
       work->YLim = 0;
       snpair_VerifPairs0 (res->Points[1], 1, n, 0, 0);
 #endif
@@ -2603,7 +2603,7 @@ void snpair_ClosePairsBitMatch (unif01_Gen * gen, snpair_Res * res,
    else
       z1 = pow (2.0, -(double) k * (MaxY + 1));
 
-   /* There are n*(n - 1)/2 pairs of points and we replicate that basic test 
+   /* There are n*(n - 1)/2 pairs of points and we replicate that basic test
       N times, so we compute pLeft = the Probability [Max {N*n*(n - 1)/2 of
       above random var.} <= MaxY] */
    if (z1 > DBL_EPSILON) {

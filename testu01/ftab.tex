@@ -7,7 +7,7 @@ resolutions (or precisions). Each table contains a two-dimensional array of
 values ({\tt Mat}), indexed by $i$ and $j$. The row $i$ of {\tt Mat} is
 associated with a generator of the family that is being tested, while the
 column $j$ is associated with the different sample sizes for the test
-being applied on the generator. Such a table can be created by 
+being applied on the generator. Such a table can be created by
 {\tt ftab\_CreateTable}, printed by {\tt ftab\_PrintTable} or
 {\tt ftab\_PrintTable2}, and deleted by {\tt ftab\_DeleteTable}.
 The function {\tt ftab\_MakeTables} is used to run a series of tests on a
@@ -119,7 +119,7 @@ void ftab_InitMatrix (ftab_Table *T, double x);
 typedef void (*ftab_CalcType) (ffam_Fam *fam, void *res, void *cho,
                                void *par, int LSize, int j,
                                int irow, int icol);
-\endcode 
+\endcode
  \tab  Type of function called by {\tt ftab\_MakeTables} to fill up
   the entry ({\tt irow}, {\tt icol}) in one or more tables of results.
   Typically, it computes $p$-values to be put in the appropriate table.
@@ -134,13 +134,13 @@ typedef void (*ftab_CalcType) (ffam_Fam *fam, void *res, void *cho,
 
 
 void ftab_MakeTables (ffam_Fam *fam, void *res, void *cho, void *par,
-                      ftab_CalcType Calc, 
+                      ftab_CalcType Calc,
                       int Nr, int j1, int j2, int jstep);
 \endcode
 \tab This function calls {\tt Calc(fam, res, cho, par, LSize, j, irow, icol)}
   on each of the first {\tt Nr} generators of family {\tt fam}, for
   {\tt j} going from {\tt j1} to {\tt j2} by step of {\tt jstep} (thus varying
-  the sample size for a given generator). 
+  the sample size for a given generator).
   It uses {\tt res} to keep the tables of results after all the tests have
   been done on the family,  {\tt cho} is used to choose the values of the
   varying parameters of the test as a function of the generator size and
@@ -187,7 +187,7 @@ typedef enum {
  \tab Possible formats that can be used to print the table entries.
   An appropriate format must be chosen before printing.
   Here, {\tt ftab\_pVal1}
-  stands for a one-sided $p$-value (a number in the interval [0, 1]), 
+  stands for a one-sided $p$-value (a number in the interval [0, 1]),
   printed only when it is near 0; {\tt ftab\_pVal2}  stands for a
   two-sided $p$-value, printed  when it is near 0 or near 1
   ($p$-values near 1 are printed as $-p$ instead of $1 -p$).
@@ -198,20 +198,20 @@ typedef enum {
 
 extern double ftab_Suspectp;
 \endcode
- \tab  Environment variable 
+ \tab  Environment variable
    used in {\tt ftab\_PrintTable} and  {\tt ftab\_PrintTable2} to determine
    which $p$-values should be printed in the table.
    When the format {\tt ftab\_pVal2} is used, only the
    $p$-values outside the interval [{\tt ftab\_Suspectp},
     $1 - {}${\tt ftab\_Suspectp}] will be considered suspect and printed.
-   The default value is 0.01. 
+   The default value is 0.01.
  \endtab
 \code
 
 
 extern int ftab_SuspectLog2p;
 \endcode
- \tab  Environment variable used in {\tt ftab\_PrintTable}  and 
+ \tab  Environment variable used in {\tt ftab\_PrintTable}  and
    {\tt ftab\_PrintTable2}  to determine which $p$-values should be printed
    in the table, when using the format {\tt ftab\_pLog2}.
    If {\tt ftab\_SuspectLog2p} $= \sigma$, the $p$-values
@@ -241,36 +241,36 @@ void ftab_PrintTable (ftab_Table *T);
   unless $p > 1 - {}$ {\tt gofw\_Epsilonp}, in which case {\tt -eps} will be
    printed ({\tt $\backslash$epsm} when {\tt ftab\_Latex} style is chosen).
 
-  In the case where {\tt Form = ftab\_pLog10}, 
+  In the case where {\tt Form = ftab\_pLog10},
   if $p \le $ {\tt ftab\_Suspectp} it prints  Round$(- \log_{10} p)$,
-  else if $p \ge 1 - $ {\tt ftab\_Suspectp} it prints 
+  else if $p \ge 1 - $ {\tt ftab\_Suspectp} it prints
   $-$Round$(- \log_{10} (1-p))$, otherwise it prints nothing.
-  In the case where {\tt Form = ftab\_pLog2}, 
+  In the case where {\tt Form = ftab\_pLog2},
   if $p \le 2^{-\sigma}$, where $\sigma =$ {\tt ftab\_SuspectLog2p},
   it prints {\rm Round$( - \log_2 p)$}, else if $p \ge 1 - 1/2^\sigma$
   it prints $-${\rm  Round$(- \log_2 (1-p))$}, and otherwise it prints
-  nothing. 
+  nothing.
 
   If {\tt Form = ftab\_Integer}, it prints them as (rounded) integers.
   If {\tt Form = ftab\_Real}, it prints them as {\tt double}'s.
-  If {\tt Form = ftab\_String},  prints  the string 
+  If {\tt Form = ftab\_String},  prints  the string
   {\tt  T->Strings[s]} where {\tt s = {\rm Round}(T->Mat[i][j])}.
 
  \endtab
 \code
 
 
-void ftab_PrintTable2 (ftab_Table *T1, ftab_Table *T2, lebool ratioF);
+void ftab_PrintTable2 (ftab_Table *T1, ftab_Table *T2, bool ratioF);
 \endcode
  \tab
   Similar to {\tt ftab\_PrintTable}, but prints two tables simultaneously,
-  using two columns for each entry, for purposes of comparison. 
-  If the flag {\tt ratioF} is {\tt TRUE}, it prints the numbers of the
+  using two columns for each entry, for purposes of comparison.
+  If the flag {\tt ratioF} is {\tt true}, it prints the numbers of the
   first table in a first column, and the ratio of the numbers from the
   second table over the corresponding numbers from the first table in the
-  second column. This is done for each element of the tables.  
-  If the flag {\tt ratioF} is {\tt FALSE}, the numbers from the second
-  table will be printed as is. 
+  second column. This is done for each element of the tables.
+  If the flag {\tt ratioF} is {\tt false}, the numbers from the second
+  table will be printed as is.
  \endtab
 \code
 

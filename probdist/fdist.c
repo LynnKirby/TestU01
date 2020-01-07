@@ -291,7 +291,7 @@ double fdist_Normal1 (double x)
 
 
 /**************************************************************************/
-/* 
+/*
  * The precision of double is 16 decimals; we shall thus use COEFFMAX = 24
  * coefficients. But the approximation is good to 30 decimals of precision
  * with 44 coefficients.
@@ -432,7 +432,7 @@ double fdist_Normal4 (double x)
    };
 
    int j;
-   lebool negatif;
+   bool negatif;
    double t, u, z, h;
    double r, r1, r2, r3, r4, r5, r6, r7, r8;
 
@@ -441,10 +441,10 @@ double fdist_Normal4 (double x)
    if (x >= fdist_XBIG)
       return 1.0;
    if (x < 0.0) {
-      negatif = TRUE;
+      negatif = true;
       x = -x;
    } else {
-      negatif = FALSE;
+      negatif = false;
    }
    j = (int) (8.0 * x + 0.5);
    if (j > 120)
@@ -638,7 +638,7 @@ double fdist_BiNormal2 (double dh, double dk, double rho)
 */
 
 /*
-//   Copyright (C) 2005, Alan Genz,  All rights reserved.               
+//   Copyright (C) 2005, Alan Genz,  All rights reserved.
 //
 //   Redistribution and use in source and binary forms, with or without
 //   modification, are permitted provided the following conditions are met:
@@ -647,26 +647,26 @@ double fdist_BiNormal2 (double dh, double dk, double rho)
 //     2. Redistributions in binary form must reproduce the above copyright
 //        notice, this list of conditions and the following disclaimer in the
 //        documentation and/or other materials provided with the distribution.
-//     3. The contributor name(s) may not be used to endorse or promote 
-//        products derived from this software without specific prior written 
+//     3. The contributor name(s) may not be used to endorse or promote
+//        products derived from this software without specific prior written
 //        permission.
 //   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-//   "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT 
-//   LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS 
-//   FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE 
-//   COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, 
-//   INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, 
-//   BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS 
-//   OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND 
-//   ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR 
-//   TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE 
+//   "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+//   LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+//   FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+//   COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+//   INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+//   BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS
+//   OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+//   ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR
+//   TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE
 //   USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 //   function p = bvnl( dh, dk, r )
 //
 //  A function for computing bivariate normal probabilities.
-//  bvnl calculates the probability that x < dh and y < dk. 
-//    parameters  
+//  bvnl calculates the probability that x < dh and y < dk.
+//    parameters
 //      dh 1st upper integration limit
 //      dk 2nd upper integration limit
 //      r   correlation coefficient
@@ -677,7 +677,7 @@ double fdist_BiNormal2 (double dh, double dk, double rho)
 //       Washington State University
 //       Pullman, Wa 99164-3113
 //       Email : alangenz@wsu.edu
-//   This function is based on the method described by 
+//   This function is based on the method described by
 //        Drezner, Z and G.O. Wesolowsky, (1989),
 //        On the computation of the bivariate normal inegral,
 //        Journal of Statist. Comput. Simul. 35, pp. 101-107,
@@ -692,8 +692,8 @@ double fdist_BiNormal2 (double dh, double dk, double rho)
 //      function p = bvnu( dh, dk, r )
 //
 //  A function for computing bivariate normal probabilities.
-//  bvnu calculates the probability that x > dh and y > dk. 
-//    parameters  
+//  bvnu calculates the probability that x > dh and y > dk.
+//    parameters
 //      dh 1st lower integration limit
 //      dk 2nd lower integration limit
 //      r   correlation coefficient
@@ -705,14 +705,14 @@ double fdist_BiNormal2 (double dh, double dk, double rho)
 //       Pullman, Wa 99164-3113
 //       Email : alangenz@wsu.edu
 //
-//    This function is based on the method described by 
+//    This function is based on the method described by
 //        Drezner, Z and G.O. Wesolowsky, (1989),
 //        On the computation of the bivariate normal inegral,
 //        Journal of Statist. Comput. Simul. 35, pp. 101-107,
 //    with major modifications for double precision, for |r| close to 1,
 //    and for matlab by Alan Genz - last modifications 7/98.
-//        Note: to compute the probability that x < dh and y < dk, use 
-//              bvnu( -dh, -dk, r ). 
+//        Note: to compute the probability that x < dh and y < dk, use
+//              bvnu( -dh, -dk, r ).
 //
 */
    if (fabs (rho) < 0.3) {
@@ -879,10 +879,10 @@ double fdist_JohnsonSU (double alpha, double beta, double x)
 {
    const double XLIM = 1.0e10;
    double r;
-   lebool negative = FALSE;
+   bool negative = false;
    util_Assert (beta > 0.0, "fdist_JohnsonSU:  beta  <= 0");
    if (x < 0.0) {
-      negative = TRUE;
+      negative = true;
       x = -x;
    }
    /* compute r = x + sqrt (x * x + 1) */
@@ -1141,7 +1141,7 @@ double fdist_Gamma (double alpha, int d, double x)
 /*=========================================================================*/
 
 static double Isubx_pq_small (double p, double q, double x, int d)
-/* 
+/*
  * Evaluates fdist_Beta (p, q, d, x) when 0 < p <= 1 and 0 < q <= 2 to a
  * precision of d = -log10 (2 epsilon) decimal digits. Uses a series
  * expansion in powers of x.
@@ -1172,7 +1172,7 @@ static double Isubx_pq_small (double p, double q, double x, int d)
 
 static void forward (double p, double q, double x, double I0, double I1,
    int nmax, double I[])
-/* 
+/*
  * Given I0 = fdist_Beta (p, q, x) and I1 = fdist_Beta (p, q + 1, x),
  * generates fdist_Beta (p, q + n, x) for n = 0, 1, 2, ..., nmax, and
  * stores the result in I.
@@ -1196,7 +1196,7 @@ static void backward (double p, double q, double x, double I0, int d,
 /*
  * Given I0 = fdist_Beta (p, q, x), generates fdist_Beta (p + n, q, x)
  * for n = 0, 1, 2,..., nmax to d significant digits, using a variant of
- * J.C.P. Miller's backward recurrence algorithm. Stores the result in I. 
+ * J.C.P. Miller's backward recurrence algorithm. Stores the result in I.
  */
 {
 
@@ -1266,7 +1266,7 @@ static const double RENORM = 1.0e300;
 
 static void Isubx_q_fixed (double p, double q, double x, int d, int nmax,
    double I[])
-/* 
+/*
  * Generates fdist_Beta (p + n, q, x), 0 < p <= 1, for n = 0, 1, 2,...,
  * nmax to d significant digits, using procedure backward. First reduces
  * q modulo 1 to q0, where 0 < q0 <= 1.
@@ -1303,7 +1303,7 @@ static void Isubx_q_fixed (double p, double q, double x, int d, int nmax,
 
 static void Isubx_p_fixed (double p, double q, double x, int d, int nmax,
    double I[])
-/* 
+/*
  * Generates fdist_Beta (p, q + n, x), 0 < q <= 1, for n = 0, 1, 2,...,
  * nmax to d significant digits, using procedure forward.
  */
@@ -1391,7 +1391,7 @@ static void Beta_p_fixed (double p, double q, double x, int d, int nmax,
  * It is an old algorithm of Gautschi of 1964. There is an algorithm
  * for fdist_Beta (1994) that is recent and is supposed to be very fast
  * (I MUST write the exact reference for later; I think it may have been in
- * Mathematics of Computations???) 
+ * Mathematics of Computations???)
  */
 double fdist_Beta (double p, double q, int d, double x)
 /*
@@ -1521,7 +1521,7 @@ double fdist_Beta (double p, double q, int d, double x)
 /*------------------------------------------------------------------------*/
 
 static double series1 (double alpha, double x)
-/* 
+/*
  * Compute the series for F(x).
  * This series is used for alpha < 1 and x close to 0.
  */
@@ -1546,7 +1546,7 @@ static double series1 (double alpha, double x)
 /*------------------------------------------------------------------------*/
 
 static double series2 (double alpha, double y)
-/* 
+/*
  * Compute the series for G(y).   y = 0.5 - x.
  * This series is used for alpha < 1 and x close to 1/2.
  */
@@ -1573,7 +1573,7 @@ static double series2 (double alpha, double y)
 /*------------------------------------------------------------------------*/
 
 static double series3 (double alpha, double x)
-/* 
+/*
  * Compute the series for F(x).
  * This series is used for alpha > 1 and x close to 0.
  */
@@ -1597,7 +1597,7 @@ static double series3 (double alpha, double x)
 /*------------------------------------------------------------------------*/
 
 static double series4 (double alpha, double y)
-/* 
+/*
  * Compute the series for G(y).   y = 0.5 - x.
  * This series is used for alpha > 1 and x close to 1/2.
  */
@@ -1628,7 +1628,7 @@ static double Peizer (double alpha, double x)
    const double y = 1.0 - x;
    double z;
    z = sqrt ((1.0 - y * fdist_belog (2.0 * x) - x * fdist_belog (2.0 * y))
-      / ((2.0*alpha - 5.0 / 6.0) * x * y)) * 
+      / ((2.0*alpha - 5.0 / 6.0) * x * y)) *
       (2.0*x - 1.0) * (alpha - 1.0 / 3.0 + 0.025 / alpha);
 
    return fdist_Normal2 (z);
@@ -1656,7 +1656,7 @@ void fdist_CalcB4 (double alpha, double *pB, double *plogB, double *pC,
 
    } else if (alpha <= 10.0) {
       *plogC = num2_LnGamma (alpha) - num2_LnGamma (0.5 + alpha) + LOG_SQPI_2;
-      *plogB = *plogC - (alpha - 1.0)*LOG4;      
+      *plogB = *plogC - (alpha - 1.0)*LOG4;
 
    } else if (alpha <= 200.0) {
       /* Convergent series for Gamma(x + 0.5) / Gamma(x) */
@@ -1687,7 +1687,7 @@ void fdist_CalcB4 (double alpha, double *pB, double *plogB, double *pC,
 /*------------------------------------------------------------------------*/
 
 double fdist_BetaSymmetric (double alpha, double x)
-/* 
+/*
  * Compute the cumulative probability of the symmetrical beta distribution.
  * Returns a negative value on error, otherwise returns u in [0, 1].
  */
@@ -1748,7 +1748,7 @@ double fdist_BetaSymmetric (double alpha, double x)
          temp = (alpha - 1.0) * log (x * (1.0 - x)) - logB;
          u = series3 (alpha, x) * exp(temp) / alpha;
 
-      } else {      
+      } else {
          const double y = 0.5 - x;
          temp = num2_log1p(-4.0*y*y);
          temp = alpha * temp - logC;
@@ -1783,7 +1783,7 @@ static double KSSpecial (long n, double x)
       double w;
       if (n <= NLIM) {
          w = num2_Factorial ((int) n);
-         return w * pow (t, (double) n); 
+         return w * pow (t, (double) n);
       }
       w = num2_LnFactorial ((int) n) + n * log (t);
       return exp (w);
@@ -2148,7 +2148,7 @@ double fdist_KS1 (long n, double x)
    if (n <= NSEP) {
       if (n*x*x < ZSEP)
          return Pomeranz (n, x);
-      else 
+      else
          return 1. - fbar_KS1(n, x);
    }
 
@@ -2337,10 +2337,10 @@ double fdist_KSPlusJumpOne (long N, double a, double x)
 
 /*=========================================================================*/
 #if 0
-static lebool IsJump (fdist_FUNC_JUMPS * H, double xa, double xb,
+static bool IsJump (fdist_FUNC_JUMPS * H, double xa, double xb,
    double ya, double yb, int NJ)
    /* Find a more precise value for the position of the jump in (xa, xb). */
-   /* Return FALSE if there is no jump, TRUE if there is a jump. */
+   /* Return false if there is no jump, true if there is a jump. */
 {
    const double eps = DBL_EPSILON;
    const int imax = DBL_MANT_DIG;
@@ -2365,11 +2365,11 @@ static lebool IsJump (fdist_FUNC_JUMPS * H, double xa, double xb,
    }
 
    if (yb - ya < epsY)
-      return FALSE;
+      return false;
    H->xJump[NJ] = (xb + xa) / 2.0;
    H->yLeftJump[NJ] = ya;
    H->yRightJump[NJ] = yb;
-   return TRUE;
+   return true;
 }
 
 /*-------------------------------------------------------------------------*/
@@ -2414,7 +2414,7 @@ void fdist_FindJumps (fdist_FUNC_JUMPS * H, int Detail)
             H->yRightJump = (double *) util_Realloc (H->yRightJump,
                (NJ + 1) * sizeof (double));
          }
-         if (IsJump (H, x - epsX, x, yLeft, yRight, i) == FALSE)
+         if (IsJump (H, x - epsX, x, yLeft, yRight, i) == false)
             i--;
       }
       yLeft = yRight;
@@ -2728,47 +2728,47 @@ static void WatsonGInit (void)
    YWA[20] = 7.165864865E-4;       YWA[21] = 1.3087767385E-3;
    YWA[22] = 2.2522044209E-3;      YWA[23] = 3.6781862572E-3;
    YWA[24] = 5.7361958631E-3;      YWA[25] = 8.5877444706E-3;
-   YWA[26] = 1.23988738E-2;        YWA[27] = 1.73320516E-2;      
-   YWA[28] = 2.35382479E-2;        YWA[29] = 3.11498548E-2;      
-   YWA[30] = 4.02749297E-2;        YWA[31] = 5.09930445E-2;      
-   YWA[32] = 6.33528333E-2;        YWA[33] = 7.73711747E-2;      
-   YWA[34] = 9.30338324E-2;        YWA[35] = 1.10297306E-1;      
-   YWA[36] = 1.290916098E-1;       YWA[37] = 1.493236984E-1;     
-   YWA[38] = 1.708812741E-1;       YWA[39] = 1.936367476E-1;     
-   YWA[40] = 2.174511609E-1;       YWA[41] = 2.42177928E-1;      
-   YWA[42] = 2.676662852E-1;       YWA[43] = 2.937643828E-1;     
-   YWA[44] = 3.203219784E-1;       YWA[45] = 3.471927188E-1;     
-   YWA[46] = 3.742360163E-1;       YWA[47] = 4.013185392E-1;     
-   YWA[48] = 4.283153467E-1;       YWA[49] = 4.551107027E-1;     
-   YWA[50] = 4.815986082E-1;       YWA[51] = 5.076830902E-1;     
-   YWA[52] = 5.332782852E-1;       YWA[53] = 5.583083531E-1;     
-   YWA[54] = 5.827072528E-1;       YWA[55] = 6.064184099E-1;     
-   YWA[56] = 6.293943006E-1;       YWA[57] = 6.515959739E-1;     
-   YWA[58] = 6.729925313E-1;       YWA[59] = 6.935605784E-1;     
-   YWA[60] = 7.132836621E-1;       YWA[61] = 7.321517033E-1;     
-   YWA[62] = 7.501604333E-1;       YWA[63] = 7.673108406E-1;     
-   YWA[64] = 7.836086337E-1;       YWA[65] = 7.99063723E-1;      
-   YWA[66] = 8.136897251E-1;       YWA[67] = 8.275034914E-1;     
-   YWA[68] = 8.405246632E-1;       YWA[69] = 8.527752531E-1;     
-   YWA[70] = 8.642792535E-1;       YWA[71] = 8.750622738E-1;     
-   YWA[72] = 8.851512032E-1;       YWA[73] = 8.945739017E-1;     
-   YWA[74] = 9.033589176E-1;       YWA[75] = 9.115352296E-1;     
-   YWA[76] = 9.19132015E-1;        YWA[77] = 9.261784413E-1;     
-   YWA[78] = 9.327034806E-1;       YWA[79] = 9.387357465E-1;     
-   YWA[80] = 9.44303351E-1;        YWA[81] = 9.494337813E-1;     
-   YWA[82] = 9.541537951E-1;       YWA[83] = 9.584893325E-1;     
-   YWA[84] = 9.624654445E-1;       YWA[85] = 9.661062352E-1;     
-   YWA[86] = 9.694348183E-1;       YWA[87] = 9.724732859E-1;     
-   YWA[88] = 9.752426872E-1;       YWA[89] = 9.777630186E-1;     
-   YWA[90] = 9.800532221E-1;       YWA[91] = 9.821311912E-1;     
-   YWA[92] = 9.840137844E-1;       YWA[93] = 9.85716844E-1;      
-   YWA[94] = 9.872552203E-1;       YWA[95] = 9.886428002E-1;     
-   YWA[96] = 9.898925389E-1;       YWA[97] = 9.910164946E-1;     
-   YWA[98] = 9.920258656E-1;       YWA[99] = 9.929310287E-1;     
-   YWA[100] = 9.937415788E-1;      YWA[101] = 9.944663692E-1;    
-   YWA[102] = 9.95113552E-1;       YWA[103] = 9.956906185E-1;    
-   YWA[104] = 9.962044387E-1;      YWA[105] = 9.966613009E-1;    
-   YWA[106] = 9.970669496E-1;      YWA[107] = 9.974266225E-1;    
+   YWA[26] = 1.23988738E-2;        YWA[27] = 1.73320516E-2;
+   YWA[28] = 2.35382479E-2;        YWA[29] = 3.11498548E-2;
+   YWA[30] = 4.02749297E-2;        YWA[31] = 5.09930445E-2;
+   YWA[32] = 6.33528333E-2;        YWA[33] = 7.73711747E-2;
+   YWA[34] = 9.30338324E-2;        YWA[35] = 1.10297306E-1;
+   YWA[36] = 1.290916098E-1;       YWA[37] = 1.493236984E-1;
+   YWA[38] = 1.708812741E-1;       YWA[39] = 1.936367476E-1;
+   YWA[40] = 2.174511609E-1;       YWA[41] = 2.42177928E-1;
+   YWA[42] = 2.676662852E-1;       YWA[43] = 2.937643828E-1;
+   YWA[44] = 3.203219784E-1;       YWA[45] = 3.471927188E-1;
+   YWA[46] = 3.742360163E-1;       YWA[47] = 4.013185392E-1;
+   YWA[48] = 4.283153467E-1;       YWA[49] = 4.551107027E-1;
+   YWA[50] = 4.815986082E-1;       YWA[51] = 5.076830902E-1;
+   YWA[52] = 5.332782852E-1;       YWA[53] = 5.583083531E-1;
+   YWA[54] = 5.827072528E-1;       YWA[55] = 6.064184099E-1;
+   YWA[56] = 6.293943006E-1;       YWA[57] = 6.515959739E-1;
+   YWA[58] = 6.729925313E-1;       YWA[59] = 6.935605784E-1;
+   YWA[60] = 7.132836621E-1;       YWA[61] = 7.321517033E-1;
+   YWA[62] = 7.501604333E-1;       YWA[63] = 7.673108406E-1;
+   YWA[64] = 7.836086337E-1;       YWA[65] = 7.99063723E-1;
+   YWA[66] = 8.136897251E-1;       YWA[67] = 8.275034914E-1;
+   YWA[68] = 8.405246632E-1;       YWA[69] = 8.527752531E-1;
+   YWA[70] = 8.642792535E-1;       YWA[71] = 8.750622738E-1;
+   YWA[72] = 8.851512032E-1;       YWA[73] = 8.945739017E-1;
+   YWA[74] = 9.033589176E-1;       YWA[75] = 9.115352296E-1;
+   YWA[76] = 9.19132015E-1;        YWA[77] = 9.261784413E-1;
+   YWA[78] = 9.327034806E-1;       YWA[79] = 9.387357465E-1;
+   YWA[80] = 9.44303351E-1;        YWA[81] = 9.494337813E-1;
+   YWA[82] = 9.541537951E-1;       YWA[83] = 9.584893325E-1;
+   YWA[84] = 9.624654445E-1;       YWA[85] = 9.661062352E-1;
+   YWA[86] = 9.694348183E-1;       YWA[87] = 9.724732859E-1;
+   YWA[88] = 9.752426872E-1;       YWA[89] = 9.777630186E-1;
+   YWA[90] = 9.800532221E-1;       YWA[91] = 9.821311912E-1;
+   YWA[92] = 9.840137844E-1;       YWA[93] = 9.85716844E-1;
+   YWA[94] = 9.872552203E-1;       YWA[95] = 9.886428002E-1;
+   YWA[96] = 9.898925389E-1;       YWA[97] = 9.910164946E-1;
+   YWA[98] = 9.920258656E-1;       YWA[99] = 9.929310287E-1;
+   YWA[100] = 9.937415788E-1;      YWA[101] = 9.944663692E-1;
+   YWA[102] = 9.95113552E-1;       YWA[103] = 9.956906185E-1;
+   YWA[104] = 9.962044387E-1;      YWA[105] = 9.966613009E-1;
+   YWA[106] = 9.970669496E-1;      YWA[107] = 9.974266225E-1;
    YWA[108] = 9.977450862E-1;      YWA[109] = 9.980266707E-1;
    YWA[110] = 9.982753021E-1;      YWA[111] = 9.984945338E-1;
    YWA[112] = 9.98687576E-1;       YWA[113] = 9.98857324E-1;
@@ -2788,65 +2788,65 @@ static void WatsonGInit (void)
    YWA[140] = 9.999831643E-1;      YWA[141] = 9.999858E-1;
    YWA[142] = 9.999883E-1;
 
-   MWA[0] = 0.0;                MWA[1] = 6.909E-15;    
-   MWA[2] = 2.763E-14;          MWA[3] = 1.036E-13;    
-   MWA[4] = 3.792E-13;          MWA[5] = 4.773E-12;    
-   MWA[6] = 4.59E-10;           MWA[7] = 2.649E-8;     
-   MWA[8] = 7.353E-7;           MWA[9] = 1.14E-5;      
-   MWA[10] = 1.102E-4;          MWA[11] = 7.276E-4;    
-   MWA[12] = 3.538E-3;          MWA[13] = 0.01342;     
-   MWA[14] = 0.04157;           MWA[15] = 0.1088;      
-   MWA[16] = 0.2474;            MWA[17] = 0.4999;      
-   MWA[18] = 0.913;             MWA[19] = 1.53;        
-   MWA[20] = 2.381;             MWA[21] = 3.475;       
-   MWA[22] = 4.795;             MWA[23] = 6.3;         
-   MWA[24] = 7.928;             MWA[25] = 9.602;       
-   MWA[26] = 11.24;             MWA[27] = 12.76;       
-   MWA[28] = 14.1;              MWA[29] = 15.18;       
-   MWA[30] = 15.98;             MWA[31] = 16.47;       
-   MWA[32] = 16.64;             MWA[33] = 16.49;       
-   MWA[34] = 16.05;             MWA[35] = 15.35;       
-   MWA[36] = 14.41;             MWA[37] = 13.28;       
-   MWA[38] = 12.0;              MWA[39] = 10.6;        
-   MWA[40] = 9.13;              MWA[41] = 7.618;       
-   MWA[42] = 6.095;             MWA[43] = 4.588;       
-   MWA[44] = 3.122;             MWA[45] = 1.713;       
-   MWA[46] = 0.3782;            MWA[47] = -0.8726;     
-   MWA[48] = -2.031;            MWA[49] = -3.091;      
-   MWA[50] = -4.051;            MWA[51] = -4.91;       
-   MWA[52] = -5.668;            MWA[53] = -6.327;      
-   MWA[54] = -6.893;            MWA[55] = -7.367;      
-   MWA[56] = -7.756;            MWA[57] = -8.064;      
-   MWA[58] = -8.297;            MWA[59] = -8.46;       
-   MWA[60] = -8.56;             MWA[61] = -8.602;      
-   MWA[62] = -8.591;            MWA[63] = -8.533;      
-   MWA[64] = -8.433;            MWA[65] = -8.296;      
-   MWA[66] = -8.127;            MWA[67] = -7.93;       
-   MWA[68] = -7.709;            MWA[69] = -7.469;      
-   MWA[70] = -7.212;            MWA[71] = -6.943;      
-   MWA[72] = -6.663;            MWA[73] = -6.378;      
-   MWA[74] = -6.087;            MWA[75] = -5.795;      
-   MWA[76] = -5.503;            MWA[77] = -5.213;      
-   MWA[78] = -4.927;            MWA[79] = -4.646;      
-   MWA[80] = -4.371;            MWA[81] = -4.103;      
-   MWA[82] = -3.843;            MWA[83] = -3.593;      
-   MWA[84] = -3.352;            MWA[85] = -3.12;       
-   MWA[86] = -2.899;            MWA[87] = -2.689;      
-   MWA[88] = -2.489;            MWA[89] = -2.3;        
-   MWA[90] = -2.121;            MWA[91] = -1.952;      
-   MWA[92] = -1.794;            MWA[93] = -1.645;      
-   MWA[94] = -1.506;            MWA[95] = -1.377;      
-   MWA[96] = -1.256;            MWA[97] = -1.144;      
-   MWA[98] = -1.041;            MWA[99] = -0.9449;     
-   MWA[100] = -0.8564;          MWA[101] = -0.775;   
-   MWA[102] = -0.7001;          MWA[103] = -0.6315;  
-   MWA[104] = -0.5687;          MWA[105] = -0.5113;  
-   MWA[106] = -0.459;           MWA[107] = -0.4114;  
-   MWA[108] = -0.3681;          MWA[109] = -0.3289;  
-   MWA[110] = -0.2934;          MWA[111] = -0.2614;  
-   MWA[112] = -0.2325;          MWA[113] = -0.2064;  
-   MWA[114] = -0.183;           MWA[115] = -0.1621;  
-   MWA[116] = -0.1433;          MWA[117] = -0.1265;  
+   MWA[0] = 0.0;                MWA[1] = 6.909E-15;
+   MWA[2] = 2.763E-14;          MWA[3] = 1.036E-13;
+   MWA[4] = 3.792E-13;          MWA[5] = 4.773E-12;
+   MWA[6] = 4.59E-10;           MWA[7] = 2.649E-8;
+   MWA[8] = 7.353E-7;           MWA[9] = 1.14E-5;
+   MWA[10] = 1.102E-4;          MWA[11] = 7.276E-4;
+   MWA[12] = 3.538E-3;          MWA[13] = 0.01342;
+   MWA[14] = 0.04157;           MWA[15] = 0.1088;
+   MWA[16] = 0.2474;            MWA[17] = 0.4999;
+   MWA[18] = 0.913;             MWA[19] = 1.53;
+   MWA[20] = 2.381;             MWA[21] = 3.475;
+   MWA[22] = 4.795;             MWA[23] = 6.3;
+   MWA[24] = 7.928;             MWA[25] = 9.602;
+   MWA[26] = 11.24;             MWA[27] = 12.76;
+   MWA[28] = 14.1;              MWA[29] = 15.18;
+   MWA[30] = 15.98;             MWA[31] = 16.47;
+   MWA[32] = 16.64;             MWA[33] = 16.49;
+   MWA[34] = 16.05;             MWA[35] = 15.35;
+   MWA[36] = 14.41;             MWA[37] = 13.28;
+   MWA[38] = 12.0;              MWA[39] = 10.6;
+   MWA[40] = 9.13;              MWA[41] = 7.618;
+   MWA[42] = 6.095;             MWA[43] = 4.588;
+   MWA[44] = 3.122;             MWA[45] = 1.713;
+   MWA[46] = 0.3782;            MWA[47] = -0.8726;
+   MWA[48] = -2.031;            MWA[49] = -3.091;
+   MWA[50] = -4.051;            MWA[51] = -4.91;
+   MWA[52] = -5.668;            MWA[53] = -6.327;
+   MWA[54] = -6.893;            MWA[55] = -7.367;
+   MWA[56] = -7.756;            MWA[57] = -8.064;
+   MWA[58] = -8.297;            MWA[59] = -8.46;
+   MWA[60] = -8.56;             MWA[61] = -8.602;
+   MWA[62] = -8.591;            MWA[63] = -8.533;
+   MWA[64] = -8.433;            MWA[65] = -8.296;
+   MWA[66] = -8.127;            MWA[67] = -7.93;
+   MWA[68] = -7.709;            MWA[69] = -7.469;
+   MWA[70] = -7.212;            MWA[71] = -6.943;
+   MWA[72] = -6.663;            MWA[73] = -6.378;
+   MWA[74] = -6.087;            MWA[75] = -5.795;
+   MWA[76] = -5.503;            MWA[77] = -5.213;
+   MWA[78] = -4.927;            MWA[79] = -4.646;
+   MWA[80] = -4.371;            MWA[81] = -4.103;
+   MWA[82] = -3.843;            MWA[83] = -3.593;
+   MWA[84] = -3.352;            MWA[85] = -3.12;
+   MWA[86] = -2.899;            MWA[87] = -2.689;
+   MWA[88] = -2.489;            MWA[89] = -2.3;
+   MWA[90] = -2.121;            MWA[91] = -1.952;
+   MWA[92] = -1.794;            MWA[93] = -1.645;
+   MWA[94] = -1.506;            MWA[95] = -1.377;
+   MWA[96] = -1.256;            MWA[97] = -1.144;
+   MWA[98] = -1.041;            MWA[99] = -0.9449;
+   MWA[100] = -0.8564;          MWA[101] = -0.775;
+   MWA[102] = -0.7001;          MWA[103] = -0.6315;
+   MWA[104] = -0.5687;          MWA[105] = -0.5113;
+   MWA[106] = -0.459;           MWA[107] = -0.4114;
+   MWA[108] = -0.3681;          MWA[109] = -0.3289;
+   MWA[110] = -0.2934;          MWA[111] = -0.2614;
+   MWA[112] = -0.2325;          MWA[113] = -0.2064;
+   MWA[114] = -0.183;           MWA[115] = -0.1621;
+   MWA[116] = -0.1433;          MWA[117] = -0.1265;
    MWA[118] = -0.1115;          MWA[119] = -9.813E-2;
    MWA[120] = -8.624E-2;        MWA[121] = -7.569E-2;
    MWA[122] = -6.632E-2;        MWA[123] = -5.803E-2;
@@ -2864,70 +2864,70 @@ static void WatsonGInit (void)
    for (j = 0; j <= 11; j++)
       CoWA[j] = 0.0;
 
-   CoWA[12] = 1.25E-5;            CoWA[13] = 3.87E-5;      
-   CoWA[14] = 1.004E-4;           CoWA[15] = 2.703E-4;     
-   CoWA[16] = 6.507E-4;           CoWA[17] = 1.3985E-3;    
-   CoWA[18] = 2.8353E-3;          CoWA[19] = 5.1911E-3;    
-   CoWA[20] = 8.9486E-3;          CoWA[21] = 1.41773E-2;   
-   CoWA[22] = 2.16551E-2;         CoWA[23] = 3.1489E-2;    
-   CoWA[24] = 4.34123E-2;         CoWA[25] = 5.78719E-2;   
-   CoWA[26] = 7.46921E-2;         CoWA[27] = 9.45265E-2;   
-   CoWA[28] = 1.165183E-1;        CoWA[29] = 1.406353E-1;  
-   CoWA[30] = 1.662849E-1;        CoWA[31] = 1.929895E-1;  
-   CoWA[32] = 2.189347E-1;        CoWA[33] = 2.457772E-1;  
-   CoWA[34] = 2.704794E-1;        CoWA[35] = 2.947906E-1;  
-   CoWA[36] = 3.169854E-1;        CoWA[37] = 3.377435E-1;  
-   CoWA[38] = 3.573555E-1;        CoWA[39] = 3.751205E-1;  
-   CoWA[40] = 3.906829E-1;        CoWA[41] = 4.039806E-1;  
-   CoWA[42] = 4.142483E-1;        CoWA[43] = 4.22779E-1;   
-   CoWA[44] = 4.288013E-1;        CoWA[45] = 4.330353E-1;  
-   CoWA[46] = 4.34452E-1;         CoWA[47] = 4.338138E-1;  
-   CoWA[48] = 4.31504E-1;         CoWA[49] = 4.272541E-1;  
-   CoWA[50] = 4.220568E-1;        CoWA[51] = 4.158229E-1;  
-   CoWA[52] = 4.083281E-1;        CoWA[53] = 3.981182E-1;  
-   CoWA[54] = 3.871678E-1;        CoWA[55] = 3.755527E-1;  
-   CoWA[56] = 3.628823E-1;        CoWA[57] = 3.520135E-1;  
-   CoWA[58] = 3.400924E-1;        CoWA[59] = 3.280532E-1;  
-   CoWA[60] = 3.139477E-1;        CoWA[61] = 2.997087E-1;  
-   CoWA[62] = 2.849179E-1;        CoWA[63] = 2.710475E-1;  
-   CoWA[64] = 2.576478E-1;        CoWA[65] = 2.449155E-1;  
-   CoWA[66] = 2.317447E-1;        CoWA[67] = 2.193161E-1;  
-   CoWA[68] = 2.072622E-1;        CoWA[69] = 1.956955E-1;  
-   CoWA[70] = 1.846514E-1;        CoWA[71] = 1.734096E-1;  
-   CoWA[72] = 1.622678E-1;        CoWA[73] = 1.520447E-1;  
-   CoWA[74] = 1.416351E-1;        CoWA[75] = 1.32136E-1;   
-   CoWA[76] = 1.231861E-1;        CoWA[77] = 1.150411E-1;  
-   CoWA[78] = 1.071536E-1;        CoWA[79] = 9.9465E-2;    
-   CoWA[80] = 9.22347E-2;         CoWA[81] = 8.54394E-2;   
-   CoWA[82] = 7.87697E-2;         CoWA[83] = 7.23848E-2;   
-   CoWA[84] = 6.6587E-2;          CoWA[85] = 6.15849E-2;        
-   CoWA[86] = 5.6573E-2;          CoWA[87] = 5.17893E-2;   
+   CoWA[12] = 1.25E-5;            CoWA[13] = 3.87E-5;
+   CoWA[14] = 1.004E-4;           CoWA[15] = 2.703E-4;
+   CoWA[16] = 6.507E-4;           CoWA[17] = 1.3985E-3;
+   CoWA[18] = 2.8353E-3;          CoWA[19] = 5.1911E-3;
+   CoWA[20] = 8.9486E-3;          CoWA[21] = 1.41773E-2;
+   CoWA[22] = 2.16551E-2;         CoWA[23] = 3.1489E-2;
+   CoWA[24] = 4.34123E-2;         CoWA[25] = 5.78719E-2;
+   CoWA[26] = 7.46921E-2;         CoWA[27] = 9.45265E-2;
+   CoWA[28] = 1.165183E-1;        CoWA[29] = 1.406353E-1;
+   CoWA[30] = 1.662849E-1;        CoWA[31] = 1.929895E-1;
+   CoWA[32] = 2.189347E-1;        CoWA[33] = 2.457772E-1;
+   CoWA[34] = 2.704794E-1;        CoWA[35] = 2.947906E-1;
+   CoWA[36] = 3.169854E-1;        CoWA[37] = 3.377435E-1;
+   CoWA[38] = 3.573555E-1;        CoWA[39] = 3.751205E-1;
+   CoWA[40] = 3.906829E-1;        CoWA[41] = 4.039806E-1;
+   CoWA[42] = 4.142483E-1;        CoWA[43] = 4.22779E-1;
+   CoWA[44] = 4.288013E-1;        CoWA[45] = 4.330353E-1;
+   CoWA[46] = 4.34452E-1;         CoWA[47] = 4.338138E-1;
+   CoWA[48] = 4.31504E-1;         CoWA[49] = 4.272541E-1;
+   CoWA[50] = 4.220568E-1;        CoWA[51] = 4.158229E-1;
+   CoWA[52] = 4.083281E-1;        CoWA[53] = 3.981182E-1;
+   CoWA[54] = 3.871678E-1;        CoWA[55] = 3.755527E-1;
+   CoWA[56] = 3.628823E-1;        CoWA[57] = 3.520135E-1;
+   CoWA[58] = 3.400924E-1;        CoWA[59] = 3.280532E-1;
+   CoWA[60] = 3.139477E-1;        CoWA[61] = 2.997087E-1;
+   CoWA[62] = 2.849179E-1;        CoWA[63] = 2.710475E-1;
+   CoWA[64] = 2.576478E-1;        CoWA[65] = 2.449155E-1;
+   CoWA[66] = 2.317447E-1;        CoWA[67] = 2.193161E-1;
+   CoWA[68] = 2.072622E-1;        CoWA[69] = 1.956955E-1;
+   CoWA[70] = 1.846514E-1;        CoWA[71] = 1.734096E-1;
+   CoWA[72] = 1.622678E-1;        CoWA[73] = 1.520447E-1;
+   CoWA[74] = 1.416351E-1;        CoWA[75] = 1.32136E-1;
+   CoWA[76] = 1.231861E-1;        CoWA[77] = 1.150411E-1;
+   CoWA[78] = 1.071536E-1;        CoWA[79] = 9.9465E-2;
+   CoWA[80] = 9.22347E-2;         CoWA[81] = 8.54394E-2;
+   CoWA[82] = 7.87697E-2;         CoWA[83] = 7.23848E-2;
+   CoWA[84] = 6.6587E-2;          CoWA[85] = 6.15849E-2;
+   CoWA[86] = 5.6573E-2;          CoWA[87] = 5.17893E-2;
    CoWA[88] = 4.70011E-2;         CoWA[89] = 4.2886E-2;
    CoWA[90] = 3.91224E-2;         CoWA[91] = 3.53163E-2;
    CoWA[92] = 3.20884E-2;         CoWA[93] = 2.92264E-2;
    CoWA[94] = 2.66058E-2;         CoWA[95] = 2.37352E-2;
-   CoWA[96] = 2.14669E-2;         CoWA[97] = 1.94848E-2;        
-   CoWA[98] = 1.75591E-2;         CoWA[99] = 1.58232E-2;        
-   CoWA[100] = 1.40302E-2;        CoWA[101] = 1.24349E-2;       
-   CoWA[102] = 1.11856E-2;        CoWA[103] = 9.9765E-3;        
-   CoWA[104] = 8.9492E-3;         CoWA[105] = 8.0063E-3;        
-   CoWA[106] = 7.1509E-3;         CoWA[107] = 6.3196E-3;        
-   CoWA[108] = 5.6856E-3;         CoWA[109] = 5.0686E-3;        
-   CoWA[110] = 4.5085E-3;         CoWA[111] = 3.9895E-3;        
-   CoWA[112] = 3.4804E-3;         CoWA[113] = 3.0447E-3;        
-   CoWA[114] = 2.7012E-3;         CoWA[115] = 2.2984E-3;        
-   CoWA[116] = 2.0283E-3;         CoWA[117] = 1.7399E-3;        
-   CoWA[118] = 1.5032E-3;         CoWA[119] = 1.3267E-3;        
-   CoWA[120] = 1.1531E-3;         CoWA[121] = 9.92E-4;          
-   CoWA[122] = 9.211E-4;          CoWA[123] = 8.296E-4;         
-   CoWA[124] = 6.991E-4;          CoWA[125] = 5.84E-4;          
-   CoWA[126] = 5.12E-4;           CoWA[127] = 4.314E-4;         
-   CoWA[128] = 3.593E-4;          CoWA[129] = 3.014E-4;         
-   CoWA[130] = 2.401E-4;          CoWA[131] = 2.004E-4;         
-   CoWA[132] = 1.614E-4;          CoWA[133] = 1.257E-4;         
-   CoWA[134] = 1.112E-4;          CoWA[135] = 9.22E-5;          
-   CoWA[136] = 8.77E-5;           CoWA[137] = 6.22E-5;          
-   CoWA[138] = 4.93E-5;           CoWA[139] = 3.92E-5;          
+   CoWA[96] = 2.14669E-2;         CoWA[97] = 1.94848E-2;
+   CoWA[98] = 1.75591E-2;         CoWA[99] = 1.58232E-2;
+   CoWA[100] = 1.40302E-2;        CoWA[101] = 1.24349E-2;
+   CoWA[102] = 1.11856E-2;        CoWA[103] = 9.9765E-3;
+   CoWA[104] = 8.9492E-3;         CoWA[105] = 8.0063E-3;
+   CoWA[106] = 7.1509E-3;         CoWA[107] = 6.3196E-3;
+   CoWA[108] = 5.6856E-3;         CoWA[109] = 5.0686E-3;
+   CoWA[110] = 4.5085E-3;         CoWA[111] = 3.9895E-3;
+   CoWA[112] = 3.4804E-3;         CoWA[113] = 3.0447E-3;
+   CoWA[114] = 2.7012E-3;         CoWA[115] = 2.2984E-3;
+   CoWA[116] = 2.0283E-3;         CoWA[117] = 1.7399E-3;
+   CoWA[118] = 1.5032E-3;         CoWA[119] = 1.3267E-3;
+   CoWA[120] = 1.1531E-3;         CoWA[121] = 9.92E-4;
+   CoWA[122] = 9.211E-4;          CoWA[123] = 8.296E-4;
+   CoWA[124] = 6.991E-4;          CoWA[125] = 5.84E-4;
+   CoWA[126] = 5.12E-4;           CoWA[127] = 4.314E-4;
+   CoWA[128] = 3.593E-4;          CoWA[129] = 3.014E-4;
+   CoWA[130] = 2.401E-4;          CoWA[131] = 2.004E-4;
+   CoWA[132] = 1.614E-4;          CoWA[133] = 1.257E-4;
+   CoWA[134] = 1.112E-4;          CoWA[135] = 9.22E-5;
+   CoWA[136] = 8.77E-5;           CoWA[137] = 6.22E-5;
+   CoWA[138] = 4.93E-5;           CoWA[139] = 3.92E-5;
    CoWA[140] = 3.15E-5;           CoWA[141] = 1.03E-5;
    CoWA[142] = 9.6E-6;
 }
@@ -3056,7 +3056,7 @@ double fdist_AndersonDarling (long N, double x)
 
 /*=========================================================================*/
 /* The following code is part of Marsaglia's file ADinf.c.
-   Very little has been changed to adapt it to ProbDist. The file was 
+   Very little has been changed to adapt it to ProbDist. The file was
    downloaded from the site of the Journal of Statistical Software
       http://www.jstatsoft.org/v09/i02/
 */
@@ -3068,11 +3068,11 @@ A procedure for evaluating the limiting distribution of the
              Anderson-Darling statistic A_n=
 -n-(1/n)[ln(x_1(1-x_n)+3ln(x_2(1-x_{n-1})+5ln(x_3(1-x_{n-2})+...
    +(2n-1)ln(x_n(1-x_1))]
-    where x_1<x_2<...<x_n is an ordered set of purported uniform 
+    where x_1<x_2<...<x_n is an ordered set of purported uniform
   [0,1) variates.
 The function is ADinf(z)=lim_{n->infty} Pr[A_n<z]. About 15 digit accuracy.
 If you don't need that much accuracy, use the quick-and-easy adinf(z).
-ADinf uses a two-term recursion for coefficients in series for which 
+ADinf uses a two-term recursion for coefficients in series for which
  initial values
 require the complementary normal integral, included as cPhi(z).
 Otherwise, use erfc() if your C compiler has one with adequate accuracy.
@@ -3131,7 +3131,7 @@ static double ADinf (double z)
 
 /*------------------------------------------------------------------------*/
 /* The following code is part of Marsaglia's file AnDarl.c.
-   Very little has been changed to adapt it to ProbDist. The file was 
+   Very little has been changed to adapt it to ProbDist. The file was
    downloaded from the site of the Journal of Statistical Software
       http://www.jstatsoft.org/v09/i02/
 --------------------------------------*/
@@ -3259,7 +3259,7 @@ double fdist_Geometric (double p, long s)
 
 double fdist_Poisson1 (double lam, long s)
 /*
- * On our machine, computing a value using fdist_Gamma is faster than the 
+ * On our machine, computing a value using fdist_Gamma is faster than the
  * naive computation for lamlim > 150.0, slower for lamlim < 150.0
  */
 {

@@ -51,7 +51,7 @@
 
 /*------------------------- extern variables ------------------------------*/
 
-lebool unif01_WrLongStateFlag = FALSE;
+bool unif01_WrLongStateFlag = false;
 
 
 
@@ -97,7 +97,7 @@ long unif01_StripL (unif01_Gen *gen, int r, long d)
    else {
       double u = num_TwoExp[r] * (gen->GetU01) (gen->param, gen->state);
       return (long) (d * (u - (long) u));
-   }  
+   }
 }
 
 unsigned long unif01_StripB (unif01_Gen *gen, int r, int s)
@@ -166,8 +166,8 @@ void unif01_DeleteGen (unif01_Gen *gen)
 
 /**************************************************************************/
 /*
- * The original generator is gen0. The position of the bit at which the 
- * increased precision is applied is s, counting from the most significant 
+ * The original generator is gen0. The position of the bit at which the
+ * increased precision is applied is s, counting from the most significant
  * bit;   v = 1 / 2^s.
  */
 typedef struct {
@@ -669,7 +669,7 @@ void unif01_DeleteTruncGen (unif01_Gen *gen)
 /************************************************************************/
 /*
  * The original generator is gen0. The r most significant bits of each random
- * number are dropped, and the s following bits are kept. 
+ * number are dropped, and the s following bits are kept.
  */
 typedef struct {
    unif01_Gen *gen0;
@@ -700,7 +700,7 @@ static unsigned long BitBlock_Bits (void *vpar, void *vsta)
 
       /* Generate B random integers Z from the bits of nrows random integers
          X from the original gen0 */
-      for (j = 0; j < param->B; j++) 
+      for (j = 0; j < param->B; j++)
 	 state->Z[j] = 0;
       for (i = 0; i < param->nrows; i++) {
  	 /* Get a random integer X of s bits */
@@ -739,7 +739,7 @@ unif01_Gen * unif01_CreateBitBlockGen (unif01_Gen *gen, int r, int s, int w)
    char *name;
    char str[64];
    size_t len, len2, len3;
- 
+
    util_Assert (s > 0, "unif01_CreateBitBlockGen:   s <= 0");
    util_Assert (r >= 0, "unif01_CreateBitBlockGen:   r < 0");
    util_Assert (r + s <= 32, "unif01_CreateBitBlockGen:   r + s > 32");
@@ -843,7 +843,7 @@ static void WrCombGen2 (void *vsta)
 }
 
 
-static unif01_Gen * CreateCombGen2 (unif01_Gen *g1, unif01_Gen *g2, 
+static unif01_Gen * CreateCombGen2 (unif01_Gen *g1, unif01_Gen *g2,
    char *mess, char *name)
 {
    unif01_Gen *gen;
@@ -960,7 +960,7 @@ static unsigned long CombGen3_Bits_Xor (void *vpar, void *junk)
    unif01_Gen *gen2 = g->gen2;
    unif01_Gen *gen3 = g->gen3;
 
-   return  gen1->GetBits (gen1->param, gen1->state) ^ 
+   return  gen1->GetBits (gen1->param, gen1->state) ^
            gen2->GetBits (gen2->param, gen2->state) ^
            gen3->GetBits (gen3->param, gen3->state);
 }
@@ -1129,7 +1129,7 @@ unif01_Gen * unif01_CreateParallelGen (int k, unif01_Gen *gen[], int L)
    genP->GetBits = &ParallelGen_Bits;
    genP->GetU01  = &ParallelGen_U01;
    return genP;
-#undef NCAT 
+#undef NCAT
 }
 
 
@@ -1321,7 +1321,7 @@ void unif01_DeleteExternGenBitsL (unif01_Gen * gen)
 /**************************************************************************/
 
 void unif01_TimerGen (unif01_Gen *gen, unif01_TimerRec * pt, long n,
-    lebool fU01)
+    bool fU01)
 {
    chrono_Chrono *C1;
    double U;
@@ -1344,7 +1344,7 @@ void unif01_TimerGen (unif01_Gen *gen, unif01_TimerRec * pt, long n,
 }
 
 void unif01_TimerSumGen (unif01_Gen *gen, unif01_TimerRec * pt, long n,
-    lebool fU01)
+    bool fU01)
 {
    chrono_Chrono *C1;
    double Sum = 0.0;
@@ -1362,7 +1362,7 @@ void unif01_TimerSumGen (unif01_Gen *gen, unif01_TimerRec * pt, long n,
    if (fU01)
       pt->mean = Sum / n;
    else
-      pt->mean = (double) Y / n;  
+      pt->mean = (double) Y / n;
    pt->n = n;
    pt->gen = gen;
    pt->fU01 = fU01;
@@ -1414,14 +1414,14 @@ void unif01_WriteTimerRec (unif01_TimerRec *R)
    printf ("%6.2f sec\n\n", R->time);
 }
 
-void unif01_TimerGenWr (unif01_Gen *gen, long n, lebool fU01)
+void unif01_TimerGenWr (unif01_Gen *gen, long n, bool fU01)
 {
    unif01_TimerRec timer;
    unif01_TimerGen (gen, &timer, n, fU01);
    unif01_WriteTimerRec (&timer);
 }
 
-void unif01_TimerSumGenWr (unif01_Gen *gen, long n, lebool fU01)
+void unif01_TimerSumGenWr (unif01_Gen *gen, long n, bool fU01)
 {
    unif01_TimerRec timer;
    unif01_TimerSumGen (gen, &timer, n, fU01);

@@ -4,7 +4,7 @@
 
 int main (void)
 {
-   swrite_Basic = FALSE;
+   swrite_Basic = false;
    bbattery_RabbitFile ("vax.bin", 1048576);
    return 0;
 }

@@ -23,7 +23,7 @@ int main (void)
    chod = fmultin_CreatePer_DT (t, 1);
    cho = fcho_CreateCho2 (chon, chod);
 
-   fmultin_Serial1 (fam, par, res, cho, 1, 0, t, TRUE, 21, 1, 5, 1);
+   fmultin_Serial1 (fam, par, res, cho, 1, 0, t, true, 21, 1, 5, 1);
 
    fcho_DeleteCho2 (cho);
    fmultin_DeletePer (chod);

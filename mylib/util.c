@@ -122,27 +122,27 @@ void *util_Free (void *p)
 
 /************************************************************************/
 
-void util_WriteBool (lebool b, int d)
+void util_WriteBool (bool b, int d)
 {
    if (b)
-      printf ("%*s", d, "TRUE");
+      printf ("%*s", d, "true");
    else
-      printf ("%*s", d, "FALSE");
+      printf ("%*s", d, "false");
 }
 
 
-void util_ReadBool (char S[], lebool *x)
+void util_ReadBool (char S[], bool *x)
 {
    int j;
    char B[6];
    j = sscanf (S, " %6s", B);
-   util_Assert (j > 0, "util_ReadBool:   on reading lebool");
+   util_Assert (j > 0, "util_ReadBool:   on reading bool");
    if (!strncmp (B, "TRUE", (size_t) 5))
-      *x = TRUE;
+      *x = true;
    else if (!strncmp (B, "FALSE", (size_t) 6))
-      *x = FALSE;
+      *x = false;
    else {
-      util_Error ("util_ReadBool:   lebool values must be TRUE or FALSE");
+      util_Error ("util_ReadBool:   bool values must be TRUE or FALSE");
    }
 }
 
@@ -157,7 +157,7 @@ int util_GetLine (FILE *infile, char *Line, char c)
      /* Find first non-white character in Line */
      j = strspn (Line, " \t\r\f\v");
      /* Discard blank lines and lines whose first non-white character is c */
-     if (Line[j] == '\n' ||  Line[j] == c) 
+     if (Line[j] == '\n' ||  Line[j] == c)
         continue;
      else {
         char *p;

@@ -37,7 +37,7 @@ in the following structure.
 
 typedef struct {
    fres_Cont *GCD;
-   fres_Cont *NumIter; 
+   fres_Cont *NumIter;
 } fmarsa_Res2;
 \endcode
  \tab
@@ -52,16 +52,16 @@ typedef struct {
 
 fmarsa_Res2 * fmarsa_CreateRes2 (void);
 \endcode
- \tab 
+ \tab
   Creates and returns a structure that will hold the results
-  of a  {\tt fmarsa\_GCD1} test. 
+  of a  {\tt fmarsa\_GCD1} test.
  \endtab
 \code
 
 
 void fmarsa_DeleteRes2 (fmarsa_Res2 *res);
 \endcode
- \tab 
+ \tab
   Frees the memory allocated by {\tt fmarsa\_CreateRes2}.
  \endtab
 
@@ -76,7 +76,7 @@ void fmarsa_DeleteRes2 (fmarsa_Res2 *res);
 
 fcho_Cho * fmarsa_CreateBirthEC (long N, int t, double EC);
 \endcode
- \tab 
+ \tab
   Given the number of replications $N$, the dimension $t$ and the sample
   size $n$, the parameter $d$ in {\tt smarsa\_BirthdaySpacings} will be chosen
   so that the expected number of collisions is approximately $EC$,
@@ -90,7 +90,7 @@ fcho_Cho * fmarsa_CreateBirthEC (long N, int t, double EC);
 
 void fmarsa_DeleteBirthEC (fcho_Cho *cho);
 \endcode
- \tab 
+ \tab
   Frees the memory allocated by {\tt fmarsa\_CreateBirthEC}.
  \endtab
 
@@ -103,8 +103,8 @@ void fmarsa_DeleteBirthEC (fcho_Cho *cho);
 
 void fmarsa_SerialOver1 (void);
 \endcode
-\tab  This is equivalent to calling {\tt fmultin\_SerialOver1} with 
-  {\tt Sparse = FALSE}, {\tt NbDelta = 1}, and {\tt Val\-Delta[0] = 1}.
+\tab  This is equivalent to calling {\tt fmultin\_SerialOver1} with
+  {\tt Sparse = false}, {\tt NbDelta = 1}, and {\tt Val\-Delta[0] = 1}.
 \endtab
 \code
 
@@ -112,8 +112,8 @@ void fmarsa_SerialOver1 (void);
 void fmarsa_CollisionOver1 (void);
 \endcode
 
-\tab This is equivalent to calling {\tt fmultin\_SerialOver1} with 
-  {\tt Sparse = TRUE}, {\tt NbDelta = 1}, and {\tt Val\-Delta[0] = -1}.
+\tab This is equivalent to calling {\tt fmultin\_SerialOver1} with
+  {\tt Sparse = true}, {\tt NbDelta = 1}, and {\tt Val\-Delta[0] = -1}.
 \endtab
 \code
 
@@ -126,8 +126,8 @@ void fmarsa_BirthdayS1 (ffam_Fam *fam, fres_Poisson *res, fcho_Cho2 *cho,
   parameters {\tt N}, $n$,  {\tt r}, $d$, {\tt t} and  {\tt p} for the
   first {\tt Nr} generators of family {\tt fam}, for $j$ going from
   {\tt j1} to {\tt j2} by steps of {\tt jstep}. The sample  size $n$ and
-  the one-dimensional interval $d$ are chosen from 
-  $n = {}$ {\tt cho->Chon->Choose(param, i, j)} and 
+  the one-dimensional interval $d$ are chosen from
+  $n = {}$ {\tt cho->Chon->Choose(param, i, j)} and
   $d = {}$ {\tt cho->Chop2->Choose(param, n, 0)}. {\tt Chon} and
   {\tt Chop2} must have been created before. When $n$ exceeds
   {\tt fmarsa\_Maxn} or $k = d^t$ exceeds {\tt fmarsa\_Maxk},

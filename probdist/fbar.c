@@ -239,7 +239,7 @@ double fbar_Normal2 (double x)
 };
 
    int j;
-   lebool negatif;
+   bool negatif;
    double t, u, z, h;
    double r, r1, r2, r3, r4, r5, r6, r7, r8;
 
@@ -250,10 +250,10 @@ double fbar_Normal2 (double x)
       return 1.0;
    }
    if (x < 0.0) {
-      negatif = TRUE;
+      negatif = true;
       x = -x;
    } else {
-      negatif = FALSE;
+      negatif = false;
    }
    j = (int) (8.0 * x + 0.5);
    if (j > 120)
@@ -336,10 +336,10 @@ double fbar_JohnsonSU (double alpha, double beta, double x)
 {
    const double XLIM = 1.0e10;
    double r;
-   lebool negative = FALSE;
+   bool negative = false;
    util_Assert (beta > 0.0, "fbar_JohnsonSU:  beta  <= 0");
    if (x < 0.0) {
-      negative = TRUE;
+      negative = true;
       x = -x;
    }
    /* compute r = x + sqrt (x * x + 1) */
@@ -418,56 +418,56 @@ static void AndersonDarlingInit (void)
    F2AD[102] = 9.9742384E-1;
 
    CoAD[0] = 0.0;
-   CoAD[1] = 0.0;                 CoAD[2] = 0.0;            
-   CoAD[3] = 0.0;                 CoAD[4] = 0.0;            
-   CoAD[5] = -1.87E-3;            CoAD[6] = 0.00898;        
-   CoAD[7] = 0.0209;              CoAD[8] = 0.03087;        
-   CoAD[9] = 0.0377;              CoAD[10] = 0.0414;        
-   CoAD[11] = 0.04386;            CoAD[12] = 0.043;         
-   CoAD[13] = 0.0419;             CoAD[14] = 0.0403;        
-   CoAD[15] = 0.038;              CoAD[16] = 3.54804E-2;    
-   CoAD[17] = 0.032;              CoAD[18] = 0.0293;        
-   CoAD[19] = 2.61949E-2;         CoAD[20] = 0.0228;        
-   CoAD[21] = 0.0192;             CoAD[22] = 1.59865E-2;    
-   CoAD[23] = 0.0129;             CoAD[24] = 0.0107;        
-   CoAD[25] = 8.2464E-3;          CoAD[26] = 0.00611;       
-   CoAD[27] = 0.00363;            CoAD[28] = 1.32272E-3;    
-   CoAD[29] = -5.87E-4;           CoAD[30] = -2.75E-3;      
-   CoAD[31] = -3.95248E-3;        CoAD[32] = -5.34E-3;      
-   CoAD[33] = -6.892E-3;          CoAD[34] = -8.10208E-3;   
-   CoAD[35] = -8.93E-3;           CoAD[36] = -9.552E-3;     
-   CoAD[37] = -1.04605E-2;        CoAD[38] = -0.0112;       
-   CoAD[39] = -1.175E-2;          CoAD[40] = -1.20216E-2;   
-   CoAD[41] = -0.0124;            CoAD[42] = -1.253E-2;     
-   CoAD[43] = -1.27076E-2;        CoAD[44] = -0.0129;       
-   CoAD[45] = -1.267E-2;          CoAD[46] = -1.22015E-2;   
-   CoAD[47] = -0.0122;            CoAD[48] = -1.186E-2;     
-   CoAD[49] = -1.17218E-2;        CoAD[50] = -0.0114;       
-   CoAD[51] = -1.113E-2;          CoAD[52] = -1.08459E-2;   
-   CoAD[53] = -0.0104;            CoAD[54] = -9.93E-3;      
-   CoAD[55] = -9.5252E-3;         CoAD[56] = -9.24E-3;      
-   CoAD[57] = -9.16E-3;           CoAD[58] = -8.8004E-3;    
-   CoAD[59] = -8.63E-3;           CoAD[60] = -8.336E-3;     
-   CoAD[61] = -8.10512E-3;        CoAD[62] = -7.94E-3;      
-   CoAD[63] = -7.71E-3;           CoAD[64] = -7.55064E-3;   
-   CoAD[65] = -7.25E-3;           CoAD[66] = -7.11E-3;      
-   CoAD[67] = -6.834E-3;          CoAD[68] = -0.0065;       
-   CoAD[69] = -6.28E-3;           CoAD[70] = -6.11008E-3;   
-   CoAD[71] = -5.86E-3;           CoAD[72] = -5.673E-3;     
-   CoAD[73] = -5.35008E-3;        CoAD[74] = -5.11E-3;      
-   CoAD[75] = -4.786E-3;          CoAD[76] = -4.59144E-3;   
-   CoAD[77] = -4.38E-3;           CoAD[78] = -4.15E-3;      
-   CoAD[79] = -4.07696E-3;        CoAD[80] = -3.93E-3;      
-   CoAD[81] = -3.83E-3;           CoAD[82] = -3.74656E-3;   
-   CoAD[83] = -3.49E-3;           CoAD[84] = -3.33E-3;      
-   CoAD[85] = -3.20064E-3;        CoAD[86] = -3.09E-3;      
-   CoAD[87] = -2.93E-3;           CoAD[88] = -2.78136E-3;   
-   CoAD[89] = -2.72E-3;           CoAD[90] = -2.66E-3;      
-   CoAD[91] = -2.56208E-3;        CoAD[92] = -2.43E-3;      
-   CoAD[93] = -2.28E-3;           CoAD[94] = -2.13536E-3;   
-   CoAD[95] = -2.083E-3;          CoAD[96] = -1.94E-3;      
-   CoAD[97] = -1.82E-3;           CoAD[98] = -1.77E-3;      
-   CoAD[99] = -1.72E-3;           CoAD[100] = -1.71104E-3;  
+   CoAD[1] = 0.0;                 CoAD[2] = 0.0;
+   CoAD[3] = 0.0;                 CoAD[4] = 0.0;
+   CoAD[5] = -1.87E-3;            CoAD[6] = 0.00898;
+   CoAD[7] = 0.0209;              CoAD[8] = 0.03087;
+   CoAD[9] = 0.0377;              CoAD[10] = 0.0414;
+   CoAD[11] = 0.04386;            CoAD[12] = 0.043;
+   CoAD[13] = 0.0419;             CoAD[14] = 0.0403;
+   CoAD[15] = 0.038;              CoAD[16] = 3.54804E-2;
+   CoAD[17] = 0.032;              CoAD[18] = 0.0293;
+   CoAD[19] = 2.61949E-2;         CoAD[20] = 0.0228;
+   CoAD[21] = 0.0192;             CoAD[22] = 1.59865E-2;
+   CoAD[23] = 0.0129;             CoAD[24] = 0.0107;
+   CoAD[25] = 8.2464E-3;          CoAD[26] = 0.00611;
+   CoAD[27] = 0.00363;            CoAD[28] = 1.32272E-3;
+   CoAD[29] = -5.87E-4;           CoAD[30] = -2.75E-3;
+   CoAD[31] = -3.95248E-3;        CoAD[32] = -5.34E-3;
+   CoAD[33] = -6.892E-3;          CoAD[34] = -8.10208E-3;
+   CoAD[35] = -8.93E-3;           CoAD[36] = -9.552E-3;
+   CoAD[37] = -1.04605E-2;        CoAD[38] = -0.0112;
+   CoAD[39] = -1.175E-2;          CoAD[40] = -1.20216E-2;
+   CoAD[41] = -0.0124;            CoAD[42] = -1.253E-2;
+   CoAD[43] = -1.27076E-2;        CoAD[44] = -0.0129;
+   CoAD[45] = -1.267E-2;          CoAD[46] = -1.22015E-2;
+   CoAD[47] = -0.0122;            CoAD[48] = -1.186E-2;
+   CoAD[49] = -1.17218E-2;        CoAD[50] = -0.0114;
+   CoAD[51] = -1.113E-2;          CoAD[52] = -1.08459E-2;
+   CoAD[53] = -0.0104;            CoAD[54] = -9.93E-3;
+   CoAD[55] = -9.5252E-3;         CoAD[56] = -9.24E-3;
+   CoAD[57] = -9.16E-3;           CoAD[58] = -8.8004E-3;
+   CoAD[59] = -8.63E-3;           CoAD[60] = -8.336E-3;
+   CoAD[61] = -8.10512E-3;        CoAD[62] = -7.94E-3;
+   CoAD[63] = -7.71E-3;           CoAD[64] = -7.55064E-3;
+   CoAD[65] = -7.25E-3;           CoAD[66] = -7.11E-3;
+   CoAD[67] = -6.834E-3;          CoAD[68] = -0.0065;
+   CoAD[69] = -6.28E-3;           CoAD[70] = -6.11008E-3;
+   CoAD[71] = -5.86E-3;           CoAD[72] = -5.673E-3;
+   CoAD[73] = -5.35008E-3;        CoAD[74] = -5.11E-3;
+   CoAD[75] = -4.786E-3;          CoAD[76] = -4.59144E-3;
+   CoAD[77] = -4.38E-3;           CoAD[78] = -4.15E-3;
+   CoAD[79] = -4.07696E-3;        CoAD[80] = -3.93E-3;
+   CoAD[81] = -3.83E-3;           CoAD[82] = -3.74656E-3;
+   CoAD[83] = -3.49E-3;           CoAD[84] = -3.33E-3;
+   CoAD[85] = -3.20064E-3;        CoAD[86] = -3.09E-3;
+   CoAD[87] = -2.93E-3;           CoAD[88] = -2.78136E-3;
+   CoAD[89] = -2.72E-3;           CoAD[90] = -2.66E-3;
+   CoAD[91] = -2.56208E-3;        CoAD[92] = -2.43E-3;
+   CoAD[93] = -2.28E-3;           CoAD[94] = -2.13536E-3;
+   CoAD[95] = -2.083E-3;          CoAD[96] = -1.94E-3;
+   CoAD[97] = -1.82E-3;           CoAD[98] = -1.77E-3;
+   CoAD[99] = -1.72E-3;           CoAD[100] = -1.71104E-3;
    CoAD[101] = -1.741E-3;         CoAD[102] = -0.0016;
 
 }
@@ -605,7 +605,7 @@ double fbar_ChiSquare1 (long N, double x)
 
    if (Y > 1.0)
       return 1.0;
-   else 
+   else
       return Y;
 }
 
@@ -699,7 +699,7 @@ double fbar_Gamma (double alpha, int d, double x)
 
 static double KSPlusbarAsymp (long n, double x)
 {
-   /* Compute the probability of the KSPlus distribution using 
+   /* Compute the probability of the KSPlus distribution using
       an asymptotic formula */
    double t = (6.0*n*x + 1);
    double z = t*t/(18.0*n);
@@ -843,7 +843,7 @@ double fbar_KS1 (long n, double x)
    if (n <= 400) {
       if (n*x*x < 4.0)
          return 1.0 - fdist_KS1(n, x);
-      else 
+      else
          return 2.0 * KSPlusbarUpper(n, x);
    }
 
@@ -852,7 +852,7 @@ double fbar_KS1 (long n, double x)
          return 2.0 * KSPlusbarUpper(n, x);
       return 2.0*KSPlusbarAsymp (n, x);
    }
- 
+
    return 1.0 - fdist_KS1(n, x);
 }
 

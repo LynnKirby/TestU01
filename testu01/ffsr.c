@@ -70,10 +70,8 @@ static int ReadOneLFSR1 (char *Line, ffam_Fam * fam, int i)
    if (k <= 32)
       fam->Gen[i] = utaus_CreateTaus (k, q, s,
              SEED & (unsigned long) (num_TwoExp[k] - 1.0));
-#ifdef USE_LONGLONG
    else
-      fam->Gen[i] = utaus_CreateLongTaus (k, q, s, (ulonglong) SEED);
-#endif
+      fam->Gen[i] = utaus_CreateLongTaus (k, q, s, (uint64_t) SEED);
    return 0;
 }
 
@@ -170,7 +168,7 @@ static int ReadOneTausLCG2 (FILE *f, char *Line, ffam_Fam * fam, int i)
       "ReadOneTausLCG2:   Error in reading TausLCG2 parameter file");
 
    fam->Gen[i] = ulec_CreateCombTausLCG21 (
-      k1, q1, s1, SEED & (unsigned long) (num_TwoExp[k1] - 1.0), 
+      k1, q1, s1, SEED & (unsigned long) (num_TwoExp[k1] - 1.0),
       k2, q2, s2, SEED & (unsigned long) (num_TwoExp[k2] - 1.0),
       m, a, 0, SEED % m);
    return 0;
@@ -183,7 +181,7 @@ static ffam_Fam *ReadAllGen (char *filename, char *deffile, GenType g,
    int i1, int i2, int istep)
 /*
  * Read parameter file. If filename exists, it will be read; otherwise, the
- * default file deffile will be read. 
+ * default file deffile will be read.
  * Keeps only generators whose LSize are in [i1, i2], and keep only generators
  * spaced istep apart. If i1 < the smallest LSize in the file, it will be
  * reset to the first LSize in the file; similarly if i2 > the largest LSize
