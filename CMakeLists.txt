@@ -146,7 +146,7 @@ foreach(module_group IN ITEMS mylib probdist testu01)
         add_custom_command(
             OUTPUT
                 ${CMAKE_CURRENT_BINARY_DIR}/include/${module}.h
-            DEPENDS
+            MAIN_DEPENDENCY
                 ${CMAKE_CURRENT_LIST_DIR}/${module_group}/${module}.tex
             COMMAND
                 tcode
@@ -160,3 +160,21 @@ foreach(module_group IN ITEMS mylib probdist testu01)
             ${CMAKE_CURRENT_BINARY_DIR}/include/${module}.h)
     endforeach()
 endforeach()
+
+#
+# Build examples.
+#
+
+set(examples bat1 bat2 bat3 birth1 birth2 ex1 ex4 fbirth fcoll scat scat2)
+
+foreach(example IN LISTS examples)
+    add_executable(testu01_example-${example} examples/${example}.c)
+    target_link_libraries(testu01_example-${example} testu01)
+endforeach()
+
+add_executable(testu01_example-ex3 examples/ex3.c examples/my16807.c)
+target_link_libraries(testu01_example-ex3 testu01)
+
+add_executable(testu01_example-ex7
+               examples/ex7.c examples/mrg32k3a.c examples/xorshift.c)
+target_link_libraries(testu01_example-ex7 testu01)
