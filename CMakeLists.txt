@@ -33,7 +33,7 @@ add_library(testu01_build_config INTERFACE)
 
 if(TESTU01_ENABLE_WARNINGS)
     if(MSVC)
-        target_compile_options(testu01_build_config INTERFACE /W4)
+        target_compile_options(testu01_build_config INTERFACE /W2)
     else()
         target_compile_options(testu01_build_config INTERFACE -Wall -pedantic)
     endif()
@@ -102,9 +102,6 @@ check_include_file(sys/utsname.h HAVE_SYS_UTSNAME_H)
 check_include_file(unistd.h      HAVE_UNISTD_H)
 check_include_file(windows.h     HAVE_WINDOWS_H)
 
-check_symbol_exists(erf    math.h   HAVE_ERF)
-check_symbol_exists(lgamma math.h   HAVE_LGAMMA)
-check_symbol_exists(log1p  math.h   HAVE_LOG1P)
 check_symbol_exists(random stdlib.h HAVE_RANDOM)
 
 configure_file(include/config.h.in   include/config.h)
@@ -140,11 +137,6 @@ target_compile_definitions(testu01 PRIVATE HAVE_CONFIG_H)
 #
 # Build headers from TeX source.
 #
-
-configure_file(
-    ${CMAKE_CURRENT_LIST_DIR}/testu01/TestU01.h
-    ${CMAKE_CURRENT_BINARY_DIR}/include/TestU01.h
-    COPYONLY)
 
 foreach(module_group IN ITEMS mylib probdist testu01)
     foreach(module IN LISTS ${module_group}_modules)
