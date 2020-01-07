@@ -62,7 +62,7 @@ static int co1 = 0, co2 = 0, co3 = 0, co4 = 0, co5 = 0;      /* Counters */
 
 /* xorgens.c - Some long-period random number generators
                generalising Marsaglia's Xorshift RNGs
-/*
+
 ==========================================================================
 |                                                                        |
 |  Copyright (C) 2004, 2006 R. P. Brent.                                 |
@@ -77,8 +77,6 @@ static int co1 = 0, co2 = 0, co3 = 0, co4 = 0, co5 = 0;      /* Counters */
 |  agreement.                                                            |
 |                                                                        |
 ==========================================================================
-*/
-/*
 
 Author:         Richard P. Brent (random@rpbrent.co.uk)
 
@@ -187,31 +185,43 @@ static unsigned long xor4096s_Bits (void *junk, void *vsta)
       int seed = *((unsigned int *) vsta);
       v = (seed != 0) ? seed : ~seed; /* v must be nonzero */
 
-      for (k = wlen; k > 0; k--)  /* Avoid correlations for close seeds */
-         v ^= (v ^= (v ^= v << 13) >> 17) << 5; /* This recurrence has period
-                                                   2^32-1 */
+      for (k = wlen; k > 0; k--)  { /* Avoid correlations for close seeds */
+         v ^= v << 13;
+         v ^= v >> 17;
+         v ^= v << 5; /* This recurrence has period 2^32-1 */
+      }
 
-      for (w = v, k = 0; k < r; k++)
+      for (w = v, k = 0; k < r; k++) {
          /* Initialise circular array */
-         x[k] = (v ^= (v ^= (v ^= v << 13) >> 17) << 5) + (w += weil);
+         v ^= v << 13;
+         v ^= v >> 17;
+         v ^= v << 5;
+         w += weil;
+         x[k] = v + w;
+      }
 
       for (i = r - 1, k = 4 * r; k > 0; k--) { /* Discard first 4*r results
                                                   (Gimeno) */
          t = x[i = (i + 1) & (r - 1)];
          v = x[(i + (r - s)) & (r - 1)];
-         t ^= (t ^= t << a) >> b;
+         t ^= t << a;
+         t ^= t >> b;
          v ^= v << c;
-         x[i] = (v ^= t ^ (v >> d));
+         v ^= t ^ (v >> d);
+         x[i] = v;
       }
    }
 
    /* Apart from initialisation (above), this is the generator */
    t = x[i = (i + 1) & (r - 1)];  /* Increment i mod r (r is a power of 2) */
    v = x[(i + (r - s)) & (r - 1)]; /* Index is (i - s) mod r */
-   t ^= (t ^= t << a) >> b;       /* (I + L^a)(I + R^b) */
+   t ^= t << a;
+   t ^= t >> b;       /* (I + L^a)(I + R^b) */
    v ^= v << c;                   /* I + L^c */
-   x[i] = (v ^= t ^ (v >> d));    /* Update circular array */
-   return (v + (w += weil));      /* Return combination with Weil generator */
+   v ^= t ^ (v >> d);
+   x[i] = v;          /* Update circular array */
+   w += weil;
+   return v + w;      /* Return combination with Weil generator */
 }
 
 #undef wlen
@@ -296,17 +306,21 @@ static unsigned long Xorgen32_Bits (void *vpar, void *vsta)
    /* Index is (i - s) mod ... */
    v = state->x[(state->i + (param->r - param->s)) & param->Mask];
 
-   t ^= (t ^= t << param->a) >> param->b;       /* (I + L^a)(I + R^b) */
+   t ^= t << param->a;
+   t ^= t >> param->b;       /* (I + L^a)(I + R^b) */
    v ^= v << param->c;                          /* I + L^c */
 
    /* Update circular array */
-   state->x[state->i] = (v ^= t ^ (v >> param->d));
+   v ^= t ^ (v >> param->d);
+   state->x[state->i] = v;
 
-   if (param->hasWeyl)
+   if (param->hasWeyl) {
       /* combination with Weil generator */
-      return (v + (state->w += param->weil));
-   else
+      state->w += param->weil;
+      return v + state->w;
+   } else {
       return v;
+   }
 }
 
 
@@ -404,29 +418,43 @@ unif01_Gen * ubrent_CreateXorgen32 (int r, int s, int a, int b, int c, int d,
 
    v = (seed != 0) ? seed : ~seed; /* v must be nonzero */
 
-   for (k = wlen; k > 0; k--)  /* Avoid correlations for close seeds */
-      v ^= (v ^= (v ^= v << 13) >> 17) << 5; /* This recurrence has period
-                                                2^32-1 */
+   /* Avoid correlations for close seeds */
+   for (k = wlen; k > 0; k--) {
+      /* This recurrence has period 2^32-1 */
+      v ^= v << 13;
+      v ^= v >> 17;
+      v ^= v << 5; 
+   }
    if (hasWeyl) {
       param->weil = 0x61c88647;
-      for (state->w = v, k = 0; k < r; k++)
+      for (state->w = v, k = 0; k < r; k++) {
          /* Initialise circular array */
-         state->x[k] = (v ^= (v ^= (v ^= v << 13) >> 17) << 5) +
-            (state->w += param->weil);
+         v ^= v << 13;
+         v ^= v >> 17;
+         v ^= v << 5;
+         state->w += param->weil;
+         state->x[k] = v + state->w;
+      }
    } else {
       param->weil = 0;
-      for (k = 0; k < r; k++)
+      for (k = 0; k < r; k++) {
          /* Initialise circular array */
-         state->x[k] = (v ^= (v ^= (v ^= v << 13) >> 17) << 5);
+         v ^= v << 13;
+         v ^= v >> 17;
+         v ^= v << 5;
+         state->x[k] = v;
+      }
    }
 
    for (i = r - 1, k = 4 * r; k > 0; k--) { /* Discard first 4*r results
                                                       (Gimeno) */
       t = state->x[i = (i + 1) & param->Mask];
       v = state->x[(i + (r - s)) & param->Mask];
-      t ^= (t ^= t << a) >> b;
+      t ^= t << a;
+      t ^= t >> b;
       v ^= v << c;
-      state->x[i] = (v ^= t ^ (v >> d));
+      v ^= t ^ (v >> d);
+      state->x[i] = v;
    }
 
    state->i = i;
@@ -530,20 +558,30 @@ static unsigned long xor4096l_Bits (void *junk, void *vsta)
       int seed = *((uint64_t *) vsta);
       v = (seed != 0) ? seed : ~seed; /* v must be nonzero */
 
-      for (k = wlen; k > 0; k--)  /* Avoid correlations for close seeds */
-         v ^= (v ^= v << 7) >> 9; /* This recurrence has period 2^64-1 */
+      /* Avoid correlations for close seeds */
+      for (k = wlen; k > 0; k--) {
+         /* This recurrence has period 2^64-1 */
+         v ^= v << 7;
+         v ^= v >> 9;
+      }
 
-      for (w = v, k = 0; k < r; k++)
+      for (w = v, k = 0; k < r; k++) {
          /* Initialise circular array */
-         x[k] = (v ^= (v ^= v << 7) >> 9) + (w += weil);
+         v ^= v << 7;
+         v ^= v >> 9;
+         w += weil;
+         x[k] = v + w;
+      }
 
       for (i = r - 1, k = 4 * r; k > 0; k--) { /* Discard first 4*r results
                                                   (Gimeno) */
          t = x[i = (i + 1) & (r - 1)];
          v = x[(i + (r - s)) & (r - 1)];
-         t ^= (t ^= t << a) >> b;
+         t ^= t << a;
+         t ^= t >> b;
          v ^= v << c;
-         x[i] = (v ^= t ^ (v >> d));
+         v ^= t ^ (v >> d);
+         x[i] = v;
       }
    }
 
@@ -551,10 +589,13 @@ static unsigned long xor4096l_Bits (void *junk, void *vsta)
 
    t = x[i = (i + 1) & (r - 1)];  /* Increment i mod r (r is a power of 2) */
    v = x[(i + (r - s)) & (r - 1)]; /* Index is (i - s) mod r */
-   t ^= (t ^= t << a) >> b;       /* (I + L^a)(I + R^b) */
+   t ^= t << a;
+   t ^= t >> b;       /* (I + L^a)(I + R^b) */
    v ^= v << c;                   /* I + L^c */
-   x[i] = (v ^= t ^ (v >> d));    /* Update circular array */
-   t = (v + (w += weil));      /* Return combination with Weil generator */
+   v ^= t ^ (v >> d);
+   x[i] = v;    /* Update circular array */
+   w += weil;
+   t = v + w;      /* Return combination with Weil generator */
    return (unsigned long) (t >> 32);
 }
 
@@ -634,11 +675,13 @@ static unsigned long Xorgen64_Bits (void *vpar, void *vsta)
    /* Index is (i - s) mod r */
    v = state->x[(state->i + (param->r - param->s)) & param->Mask];
 
-   t ^= (t ^= t << param->a) >> param->b;       /* (I + L^a)(I + R^b) */
+   t ^= t << param->a;
+   t ^= t >> param->b;       /* (I + L^a)(I + R^b) */
    v ^= v << param->c;                          /* I + L^c */
 
    /* Update circular array */
-   state->x[state->i] = (v ^= t ^ (v >> param->d));
+   v ^= t ^ (v >> param->d);
+   state->x[state->i] = v;
 
    if (param->hasWeyl)
       /* combination with Weil generator */
@@ -741,19 +784,31 @@ unif01_Gen * ubrent_CreateXorgen64 (int r, int s, int a, int b, int c, int d,
    state->x = util_Calloc ((size_t) state->r2, sizeof (uint64_t));
 
    v = (seed != 0) ? seed : ~seed; /* v must be nonzero */
-   for (k = wlen; k > 0; k--)  /* Avoid correlations for close seeds */
-      v ^= (v ^= v << 7) >> 9; /* This recurrence has period 2^64-1 */
+
+   /* Avoid correlations for close seeds */
+   for (k = wlen; k > 0; k--) {
+      /* This recurrence has period 2^64-1 */
+      v ^= v << 7;
+      v ^= v >> 9;
+   }
 
    if (hasWeyl) {
       param->weil = ((int64_t) 0x61c88646 << 32) + (int64_t) 0x80b583eb;
-      for (state->w = v, k = 0; k < r; k++)
+      for (state->w = v, k = 0; k < r; k++){
          /* Initialise circular array */
-         state->x[k] = (v ^= (v ^= v << 7) >> 9) + (state->w += param->weil);
+         v ^= v << 7;
+         v ^= v >> 9;
+         state->w += param->weil;
+         state->x[k] = v + state->w;
+      }
    } else {
       param->weil = 0;
-      for (k = 0; k < r; k++)
+      for (k = 0; k < r; k++) {
          /* Initialise circular array */
-         state->x[k] = (v ^= (v ^= v << 7) >> 9);
+         v ^= v << 7;
+         v ^= v >> 9;
+         state->x[k] = v;
+      }
    }
    for (k = r; k < (int) state->r2; k++)
        state->x[k] = state->x[k - r];
@@ -762,9 +817,11 @@ unif01_Gen * ubrent_CreateXorgen64 (int r, int s, int a, int b, int c, int d,
                                                (Gimeno) */
       t = state->x[i = (i + 1) & param->Mask];
       v = state->x[(i + (r - s)) & param->Mask];
-      t ^= (t ^= t << a) >> b;
+      t ^= t << a;
+      t ^= t >> b;
       v ^= v << c;
-      state->x[i] = (v ^= t ^ (v >> d));
+      v ^= t ^ (v >> d);
+      state->x[i] = v;
    }
 
    state->i = i;
@@ -836,20 +893,30 @@ static double xor4096d_U01 (void *junk, void *vsta)
       int seed = *((uint64_t *) vsta);
       v = (seed != 0) ? seed : ~seed; /* v must be nonzero */
 
-      for (k = wlen; k > 0; k--)  /* Avoid correlations for close seeds */
-         v ^= (v ^= v << 7) >> 9; /* This recurrence has period 2^64-1 */
+      /* Avoid correlations for close seeds */
+      for (k = wlen; k > 0; k--) {
+         /* This recurrence has period 2^64-1 */
+         v ^= v << 7;
+         v ^= v >> 9; 
+      }
 
-      for (w = v, k = 0; k < r; k++)
+      for (w = v, k = 0; k < r; k++) {
          /* Initialise circular array */
-         x[k] = (v ^= (v ^= v << 7) >> 9) + (w += weil);
+         v ^= v << 7;
+         v ^= v >> 9;
+         w += weil;
+         x[k] = v + w;
+      }
 
       for (i = r - 1, k = 4 * r; k > 0; k--) { /* Discard first 4*r results
                                                   (Gimeno) */
          t = x[i = (i + 1) & (r - 1)];
          v = x[(i + (r - s)) & (r - 1)];
-         t ^= (t ^= t << a) >> b;
+         t ^= t << a;
+         t ^= t >> b;
          v ^= v << c;
-         x[i] = (v ^= t ^ (v >> d));
+         v ^= t ^ (v >> d);
+         x[i] = v;
       }
    }
 
@@ -859,10 +926,13 @@ static double xor4096d_U01 (void *junk, void *vsta)
    while (v == (int64_t) 0) {    /* Loop until result nonzero */
       t = x[i = (i + 1) & (r - 1)]; /* Increment i mod r (r = power of 2) */
       v = x[(i + (r - s)) & (r - 1)]; /* Index is (i - s) mod r */
-      t ^= (t ^= t << a) >> b;    /* (I + L^a)(I + R^b) */
+      t ^= t << a;
+      t ^= t >> b;                /* (I + L^a)(I + R^b) */
       v ^= v << c;                /* I + L^c */
-      x[i] = (v ^= t ^ (v >> d)); /* Update circular array */
-      v += (w += weil);           /* 64-bit unsigned integer */
+      v ^= t ^ (v >> d);
+      x[i] = v;                   /* Update circular array */
+      w += weil;
+      v += w;                     /* 64-bit unsigned integer */
       v >>= 11;                   /* 53-bit integer (possibly zero) */
    }
    return t53 * (double) v;       /* Scale to (0.0, 1.0) */

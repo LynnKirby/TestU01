@@ -271,14 +271,14 @@ static void InitRes (
    res->name = util_Realloc (res->name, 1 + strlen (nam) * sizeof (char));
    strcpy (res->name, nam);
 
-   memset (res->LogCESig_sVal, 0, sizeof (res->LogCESig_sVal));
-   memset (res->LogCESig_pVal, 0, sizeof (res->LogCESig_pVal));
-   memset (res->LogCASig_sVal, 0, sizeof (res->LogCASig_sVal));
-   memset (res->LogCASig_pVal, 0, sizeof (res->LogCASig_pVal));
-   memset (res->SquareCESig_sVal, 0, sizeof (res->SquareCESig_sVal));
-   memset (res->SquareCESig_pVal, 0, sizeof (res->SquareCESig_pVal));
-   memset (res->SquareCASig_sVal, 0, sizeof (res->SquareCASig_sVal));
-   memset (res->SquareCASig_pVal, 0, sizeof (res->SquareCASig_pVal));
+   memset (res->LogCESig_sVal, 0, Nbm * sizeof (double));
+   memset (res->LogCESig_pVal, 0, Nbm * sizeof (double));
+   memset (res->LogCASig_sVal, 0, Nbm * sizeof (double));
+   memset (res->LogCASig_pVal, 0, Nbm * sizeof (double));
+   memset (res->SquareCESig_sVal, 0, Nbm * sizeof (double));
+   memset (res->SquareCESig_pVal, 0, Nbm * sizeof (double));
+   memset (res->SquareCASig_sVal, 0, Nbm * sizeof (double));
+   memset (res->SquareCASig_pVal, 0, Nbm * sizeof (double));
 }
 
 
