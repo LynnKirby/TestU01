@@ -29,11 +29,13 @@ endif()
 
 set(TESTU01_ENABLE_WARNINGS ${enable_warnings} CACHE BOOL "Enable warnings.")
 
+add_library(testu01_build_config INTERFACE)
+
 if(NOT TESTU01_ENABLE_WARNINGS)
     if(MSVC)
-        add_compile_options(/w)
+        target_compile_options(testu01_build_config INTERFACE /w)
     else()
-        add_compile_options(-w)
+        target_compile_options(testu01_build_config INTERFACE -w)
     endif()
 endif()
 
@@ -42,7 +44,10 @@ endif()
 #
 
 if(WIN32)
-    add_compile_definitions(_CRT_SECURE_NO_WARNINGS)
+    target_compile_definitions(
+        testu01_build_config
+        INTERFACE
+        _CRT_SECURE_NO_WARNINGS)
 endif()
 
 #
@@ -104,6 +109,7 @@ configure_file(include/gdefconf.h.in include/gdefconf.h)
 #
 
 add_executable(tcode mylib/tcode.c)
+target_link_libraries(tcode PRIVATE testu01_build_config)
 
 #
 # The main library. We build this as one static library instead of multiple
@@ -111,6 +117,7 @@ add_executable(tcode mylib/tcode.c)
 #
 
 add_library(testu01 STATIC ${all_sources})
+target_link_libraries(testu01 PRIVATE testu01_build_config)
 
 if(UNIX)
     target_link_libraries(testu01 PUBLIC m)
@@ -120,8 +127,7 @@ target_include_directories(
     testu01
     PUBLIC
     include
-    ${CMAKE_CURRENT_BINARY_DIR}/include
-)
+    ${CMAKE_CURRENT_BINARY_DIR}/include)
 
 target_compile_definitions(testu01 PRIVATE HAVE_CONFIG_H)
 
@@ -132,8 +138,7 @@ target_compile_definitions(testu01 PRIVATE HAVE_CONFIG_H)
 configure_file(
     ${CMAKE_CURRENT_LIST_DIR}/testu01/TestU01.h
     ${CMAKE_CURRENT_BINARY_DIR}/include/TestU01.h
-    COPYONLY
-)
+    COPYONLY)
 
 foreach(module_group IN ITEMS mylib probdist testu01)
     foreach(module IN LISTS ${module_group}_modules)
@@ -141,17 +146,17 @@ foreach(module_group IN ITEMS mylib probdist testu01)
         add_custom_command(
             OUTPUT
                 ${CMAKE_CURRENT_BINARY_DIR}/include/${module}.h
+            DEPENDS
+                ${CMAKE_CURRENT_LIST_DIR}/${module_group}/${module}.tex
             COMMAND
                 tcode
                 "${CMAKE_CURRENT_LIST_DIR}/${module_group}/${module}.tex"
-                "${CMAKE_CURRENT_BINARY_DIR}/include/${module}.h"
-        )
+                "${CMAKE_CURRENT_BINARY_DIR}/include/${module}.h")
 
         # Add generated header as a source to create a file level dependency.
         target_sources(
             testu01
             PRIVATE
-            ${CMAKE_CURRENT_BINARY_DIR}/include/${module}.h
-        )
+            ${CMAKE_CURRENT_BINARY_DIR}/include/${module}.h)
     endforeach()
 endforeach()

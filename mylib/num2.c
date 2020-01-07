@@ -280,7 +280,7 @@ double num2_Factorial (int n)
    if (n <= 170)
       return Factorials[n];
    util_Warning (1, "num2_Factorial:   n > 170:   return inf");
-   return 1.0 / 0.0;
+   return INFINITY;
 }
 
 
