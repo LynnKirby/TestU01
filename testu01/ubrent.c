@@ -22,6 +22,7 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <inttypes.h>
 
 #define LEN  200                  /* Max length of strings */
 
@@ -707,12 +708,12 @@ static void WrXorgen64 (void *vsta)
    unsigned int s = state->i;
 
    if (unif01_WrLongStateFlag) {
-      printf (" i = %d,   w = %llu\n", state->i, state->w);
+      printf (" i = %d,   w = %" PRIu64 "\n", state->i, state->w);
       printf (" x = {\n ");
       for (j = 0; j < state->r2; j++) {
          if (++s >= state->r2)
             s = 0;
-         printf ("  %20llu", state->x[s]);
+         printf ("  %20" PRIu64, state->x[s]);
          if (j < state->r2 - 1)
             printf (",");
          if ((j % 3) == 2)
