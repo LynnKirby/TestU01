@@ -1,3 +1,11 @@
+/*
+ * SPDX-License-Identifier: LicenseRef-rijndael
+ * SPDX-FileCopyrightText: 2000 Vincent Rijmen
+ * SPDX-FileCopyrightText: 2000 Antoon Bosselaers
+ * SPDX-FileCopyrightText: 2000 Paulo Barreto
+ * Code derived from TestU01: http://simul.iro.umontreal.ca/testu01/tu01.html
+ */
+
 /*                       Remarks for TestU01:
  * The only changes I have made in the authors' code below is to rename the
  * types u8, u32. (R. Simard for TestU01)
@@ -1302,7 +1310,7 @@ void rijndaelEncryptRound(const uint32_t rk[/*4*(Nr + 1)*/], int Nr, uint8_t blo
     		(Te4[(s1 >>  8) & 0xff] & 0x0000ff00) ^
     		(Te4[(s2      ) & 0xff] & 0x000000ff) ^
     		rk[3];
-		
+
 		s0 = t0;
 		s1 = t1;
 		s2 = t2;

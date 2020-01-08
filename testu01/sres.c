@@ -1,32 +1,8 @@
-/*************************************************************************\
- *
- * Package:        TestU01
- * File:           sres.c
- * Environment:    ANSI C
- *
- * Copyright (c) 2002 Pierre L'Ecuyer, DIRO, Université de Montréal.
- * e-mail: lecuyer@iro.umontreal.ca
- * All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted without a fee for private, research,
- * academic, or other non-commercial purposes.
- * Any use of this software in a commercial environment requires a
- * written licence from the copyright owner.
- *
- * Any changes made to this package must be clearly identified as such.
- *
- * In scientific publications which used this software, a reference to it
- * would be appreciated.
- *
- * Redistributions of source code must retain this copyright notice
- * and the following disclaimer.
- *
- * THIS PACKAGE IS PROVIDED "AS IS" AND WITHOUT ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
- * WARRANTIES OF MERCHANTIBILITY AND FITNESS FOR A PARTICULAR PURPOSE.
- *
-\*************************************************************************/
+/*
+ * SPDX-License-Identifier: GPL-3.0-or-later AND LicenseRef-testu01
+ * Copyright (c) 2002 Pierre L'Ecuyer, DIRO, Université de Montréal
+ * Code derived from TestU01: http://simul.iro.umontreal.ca/testu01/tu01.html
+ */
 
 #include "util.h"
 #include "sres.h"
@@ -204,7 +180,7 @@ void sres_InitPoisson (sres_Poisson *res, long N, double Lambda, char *nam)
    res->pVal2 = -1.0;
    res->name = util_Realloc (res->name, 1 + strlen (nam) * sizeof (char));
    strcpy (res->name, nam);
-   
+
 }
 
 
@@ -244,7 +220,7 @@ void sres_InitDisc (sres_Disc *res, long N, char *nam)
    res->pVal2 = -1.0;
    res->name = util_Realloc (res->name, 1 + strlen (nam) * sizeof (char));
    strcpy (res->name, nam);
-   
+
 }
 
 

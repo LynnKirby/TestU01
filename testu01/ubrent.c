@@ -1,19 +1,9 @@
-/*************************************************************************\
- *
- * Package:        TestU01
- * File:           ubrent.c
- * Environment:    ANSI C
- *
- * Comment: I have made mostly cosmetic changes on Brent's code to adapt
- *    his generators for testing by TestU01. The random numbers
- *    generated should be the same. The code was taken from Brent's file
- *    xorgens201.c available on his Web site for version 2004 of the RNG,
- *    and from xorgens304 for the version 2006.
- *
- * Richard P. Brent kindly gave us the explicit permission to include
- *    his code in TestU01 and distribute it. (Richard Simard)
- *
-\*************************************************************************/
+/*
+ * SPDX-License-Identifier: GPL-3.0-or-later AND LicenseRef-testu01
+ * Copyright (c) 2002 Pierre L'Ecuyer, DIRO, Université de Montréal
+ * Copyright (c) 2020 Lynn Kirby
+ * Code derived from TestU01: http://simul.iro.umontreal.ca/testu01/tu01.html
+ */
 
 
 #include "util.h"
@@ -424,7 +414,7 @@ unif01_Gen * ubrent_CreateXorgen32 (int r, int s, int a, int b, int c, int d,
       /* This recurrence has period 2^32-1 */
       v ^= v << 13;
       v ^= v >> 17;
-      v ^= v << 5; 
+      v ^= v << 5;
    }
    if (hasWeyl) {
       param->weil = 0x61c88647;
@@ -898,7 +888,7 @@ static double xor4096d_U01 (void *junk, void *vsta)
       for (k = wlen; k > 0; k--) {
          /* This recurrence has period 2^64-1 */
          v ^= v << 7;
-         v ^= v >> 9; 
+         v ^= v >> 9;
       }
 
       for (w = v, k = 0; k < r; k++) {

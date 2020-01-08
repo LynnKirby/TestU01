@@ -1,32 +1,8 @@
-/*************************************************************************\
- *
- * Package:        TestU01
- * File:           ugfsr.c
- * Environment:    ANSI C
- *
- * Copyright (c) 2002 Pierre L'Ecuyer, DIRO, Université de Montréal.
- * e-mail: lecuyer@iro.umontreal.ca
- * All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted without a fee for private, research,
- * academic, or other non-commercial purposes.
- * Any use of this software in a commercial environment requires a
- * written licence from the copyright owner.
- *
- * Any changes made to this package must be clearly identified as such.
- *
- * In scientific publications which used this software, a reference to it
- * would be appreciated.
- *
- * Redistributions of source code must retain this copyright notice
- * and the following disclaimer.
- *
- * THIS PACKAGE IS PROVIDED "AS IS" AND WITHOUT ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
- * WARRANTIES OF MERCHANTIBILITY AND FITNESS FOR A PARTICULAR PURPOSE.
- *
-\*************************************************************************/
+/*
+ * SPDX-License-Identifier: GPL-3.0-or-later AND LicenseRef-testu01
+ * Copyright (c) 2002 Pierre L'Ecuyer, DIRO, Université de Montréal
+ * Code derived from TestU01: http://simul.iro.umontreal.ca/testu01/tu01.html
+ */
 
 #include "util.h"
 #include "num.h"
@@ -72,7 +48,7 @@ typedef struct {
 
 typedef struct {
    unsigned long *X;
-   unsigned int r, s, K; 
+   unsigned int r, s, K;
 } GFSR_state;
 
 /*------------------------------------*/
@@ -100,7 +76,7 @@ typedef struct {
 
 typedef struct {
    unsigned long *X;
-   unsigned int r1, r2, r3, s, K; 
+   unsigned int r1, r2, r3, s, K;
 } GFSR5_state;
 
 /*------------------------------------*/
@@ -1194,15 +1170,15 @@ unif01_Gen *ugfsr_CreateTT800M96 (unsigned long S[])
  * to make it consistent with TestU01. (R. Simard)
  */
 
-/* 
+/*
    A C-program for MT19937, with initialization improved 2002/1/26.
    Coded by Takuji Nishimura and Makoto Matsumoto.
 
-   Before using, initialize the state by using init_genrand(seed)  
+   Before using, initialize the state by using init_genrand(seed)
    or init_by_array(init_key, key_length).
 
    Copyright (C) 1997 - 2002, Makoto Matsumoto and Takuji Nishimura,
-   All rights reserved.                          
+   All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions
@@ -1215,8 +1191,8 @@ unif01_Gen *ugfsr_CreateTT800M96 (unsigned long S[])
         notice, this list of conditions and the following disclaimer in the
         documentation and/or other materials provided with the distribution.
 
-     3. The names of its contributors may not be used to endorse or promote 
-        products derived from this software without specific prior written 
+     3. The names of its contributors may not be used to endorse or promote
+        products derived from this software without specific prior written
         permission.
 
    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
@@ -1489,11 +1465,11 @@ static void WrMT19937 (void *vsta)
 /*-----------------------------------------------------------------------*/
 
 unif01_Gen *ugfsr_CreateMT19937_98 (unsigned long seed)
-/* 
+/*
  * Setting initial seeds to X[NN] using
- * the generator Line 25 of Table 1 in          
- * [KNUTH 1981, The Art of Computer Programming 
- * Vol. 2 (2nd Ed.), pp102]                    
+ * the generator Line 25 of Table 1 in
+ * [KNUTH 1981, The Art of Computer Programming
+ * Vol. 2 (2nd Ed.), pp102]
  */
 {
    unif01_Gen *gen;

@@ -3,6 +3,6 @@ Upstream-Name: Lynn's TestU01
 Upstream-Contact: Lynn Kirby <lynn@arrak.is>
 Source: https://github.com/LynnKirby/TestU01
 
-Files: doc/* examples/* mylib/* param/* probdist/* testu01/*
+Files: doc/* examples/*.res examples/*.dat examples/*.bin param/* *.tex *.bbl *.pdf *.ind
 Copyright: 2002 Pierre L'Ecuyer
-License: LicenseRef-testu01
+License: GPL-3.0-or-later AND LicenseRef-testu01

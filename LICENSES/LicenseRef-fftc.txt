@@ -1,0 +1,36 @@
+/*
+CC=================================================================CC
+CC                                                                 CC
+CC  Subroutine RSRFFT(X,M):                                        CC
+CC      A real-valued, in-place, split-radix FFT program           CC
+CC      Decimation-in-time, cos/sin in second loop                 CC
+CC      and computed recursively                                   CC
+CC      Output in order:                                           CC
+CC              [ Re(0),Re(1),....,Re(N/2),Im(N/2-1),...Im(1)]     CC
+CC                                                                 CC
+CC  Input/output                                                   CC
+CC      X    Array of input/output (length >= N)                   CC
+CC      M    Transform length is N=2**M                            CC
+CC                                                                 CC
+CC  Calls:                                                         CC
+CC      RSTAGE,RBITREV                                             CC
+CC                                                                 CC
+CC  Author:                                                        CC
+CC      H.V. Sorensen,   University of Pennsylvania,  Oct. 1985    CC
+CC                       Arpa address: hvs@ee.upenn.edu            CC
+CC  Modified:                                                      CC
+CC      F. Bonzanigo,    ETH-Zurich,                  Sep. 1986    CC
+CC      H.V. Sorensen,   University of Pennsylvania,  Mar. 1987    CC
+CC      H.V. Sorensen,   University of Pennsylvania,  Oct. 1987    CC
+CC      R. Simard,       Université de Montréal,      Mar. 2014    CC
+CC                                                                 CC
+CC  Reference:                                                     CC
+CC      Sorensen, Jones, Heideman, Burrus :"Real-valued fast       CC
+CC      Fourier transform algorithms", IEEE Tran. ASSP,            CC
+CC      Vol. ASSP-35, No. 6, pp. 849-864, June 1987                CC
+CC                                                                 CC
+CC      This program may be used and distributed freely as         CC
+CC      as long as this header is included                         CC
+CC                                                                 CC
+CC=================================================================CC
+*/

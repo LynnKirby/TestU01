@@ -1,32 +1,8 @@
-/*************************************************************************\
- *
- * Package:        TestU01
- * File:           uinv.c
- * Environment:    ANSI C
- *
- * Copyright (c) 2002 Pierre L'Ecuyer, DIRO, Université de Montréal.
- * e-mail: lecuyer@iro.umontreal.ca
- * All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted without a fee for private, research,
- * academic, or other non-commercial purposes.
- * Any use of this software in a commercial environment requires a
- * written licence from the copyright owner.
- *
- * Any changes made to this package must be clearly identified as such.
- *
- * In scientific publications which used this software, a reference to it
- * would be appreciated.
- *
- * Redistributions of source code must retain this copyright notice
- * and the following disclaimer.
- *
- * THIS PACKAGE IS PROVIDED "AS IS" AND WITHOUT ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
- * WARRANTIES OF MERCHANTIBILITY AND FITNESS FOR A PARTICULAR PURPOSE.
- *
-\*************************************************************************/
+/*
+ * SPDX-License-Identifier: GPL-3.0-or-later AND LicenseRef-testu01
+ * Copyright (c) 2002 Pierre L'Ecuyer, DIRO, Université de Montréal
+ * Code derived from TestU01: http://simul.iro.umontreal.ca/testu01/tu01.html
+ */
 
 #include "util.h"
 #include "num.h"
@@ -53,7 +29,7 @@
 
 
 /*============================== Types ==================================*/
-/* 
+/*
  * Different styles for generators of same type: Small, Medium, Large
  */
 
@@ -329,7 +305,7 @@ unif01_Gen *uinv_CreateInvImpl (long m, long a1, long a2, long z0)
 
 
 static unsigned long InvImpl2a_Bits (void *vpar, void *vsta)
-/* 
+/*
  * Implementation used when M = 2^e  with  3 <= e <= 30.
  * Compute the inverse by the modified Euclide algorithm.
  */
@@ -638,7 +614,7 @@ unif01_Gen *uinv_CreateInvImpl2b (int e, unsigned long a1, unsigned long a2,
 /*
  * Non-linear Generator with "explicit" inversion in the form
  * Z = Xn^(-1)  when Xn # 0 ,  else 0 and
- * with Xn = a*n + c as mentionned in L'Ecuyer (1993). 
+ * with Xn = a*n + c as mentionned in L'Ecuyer (1993).
  *
  * The values returned by the generator implemented below are
  * in the following set: { 0/m, 1/m, 2/m, ..., (m-1)/m }.
@@ -738,7 +714,7 @@ static unsigned long InvExpl2a_Bits (void *vpar, void *vsta)
       else
          return num_InvExpon (31, state->Z) << 1;
 
-   } else {  /* param->E == 32 */ 
+   } else {  /* param->E == 32 */
       state->Z += param->A2;
       state->Z &= MASK32;
       if (state->Z == 0)
@@ -838,7 +814,7 @@ static unsigned long InvExpl2b_Bits (void *vpar, void *vsta)
       Z &= MASK32;
 #endif
       return Z;
-   } 
+   }
 }
 
 /*-------------------------------------------------------------------------*/

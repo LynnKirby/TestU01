@@ -1,4 +1,12 @@
 /*
+ * SPDX-License-Identifier: GPL-3.0-or-later AND LicenseRef-testu01 AND LicenseRef-fftc
+ * Copyright (c) 1985, 1987 H.V. Sorensen
+ * Copyright (c) 1986 F. Bonzanigo
+ * Copyright (c) 2004 R. Simard
+ * Code derived from TestU01: http://simul.iro.umontreal.ca/testu01/tu01.html
+*/
+
+/*
 CC=================================================================CC
 CC                                                                 CC
 CC  Subroutine RSRFFT(X,M):                                        CC

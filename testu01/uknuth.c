@@ -1,11 +1,8 @@
-/*************************************************************************\
- *
- * Package:        TestU01
- * File:           uknuth.c
- * Environment:    ANSI C
- * Programmer:     Richard Simard.
- *
-\*************************************************************************/
+/*
+ * SPDX-License-Identifier: GPL-3.0-or-later AND LicenseRef-testu01
+ * Copyright (c) 2002 Pierre L'Ecuyer, DIRO, Université de Montréal
+ * Code derived from TestU01: http://simul.iro.umontreal.ca/testu01/tu01.html
+ */
 
 #include "util.h"
 #include "addstr.h"
@@ -475,7 +472,7 @@ void ran_start(seed)    /* do this before using ran_array */
     ss<<=1; if (ss>=MM) ss-=MM-2; /* cyclic shift 29 bits */
   }
   x[1]++;              /* make x[1] (and only x[1]) odd */
-  for (ss=seed&(MM-1),t=TT-1; t; ) {       
+  for (ss=seed&(MM-1),t=TT-1; t; ) {
     for (j=KK-1;j>0;j--) x[j+j]=x[j], x[j+j-1]=0; /* "square" */
     for (j=KK+KK-2;j>=KK;j--)
       x[j-(KK-LL)]=mod_diff(x[j-(KK-LL)],x[j]),

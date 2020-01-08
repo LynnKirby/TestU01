@@ -1,32 +1,8 @@
-/*************************************************************************\
- *
- * Package:        TestU01
- * File:           fcong.c
- * Environment:    ANSI C
- *
- * Copyright (c) 2002 Pierre L'Ecuyer, DIRO, Université de Montréal.
- * e-mail: lecuyer@iro.umontreal.ca
- * All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted without a fee for private, research,
- * academic, or other non-commercial purposes.
- * Any use of this software in a commercial environment requires a
- * written licence from the copyright owner.
- *
- * Any changes made to this package must be clearly identified as such.
- *
- * In scientific publications which used this software, a reference to it
- * would be appreciated.
- *
- * Redistributions of source code must retain this copyright notice
- * and the following disclaimer.
- *
- * THIS PACKAGE IS PROVIDED "AS IS" AND WITHOUT ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
- * WARRANTIES OF MERCHANTIBILITY AND FITNESS FOR A PARTICULAR PURPOSE.
- *
-\*************************************************************************/
+/*
+ * SPDX-License-Identifier: GPL-3.0-or-later AND LicenseRef-testu01
+ * Copyright (c) 2002 Pierre L'Ecuyer, DIRO, Université de Montréal
+ * Code derived from TestU01: http://simul.iro.umontreal.ca/testu01/tu01.html
+ */
 
 #include "gdef.h"
 #include "util.h"
@@ -334,7 +310,7 @@ static ffam_Fam *ReadAllGen (char *filename, char *deffile, GenType g,
    int i1, int i2, int istep)
 /*
  * Read parameter file. If filename exists, it will be read; otherwise, the
- * default file deffile will be read. 
+ * default file deffile will be read.
  * Keeps only generators whose LSize are in [i1, i2], and keep only generators
  * spaced istep apart. If i1 < the smallest LSize in the file, it will be
  * reset to the first LSize in the file; similarly if i2 > the largest LSize

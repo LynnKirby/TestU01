@@ -1,11 +1,9 @@
-/*************************************************************************\
- *
- * Package:        TestU01
- * File:           udeng.c
- * Environment:    ANSI C
- * Programmer:     Richard Simard.
- *
-\*************************************************************************/
+/*
+ * SPDX-License-Identifier: GPL-3.0-or-later AND LicenseRef-testu01
+ * Copyright (c) 2002 Pierre L'Ecuyer, DIRO, Université de Montréal
+ * Copyright (c) 2020 Lynn Kirby
+ * Code derived from TestU01: http://simul.iro.umontreal.ca/testu01/tu01.html
+ */
 
 #include "gdef.h"
 #include "util.h"
@@ -30,7 +28,7 @@ typedef struct {
 
 typedef struct {
    double *X;
-   unsigned int s, K; 
+   unsigned int s, K;
 } DX02_state;
 
 
@@ -59,7 +57,7 @@ static double DX02a_U01 (void *vpar, void *vsta)
    Z = state->X[state->s & MASK1] = fmod (Z, param->m);
    return  Z / param->m;
    /*
-   Z = state->X[state->s & MASK1] = num_MultModD (param->b, 
+   Z = state->X[state->s & MASK1] = num_MultModD (param->b,
        state->X[(state->s - 1) & MASK1] + state->X[(state->s - state->K) &
                 MASK1], 0.0, param->m);
    return  Z / param->m;
@@ -79,7 +77,7 @@ static double DX02a_U01 (void *vpar, void *vsta)
 
    if (co % 3 == 0) {
       for (i = 0; i < 100; i++) {
-         state->X[state->s & MASK1] = num_MultModD (param->b, 
+         state->X[state->s & MASK1] = num_MultModD (param->b,
          state->X[(state->s - 1) & MASK1] + state->X[(state->s - state->K) &
             MASK1], 0.0, param->m);
          ++state->s;
@@ -87,7 +85,7 @@ static double DX02a_U01 (void *vpar, void *vsta)
       co = 0;
    }
    co++;
-   Z = state->X[state->s & MASK1] = num_MultModD (param->b, 
+   Z = state->X[state->s & MASK1] = num_MultModD (param->b,
     state->X[(state->s - 1) & MASK1] + state->X[(state->s - state->K) &
      MASK1], 0.0, param->m);
    return  Z / param->m;
@@ -124,7 +122,7 @@ static double DL00a_U01 (void *vpar, void *vsta)
           state->X[(state->s - 1) & MASK1];
    Z = state->X[state->s & MASK1] = fmod (Z + param->m, param->m);
 
-   /*   Z = state->X[state->s & MASK1] = num_MultModD (param->b, 
+   /*   Z = state->X[state->s & MASK1] = num_MultModD (param->b,
        state->X[(state->s - state->K) & MASK1],
        -state->X[(state->s - 1) & MASK1], param->m); */
    return  Z / param->m;

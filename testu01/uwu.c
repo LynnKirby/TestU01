@@ -1,11 +1,9 @@
-/*************************************************************************\
- *
- * Package:        TestU01
- * File:           uwu.c
- * Environment:    ANSI C
- * Programmer:     Richard Simard
-
-\********************************************************************/
+/*
+ * SPDX-License-Identifier: GPL-3.0-or-later AND LicenseRef-testu01
+ * Copyright (c) 2002 Pierre L'Ecuyer, DIRO, Université de Montréal
+ * Copyright (c) 2002 Richard Simard
+ * Code derived from TestU01: http://simul.iro.umontreal.ca/testu01/tu01.html
+ */
 
 #include "util.h"
 #include "addstr.h"

@@ -1,32 +1,8 @@
-/*************************************************************************\
- *
- * Package:        TestU01
- * File:           uautomata.c
- * Environment:    ANSI C
- *
- * Copyright (c) 2002 Pierre L'Ecuyer, DIRO, Université de Montréal.
- * e-mail: lecuyer@iro.umontreal.ca
- * All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted without a fee for private, research,
- * academic, or other non-commercial purposes.
- * Any use of this software in a commercial environment requires a
- * written licence from the copyright owner.
- *
- * Any changes made to this package must be clearly identified as such.
- *
- * In scientific publications which used this software, a reference to it
- * would be appreciated.
- *
- * Redistributions of source code must retain this copyright notice
- * and the following disclaimer.
- *
- * THIS PACKAGE IS PROVIDED "AS IS" AND WITHOUT ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
- * WARRANTIES OF MERCHANTIBILITY AND FITNESS FOR A PARTICULAR PURPOSE.
- *
-\*************************************************************************/
+/*
+ * SPDX-License-Identifier: GPL-3.0-or-later AND LicenseRef-testu01
+ * Copyright (c) 2002 Pierre L'Ecuyer, DIRO, Université de Montréal
+ * Code derived from TestU01: http://simul.iro.umontreal.ca/testu01/tu01.html
+ */
 
 #include "util.h"
 #include "num.h"
@@ -114,7 +90,7 @@ static void DoOneTimeStep (CA1_param *param, CA1_state *state)
       }
       state->Cell[i] = param->F[ind];
    }
- 
+
    /* Beginning of grid */
    for (i = 0; i < param->r; i++) {
       ind = 0;
@@ -142,7 +118,7 @@ static void RotateCells (CA1_param *param, CA1_state *state)
 	 state->Cell[i + param->rot] = state->OldCell [i];
       for (i = state->N - param->rot; i < state->N; i++)
 	 state->Cell[i + param->rot - state->N] = state->OldCell [i];
- 
+
    } else if (param->rot < 0) {
       for (i = -param->rot; i < state->N; i++)
 	 state->Cell[param->rot + i] = state->OldCell [i];
@@ -218,7 +194,7 @@ static void WrCA1 (void *vsta)
 
 /*-----------------------------------------------------------------------*/
 
-unif01_Gen * uautomata_CreateCA1 (int N, int S[ ], int r, int F[ ], 
+unif01_Gen * uautomata_CreateCA1 (int N, int S[ ], int r, int F[ ],
                                   int k, int ts, int cs, int rot)
 {
    unif01_Gen *gen;
@@ -248,7 +224,7 @@ unif01_Gen * uautomata_CreateCA1 (int N, int S[ ], int r, int F[ ],
       Z <<= 1;
       Z += F[i];
    }
-   addstr_Ulong(name, " = Rule ", Z);   
+   addstr_Ulong(name, " = Rule ", Z);
    addstr_Long (name, ",   k = ", (long) k);
    addstr_Long (name, ",   ts = ", (long) ts);
    addstr_Long (name, ",   cs = ", (long) cs);
@@ -280,7 +256,7 @@ unif01_Gen * uautomata_CreateCA1 (int N, int S[ ], int r, int F[ ],
             "uautomata_CreateCA1:   all S[i] must be in { 0, 1 }."); */
       state->Cell[i] = S[i] & 1;
    }
-   
+
    gen->GetBits = &CA1_Bits;
    gen->GetU01  = &CA1_U01;
    gen->Write   = &WrCA1;

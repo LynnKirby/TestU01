@@ -1,32 +1,8 @@
-/*************************************************************************\
- *
- * Package:        TestU01
- * File:           fcho.c
- * Environment:    ANSI C
- *
- * Copyright (c) 2002 Pierre L'Ecuyer, DIRO, Université de Montréal.
- * e-mail: lecuyer@iro.umontreal.ca
- * All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted without a fee for private, research,
- * academic, or other non-commercial purposes.
- * Any use of this software in a commercial environment requires a
- * written licence from the copyright owner.
- *
- * Any changes made to this package must be clearly identified as such.
- *
- * In scientific publications which used this software, a reference to it
- * would be appreciated.
- *
- * Redistributions of source code must retain this copyright notice
- * and the following disclaimer.
- *
- * THIS PACKAGE IS PROVIDED "AS IS" AND WITHOUT ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
- * WARRANTIES OF MERCHANTIBILITY AND FITNESS FOR A PARTICULAR PURPOSE.
- *
-\*************************************************************************/
+/*
+ * SPDX-License-Identifier: GPL-3.0-or-later AND LicenseRef-testu01
+ * Copyright (c) 2002 Pierre L'Ecuyer, DIRO, Université de Montréal
+ * Code derived from TestU01: http://simul.iro.umontreal.ca/testu01/tu01.html
+ */
 
 #include "util.h"
 #include "fcho.h"
@@ -114,7 +90,7 @@ static void WriteSample (void *vpar, long junk, long j)
          printf ("+ ");
       else
          printf ("- ");
-      if (fabs (b - 1.0) > EPS2) 
+      if (fabs (b - 1.0) > EPS2)
          printf ("%4.2f*%1ld ", fabs (b), labs (j));
       else
          printf ("%1ld ", labs (j));
@@ -133,7 +109,7 @@ static void WriteSample (void *vpar, long junk, long j)
       printf (")");
 
    if (ftab_Style == ftab_Latex)
-      printf ("$");  
+      printf ("$");
    printf ("\n\n");
 }
 
@@ -144,7 +120,7 @@ static double ChooseSample (void *vpar, long i, long j)
 {
    Sample_Param *param = vpar;
    double x, y;
-   
+
    if (swrite_Basic)
       WriteSample (vpar, 0, j);
    x = i * param->a + j * param->b + param->c;
@@ -159,7 +135,7 @@ fcho_Cho * fcho_CreateSampleSize (double a, double b, double c,
                                   fcho_FuncType F, char *name)
 {
    fcho_Cho *cho;
-   Sample_Param *param;   
+   Sample_Param *param;
    size_t len;
    char *name0 = "n";
 
