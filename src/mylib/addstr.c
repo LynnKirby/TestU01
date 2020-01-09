@@ -85,9 +85,9 @@ void  addstr_Bool (char *to, const char *add, int b)
 {
    strcat (to, add);
    if (b)
-      strcat (to, "true");
+      strcat (to, "TRUE");
    else
-      strcat (to, "false");
+      strcat (to, "FALSE");
 }
 
 void  addstr_ArrayLong (char *to, const char *add, int high, long val[])

@@ -26,11 +26,17 @@ random number generators.
     - Clang 9 (including `clang-cl`)
     - GCC 7
     - Visual C++ 2019 Version 16.4
+- [**cmocka**](https://cmocka.org/) 1.1.5 *(optional)*. Used for testing. Will
+  be downloaded and built automatically if `TESTU01_BUILD_THIRDPARTY` is `ON`.
 
 ### CMake options
 
 - `TESTU01_ENABLE_WARNINGS`. Show or suppress build warnings.
   (Default: `ON` when this is the root CMake project)
+- `TESTU01_ENABLE_TESTS`. Enable building and running tests.
+  (Default: `ON` when this is the root CMake project)
+- `TESTU01_BUILD_THIRDPARTY`. Download and build dependencies if they cannot be
+  found locally. (Default: `ON`)
 
 ### Building the CMake project
 

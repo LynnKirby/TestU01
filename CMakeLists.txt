@@ -15,19 +15,28 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
-#
-# Handle build options.
-#
-
-# Enable warnings by default if we're a standalone project. Disable them if
-# we're built as a subdirectory.
 if(CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
-    set(enable_warnings ON)
+    set(testu01_is_root_project ON)
 else()
-    set(enable_warnings OFF)
+    set(testu01_is_root_project OFF)
 endif()
 
-set(TESTU01_ENABLE_WARNINGS ${enable_warnings} CACHE BOOL "Enable warnings.")
+#
+# Define build options.
+#
+
+set(TESTU01_ENABLE_WARNINGS ${testu01_is_root_project} CACHE BOOL
+    "Show or suppress build warnings.")
+
+set(TESTU01_ENABLE_TESTS ${testu01_is_root_project} CACHE BOOL
+    "Enable building and running tests.")
+
+set(TESTU01_BUILD_THIRDPARTY ON CACHE BOOL
+    "Download and build dependencies if they cannot be found locally.")
+
+#
+# Handle compilation options.
+#
 
 add_library(testu01_build_config INTERFACE)
 
@@ -154,3 +163,15 @@ target_link_libraries(testu01_example-ex3 testu01_build_config testu01)
 add_executable(testu01_example-ex7
                examples/ex7.c examples/mrg32k3a.c examples/xorshift.c)
 target_link_libraries(testu01_example-ex7 testu01_build_config testu01)
+
+
+#
+# Tests.
+#
+
+set(Python3_EXECUTABLE "C:/Users/Lynn/.pyenv/pyenv-win/versions/3.8.1/python")
+
+if(TESTU01_ENABLE_TESTS)
+    enable_testing()
+    add_subdirectory(test)
+endif()
