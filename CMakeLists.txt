@@ -169,8 +169,6 @@ target_link_libraries(testu01_example-ex7 testu01_build_config testu01)
 # Tests.
 #
 
-set(Python3_EXECUTABLE "C:/Users/Lynn/.pyenv/pyenv-win/versions/3.8.1/python")
-
 if(TESTU01_ENABLE_TESTS)
     enable_testing()
     add_subdirectory(test)
