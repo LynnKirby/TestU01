@@ -8,10 +8,11 @@
 #ifndef TESTU01_TEST_H
 #define TESTU01_TEST_H
 
-#include <cmocka.h>
 #include <setjmp.h>
 #include <stdarg.h>
 #include <stddef.h>
+
+#include <cmocka.h>
 
 #ifndef __has_extension
 #define __has_extension(x) 0

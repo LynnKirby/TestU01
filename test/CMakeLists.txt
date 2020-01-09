@@ -72,3 +72,12 @@ target_link_libraries(
     testu01 cmocka)
 
 add_test(NAME alltests COMMAND tu01_test_runner)
+
+#
+# Lint tests.
+#
+
+add_test(
+    NAME clang-format
+    COMMAND ${Python3_EXECUTABLE} utils/run-clang-format.py -r .
+    WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/../)
