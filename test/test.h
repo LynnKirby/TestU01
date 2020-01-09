@@ -25,7 +25,7 @@
 
 #define TEST(name)                       \
     static void testactual_##name(void); \
-    void test_##name(void** state)       \
+    void test_##name(void **state)       \
     {                                    \
         (void)state; /* unused */        \
         testactual_##name();             \
