@@ -4,10 +4,10 @@
  * Code derived from TestU01: http://simul.iro.umontreal.ca/testu01/tu01.html
  */
 
-#include "gdef.h"
-#include "util.h"
-#include "ufile.h"
-#include "unif01.h"
+#include "TestU01/gdef.h"
+#include "TestU01/util.h"
+#include "TestU01/ufile.h"
+#include "TestU01/unif01.h"
 
 #include <stdio.h>
 #include <string.h>

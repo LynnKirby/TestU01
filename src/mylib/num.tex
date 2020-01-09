@@ -1,6 +1,6 @@
 \defmodule {num}
 
-This module offers some useful constants and basic tools to 
+This module offers some useful constants and basic tools to
 manipulate numbers represented in different forms.
 
 \bigskip\hrule
@@ -10,7 +10,7 @@ manipulate numbers represented in different forms.
 #ifndef NUM_H
 #define NUM_H
 \endhide
-#include "gdef.h"
+#include "TestU01/gdef.h"
 \endcode
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -66,15 +66,15 @@ manipulate numbers represented in different forms.
 
 #define num_MaxTwoExp   64
 \endcode
-  \tab Powers of 2 up to {\tt num\_MaxTwoExp} are stored exactly 
+  \tab Powers of 2 up to {\tt num\_MaxTwoExp} are stored exactly
   in the array {\tt num\_TwoExp}.
   \endtab
 \code
 
-extern double num_TwoExp[];   
+extern double num_TwoExp[];
 \endcode
   \tab  Contains precomputed powers of 2.
-  One has {\tt num\_TwoExp[i]} $= 2^i$ for $0 \le i \le$ 
+  One has {\tt num\_TwoExp[i]} $= 2^i$ for $0 \le i \le$
   {\tt num\_MaxTwoExp}.
 \endtab
 \code
@@ -98,7 +98,7 @@ extern double num_TENNEGPOW[];
 \guisec{Prototypes}
 \code
 
-#define num_Log2(x) (num_1Ln2 * log(x)) 
+#define num_Log2(x) (num_1Ln2 * log(x))
 \endcode
   \tab Gives the logarithm of $x$ in base 2.
   \endtab
@@ -120,9 +120,9 @@ double num_RoundD (double x);
 
 
 int num_IsNumber (char S[]);
-\endcode 
-\tab  Returns {\tt 1} if the string {\tt S} begins with a number     
-   (with the possibility of spaces and a $+/-$ sign    
+\endcode
+\tab  Returns {\tt 1} if the string {\tt S} begins with a number
+   (with the possibility of spaces and a $+/-$ sign
    before the number). For example, `` + 2'' and ``4hello''
    return {\tt 1}, while ``$-+2$'' and ``hello'' return
    {\tt 0}.
@@ -141,7 +141,7 @@ void num_IntToStrBase (long k, long b, char S[]);
 void num_Uint2Uchar (unsigned char output[], unsigned int input[], int L);
 \endcode
   \tab Transforms the $L$ 32-bit integers contained in {\tt input} into
-   $4L$ characters and puts them into {\tt output}. The order is such that 
+   $4L$ characters and puts them into {\tt output}. The order is such that
   the 8 most significant bits of {\tt input[0]} will be in {\tt output[0]},
   the 8 least significant bits of {\tt input[0]} will be in {\tt output[3]},
   and the 8 least significant bits of {\tt input[L-1]} will be in
@@ -160,7 +160,7 @@ void num_WriteD (double x, int i, int j, int k);
    with at least {\tt k} significant digits
    ({\tt j} or {\tt i} is too small), it will be printed in scientific
    notation with at least {\tt k} significant digits.
-   In that case, {\tt i} is increased if necessary. 
+   In that case, {\tt i} is increased if necessary.
    Restriction: {\tt j} and {\tt k} must be strictly smaller than {\tt i}.
  \endtab
 \code
@@ -187,9 +187,9 @@ long num_MultModL (long a, long s, long c, long m);
 double num_MultModD (double a, double s, double c, double m);
 \endcode
  \tab  Returns $(as+c) \mod m$, assuming that
-  $a$, $s$, $c$, and $m$ are all {\em integers\/} less than $2^{35}$ 
+  $a$, $s$, $c$, and $m$ are all {\em integers\/} less than $2^{35}$
   (represented exactly).
-  Works under the assumption that all positive integers less than 
+  Works under the assumption that all positive integers less than
   $2^{53}$ are represented exactly in floating-point (in {\tt double}).
 \endtab
 \code
@@ -197,7 +197,7 @@ double num_MultModD (double a, double s, double c, double m);
 
 long num_InvEuclid (long m, long z);
 \endcode
- \tab  This function computes the inverse $z^{-1}\bmod m$ by the 
+ \tab  This function computes the inverse $z^{-1}\bmod m$ by the
   modified Euclid algorithm (see \cite[p. 325]{iKNU81a}) and returns
   the result. If the inverse does not exist, returns 0.
 \endtab

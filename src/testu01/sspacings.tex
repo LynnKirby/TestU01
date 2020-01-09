@@ -8,9 +8,9 @@ These tests are studied by L'Ecuyer \cite{rLEC97h}.
 Let $u_1,\dots,u_n$ be a sample of $n$ uniforms over $(0,1)$, and
 $u_{(1)},\dots, u_{(n)}$ their values sorted by increasing order.
 Define $u_{(0)} = 0$ and $u_{(n+i)} = 1 + u_{(i-1)}$ for $i > 1$.
-For $m<n$, the {\em overlapping spacings of order $m$\/} are 
+For $m<n$, the {\em overlapping spacings of order $m$\/} are
  $$ G_{m,i} = U_{(i+m)} - U_{(i)},  \qquad  0\le i\le n. $$
-The general classes of goodness-of-fit statistics considered here are 
+The general classes of goodness-of-fit statistics considered here are
 \eq
    H_{m,n} = \sum_{i=0}^{n-m+1} h (n G_{m,i})               \eqlabel {Hmn}
 \endeq
@@ -19,21 +19,21 @@ and
    H_{m,n}^{(c)} = \sum_{i=0}^n h (n G_{m,i}).              \eqlabel {Hmnc}
 \endeq
 where $h$ is some smooth function.
-Such statistics are discussed, e.g., in 
+Such statistics are discussed, e.g., in
 \cite{tPYK65a,tKUO81a,tRAO84a,tHAL86a,rLEC97h}.
-The form (\ref{Hmnc}) is a {\em circular\/} version that puts the 
+The form (\ref{Hmnc}) is a {\em circular\/} version that puts the
 observations in a circle before computing the spacings.
 
 Under mild assumptions on $h$ and after being properly standardized,
-these statistics are asymptotically normal as $n\to\infty$, 
-either for fixed $m$ or when $m\to\infty$ no faster than $O(n^p)$ 
+these statistics are asymptotically normal as $n\to\infty$,
+either for fixed $m$ or when $m\to\infty$ no faster than $O(n^p)$
 for $0 < p < 1$ (see, e.g., \cite{tDEL79a,tHAL86a,tJAM89a,tKUO81a}).
-In this module, they are standardized using the {\em exact\/} mean 
+In this module, they are standardized using the {\em exact\/} mean
 and variance whenever this is possible.
 
 The functions {\tt sspacings\_AllSpacings} and {\tt sspacings\_AllSpacings2}
 apply several tests of the form (\ref{Hmn}) and (\ref{Hmnc}) simultaneously
-on the same sample. 
+on the same sample.
 Other functions apply only specific tests.
 
 \resdef
@@ -45,8 +45,8 @@ Other functions apply only specific tests.
 #ifndef SSPACINGS_H
 #define SSPACINGS_H
 \endhide
-#include "unif01.h"
-#include "sres.h"
+#include "TestU01/unif01.h"
+#include "TestU01/sres.h"
 \endcode
 
 \ifdetailed   %%%%%%%
@@ -120,7 +120,7 @@ typedef struct {
 
 sspacings_Res * sspacings_CreateRes (void);
 \endcode
- \tab 
+ \tab
   Creates and returns a structure to hold the results of a test.
  \endtab
 \code
@@ -128,7 +128,7 @@ sspacings_Res * sspacings_CreateRes (void);
 
 void sspacings_DeleteRes (sspacings_Res *res);
 \endcode
- \tab 
+ \tab
   Frees the memory allocated by {\tt sspacings\_CreateRes}.
  \endtab
 \fi  %%%%%%%%%%
@@ -153,7 +153,7 @@ void sspacings_SumLogsSpacings (unif01_Gen *gen, sspacings_Res *res,
  $$
   This is the circular version.
   Under $\cH_0$, this statistic is approximately normally distributed
-  for large $n$, and exact formulas for $E[L_{m,n}^{(c)}]$ and 
+  for large $n$, and exact formulas for $E[L_{m,n}^{(c)}]$ and
   $\Var[L_{m,n}^{(c)}]$ are given in \cite{tCRE76a,rLEC97h}.
 %  This function computes $N$ copies of this statistic and  compares
 %  the empirical distribution of the  $N$ values obtained,
@@ -166,15 +166,15 @@ void sspacings_SumSquaresSpacings (unif01_Gen *gen, sspacings_Res *res,
                                    long N, long n, int r, int m);
 \endcode
 \tab
-  Similar to {\tt sspacings\_SumLogsSpacings}, except that the test 
+  Similar to {\tt sspacings\_SumLogsSpacings}, except that the test
   \index{Test!SumSquaresSpacings} \index{spacings!squares}
   statistic is the sum of the squares of the spacings of order $m$,
  $$
    S_{m,n}^{(c)} = \sum_{i=0}^n (n G_{m,i})^2.
  $$
   Under $\cH_0$, it is approximately normally distributed for large $n$.
-  Exact formulas for $E[S_{m,n}^{(c)}]$ and $\Var[S_{m,n}^{(c)}]$ 
-  (as well as for its non-circular version) are given in 
+  Exact formulas for $E[S_{m,n}^{(c)}]$ and $\Var[S_{m,n}^{(c)}]$
+  (as well as for its non-circular version) are given in
   \cite{tCRE79a,rLEC97h}.
 \endtab
 \code
@@ -184,11 +184,11 @@ void sspacings_ScanSpacings (unif01_Gen *gen, sspacings_Res *res,
                              long N, long n, int r, double d);
 \endcode
 \tab
-%%  \footnote {Pas tout a fait comme dans {\tt CalcScanStat}, 
+%%  \footnote {Pas tout a fait comme dans {\tt CalcScanStat},
 %%      ... a verifier.} %%%
   The test statistic  \index{Test!ScanSpacings}
-  here is the largest number of values $U_{(i)}$ 
-  falling in a window of witdh $d$ when this window scans the 
+  here is the largest number of values $U_{(i)}$
+  falling in a window of witdh $d$ when this window scans the
   interval $[0,1]$:
    $$ S(L) = \max_{0\le i\le n} \max \left\{j-i+1
         \mid j\ge 1 \mbox{ and } U_{(j)}-U_{(i)} \le d\right\}.$$
@@ -210,12 +210,12 @@ void sspacings_AllSpacings (unif01_Gen *gen, sspacings_Res *res,
   This function \index{Test!AllSpacings}
   applies simultaneously different tests based
   on the statistics defined in  (\ref{Hmn}) and (\ref{Hmnc}),
-  for $h(x) = \ln x$ and $h(x) = x^2$, 
+  for $h(x) = \ln x$ and $h(x) = x^2$,
 %  as in {\tt sspacin\_SumLogsSpacings} and
 %  {\tt sspacin\_SumSquaresSpacings},
   for $m$ varying from $m_0$ to $m_1$ by steps of length $d$.
   For example, if $(m_0, m_1, d) = (1, 10, 3)$,
-  the tests will be performed for $m = 1, 4, 7, 10$, while if 
+  the tests will be performed for $m = 1, 4, 7, 10$, while if
   $(m_0, m_1, d) = (1, 10, 2)$, it will be performed for $m = 1, 3, 5, 7, 9$.
   If $m_0 = 0$, the program considers all $m$ in $\{1, d, 2d, \dots\}$
   such that $m\le m_1$.  For example, if $(m_0, m_1, d) = (0, 11, 3)$,

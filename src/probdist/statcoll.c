@@ -4,10 +4,10 @@
  * Code derived from TestU01: http://simul.iro.umontreal.ca/testu01/tu01.html
  */
 
-#include "statcoll.h"
+#include "TestU01/statcoll.h"
 
-#include "util.h"
-#include "tables.h"
+#include "TestU01/util.h"
+#include "TestU01/tables.h"
 
 #include <stddef.h>
 #include <string.h>

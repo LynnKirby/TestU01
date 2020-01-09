@@ -5,13 +5,13 @@
  * Code derived from TestU01: http://simul.iro.umontreal.ca/testu01/tu01.html
  */
 
-#include "fbar.h"
-#include "fdist.h"
+#include "TestU01/fbar.h"
+#include "TestU01/fdist.h"
 
-#include "num.h"
-#include "num2.h"
-#include "util.h"
-#include "gdef.h"
+#include "TestU01/num.h"
+#include "TestU01/num2.h"
+#include "TestU01/util.h"
+#include "TestU01/gdef.h"
 
 #include <math.h>
 #include <float.h>

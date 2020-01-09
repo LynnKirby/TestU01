@@ -10,9 +10,9 @@ to a family of generators of different sizes.
 #ifndef FWALK_H
 #define FWALK_H
 \endhide
-#include "ffam.h"
-#include "fres.h"
-#include "fcho.h"
+#include "TestU01/ffam.h"
+#include "TestU01/fres.h"
+#include "TestU01/fcho.h"
 
 
 extern long fwalk_Maxn;
@@ -51,16 +51,16 @@ typedef struct {
 
 fwalk_Res1 * fwalk_CreateRes1 (void);
 \endcode
- \tab 
+ \tab
   Creates and returns a structure that will hold the results
-  of a {\tt fwalk\_RWalk1} test. 
+  of a {\tt fwalk\_RWalk1} test.
  \endtab
 \code
 
 
 void fwalk_DeleteRes1 (fwalk_Res1 *res);
 \endcode
- \tab 
+ \tab
   Frees the memory allocated by {\tt fwalk\_CreateRes1}.
  \endtab
 
@@ -85,7 +85,7 @@ void fwalk_RWalk1 (ffam_Fam *fam, fwalk_Res1 *res, fcho_Cho2 *cho,
   One will have either {\tt n} = {\tt cho->Chon->Choose(param, i, j)},
   or {\tt L} = {\tt cho->Chop2->Choose(param, i, j)} or both. A positive
   value for {\tt n} or {\tt L} will be used as is by the test. When {\tt n}
-  exceeds {\tt fwalk\_Maxn} or {\tt L} exceeds {\tt fwalk\_MaxL}, 
+  exceeds {\tt fwalk\_Maxn} or {\tt L} exceeds {\tt fwalk\_MaxL},
   the test is not run.
 \endtab
 \code
@@ -120,7 +120,7 @@ void fwalk_VarGeoN1 (ffam_Fam *fam, fres_Cont *res, fcho_Cho2 *cho,
 \endtab
 
 \code
-\hide 
+\hide
 #endif
 \endhide
 \endcode

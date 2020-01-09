@@ -5,9 +5,9 @@
  */
 
 #include "my16807.h"
-#include "unif01.h"
-#include "util.h"
-#include "addstr.h"
+#include "TestU01/unif01.h"
+#include "TestU01/util.h"
+#include "TestU01/addstr.h"
 #include <string.h>
 
 typedef struct { double S; } My16807_state;

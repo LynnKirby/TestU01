@@ -1,9 +1,9 @@
 \defmodule {ucarry}
 
-Generators based on linear recurrences with carry are implemented 
-in this module.  This includes the 
-{\em add-with-carry\/} (AWC), 
-{\em subtract-with-borrow\/} (SWB), 
+Generators based on linear recurrences with carry are implemented
+in this module.  This includes the
+{\em add-with-carry\/} (AWC),
+{\em subtract-with-borrow\/} (SWB),
 {\em multiply-with-carry\/} (MWC), and
 {\em shift-with-carry} (SWC) generators.
 For the theoretical properties of these generators and other details,
@@ -21,15 +21,15 @@ we refer the reader to \cite{rCOU94a,rCOU95a,rCOU97a,rKOC95a,rTEZ93a}.
 #ifndef UCARRY_H
 #define UCARRY_H
 \endhide
-#include "gdef.h"
-#include "unif01.h"
+#include "TestU01/gdef.h"
+#include "TestU01/unif01.h"
 
 
 unif01_Gen * ucarry_CreateAWC (unsigned int r, unsigned int s,
                                unsigned long c, unsigned long m,
                                unsigned long S[]);
 \endcode
-  \tab Implements the add-with-carry (AWC) generator 
+  \tab Implements the add-with-carry (AWC) generator
 \index{Generator!add-with-carry}%
    proposed by  Marsaglia and Zaman \cite{rMAR91a}, based on the
    recurrence
@@ -72,7 +72,7 @@ unif01_Gen * ucarry_CreateRanlux (unsigned int L, long s);
 \endcode
   \tab Implements the specific modified SWB generator proposed by
 \index{Generator!Ranlux}
-   L\"uscher \cite{rLUS94a}. This is an adapted version of the 
+   L\"uscher \cite{rLUS94a}. This is an adapted version of the
    FORTRAN implementation of James \cite{rJAM94a}.
    The parameter {\tt L} is the luxury level and {\tt s} is the
    initial state.   Restriction: $24\le L$.
@@ -84,7 +84,7 @@ unif01_Gen * ucarry_CreateMWC (unsigned int r, unsigned long c,
                                unsigned int w, unsigned long A[],
                                unsigned long S[]);
 \endcode
-  \tab  Implements the {\em multiply-with-carry\/} (MWC) generator, 
+  \tab  Implements the {\em multiply-with-carry\/} (MWC) generator,
  defined by \cite{rCOU97a}:
 \eqs
    x_n &=& (a_1 x_{n-1} + \cdots + a_r x_{n-r} + c_{n-1}) \mod 2^{w};
@@ -93,11 +93,11 @@ unif01_Gen * ucarry_CreateMWC (unsigned int r, unsigned long c,
                                                         \label {mwcc} \\
    u_n &=& x_n /2^w.                                    \label {mwcu}
 \endeqs
-   The array {\tt A[0..(r-1)]} must contain the coefficients 
+   The array {\tt A[0..(r-1)]} must contain the coefficients
    $a_1,\dots, a_r$, \index{Generator!multiply-with-carry}
    the array {\tt S[0..(r-1)]} gives the initial values
    $(x_0,\dots,x_{-r+1})$, and {\tt c} gives the value of $c_0$.
-   This implementation uses 64-bit integers and therefore works 
+   This implementation uses 64-bit integers and therefore works
    only on platforms where these are available.
    Restrictions: $w \le 32$, $a_i < 2^w$, $x_i < 2^w$,
    and $c + (2^w -1)(|a_1| + \cdots + |a_r|) < 2^{64}$.
@@ -109,7 +109,7 @@ unif01_Gen * ucarry_CreateMWCFloat (unsigned int r, unsigned long c,
                                     unsigned int w, unsigned long A[],
                                     unsigned long S[]);
 \endcode
-  \tab Same as {\tt ucarry\_CreateMWC}, but uses a floating-point 
+  \tab Same as {\tt ucarry\_CreateMWC}, but uses a floating-point
    implementation (in {\tt double}).
    Restrictions: $w \le 32$, $a_i < 2^w$, $x_i < 2^w$,
    and $c + (2^w -1)(|a_1| + \cdots + |a_r|) < \min\{2^{53}, \ 2^{32+w}\}$.
@@ -180,8 +180,8 @@ unif01_Gen * ucarry_CreateSWC (unsigned int r, unsigned int h,
    of that polynomial.
    The vector {\tt S[0..r-1]} gives the  initial values of
    $(x_0,\dots,x_{-r+1})$ and {\tt c} is the initial carry.
-%   Note: as usual the first element of the vectors {\tt A} 
-%   and {\tt S} must start at index 0. 
+%   Note: as usual the first element of the vectors {\tt A}
+%   and {\tt S} must start at index 0.
    Restrictions: $0 < r$ and $w \le 32$.
   \endtab
 \code
@@ -200,7 +200,7 @@ unif01_Gen * ucarry_CreateMWC1616 (unsigned int a, unsigned int b,
     {\tt cary}_n &=& (b y_{n-1} + {\tt cary}_{n-1}) \div 2^{16}.
   \endeqs
    The rightmost 16 bits of the two above product make the new $x$ (or $y$)
-   and the leftmost 16 bits the new carry {\tt carx}  (or {\tt cary}).  
+   and the leftmost 16 bits the new carry {\tt carx}  (or {\tt cary}).
    The function returns $(x_n \ll 16)+(y_n\ \&\ {\mbox{0xf{f}f{f}}})$;
    the output is a 32-bit integer, $x_n$ making up its leftmost 16 bits
    and $y_n$ its rightmost 16 bits.

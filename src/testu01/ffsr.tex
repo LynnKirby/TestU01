@@ -17,7 +17,7 @@ All these generators are based on linear recurrences modulo 2.
 #ifndef FFSR_H
 #define FFSR_H
 \endhide
-#include "ffam.h"
+#include "TestU01/ffam.h"
 \endcode
 
 
@@ -30,9 +30,9 @@ ffam_Fam * ffsr_CreateLFSR1 (char *fname, int i1, int i2, int istep);
 \endcode
 \tab
  Creates a family of simple LFSR (or Tausworthe) generators whose
- parameters are defined in file named {\tt fname}. By default, uses a 
+ parameters are defined in file named {\tt fname}. By default, uses a
  predefined family of generators with primitive characteristic trinomial of
- degree $i$ (with period length $2^i-1$) and the best equidistribution 
+ degree $i$ (with period length $2^i-1$) and the best equidistribution
  properties within its class.
  Restrictions: $10 \le i1 \le i2 \le 60$.
 \endtab
@@ -42,11 +42,11 @@ ffam_Fam * ffsr_CreateLFSR1 (char *fname, int i1, int i2, int istep);
 ffam_Fam * ffsr_CreateLFSR2 (char *fname, int i1, int i2, int istep);
 \endcode
 \tab Creates a family of combined LFSR generators with two components, whose
- parameters are defined in file named {\tt fname}. By default, uses a 
+ parameters are defined in file named {\tt fname}. By default, uses a
  predefined family  with each component
  based on a primitive characteristic trinomial.
  The combination generator has period length near $2^i-1$ and the best
- possible equidistribution within its class. 
+ possible equidistribution within its class.
  Restrictions: $10 \le i1 \le i2 \le 36$.
 \endtab
 \code
@@ -56,11 +56,11 @@ ffam_Fam * ffsr_CreateLFSR3 (char *fname, int i1, int i2, int istep);
 \endcode
 \tab
  Creates a family of combined LFSR generators with three components, whose
- parameters are defined in file named {\tt fname}. By default, uses a 
+ parameters are defined in file named {\tt fname}. By default, uses a
  predefined family with each component
  based on a primitive characteristic trinomial.
  The combination generator has period length near $2^i-1$ and the best
- possible equidistribution within its class. 
+ possible equidistribution within its class.
  Restrictions: $14 \le i1 \le i2 \le 36$.
 \endtab
 \code
@@ -105,7 +105,7 @@ ffam_Fam * ffsr_CreateTausLCG2 (char *fname, int i1, int i2, int istep);
  Creates a family of combined generators that adds the outputs of an LCG
  and an LFSR2, modulo 1, whose parameters are defined in file named
  {\tt fname}. Each generator is created by calling the function
-  {\tt ulec\_CreateCombTausLCG21}. By default, uses a 
+  {\tt ulec\_CreateCombTausLCG21}. By default, uses a
  predefined family with generators having a period near $2^i$.
  Restrictions: $20 \le i1 \le i2 \le 62$.
 \endtab

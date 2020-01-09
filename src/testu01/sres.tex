@@ -6,13 +6,13 @@ obey either a chi-square, a normal or a Poisson distribution or some other
 simple distribution. Some tests require more specialized structures for
 the results and those are defined in the appropriate modules.
 
-The first argument of each testing function is the random number generator 
+The first argument of each testing function is the random number generator
 to be tested. It must be created by calling the appropriate function
 in one of the module {\tt u}, and deleted when no longer needed.
-The second argument of each testing function is a structure 
+The second argument of each testing function is a structure
 {\tt s\ldots\_Res} that can keep the test results (intermediate and final).
 This is useful if one wishes to do something else with the
-results or the information generated during a test. In that case, one 
+results or the information generated during a test. In that case, one
 {\it must} call the appropriate {\tt Create} function to create the
  {\tt s\ldots\_Res} structure. Simply declaring a variable  {\tt
 s\ldots\_Res} and passing its address as the argument will not work.
@@ -21,7 +21,7 @@ The same structure can
 be used to call a test many times with different parameters.
 If one does not want to post-process or use the results after a test,
 it suffices to set the {\tt \ldots\_Res} argument to the {\tt NULL} pointer.
-Then, the structure is created and deleted automatically inside the 
+Then, the structure is created and deleted automatically inside the
 testing function.
 
 
@@ -31,8 +31,8 @@ testing function.
 #ifndef SRES_H
 #define SRES_H
 \endhide
-#include "gofw.h"
-#include "statcoll.h"
+#include "TestU01/gofw.h"
+#include "TestU01/statcoll.h"
 \endcode
 
 
@@ -91,16 +91,16 @@ typedef struct {
 
 sres_Basic * sres_CreateBasic (void);
 \endcode
- \tab 
+ \tab
   Creates and returns a structure that will hold the results
-  of a simple test. 
+  of a simple test.
  \endtab
 \code
 
 
 void sres_DeleteBasic (sres_Basic *res);
 \endcode
- \tab 
+ \tab
   Frees the memory allocated to {\tt res} by {\tt sres\_CreateBasic}.
  \endtab
 \code
@@ -108,7 +108,7 @@ void sres_DeleteBasic (sres_Basic *res);
 
 void sres_InitBasic (sres_Basic *res, long N, char *nam);
 \endcode
- \tab 
+ \tab
    Initializes the {\tt res} structure, ensures that its
    collector {\tt sVal1}  can contain up to  {\tt N} values and sets
    its  {\tt name} field to  {\tt nam}. This function must not be called
@@ -121,10 +121,10 @@ void sres_InitBasic (sres_Basic *res, long N, char *nam);
 void sres_GetNormalSumStat (sres_Basic *res);
 \endcode
  \tab
-  Computes the sample sum and the sample variance $S^2$ of the $N$ observations in 
+  Computes the sample sum and the sample variance $S^2$ of the $N$ observations in
   the collector {\tt res->sVal1}. Then computes the $p$-value of the sum, assuming
   that it obeys a {\em normal\/} law with mean 0 and variance $N$. Computes also
-  the $p$-value of $(N-1)S^2$, assuming it obeys a {\em chi-square\/} law with 
+  the $p$-value of $(N-1)S^2$, assuming it obeys a {\em chi-square\/} law with
   $N-1$ degrees of freedom. The computed values are put in
   {\tt res->sVal2[gofw\_Sum]}, {\tt res->pVal2[gofw\_Sum]},
   {\tt res->sVal2[gofw\_Var]} and {\tt res->pVal2[gofw\_Var]}.
@@ -188,16 +188,16 @@ typedef struct {
 
 sres_Disc * sres_CreateDisc (void);
 \endcode
- \tab 
+ \tab
   Creates and returns a structure that will hold the results
-  of a simple test based on a discrete distribution. 
+  of a simple test based on a discrete distribution.
  \endtab
 \code
 
 
 void sres_DeleteDisc (sres_Disc *res);
 \endcode
- \tab 
+ \tab
   Frees the memory allocated to {\tt res} by {\tt sres\_CreateDisc}.
  \endtab
 \code
@@ -205,10 +205,10 @@ void sres_DeleteDisc (sres_Disc *res);
 
 void sres_InitDisc (sres_Disc *res, long N, char *nam);
 \endcode
- \tab 
+ \tab
    Initializes the {\tt res} structure and ensures that its statistical
    collector {\tt sVal1} can contain up to  {\tt N} statistic values.
-   Also sets its  {\tt name} field to  {\tt nam}. 
+   Also sets its  {\tt name} field to  {\tt nam}.
    This function must not be called
    directly by the user. It has been made public because it is called
    internally by the tests in different modules.
@@ -232,9 +232,9 @@ typedef struct {
    long jmax;
 \endcode
  \tabb
-  {\tt NbExp} and {\tt Count} contain the expected and 
-  observed numbers of observations in each class, respectively. 
-  {\tt Loc} give the classes 
+  {\tt NbExp} and {\tt Count} contain the expected and
+  observed numbers of observations in each class, respectively.
+  {\tt Loc} give the classes
   redirections which ensure that the expected numbers in each class
   are large enough to justify the application of the chi-square law.
   The indices {\tt jmin} and {\tt jmax} are the lowest
@@ -289,16 +289,16 @@ typedef struct {
 
 sres_Chi2 * sres_CreateChi2 (void);
 \endcode
- \tab 
+ \tab
   Creates and returns a structure that will hold the results
-  of a chi-square test. 
+  of a chi-square test.
  \endtab
 \code
 
 
 void sres_DeleteChi2 (sres_Chi2 *res);
 \endcode
- \tab 
+ \tab
   Frees the memory allocated to {\tt res} by {\tt sres\_CreateChi2}.
  \endtab
 \code
@@ -306,7 +306,7 @@ void sres_DeleteChi2 (sres_Chi2 *res);
 
 void sres_InitChi2 (sres_Chi2 *res, long N, long jmax, char *nam);
 \endcode
- \tab 
+ \tab
    Initializes the {\tt res} structure and ensures that its statistical
    collector  {\tt sVal1} can contain up to  {\tt N} statistic values
    while the counters can contain up to  {\tt jmax + 1} classes. Also sets
@@ -319,7 +319,7 @@ void sres_InitChi2 (sres_Chi2 *res, long N, long jmax, char *nam);
 
 void sres_GetChi2SumStat (sres_Chi2 *res);
 \endcode
- \tab 
+ \tab
   Computes the sum of the $N$ observations in the collector {\tt res->sVal1}.
   Then computes the $p$-value of the sum, assuming that it obeys a
   {\em chi-square\/} law with $N\ell$ degrees of freedom, where $\ell$ is the
@@ -334,7 +334,7 @@ void sres_GetChi2SumStat (sres_Chi2 *res);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \guisec{Structure for Poisson test results}
 
-The detailed results for a Poisson test can be recovered in the 
+The detailed results for a Poisson test can be recovered in the
 following structure.\index{Poisson results}
 
 \code
@@ -345,7 +345,7 @@ typedef struct {
 \endcode
  \tabb
   The Poisson mean is {\tt Lambda}. When the number of replications
-  $N>1$, {\tt Mu = $N*\;$Lambda} gives the mean of the sum of all 
+  $N>1$, {\tt Mu = $N*\;$Lambda} gives the mean of the sum of all
   Poisson means for the $N$ replications.
  \endtabb
 \code
@@ -395,16 +395,16 @@ typedef struct {
 
 sres_Poisson * sres_CreatePoisson (void);
 \endcode
- \tab 
+ \tab
   Creates and returns a structure that will hold the results
-  of a test based on the Poisson distribution. 
+  of a test based on the Poisson distribution.
  \endtab
 \code
 
 
 void sres_DeletePoisson (sres_Poisson *res);
 \endcode
- \tab 
+ \tab
   Frees the memory allocated to {\tt res} by {\tt sres\_CreatePoisson}.
  \endtab
 \code
@@ -412,7 +412,7 @@ void sres_DeletePoisson (sres_Poisson *res);
 
 void sres_InitPoisson (sres_Poisson *res, long N, double Lambda, char *nam);
 \endcode
- \tab 
+ \tab
    Initializes the {\tt res} structure and ensures that its statistical
    collector {\tt sVal1} can contain up to  {\tt N} statistic values.
    Also sets its {\tt Lambda} field to the Poisson mean {\tt Lambda} and

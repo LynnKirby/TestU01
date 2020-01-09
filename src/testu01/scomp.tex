@@ -1,14 +1,14 @@
 \defmodule {scomp}
 
-This module contains three tests based on the evolution of the 
+This module contains three tests based on the evolution of the
 {\em linear complexity\/} of a sequence of bits as it grows,%
 \index{complexity!linear}
 and a test based on the compressibility of the bit sequence,
 as measured by the Lempel-Ziv complexity.%
-\index{compression} 
-% The first two linear complexity tests are taken from 
-% Erdmann \cite{rERD92a} and the third from \cite {rRUK01a}. 
-For the compressibility test, we use the Lempel-Ziv compression 
+\index{compression}
+% The first two linear complexity tests are taken from
+% Erdmann \cite{rERD92a} and the third from \cite {rRUK01a}.
+For the compressibility test, we use the Lempel-Ziv compression
 algorithm of 1978 (see \cite{iZIV78a}).
 A similar test is implemented in \cite{rERD92a,rRUK01a},
 but according to the authors, it uses a version of
@@ -23,8 +23,8 @@ the Lempel-Ziv algorithm of 1977 instead \cite{iZIV77a}.
 #ifndef SCOMP_H
 #define SCOMP_H
 \endhide
-#include "unif01.h"
-#include "sres.h"
+#include "TestU01/unif01.h"
+#include "TestU01/sres.h"
 \endcode
 
 \ifdetailed  %%%%%%%%%%%%%%%
@@ -51,16 +51,16 @@ typedef struct {
 
 scomp_Res * scomp_CreateRes (void);
 \endcode
- \tab 
+ \tab
   Creates and returns a structure that will hold the results
-  of a  {\tt scomp\_LinearComp} test. 
+  of a  {\tt scomp\_LinearComp} test.
  \endtab
 \code
 
 
 void scomp_DeleteRes (scomp_Res *res);
 \endcode
- \tab 
+ \tab
   Frees the memory allocated by {\tt scomp\_CreateRes}.
  \endtab
 
@@ -76,17 +76,17 @@ void scomp_LinearComp (unif01_Gen *gen, scomp_Res *res,
 \endcode
 \tab \index{Test!LinearComp} %
   \index{Test!linear complexity|see{LinearComp}} %
-  This procedure applies simultaneously the jump complexity test and the jump 
+  This procedure applies simultaneously the jump complexity test and the jump
   size test, two tests based on the linear complexity of a sequence of bits and
   described in \cite{rCAR89a,rERD92a}. A sequence of $n$ bits is constructed by
   taking $s$ bits from each random number. For each $\ell$, $1\le \ell\le n$,
   the linear complexity of the subsequence formed by the first $\ell$ bits is
-  computed by the  Berlekamp-Massey algorithm \cite{mBER84a,mMAS69a}. 
-  \index{Berlekamp-Massey algorithm} 
+  computed by the  Berlekamp-Massey algorithm \cite{mBER84a,mMAS69a}.
+  \index{Berlekamp-Massey algorithm}
 
-  The {\em jump complexity test\/} counts the number of jumps occurring in the 
-  linear complexity of the sequence.  A {\em jump\/} occurs whenever adding 
-  the next bit to the sequence increases its linear complexity. 
+  The {\em jump complexity test\/} counts the number of jumps occurring in the
+  linear complexity of the sequence.  A {\em jump\/} occurs whenever adding
+  the next bit to the sequence increases its linear complexity.
   Under $\cH_0$, for $n$ sufficiently large, the number of jumps, say $J$,
   is approximately normally distributed  with mean and variance
   given by \cite{rWAN97a}:
@@ -96,7 +96,7 @@ void scomp_LinearComp (unif01_Gen *gen, scomp_Res *res,
                  + \frac{6 + R_n}{18(2^n)} - \frac 1 {9(2^{2n})},
    \end{eqnarray}
   where $R_n$ is the parity of $n$ (= 0 for even $n$, 1 for odd $n$).
-  The test compares the standardized value of the observed number 
+  The test compares the standardized value of the observed number
   of jumps to the standard normal distribution.
 
  \hpierre{Should be called ``jump sizes'', I believe.}
@@ -111,28 +111,28 @@ void scomp_LinearComp (unif01_Gen *gen, scomp_Res *res,
 %  the $N$ chi-square values  to the chi-square distribution.
 
   When $N$ is large enough, the procedure also applies a third test,
-  taken from \cite{rRUK01a}.  It is a chi-square 
+  taken from \cite{rRUK01a}.  It is a chi-square
   test based on the $N$ replications of the statistic
   \begin{eqnarray}
    T_n  & = & (-1)^n (L_n - \xi_n) + 2/9,  \nonumber
   \end{eqnarray}
   where $L_n$ is the linear complexity of the sequence, and
   $\xi_n = n/2 + (4 + R_n)/18$ is an approximation of $E[L_n]$ under $\cH_0$.
-  The statistic $T_n$ takes only integer values, with probabilities 
+  The statistic $T_n$ takes only integer values, with probabilities
   given by (see \cite{rRUK01a}):
  % Nist Special publication 800-22, May 15,
  % 2001, p. 86, at \url{http://csrc.nist.gov/rng/index.html}.
    \begin{eqnarray*}
-     P[T = k] & = & \left\{\begin{array}{ll} 
+     P[T = k] & = & \left\{\begin{array}{ll}
           0.5 & \mbox{ for } k=0, \\[4pt]
          \displaystyle {2^{-2k}} & \mbox{ for } k = 1, 2, 3,
     \ldots \\[4pt]
          \displaystyle { 2^{-2|k| - 1}} & \mbox{ for } k = -1, -2,
-  -3, \ldots 
+  -3, \ldots
        \end{array} \right.
    \end{eqnarray*}
 %  Restriction: $ns/16 \ge$ {\tt gofs\_MinExpected}.
-  Recommendation: take $N=1$ and $n$ large (however, computing the 
+  Recommendation: take $N=1$ and $n$ large (however, computing the
   linear complexity takes $O(n^2 \log n)$ time).
 \endtab
 \code
@@ -142,19 +142,19 @@ void scomp_LempelZiv (unif01_Gen *gen, sres_Basic *res,
                       long N, int k, int r, int s);
 \endcode
 \tab
-   Given a string of $n= 2^k$ bits, this test \cite{rRUK01a,rERD92a} 
+   Given a string of $n= 2^k$ bits, this test \cite{rRUK01a,rERD92a}
    counts the number $W$ of distinct patterns in the string in order to
    determine%
 \index{Test!LempelZiv} \index{Lempel-Ziv compression} %
  \index{Test!compression|see{LempelZiv}}
    its compressibility by the Lempel-Ziv compression
-   algorithm of 1978 (see \cite{iZIV78a}). 
-   According to \cite{iKIR94a}, under $\cH_0$, 
+   algorithm of 1978 (see \cite{iZIV78a}).
+   According to \cite{iKIR94a}, under $\cH_0$,
    $$
      Z = \frac{W - {n}/{\log_2 n}}{\sqrt{{0.266\,n} /
         {(\log_2 n)^3}}},
    $$
-   has approximately the standard normal distribution for large $n$. 
+   has approximately the standard normal distribution for large $n$.
    However, our tests show that even for $n$ as large as $2^{24}$,
    the approximation is not very good.
 \hrichard {An interesting problem: To examine the exact distribution
@@ -165,8 +165,8 @@ void scomp_LempelZiv (unif01_Gen *gen, sres_Basic *res,
 %   seem to indicate that the asymptotic regime is attained only for much
 %   larger values of $n$ because of the logarithmic factor.
    Our implementation of the test assumes that $W$ has approximately
-   the normal distribution, but uses estimates of its mean and 
-   standard deviation that have been obtained through simulation 
+   the normal distribution, but uses estimates of its mean and
+   standard deviation that have been obtained through simulation
    with two differents reliable generators.
    Restriction: $k \le 28$ and $N$ not too large.
 \endtab

@@ -1,6 +1,6 @@
 \defmodule {uquad}
 
-This module implements generators based on quadratic recurrences 
+This module implements generators based on quadratic recurrences
 modulo $m$, of the form
 \eq
   x_{n+1} = (a x_n^2 + b x_n + c) \mod m,          \eqlabel{quad}
@@ -19,7 +19,7 @@ for analyses of such generators.
 #ifndef UQUAD_H
 #define UQUAD_H
 \endhide
-#include "unif01.h"
+#include "TestU01/unif01.h"
 
 
 unif01_Gen * uquad_CreateQuadratic (long m, long a, long b, long c, long s);
@@ -27,7 +27,7 @@ unif01_Gen * uquad_CreateQuadratic (long m, long a, long b, long c, long s);
   \tab  Initializes a generator based on recurrence (\ref{quad}),
    with initial state $x_0 = s$.
 \index{Generator!quadratic}%
-   Depending on the values of the parameters, various implementations 
+   Depending on the values of the parameters, various implementations
    of different speeds are used.  In general, this generator
    is slow.  Restrictions: $a$, $b$, $c$ and $s$ non
    negative and less than $m$.

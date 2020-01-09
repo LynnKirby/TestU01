@@ -4,9 +4,9 @@
  * Code derived from TestU01: http://simul.iro.umontreal.ca/testu01/tu01.html
  */
 
-#include "util.h"
-#include "sres.h"
-#include "fbar.h"
+#include "TestU01/util.h"
+#include "TestU01/sres.h"
+#include "TestU01/fbar.h"
 
 #include <string.h>
 #include <math.h>

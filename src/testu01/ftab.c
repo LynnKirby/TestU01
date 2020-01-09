@@ -6,15 +6,15 @@
  */
 
 
-#include "util.h"
-#include "chrono.h"
-#include "num.h"
-#include "tables.h"
-#include "gofw.h"
+#include "TestU01/util.h"
+#include "TestU01/chrono.h"
+#include "TestU01/num.h"
+#include "TestU01/tables.h"
+#include "TestU01/gofw.h"
 
-#include "ftab.h"
-#include "ffam.h"
-#include "swrite.h"
+#include "TestU01/ftab.h"
+#include "TestU01/ffam.h"
+#include "TestU01/swrite.h"
 
 #include <stdio.h>
 #include <math.h>

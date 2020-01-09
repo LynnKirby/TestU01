@@ -13,7 +13,7 @@ Implements various special generators proposed in the litterature.
 #ifndef UVARIA_H
 #define UVARIA_H
 \endhide
-#include "unif01.h"
+#include "TestU01/unif01.h"
 
 
 unif01_Gen * uvaria_CreateACORN (int k, double S[]);
@@ -43,9 +43,9 @@ unif01_Gen * uvaria_CreateRanrotB (unsigned int seed);
   \tab
   This is a lagged-Fibonacci-type random number generator, but
 \index{Generator!RANROT}%
-  with a rotation of bits, called RANROT, and proposed by 
+  with a rotation of bits, called RANROT, and proposed by
   Fog \cite{rFOG01a}.  The variant programmed here is RANROT of type B.
- \hrichard {Voici ce que Agner Fog m'a r\'epondu: 
+ \hrichard {Voici ce que Agner Fog m'a r\'epondu:
    The theoretical description is on my website.
    The scientific journals will only publish code that is supported by
    theoretical proof, and my point is that such proof may not be possible for
@@ -56,18 +56,18 @@ unif01_Gen * uvaria_CreateRanrotB (unsigned int seed);
           (X_{n-k}\  \mbox{rotl}\  r_2)\right) \mod 2^b
   $$
   where rotl denotes a left rotation of the bits,
-  each $X_n$ is an {\tt unsigned int}, 
-  and $b$ is the number of bits in an {\tt unsigned int}. 
+  each $X_n$ is an {\tt unsigned int},
+  and $b$ is the number of bits in an {\tt unsigned int}.
   The output value is $u_n = X_n/2^b$.
-  The last $k$ values of $X$ are stored in a circular buffer 
+  The last $k$ values of $X$ are stored in a circular buffer
   (here of size 17, with $r_1 = 5$ and $r_2 = 3$).
-  Information about RANROT generators can be found at 
+  Information about RANROT generators can be found at
   \url{http://www.agner.org/random/}.
 
-%  Restrictions: {\tt type = 'B'}. 
+%  Restrictions: {\tt type = 'B'}.
   Since Fog's code is copied verbatim here, there are global
   variables in the implementation. Thus no more than
-  one generator of that type can be in use at any given time. 
+  one generator of that type can be in use at any given time.
 %  Using two or more simultaneously will give meaningless results.
  \endtab
 \code
@@ -76,7 +76,7 @@ unif01_Gen * uvaria_CreateRanrotB (unsigned int seed);
 unif01_Gen * uvaria_CreateRey97 (double a1, double a2, double b2, long n0);
 \endcode
   \tab Generator proposed by W.\ Rey \cite{rREY98a}.
-% , of Philips Research 
+% , of Philips Research
 \index{Generator!Rey}%
    It uses the recurrence:
    \begin {eqnarray}
@@ -84,8 +84,8 @@ unif01_Gen * uvaria_CreateRey97 (double a1, double a2, double b2, long n0);
     u_i &=& (a_2 + z_i) \sin (b_2 z) \mod 1,
    \end {eqnarray}
    where $b_1 = (\sqrt{5}-1) \pi/2$.
-   According to the author, $a_1$, $a_2$ and $b_2$  should be chosen 
-   sufficiently large.   
+   According to the author, $a_1$, $a_2$ and $b_2$  should be chosen
+   sufficiently large.
   \endtab
 \code
 
@@ -96,7 +96,7 @@ unif01_Gen * uvaria_CreateTindo (long b, long Delta, int s, int k);
 \index{Generator!Tindo}%
    by Tindo in \cite{rTIN90a}, with $a_0 = b - {\tt Delta}$  and
    $a_1 = {\tt Delta} + 1$.  Assumes that  $0 < {\tt Delta} < b-1$ and
-   $b < 2^{15} = 32768$. 
+   $b < 2^{15} = 32768$.
    Restrictions: $1 \le k \le 32$, $1 \le s \le 32$.
   \endtab
 
@@ -125,7 +125,7 @@ void uvaria_DeleteRanrotB (unif01_Gen *gen);
 void uvaria_DeleteGen (unif01_Gen *gen);
 \endcode
  \tab  Frees the dynamic memory used by any generator of this module
-  that does not have an explicit {\tt Delete} function. 
+  that does not have an explicit {\tt Delete} function.
   This function should be called to clean up a generator object
   when it is no longer in use.
  \endtab

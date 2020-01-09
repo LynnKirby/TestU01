@@ -5,9 +5,9 @@
  * Code derived from TestU01: http://simul.iro.umontreal.ca/testu01/tu01.html
  */
 
-#include "gdef.h"
-#include "swrite.h"
-#include "bbattery.h"
+#include "TestU01/gdef.h"
+#include "TestU01/swrite.h"
+#include "TestU01/bbattery.h"
 
 int main (void)
 {

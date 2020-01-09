@@ -6,10 +6,10 @@
  */
 
 
-#include "tables.h"
-#include "util.h"
-#include "mystr.h"
-#include "num.h"
+#include "TestU01/tables.h"
+#include "TestU01/util.h"
+#include "TestU01/mystr.h"
+#include "TestU01/num.h"
 
 #include <stdlib.h>
 #include <stdio.h>

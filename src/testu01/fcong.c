@@ -4,17 +4,17 @@
  * Code derived from TestU01: http://simul.iro.umontreal.ca/testu01/tu01.html
  */
 
-#include "gdef.h"
-#include "util.h"
-#include "num.h"
+#include "TestU01/gdef.h"
+#include "TestU01/util.h"
+#include "TestU01/num.h"
 
-#include "fcong.h"
-#include "ffam.h"
-#include "unif01.h"
-#include "ulcg.h"
-#include "uinv.h"
-#include "ucubic.h"
-#include "umrg.h"
+#include "TestU01/fcong.h"
+#include "TestU01/ffam.h"
+#include "TestU01/unif01.h"
+#include "TestU01/ulcg.h"
+#include "TestU01/uinv.h"
+#include "TestU01/ucubic.h"
+#include "TestU01/umrg.h"
 
 #include <string.h>
 

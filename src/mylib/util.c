@@ -5,7 +5,7 @@
  * Code derived from TestU01: http://simul.iro.umontreal.ca/testu01/tu01.html
  */
 
-#include "util.h"
+#include "TestU01/util.h"
 
 #include <stdio.h>
 #include <stdlib.h>

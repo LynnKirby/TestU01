@@ -4,8 +4,8 @@
  * Code derived from TestU01: http://simul.iro.umontreal.ca/testu01/tu01.html
  */
 
-#include "unif01.h"
-#include "bbattery.h"
+#include "TestU01/unif01.h"
+#include "TestU01/bbattery.h"
 
 unsigned int xorshift (void);
 double MRG32k3a (void);

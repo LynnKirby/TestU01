@@ -4,13 +4,13 @@
  * Code derived from TestU01: http://simul.iro.umontreal.ca/testu01/tu01.html
  */
 
-#include "ugranger.h"
-#include "utaus.h"
-#include "ulcg.h"
-#include "uinv.h"
-#include "ucubic.h"
-#include "unif01.h"
-#include "num.h"
+#include "TestU01/ugranger.h"
+#include "TestU01/utaus.h"
+#include "TestU01/ulcg.h"
+#include "TestU01/uinv.h"
+#include "TestU01/ucubic.h"
+#include "TestU01/unif01.h"
+#include "TestU01/num.h"
 
 #ifdef USE_GMP
 #include <gmp.h>

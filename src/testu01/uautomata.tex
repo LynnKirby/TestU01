@@ -1,13 +1,13 @@
 \defmodule {uautomata}
 
 This module implements generators based on cellular automata. A cellular
-automaton consists of a $d$-dimensional grid of cells, whose coordinates are 
+automaton consists of a $d$-dimensional grid of cells, whose coordinates are
 the integer points in the \mbox{$d$-dimensional} euclidean lattice
  ${\cal L} = \mathbb{Z}^d$. Each cell can hold a value taken from a discrete
  set (for now, only binary values 0 and 1 are implemented).
 The value $x$ at each cell $i$ evolves deterministically with (discrete)
  time according
-to a set of rules involving the values of its nearest neighbours. For a 
+to a set of rules involving the values of its nearest neighbours. For a
 one-dimensional cellular automaton with neighbourhood of radius $r$, the value
  of a cell at a given time depends on its value at the previous time
  step  as well as the values of the $r$ closest cells on
@@ -19,7 +19,7 @@ $$
 $$
 where $t$ represents discrete time.
 These rules are applied synchronously to each cell at every time step.
-Here, only uniform cellular automata are considered, for which the rules 
+Here, only uniform cellular automata are considered, for which the rules
 are identical for all cell.
 See \cite{rWOL86a,rWOL86b,rTOM99a}
 for the theory of  cellular automata.
@@ -40,17 +40,17 @@ Similarly, a two-dimensional grid is considered as a torus.
 #ifndef UAUTOMAT_H
 #define UAUTOMAT_H
 \endhide
-#include "unif01.h"
+#include "TestU01/unif01.h"
 
 unif01_Gen * uautomata_CreateCA1 (int N, int S[ ], int r, int F[ ],
                                   int k, int ts, int cs, int rot);
 \endcode
   \tab  Initializes a generator based on a 1-dimensional boolean uniform
  cellular automaton made up of $N$ cells, with a rule $F$ of radius $r$,
- and an initial state $S$. A rule of radius $r$ is such that only the $r$ 
+ and an initial state $S$. A rule of radius $r$ is such that only the $r$
  nearest neighbors on each side of a cell are involved in determining the
- value of the cell at the next time step. Thus each cell has $2r+1$ 
- neighbors, including itself. 
+ value of the cell at the next time step. Thus each cell has $2r+1$
+ neighbors, including itself.
  The initial value of cell $i$ is given in $S[i]$ and can take
 \index{Generator!cellular automata}%
  values 0 and 1 only.
@@ -68,7 +68,7 @@ unif01_Gen * uautomata_CreateCA1 (int N, int S[ ], int r, int F[ ],
    $j$                   & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\ \hline
  $x_{i-1}, x_i, x_{i+1}$
        & 111 & 110 & 101 & 100 & 011  & 010 & 001 & 000 \\ \hline
-    new $x_i$ & 0 & 0 & 0 & 1 & 1 & 1 & 1 & 0 \\ \hline 
+    new $x_i$ & 0 & 0 & 0 & 1 & 1 & 1 & 1 & 0 \\ \hline
 \end{tabular}
 \end{center}
 
@@ -111,7 +111,7 @@ unif01_Gen * uautomata_CreateCA1 (int N, int S[ ], int r, int F[ ],
  will become the value of cell ($i- {\tt rot}) \bmod N$  instead.
  There is no shift when {\tt rot} $= 0$.
 
- Restrictions: $k*({\tt cs} + 1) \le N+ {\tt cs}$. 
+ Restrictions: $k*({\tt cs} + 1) \le N+ {\tt cs}$.
  \endtab
 \code
 
@@ -151,7 +151,7 @@ void uautomata_DeleteCA90mp (unif01_Gen *gen);
 void uautomata_DeleteGen (unif01_Gen *gen);
 \endcode
  \tab  Frees the dynamic memory used by any generator of this module
-  that does not have an explicit {\tt Delete} function. 
+  that does not have an explicit {\tt Delete} function.
   This function should be called when a generator
   is no longer in use.
  \endtab

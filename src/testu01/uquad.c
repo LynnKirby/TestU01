@@ -5,12 +5,12 @@
  * Code derived from TestU01: http://simul.iro.umontreal.ca/testu01/tu01.html
  */
 
-#include "util.h"
-#include "num.h"
-#include "addstr.h"
+#include "TestU01/util.h"
+#include "TestU01/num.h"
+#include "TestU01/addstr.h"
 
-#include "uquad.h"
-#include "unif01.h"
+#include "TestU01/uquad.h"
+#include "TestU01/unif01.h"
 
 #include <stdio.h>
 #include <stdlib.h>

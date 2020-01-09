@@ -5,8 +5,8 @@
  */
 
 
-#include "bitset.h"
-#include "util.h"
+#include "TestU01/bitset.h"
+#include "TestU01/util.h"
 #include <stdio.h>
 #include <string.h>
 #include <limits.h>

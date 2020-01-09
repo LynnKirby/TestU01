@@ -1,6 +1,6 @@
 \defmodule{uweyl}
 
-This module implements simple and combined generators based on 
+This module implements simple and combined generators based on
 Weyl sequences, proposed by Holian et al.\ \cite{rHOL94a}.
 \index{Generator!Weyl}
 
@@ -14,12 +14,12 @@ Weyl sequences, proposed by Holian et al.\ \cite{rHOL94a}.
 #define UWEYL_H
 /* uweyl.h for ANSI C */
 \endhide
-#include "unif01.h"
+#include "TestU01/unif01.h"
 
 
 unif01_Gen * uweyl_CreateWeyl (double alpha, long n0);
 \endcode
- \tab  Implements a  generator defined by the 
+ \tab  Implements a  generator defined by the
  Weyl sequence:
  \eq
    u_n = n \alpha \mod 1 = (u_{n-1} + \alpha) \mod 1,
@@ -28,9 +28,9 @@ unif01_Gen * uweyl_CreateWeyl (double alpha, long n0);
  The  initial value of $n$ is {\tt n0}.
  In theory, if $\alpha$ is irrationnal, this sequence is asymptotically
  equidistributed over (0,1) \cite {rWEY16a}.
- However, this is not true for the present 
+ However, this is not true for the present
 %% \hrichard{remplacer par for any computer? Non}
- implementation, because 
+ implementation, because
  $\alpha$ is represented only with finite precision.
  The implementation is only a rough approximation,
  valid when $n$ is not too large.
@@ -47,12 +47,12 @@ unif01_Gen * uweyl_CreateWeyl (double alpha, long n0);
 
 unif01_Gen * uweyl_CreateNWeyl (double alpha, long n0);
 \endcode
- \tab  Implements a nested Weyl generator, as suggested in \cite{rHOL94a}, 
+ \tab  Implements a nested Weyl generator, as suggested in \cite{rHOL94a},
  defined by
  \eq
    u_n = (n\, (n\alpha \mod 1)) \mod 1,
  \endeq
- where {\tt alpha} $= \alpha \in (0,1)$. 
+ where {\tt alpha} $= \alpha \in (0,1)$.
   The initial value of $n$ is {\tt n0}.
  \endtab
 \code

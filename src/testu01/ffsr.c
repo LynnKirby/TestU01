@@ -5,14 +5,14 @@
  * Code derived from TestU01: http://simul.iro.umontreal.ca/testu01/tu01.html
  */
 
-#include "gdef.h"
-#include "num.h"
-#include "util.h"
+#include "TestU01/gdef.h"
+#include "TestU01/num.h"
+#include "TestU01/util.h"
 
-#include "ffsr.h"
-#include "ffam.h"
-#include "utaus.h"
-#include "ulec.h"
+#include "TestU01/ffsr.h"
+#include "TestU01/ffam.h"
+#include "TestU01/utaus.h"
+#include "TestU01/ulec.h"
 
 #include <stdio.h>
 

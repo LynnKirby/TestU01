@@ -6,8 +6,8 @@
  */
 
 
-#include "util.h"
-#include "fnpair.h"
+#include "TestU01/util.h"
+#include "TestU01/fnpair.h"
 #include <string.h>
 #include <math.h>
 

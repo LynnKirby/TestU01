@@ -6,9 +6,9 @@
  */
 
 
-#include "util.h"
-#include "bitset.h"
-#include "num.h"
+#include "TestU01/util.h"
+#include "TestU01/bitset.h"
+#include "TestU01/num.h"
 #include <math.h>
 #include <string.h>
 #include <stdio.h>

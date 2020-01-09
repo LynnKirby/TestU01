@@ -4,9 +4,9 @@
  * Code derived from TestU01: http://simul.iro.umontreal.ca/testu01/tu01.html
  */
 
-#include "unif01.h"
-#include "ufile.h"
-#include "scatter.h"
+#include "TestU01/unif01.h"
+#include "TestU01/ufile.h"
+#include "TestU01/scatter.h"
 
 int main (void)
 {

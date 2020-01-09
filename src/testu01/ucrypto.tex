@@ -9,7 +9,7 @@ proposed or used in the world of cryptology.
 % For more details, see
 % \url{http://www.esat.kuleuven.ac.be/~rijmen/rijndael/}.
 
-% Les RNG propos\'es au workshop de NIST en 2004: 
+% Les RNG propos\'es au workshop de NIST en 2004:
 % \texttt{Hash, HMAC, KHF, cipherOFB, cipherCTR,
 % Dual\_EC, MS}. (2004) \url{http://csrc.nist.gov/CryptoToolkit/tkrng.html}
 \newcommand{\aes}{\textrm{AES}}
@@ -26,7 +26,7 @@ proposed or used in the world of cryptology.
 #ifndef UCRYPTO_H
 #define UCRYPTO_H
 \endhide
-#include "unif01.h"
+#include "TestU01/unif01.h"
 
 
 typedef enum {
@@ -38,11 +38,11 @@ typedef enum {
  \tab  Block modes of operation \cite{rDWO01a} for this module. Given an algorithm
   (for example, encryption or hashing) used as a generator of random numbers, then
   the output feedback mode (\texttt{OFB}) uses the result of the last application
-  of the algorithm as input block for the current application. The counter 
-   mode (\texttt{CTR}) applies the algorithm on a counter used as input and 
-  incremented by 1 at each application.  The key counter mode (\texttt{KTR}) 
+  of the algorithm as input block for the current application. The counter
+   mode (\texttt{CTR}) applies the algorithm on a counter used as input and
+  incremented by 1 at each application.  The key counter mode (\texttt{KTR})
   applies the algorithm on the seed with a different key at each application of
-  the algorithm; the key is incremented by 1 before each application.   
+  the algorithm; the key is incremented by 1 before each application.
 %  It is assumed that the plain text blocks to encrypt are all 0, except for the
 %  first one (\emph{the seed}) which is used for initialization.
  \endtab
@@ -76,7 +76,7 @@ unif01_Gen * ucrypto_CreateAES (unsigned char *Key, int klen,
 \begin{itemize}
 
 \item  For the \texttt{OFB} mode, each new block of 128 bits $C_j$ is
-  obtained by $C_j = \cale(K,C_{j-1})$, where $C_0 =$ \texttt{Seed}. 
+  obtained by $C_j = \cale(K,C_{j-1})$, where $C_0 =$ \texttt{Seed}.
 
 \item The \texttt{CTR} mode uses a 128-bit counter $i$ whose initial value is
   equal to \texttt{Seed}, and which is incremented
@@ -84,7 +84,7 @@ unif01_Gen * ucrypto_CreateAES (unsigned char *Key, int klen,
   $C_j$ is obtained by $C_j = \cale(K,i)$.
 
 \item The \texttt{KTR} mode uses a counter $i$ as the key which is
-  incremented by 1 at each encryption step $j$ as $i \leftarrow i + 1$. 
+  incremented by 1 at each encryption step $j$ as $i \leftarrow i + 1$.
   Each new block of 128 bits $C_j$ is obtained by
   $C_j = \cale(i, \texttt{Seed})$, where the initial value of $i$ is
  \texttt{Key} viewed as an integer.
@@ -98,7 +98,7 @@ unif01_Gen * ucrypto_CreateSHA1 (unsigned char *Seed, int len,
 \endcode
  \tab Uses the \textit{Secure Hash Algorithm}
   \shaun\ as a source of random numbers \cite{rNIS02a,rBAR06a}.
-\index{Generator!SHA1}% 
+\index{Generator!SHA1}%
  \texttt{Seed} is an array of size \texttt{len} used to initialize the
   generator. At each hashing step $j$, the \shaun\ algorithm is applied on the
   input block to obtain a hashed string of 160 bits (20 bytes). Of these,
@@ -110,9 +110,9 @@ unif01_Gen * ucrypto_CreateSHA1 (unsigned char *Seed, int len,
   calls to the generator. Restrictions: \texttt{len} $\le 55$,
   $0 \le r \le 19$, $1 \le s \le 20$, and  $r + s \le 20$.
 
- Let $C = \calh(T)$ denote the \shaun\  operation applied on the original text $T$ 
+ Let $C = \calh(T)$ denote the \shaun\  operation applied on the original text $T$
  hashed to the 160-bit string $C$. (When $T$ is too short, it is padded
- automatically by the \shaun\  algorithm to have the required block length of 
+ automatically by the \shaun\  algorithm to have the required block length of
  512 bits.)
 \begin{itemize}
 \item  For the \texttt{OFB} mode, each new block of 160 $C_j$ is
@@ -129,7 +129,7 @@ unif01_Gen * ucrypto_CreateSHA1 (unsigned char *Seed, int len,
 
 unif01_Gen * ucrypto_CreateISAAC (int flag, unsigned int A[256]);
 \endcode
-  \tab 
+  \tab
    This is the generator \texttt{ISAAC}
 \index{Generator!ISAAC}%
    (Indirection, Shift, Accumulate, Add, and Count),
@@ -137,8 +137,8 @@ unif01_Gen * ucrypto_CreateISAAC (int flag, unsigned int A[256]);
    The version used here is the one recommended for cryptography,
    with  \texttt{RANDSIZL = 8}.
    If \texttt{flag = 0}, the array  \texttt{A} is not used and the initial state
-   is obtained from a complicated initialization procedure used in Jenkins' 
-   implementation. 
+   is obtained from a complicated initialization procedure used in Jenkins'
+   implementation.
   \richard{In his test program in file \texttt{rand.c}, Jenkins outputs the ISAAC
    random numbers as \texttt{randrsl[0], randrsl[1], randrsl[2]}, \ldots
    In TestU01, they are outputted in the order  { \tt randrsl[255], randrsl[254],

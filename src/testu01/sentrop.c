@@ -6,21 +6,21 @@
  */
 
 
-#include "gdef.h"
-#include "util.h"
-#include "tables.h"
-#include "chrono.h"
-#include "num.h"
+#include "TestU01/gdef.h"
+#include "TestU01/util.h"
+#include "TestU01/tables.h"
+#include "TestU01/chrono.h"
+#include "TestU01/num.h"
 
-#include "sentrop.h"
-#include "smultin.h"
-#include "unif01.h"
-#include "swrite.h"
-#include "wdist.h"
+#include "TestU01/sentrop.h"
+#include "TestU01/smultin.h"
+#include "TestU01/unif01.h"
+#include "TestU01/swrite.h"
+#include "TestU01/wdist.h"
 
-#include "statcoll.h"
-#include "gofw.h"
-#include "fbar.h"
+#include "TestU01/statcoll.h"
+#include "TestU01/gofw.h"
+#include "TestU01/fbar.h"
 
 #include <math.h>
 #include <stddef.h>

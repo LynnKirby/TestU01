@@ -5,11 +5,11 @@
  * Code derived from TestU01: http://simul.iro.umontreal.ca/testu01/tu01.html
  */
 
-#include "fcong.h"
-#include "ffam.h"
-#include "fcho.h"
-#include "fmultin.h"
-#include "smultin.h"
+#include "TestU01/fcong.h"
+#include "TestU01/ffam.h"
+#include "TestU01/fcho.h"
+#include "TestU01/fmultin.h"
+#include "TestU01/smultin.h"
 
 int main (void)
 {

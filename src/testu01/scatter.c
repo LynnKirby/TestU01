@@ -5,12 +5,12 @@
  * Code derived from TestU01: http://simul.iro.umontreal.ca/testu01/tu01.html
  */
 
-#include "util.h"
-#include "chrono.h"
-#include "mystr.h"
+#include "TestU01/util.h"
+#include "TestU01/chrono.h"
+#include "TestU01/mystr.h"
 
-#include "scatter.h"
-#include "unif01.h"
+#include "TestU01/scatter.h"
+#include "TestU01/unif01.h"
 
 #include <string.h>
 #include <stdio.h>

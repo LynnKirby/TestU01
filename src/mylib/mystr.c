@@ -5,8 +5,8 @@
  * Code derived from TestU01: http://simul.iro.umontreal.ca/testu01/tu01.html
  */
 
-#include "util.h"
-#include "mystr.h"
+#include "TestU01/util.h"
+#include "TestU01/mystr.h"
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>

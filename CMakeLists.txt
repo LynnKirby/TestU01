@@ -90,7 +90,7 @@ set(TESTU01_PACKAGE_NAME "${CMAKE_PROJECT_NAME} ${CMAKE_PROJECT_VERSION}")
 check_include_file(gmp.h HAVE_GMP_H)
 check_symbol_exists(random stdlib.h HAVE_RANDOM)
 
-configure_file(include/gdefconf.h.in include/gdefconf.h)
+configure_file(include/TestU01/gdefconf.h.in include/TestU01/gdefconf.h)
 
 #
 # Build the TeX to header file converter.
@@ -117,8 +117,6 @@ target_include_directories(
     include
     ${CMAKE_CURRENT_BINARY_DIR}/include)
 
-target_compile_definitions(testu01 PRIVATE HAVE_CONFIG_H)
-
 #
 # Build headers from TeX source.
 #
@@ -126,7 +124,7 @@ target_compile_definitions(testu01 PRIVATE HAVE_CONFIG_H)
 foreach(module_group IN ITEMS mylib probdist testu01)
     foreach(module IN LISTS ${module_group}_modules)
         set(src "${CMAKE_CURRENT_LIST_DIR}/src/${module_group}/${module}.tex")
-        set(dest "${CMAKE_CURRENT_BINARY_DIR}/include/${module}.h")
+        set(dest "${CMAKE_CURRENT_BINARY_DIR}/include/TestU01/${module}.h")
         # Generate the header.
         add_custom_command(
             OUTPUT ${dest}

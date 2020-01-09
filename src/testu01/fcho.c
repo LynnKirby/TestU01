@@ -4,10 +4,10 @@
  * Code derived from TestU01: http://simul.iro.umontreal.ca/testu01/tu01.html
  */
 
-#include "util.h"
-#include "fcho.h"
-#include "ftab.h"
-#include "swrite.h"
+#include "TestU01/util.h"
+#include "TestU01/fcho.h"
+#include "TestU01/ftab.h"
+#include "TestU01/swrite.h"
 
 #include <stdio.h>
 #include <string.h>

@@ -13,7 +13,7 @@ read directly from an arbitrary file. No more than one generator of each
 #ifndef UFILE_H
 #define UFILE_H
 \endhide
-#include "unif01.h"
+#include "TestU01/unif01.h"
 
 
 unif01_Gen * ufile_CreateReadText (char *fname, long nbuf);
@@ -21,7 +21,7 @@ unif01_Gen * ufile_CreateReadText (char *fname, long nbuf);
   \tab  Reads numbers (assumed to be in text format) from input file
    \texttt{fname}. \index{Generator!read from file}%
    The numbers must be floating-point numbers in [0, 1), separated by
-   whitespace characters. Numbers in the file can be grouped in any way: 
+   whitespace characters. Numbers in the file can be grouped in any way:
    there may be blank lines, some lines may contain many numbers, others
    only one. The file must contain only valid real numbers, nothing else.
    The numbers are read in batches of {\tt nbuf} at a time and kept in an array
@@ -46,7 +46,7 @@ unif01_Gen * ufile_CreateReadBin (char *fname, long nbuf);
   \texttt{unsigned char}'s at a time, transformed into  {\tt nbuf}  unsigned
    32-bit integers and kept in an array (if {\tt nbuf} is very large, a
     smaller but still large array will be used instead).
-   This function is used in order to test (random) 
+   This function is used in order to test (random)
    bit sequences kept in a file.
   \endtab
 \code
@@ -65,7 +65,7 @@ void ufile_InitReadBin (void);
 
 void ufile_DeleteReadText (unif01_Gen *);
 \endcode
-  \tab Closes the file and frees the dynamic memory allocated by 
+  \tab Closes the file and frees the dynamic memory allocated by
   \texttt{ufile\_CreateReadText}.
   \endtab
 \code
@@ -73,7 +73,7 @@ void ufile_DeleteReadText (unif01_Gen *);
 
 void ufile_DeleteReadBin (unif01_Gen *);
 \endcode
-  \tab Closes the file and frees the dynamic memory allocated by 
+  \tab Closes the file and frees the dynamic memory allocated by
   \texttt{ufile\_CreateReadBin}.
   \endtab
 
@@ -85,10 +85,10 @@ void ufile_DeleteReadBin (unif01_Gen *);
 void ufile_Gen2Bin (unif01_Gen *gen, char *fname, double n, int r, int s);
 \endcode
   \tab Creates the file {\tt fname} containing $n$ random bits using the
-  output of generator {\tt gen}. From each random number 
+  output of generator {\tt gen}. From each random number
   returned by {\tt gen}, the $r$ most significant bits will be dropped
   and the $s$ following bits will be written to the file until $n$ bits
-  have been written. Restriction: $s \in \{ 8, 16, 24, 32 \}$. 
+  have been written. Restriction: $s \in \{ 8, 16, 24, 32 \}$.
   \endtab
 
 \code

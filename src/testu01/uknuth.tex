@@ -1,6 +1,6 @@
 \defmodule {uknuth}
 
-This module collects generators proposed by Donald E. Knuth. 
+This module collects generators proposed by Donald E. Knuth.
 Knuth's code can be found at
 \url{http://www-cs-faculty.stanford.edu/~knuth/programs.html}.
 %% We have copied Knuth's code almost verbatim but were forced
@@ -22,7 +22,7 @@ time. \index{Generator!Knuth}
 #ifndef UKNUTH_H
 #define UKNUTH_H
 \endhide
-#include "unif01.h"
+#include "TestU01/unif01.h"
 
 
 unif01_Gen * uknuth_CreateRan_array1 (long s, long A[100]);
@@ -38,12 +38,12 @@ unif01_Gen * uknuth_CreateRan_array1 (long s, long A[100]);
   $$
   out of which only the first 100 are used and the
   next 909 are discarded, and this process is repeated.
-  The generator returns $U_j = X_j/2^{30}$. 
+  The generator returns $U_j = X_j/2^{30}$.
   Gives 30 bits of precision.
 
   If the seed $s \ge 0$, then Knuth's initialization procedure
   is performed: it shifts and transforms the bits of $s$  in order to get
-  the 100 numbers that make up the initial state; in that case, 
+  the 100 numbers that make up the initial state; in that case,
   array {\tt A} is unused.
   If  $s < 0$, then the initial state is taken from the array
   {\tt A[0..99]}.  This could be convenient for restarting the
@@ -55,22 +55,22 @@ unif01_Gen * uknuth_CreateRan_array1 (long s, long A[100]);
 
 unif01_Gen * uknuth_CreateRan_array2 (long s, long A[100]);
 \endcode
-  \tab 
+  \tab
    This implements the new version of {\tt ran\_array} with a new
-  initialization procedure as appeared on Knuth's web site in 2002. 
+  initialization procedure as appeared on Knuth's web site in 2002.
  \endtab
 \code
 
 
 unif01_Gen * uknuth_CreateRanf_array1 (long s, double B[100]);
 \endcode
-  \tab Similar generator to {\tt ran\_array1} above, but 
-   where the recurrence is 
+  \tab Similar generator to {\tt ran\_array1} above, but
+   where the recurrence is
    $$
     U_j = (U_{j-100} + U_{j-37}) \bmod 1
    $$
    and is  implemented directly in floating-point arithmetic.
-   This implements the first version of Knuth's 
+   This implements the first version of Knuth's
     {\tt ranf\_array} as it
 \index{Generator!ranf\_array}%
    appeared on his web site in 2000. Array {\tt B} contains
@@ -82,7 +82,7 @@ unif01_Gen * uknuth_CreateRanf_array1 (long s, double B[100]);
 unif01_Gen * uknuth_CreateRanf_array2 (long s, double B[100]);
 \endcode
   \tab  This implements  the new version of {\tt ranf\_array} as it
-   appeared on Knuth's web site in 2002. 
+   appeared on Knuth's web site in 2002.
   \endtab
 
 

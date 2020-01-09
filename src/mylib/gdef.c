@@ -5,7 +5,7 @@
  * Code derived from TestU01: http://simul.iro.umontreal.ca/testu01/tu01.html
  */
 
-#include "gdef.h"
+#include "TestU01/gdef.h"
 
 #ifdef _WIN32
 #include <Windows.h>

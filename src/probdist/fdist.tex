@@ -3,23 +3,23 @@
 This module provides procedures to compute (or approximate)
 the distribution functions of several standard types of random variables
 and of certain goodness-of-fit test statistics.
-Recall that the distribution function of a continuous random variable $X$ 
+Recall that the distribution function of a continuous random variable $X$
 with density $f$ is
 \eq
-  F(x) = P[X\le x] = \int_{-\infty}^x f(x)dx 
+  F(x) = P[X\le x] = \int_{-\infty}^x f(x)dx
 \endeq
-while that of a discrete random variable $X$ with mass function $f$ 
+while that of a discrete random variable $X$ with mass function $f$
 over the set of integers is
 \eq
   F(x) = P[X\le x] = \sum_{s=-\infty}^x f(x).
 \endeq
-All the procedures in this module return $F(x)$ for some 
+All the procedures in this module return $F(x)$ for some
 probability distribution.
 
 Most distributions are implemented only in standardized form here,
 i.e., with the location parameter set to 0 and the scale parameter
-set to 1.  To shift the distribution by $x_0$ and rescale by $c$, 
-it suffices to replace $x$ by $(x-x_0)/c$ in the argument when 
+set to 1.  To shift the distribution by $x_0$ and rescale by $c$,
+it suffices to replace $x$ by $(x-x_0)/c$ in the argument when
 calling the function.
 
 %\begin{detailed}
@@ -37,8 +37,8 @@ calling the function.
 #ifndef FDIST_H
 #define FDIST_H
 \endhide
-#include "gdef.h"
-#include "fmass.h"
+#include "TestU01/gdef.h"
+#include "TestU01/fmass.h"
 \endcode
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -58,11 +58,11 @@ double fdist_Unif (double x);
 double fdist_Expon (double x);
 \endcode
  \tab
-  Returns 
+  Returns
   \eq
    F(x) = 1 - e^{- x}                          \eqlabel{eq:Fexpon}
   \endeq
-  for $x > 0$, and 0 for $x<0$.  This is the standard exponential 
+  for $x > 0$, and 0 for $x<0$.  This is the standard exponential
   distribution \cite{tJOH95a} with mean 1.
  \endtab
 \code
@@ -71,15 +71,15 @@ double fdist_Expon (double x);
 double fdist_Weibull (double alpha, double x);
 \endcode
   \tab
-  Returns 
+  Returns
   \eq
    F(x) = 1 - e^{- x^\alpha},                 \eqlabel{eq:Fweibull}
   \endeq
   for $x>0$, and 0 for $x\le 0$.
-  This is the standard Weibull distribution function \cite{tJOH95a} with shape 
+  This is the standard Weibull distribution function \cite{tJOH95a} with shape
   parameter $\alpha$.
   Restriction: $\alpha > 0$.
- \hpierre {D'habitude la Weibull a 2 ou 3 param\'etres. Il faudrait 
+ \hpierre {D'habitude la Weibull a 2 ou 3 param\'etres. Il faudrait
    peut-etre ajouter les autres param\`etres.  M\^eme chose pour les autres
    loi de probabilit\'es qui suivent? }
  \endtab
@@ -89,7 +89,7 @@ double fdist_Weibull (double alpha, double x);
 double fdist_ExtremeValue (double x);
 \endcode
  \tab
-  Returns 
+  Returns
  \eq
      F(x) = e^{-e^{-x}},                       \eqlabel{eq:Fextreme}
  \endeq
@@ -101,7 +101,7 @@ double fdist_ExtremeValue (double x);
 double fdist_Logistic (double x);
 \endcode
  \tab
-  Returns 
+  Returns
   \eq F(x) = \frac 1{1 + e^{-x}} =
        \frac12\left(1 + \tanh \left(\frac{x}{2}\right)\right),
                                               \eqlabel{eq:Flogistic}
@@ -128,9 +128,9 @@ double fdist_Pareto (double c, double x);
 
 double fdist_Normal1 (double x);
 \endcode
-  \tab  
+  \tab
   Returns an approximation of $\Phi(x)$, where $\Phi$ is the standard normal
-  distribution function, with mean 0 and variance 1. 
+  distribution function, with mean 0 and variance 1.
   Uses the approximation given in \cite[page 90]{tKEN80a}. This distribution
   is less precise than {\tt fdist\_Normal2} in the lower tail, as it will
   not compute probabilities smaller than {\tt DBL\_EPSILON}.
@@ -140,14 +140,14 @@ double fdist_Normal1 (double x);
 
 double fdist_Normal2 (double x);
 \endcode
-  \tab  
-  Returns an approximation of $\Phi(x)$, 
+  \tab
+  Returns an approximation of $\Phi(x)$,
   where $\Phi$ is the standard normal distribution function,
-  with mean 0 and variance 1. 
+  with mean 0 and variance 1.
   Uses the Chebyshev approximation proposed in \cite{tSCH78a},
   which gives 15 decimals of precision nearly everywhere.
 %  In the paper, the author gives the coefficients with 30 decimals of
-%  precision.   
+%  precision.
   This function is 1.5 times slower than {\tt fdist\_Normal1}.
  \endtab
 \code
@@ -162,9 +162,9 @@ double fdist_Normal3 (double x);
 \hrichard {Toutes les macros HAVE OU USE proviennent du module gdef de mylib.
 Si on veut que l'utilisateur puisse les utiliser ou non, d\'ependant
 de sa machine, il faut qu'il les voit; sinon, il faudra l'\'eliminer.}
-  Returns an approximation of $\Phi(x)$, 
+  Returns an approximation of $\Phi(x)$,
   where $\Phi$ is the standard normal distribution function,
-  with mean 0 and variance 1. 
+  with mean 0 and variance 1.
   Uses the {\tt erf} function from the standard C library. On some machines,
   this function is twice as fast as {\tt fdist\_Normal1}.
  \endtab
@@ -173,9 +173,9 @@ de sa machine, il faut qu'il les voit; sinon, il faudra l'\'eliminer.}
 
 double fdist_Normal4 (double x);
 \endcode
-  \tab  
+  \tab
   Returns an approximation of $\Phi(x)$,  where $\Phi$ is the standard
-  normal distribution function, with mean 0 and variance 1. 
+  normal distribution function, with mean 0 and variance 1.
    Uses Marsaglia's et al \cite{rMAR94b} fast method
   with tables lookup. Returns 15 decimal digits of precision.
   This function is as fast as {\tt fdist\_Normal1} (no more no less).
@@ -185,7 +185,7 @@ double fdist_Normal4 (double x);
 
 double fdist_BiNormal1 (double x, double y, double rho, int ndig);
 \endcode
-  \tab  
+  \tab
   Returns the value $u$ of the standard bivariate normal distribution,
   given by
 \begin{eqnarray}
@@ -196,7 +196,7 @@ double fdist_BiNormal1 (double x, double y, double rho, int ndig);
   where $\rho = ${ \tt rho} is the correlation between $x$ and $y$, and
  \texttt{ndig} is the number of decimal digits of accuracy.
   The code was translated from the Fortran program written
-   by T. G. Donnelly \cite{tDON73a} and copyrighted by the ACM (see 
+   by T. G. Donnelly \cite{tDON73a} and copyrighted by the ACM (see
   \url{http://www.acm.org/pubs/copyright_policy/#Notice}). The absolute error
   is expected to be smaller than $10^{-d}$, where $d={}$\texttt{ndig}.
   Restriction: \texttt{ndig}${} \le 15$.
@@ -206,15 +206,15 @@ double fdist_BiNormal1 (double x, double y, double rho, int ndig);
 
 double fdist_BiNormal2 (double x, double y, double rho);
 \endcode
-  \tab  
-  Returns the value of the standard bivariate normal distribution as 
+  \tab
+  Returns the value of the standard bivariate normal distribution as
   defined in (\ref{eq.binormal1}) above.
   It was translated directly from the Matlab code written by Alan Genz
-  and available from his web page (the code is copyrighted by Alan Genz, 
+  and available from his web page (the code is copyrighted by Alan Genz,
   and is included in this package with the kind permission of its author).
-  The algorithm, described in \cite{tGEN04a}, is a modified form of the 
+  The algorithm, described in \cite{tGEN04a}, is a modified form of the
   algorithm proposed in \cite{tDRE89a}. The program's accuracy results
-  in an absolute error less than $5 \cdot 10^{-16}$. 
+  in an absolute error less than $5 \cdot 10^{-16}$.
  \endtab
 \code
 
@@ -253,7 +253,7 @@ double fdist_JohnsonSU (double alpha, double beta, double x);
   Returns the Johnson JSU distribution function \cite{sLAW00a}:
   \eq
    F(x) = \Phi\left(\alpha + \beta\ln\left(x +
-          \sqrt{x^2 + 1} \right)\right) 
+          \sqrt{x^2 + 1} \right)\right)
   \endeq
   where $\Phi$ is the standard normal distribution.
   Restriction: $\beta>0$.
@@ -264,9 +264,9 @@ double fdist_JohnsonSU (double alpha, double beta, double x);
 double fdist_ChiSquare1 (long k, double x);
 \endcode
   \tab
-  Returns an approximation of the chi-square distribution function 
-  with $k$ degrees of freedom, 
-\iffalse 
+  Returns an approximation of the chi-square distribution function
+  with $k$ degrees of freedom,
+\iffalse
  whose density is
  \eq
    f(x) =                       \eqlabel{eq:Fchi2}
@@ -285,7 +285,7 @@ double fdist_ChiSquare1 (long k, double x);
 double fdist_ChiSquare2 (long k, int d, double x);
 \endcode
   \tab
-  Returns an approximation of the chi-square distribution function 
+  Returns an approximation of the chi-square distribution function
   with $k$ degrees of freedom, by calling {\tt fdist\_Gamma (k/2, d, x/2)}.
   The function will do its best to return $d$ decimals
   digits of precision (but there is no guarantee).
@@ -299,7 +299,7 @@ double fdist_ChiSquare2 (long k, int d, double x);
 double fdist_Student1 (long n, double x);
 \endcode
   \tab
-  Returns the approximation of \cite[p.96]{tKEN80a} for the 
+  Returns the approximation of \cite[p.96]{tKEN80a} for the
   {\em Student-$t$\/} distribution function with $n$ degrees of freedom,
   whose density is
    \eq
@@ -318,7 +318,7 @@ double fdist_Student1 (long n, double x);
 double fdist_Student2 (long n, int d, double x);
 \endcode
   \tab
-  Returns an approximation of the {\em Student-$t$\/} distribution 
+  Returns an approximation of the {\em Student-$t$\/} distribution
   function with $n$ degrees of freedom, with density (\ref{eq:fstudent}).
   Uses the relationship (see \cite{tJOH95a})
  \eq
@@ -332,8 +332,8 @@ double fdist_Student2 (long n, int d, double x);
 \hrichard {Dans Kotz et Johnson et aussi dans Kendall,
  la distribution {\em beta\/} est
  not\'ee  $I_{p, q}(x)$. Je crois que \c ca pourrait \^etre assez standard. }
-  (also called the incomplete {\em beta\/} ratio) defined in 
-  (\ref{eq:Fbeta}), which is approximated by calling {\tt fdist\_Beta}. 
+  (also called the incomplete {\em beta\/} ratio) defined in
+  (\ref{eq:Fbeta}), which is approximated by calling {\tt fdist\_Beta}.
   The function tries to return $d$ decimals digits of precision
  (but there is no guarantee).
   Restrictions:  $n>0$ and $0 < d \le 15$.
@@ -356,7 +356,7 @@ double fdist_Gamma (double a, int d, double x);
   \endeq
 %%   One has $\Gamma(\alpha) = (\alpha-1)!$ when $\alpha$ is an integer.
   The function tries to return $d$ decimals digits of precision.
-%, but there is no guarantee.  
+%, but there is no guarantee.
   For $a$ not too large (e.g., $a \le 1000$),
   $d$ gives a good idea of the precision attained.
 %% For d = 16, gives at least 13 decimals of precision for $a \le 1000$,
@@ -370,13 +370,13 @@ double fdist_Gamma (double a, int d, double x);
 double fdist_Beta (double p, double q, int d, double x);
 \endcode
   \tab
-  Returns an approximation of 
+  Returns an approximation of
   \eq
-    F(x) = I_{p,q}(x) 
+    F(x) = I_{p,q}(x)
          = \int_0^x \frac {t^{p-1} (1 - t)^{q-1}}{B(p, q)} dt,
                                                      \eqlabel{eq:Fbeta}
   \endeq
-  the {\em beta\/} distribution function with parameters $p$ and $q$, 
+  the {\em beta\/} distribution function with parameters $p$ and $q$,
   evaluated at $x \in [0, 1]$, where $B(p,q)$ is the {\em beta\/} function
   defined by
   \eq
@@ -384,7 +384,7 @@ double fdist_Beta (double p, double q, int d, double x);
   \endeq
   where $\Gamma (x)$ is the Gamma function defined in (\ref{eq:Gamma}).
   For $\max(p, q) \le 1000$, use a recurrence relation in $p$ and $q$ for
-  {\tt fdist\_Beta}, given in \cite{tGAU64a,tGAU64b}. 
+  {\tt fdist\_Beta}, given in \cite{tGAU64a,tGAU64b}.
   Else, if $\min(p, q) \le 30$,
   use an approximation due to Bol'shev \cite{tMAR78a}.  Otherwise, use a
   normal approximation \cite{tPEI68a}.
@@ -399,9 +399,9 @@ double fdist_Beta (double p, double q, int d, double x);
 double fdist_BetaSymmetric (double p, double x);
 \endcode
   \tab
-  Returns an approximation of the symmetrical {\em beta\/} distribution 
+  Returns an approximation of the symmetrical {\em beta\/} distribution
   function $F(x)$ with parameters $p = q$  as defined in (\ref{eq:Fbeta}).
-  Uses four different hypergeometric series 
+  Uses four different hypergeometric series
   (for the four cases $x$ close to 0 and $p \le 1$,
      $x$ close to 0 and $p > 1$,  $x$ close to 1/2 and $p \le 1$,
   and  $x$ close to 1/2 and $p > 1$)
@@ -414,21 +414,21 @@ double fdist_BetaSymmetric (double p, double x);
 
 double fdist_KSPlus (long n, double x);
 \endcode
- \tab  Returns $p = P[D_n^+ \le x]$, where 
+ \tab  Returns $p = P[D_n^+ \le x]$, where
  \eq                                            \eqlabel{eq:KSPlus}
    D_n^+ = \sup_{-\infty < s < \infty} [\hat F_n(s) - F(s)]^+
  \endeq
   is the positive Kolmogorov-Smirnov statistic for a sample of size $n$
-  whose empirical distribution function is $\hat F_n$,  
+  whose empirical distribution function is $\hat F_n$,
   under the hypothesis that the observations follow a continuous distribution
-  function $F$. 
+  function $F$.
   (Recall that $x^+$ represents $\max (0, x)$, the positive part of $x$.)
-  The statistic 
+  The statistic
  \eq                                            \eqlabel{eq:KSMinus}
    D_n^- = \sup_{-\infty < s < \infty} [F(s) - \hat F_n(s)]^+
  \endeq
   has the same distribution as $D_n^+$.
-  Procedures for computing these statistics are availables in 
+  Procedures for computing these statistics are availables in
   module {\tt gofs}.
   The distribution function of $D_n^+$ can be approximated via the
   following expressions:
@@ -443,13 +443,13 @@ double fdist_KSPlus (long n, double x);
         \left({j\over n} - x \right)^j
         \left(1 - {j\over n} + x \right)^{n-j-1}   \label {DistKS2} \\[4pt]
     &\approx& 1 - e^{-2 n x^2} \left[1 - {2x\over 3} \left(
-           1 - x\left(1 - {2 n x^2 \over 3}\right) \right.\right. 
+           1 - x\left(1 - {2 n x^2 \over 3}\right) \right.\right.
                                                    \nonumber\\[4pt]
     &&  \left.\left. - {2\over 3n} \left({1\over 5} - {19 n x^2 \over 15}
               + {2n^2 x^4 \over 3}\right) \right) + O(n^{-2}) \right].
                                                    \label {DistKS3}
   \end {eqnarray}
-  Formula (\ref{DistKS1}) and (\ref{DistKS2}) can be found in 
+  Formula (\ref{DistKS1}) and (\ref{DistKS2}) can be found in
   \cite{tDUR73a}, equations (2.1.12) and (2.1.16), while (\ref{DistKS3})
   can be found in \cite{tDAR60a}.
   Formula (\ref{DistKS2}) contains less terms than (\ref{DistKS1})
@@ -462,11 +462,11 @@ double fdist_KSPlus (long n, double x);
   (\ref{DistKS1}) when $nx \ge 6.5$ and $n \le 4000$,
   and (\ref{DistKS3}) when $nx \ge 6.5$ and $n > 4000$.
 %   The relative  error on $p(x) = P[D_n^+ \le x]$ is always less than
-%   $10^{-5}$, and the relative error on $1-p(x)$ is less than 
+%   $10^{-5}$, and the relative error on $1-p(x)$ is less than
 %   $10^{-1}$ when $1-p(x) > 10^{-10}$.
-%   The {\em absolute\/}  error on $1-p(x)$ is less than $10^{-11}$ 
+%   The {\em absolute\/}  error on $1-p(x)$ is less than $10^{-11}$
 %   when $1-p(x) < 10^{-10}$.
-%  It must be noted that Korolyuk \cite{tKOR59a} and many others 
+%  It must be noted that Korolyuk \cite{tKOR59a} and many others
 %  gave an erroneous formula for the asymptotic form (\ref{DistKS3}).
 %  Darling \cite{tDAR60a} gives the correct formula with references.
   \endtab
@@ -496,8 +496,8 @@ For a given $n$, the precision increases as $x$ increases.
 double fdist_KS2 (long n, double x);
 \endcode
 \tab Another version of the Kolmogorov-Smirnov distribution
-$ P[D_n \le x]$, using Durbin's matrix formula \cite{tDUR73a}. 
-It is astronomically slow for large $n$. According to its authors 
+$ P[D_n \le x]$, using Durbin's matrix formula \cite{tDUR73a}.
+It is astronomically slow for large $n$. According to its authors
 \cite{tMAR03a}, it should return at least 7 decimal digits
 of precision.
 \endtab
@@ -519,7 +519,7 @@ double fdist_KSPlusJumpOne (long n, double a, double x);
                                     \eqlabel{eq:KSPlusJumpOne}
  \endeq
 \iffalse  %%%%%
-  and 
+  and
   \eq
     D_n^-(a) = \sup_{a\le u\le 1} \left(u - \hat F_n(F^{-1}(u))\right)
              = \max_{\rule{0pt}{7pt} \lfloor 1+an\rfloor \le j \le n}
@@ -529,7 +529,7 @@ double fdist_KSPlusJumpOne (long n, double a, double x);
     function. }
 \fi  %%%%
   where $V_{(1)},\dots,V_{(n)}$ are the observations sorted by increasing
-  order.  The procedure returns an approximation of 
+  order.  The procedure returns an approximation of
   $P[D_n^+(a) \le x]$ computed via
   \begin {eqnarray}
    P[D_n^+(a) \le x]
@@ -555,7 +555,7 @@ double fdist_KSPlusJumpOne (long n, double a, double x);
   when $nx \ge 6.5$ or $x+a \ge 0.5$.
   Restriction: $0 < a < 1$.
   \endtab
-\hide  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
+\hide  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \code
 #if 0
 
@@ -563,7 +563,7 @@ void fdist_FindJumps (fdist_FUNC_JUMPS *H, int Detail);
 \endcode
  \tab
    Find empirically all the jumps of the function  {\tt H->F(H->par, x)}
-   in the interval  {\tt (H->xa, H->xb)} by advancing with steps of size 
+   in the interval  {\tt (H->xa, H->xb)} by advancing with steps of size
    {\tt epsX} along the  {\tt x} direction. If the value {\tt y} of the
    function differs by more than  {\tt epsY} over such a step, it will be
    considered as a possible jump (discontinuity) of the function.
@@ -573,10 +573,10 @@ void fdist_FindJumps (fdist_FUNC_JUMPS *H, int Detail);
    {\tt epsY/epsX} should be chosen larger than the largest
    slope of the function at continuous points in the interval.
    The number of jumps is returned in  {\tt H->NJumps}; the position
-   {\tt x} of the $i$-th jump will be kept in 
+   {\tt x} of the $i$-th jump will be kept in
    {\tt H->xJump[i], i = 1,2,...,H->NJumps}.
    The value of the function  immediately to the left and to the right
-   of jump $i$ will be kept in {\tt H->yLeftJump[i]} and 
+   of jump $i$ will be kept in {\tt H->yLeftJump[i]} and
    {\tt H->yRightJump[i]} respectively. The name of the function can be
    kept in {\tt H->doc}.
    If {\tt Detail $>$ 0}, very detailed information will be printed about
@@ -593,14 +593,14 @@ void fdist_FreeJumps (fdist_FUNC_JUMPS *H);
   to keep information about the jumps of {\tt H}.
   This should be called when one has no more use for the jumps. {\tt H}
   itself and the other fields of {\tt H} that are allocated by
-  the user  (v.g. {\tt par, doc}) must be released explicitly by the user. 
+  the user  (v.g. {\tt par, doc}) must be released explicitly by the user.
  \endtab
 \code
 
 
 double fdist_KSMinusJumpsMany (fdist_FUNC_JUMPS *H, double x);
 \endcode
- \tab  
+ \tab
   Return the $p$-value $P[D_{\!N}^- \ge x]$, where $D_{\!N}^-$ is the
   Kolmogorov-Smirnov statistic (\ref{eq:KSMinus}) for a sample of size
   $N =$  {\tt H->par->paramI[0]}, under
@@ -608,7 +608,7 @@ double fdist_KSMinusJumpsMany (fdist_FUNC_JUMPS *H, double x);
   cumulative distribution function  {\tt H->F}. The distribution function
   {\tt H->F} has {\tt H->NJumps} jumps;  the $x$ coordinate of jump $i$
   is in {\tt H->xJump[i], i = 1, 2, ..., NJumps}, and the values of {\tt H->F}
-  immediately to the left and to the right of jump $i$ are in 
+  immediately to the left and to the right of jump $i$ are in
   {\tt H->yLeftJump[i]} and {\tt H->yRightJump[i]}.
 
   This distribution function is computed following the method
@@ -622,7 +622,7 @@ double fdist_KSMinusJumpsMany (fdist_FUNC_JUMPS *H, double x);
 double fdist_KSPlusJumpsMany (fdist_FUNC_JUMPS *H, double x);
 #endif
 \endcode
- \tab  
+ \tab
   Similar to {\tt fdist\_KSMinusJumpsMany}, but for $D_N^+$, defined
   in (\ref{eq:KSPlus}).
   \endtab
@@ -646,7 +646,7 @@ double fdist_CramerMises (long n, double x);
     {\rm K}_{1/4}\left(\frac{(4j+1)^2}{16 x}\right),
                                                        \eqlabel{eq:DistCM1}
    \end{equation}
-  where ${\rm K}_{\nu}$ is the  modified Bessel function of the 
+  where ${\rm K}_{\nu}$ is the  modified Bessel function of the
   second kind.
   To correct for the deviation between $P(W_n^2\le x)$ and $P(W^2\le x)$,
   we add a correction in $1/n$, obtained empirically by simulation.
@@ -666,20 +666,20 @@ double fdist_WatsonG (long n, double x);
  \tab Returns an approximation of $P[G_n \le x]$, where $G_n$ is the
   Watson statistic  defined in (\ref{eq:WatsonG}),
   for a sample of independent uniforms over $(0,1)$.
-  The approximation is computed in a similar way as for 
+  The approximation is computed in a similar way as for
   {\tt fdist\_CramerMises}.
   To implement this procedure, a table of the values of
-  $g(x) = \lim_{n\to\infty} P[G_n \le x]$ and of its derivative 
-  was first computed by numerical integration. 
-  For $x \le 1.5$, the procedure uses this table with cubic spline 
+  $g(x) = \lim_{n\to\infty} P[G_n \le x]$ and of its derivative
+  was first computed by numerical integration.
+  For $x \le 1.5$, the procedure uses this table with cubic spline
   interpolation.
   For $x > 1.5$, it uses the empirical curve $g(x) = 1 - e^{19 - 20x}$.
   A correction of order $1/\sqrt{n}$, obtained
   empirically from $10^7$ simulation runs with $n = 256$ and also
   implemented as an interpolation table with an exponential tail,
   is then added.
-  The  absolute  error is estimated to be less than 
-  0.01, 0.005, 0.002, 0.0008, 0.0005, 0.0005, 0.0005 for 
+  The  absolute  error is estimated to be less than
+  0.01, 0.005, 0.002, 0.0008, 0.0005, 0.0005, 0.0005 for
   $n = 16$, 32, 64, 128, 256, 512, 1024, respectively.
   For the trivial case $n=1$, always returns 0.5.
  \endtab
@@ -688,10 +688,10 @@ double fdist_WatsonG (long n, double x);
 
 double fdist_WatsonU (long n, double x);
 \endcode
- \tab  Returns $P[U^2 \le x]$, where $U^2$ is the Watson statistic 
+ \tab  Returns $P[U^2 \le x]$, where $U^2$ is the Watson statistic
   defined in (\ref{eq:WatsonU}) in the limit when $n \to\infty$,
   for a sample of independent uniforms over $(0,1)$.
-  Only this limiting distribution (when $n \to\infty$) is implemented. 
+  Only this limiting distribution (when $n \to\infty$) is implemented.
   It is given by
    \begin{equation}
     P(U^2 \le x)  \ = \ 1 + 2 \sum_{j=1}^\infty (-1)^j e^{-2 j^2 \pi^2 x}
@@ -708,8 +708,8 @@ double fdist_WatsonU (long n, double x);
   which can be used for small $x$.
   The current implementation uses (\ref{eq:DistWU1}) for $x > 0.15$,
   and (\ref{eq:DistWU2}) for $x \le 0.15$.
-  The absolute difference between the returned value and $P[U_n^2 \le x]$ 
-  is estimated to be less than 0.01 for $n \ge 8$. 
+  The absolute difference between the returned value and $P[U_n^2 \le x]$
+  is estimated to be less than 0.01 for $n \ge 8$.
   For the trivial case $n=1$, always returns 0.5.
  \endtab
 \code
@@ -720,11 +720,11 @@ double fdist_AndersonDarling (long n, double x);
  \tab Returns $F_n(x) = P[A_n^2 \le x]$, where $A_n^2$ is the
   Anderson-Darling statistic \cite{tAND52a} defined in (\ref{eq:Andar}),
   for a sample of independent uniforms over $(0,1)$.
-  The approximation is computed similarly as for 
+  The approximation is computed similarly as for
   {\tt fdist\_CramerMises}.
   To implement this procedure, an interpolation table of the values of
   $F(x) = \lim_{n\to\infty} P[A_n^2 \le x]$
-  was first computed by numerical integration. 
+  was first computed by numerical integration.
   Then a linear correction in $1/n$, obtained by simulation, was added.
   For $x \le 5$, the procedure approximates $F_n(x) = P[A_n^2 \le x]$ by
   interpolation.  For $5 < x < 10$, it uses the empirical curve
@@ -794,7 +794,7 @@ double fdist_Poisson1 (double lambda, long s);
     F_\lambda(s) =  e^{-\lambda} \sum_{j=0}^s\; \frac{\lambda^j}{j!},
                                                \eqlabel{eq:FPoisson}
   \endeq
-  the Poisson distribution function 
+  the Poisson distribution function
   with parameter $\lambda =$ {\tt lambda}, evaluated at $s$.
 \ifdetailed
   This procedure adds all the non-negligible terms of the sum
@@ -826,7 +826,7 @@ double fdist_Poisson1 (double lambda, long s);
    conserv\'es.}
   In the cases where the Poisson distribution must be computed more than
   once with the same $\lambda$, % and $\lambda$ is not too large,
-  it is more efficient to use 
+  it is more efficient to use
   {\tt fdist\_Poisson2} instead of {\tt fdist\_Poisson1}.
   Restriction: $\lambda > 0$.
  \endtab
@@ -838,7 +838,7 @@ double fdist_Poisson2 (fmass_INFO W, long s);
  \tab  Returns the Poisson distribution function (\ref{eq:FPoisson})
   from the structure {\tt W}, which must have been created previously
   by calling {\tt fmass\_CreatePoisson} with the desired $\lambda$.
-%  Restriction: only integral values of $s$ are meaningful. 
+%  Restriction: only integral values of $s$ are meaningful.
  \endtab
 \code
 
@@ -853,15 +853,15 @@ double fdist_Binomial1 (long n, double p, long s);
   the distribution function of a binomial random variable with parameters
   $n$ and $p$, evaluated at $s$.
 \ifdetailed
-  If $n \le 10000$, the non-negligible terms of the sum are 
+  If $n \le 10000$, the non-negligible terms of the sum are
   added explicitly.
-  If $n > 10000$ and $np(1-p) > 100$, the Camp-Paulson normal 
+  If $n > 10000$ and $np(1-p) > 100$, the Camp-Paulson normal
   approximation \cite{tCAM51a,tMOL70a} is used, otherwise, a Poisson
   approximation due to Bol'shev \cite{tBOL64a,tMOL70a} is used.
 \fi
   When the binomial distribution has to be computed more than
-  once with the same parameters $n$ and $p$, it is more efficient to use 
-  {\tt fdist\_Binomial2} instead of {\tt fdist\_Binomial1}, 
+  once with the same parameters $n$ and $p$, it is more efficient to use
+  {\tt fdist\_Binomial2} instead of {\tt fdist\_Binomial1},
   unless $n$ is very large (e.g., $n > 10^5$).
   Restrictions: $0 \le p \le 1$ and $n \ge 0$.
  \endtab
@@ -886,11 +886,11 @@ double fdist_NegaBin1 (long n, double p, long s);
                                                \eqlabel{eq:Fnegabin}
   \endeq
   the distribution function of a negative binomial random variable with
-  parameters $n$ and $p$, evaluated at $s$. 
+  parameters $n$ and $p$, evaluated at $s$.
   If this distribution has to be computed more than
-  once with the same $n$ and $p$, it is more efficient to use 
+  once with the same $n$ and $p$, it is more efficient to use
   {\tt fdist\_NegaBin2} instead of {\tt fdist\_NegaBin1},
-  unless $n$ is very large. 
+  unless $n$ is very large.
 % (e.g., $n > 10000$). ??
   Restrictions: $n \ge 0$ and $0 \le p \le 1$.
  \endtab
@@ -899,8 +899,8 @@ double fdist_NegaBin1 (long n, double p, long s);
 
 double fdist_NegaBin2 (fmass_INFO W, long s);
 \endcode
- \tab  Returns the negative binomial distribution function 
-  (\ref{eq:Fnegabin}) from the structure {\tt W}, 
+ \tab  Returns the negative binomial distribution function
+  (\ref{eq:Fnegabin}) from the structure {\tt W},
   which must have been created previously
   by calling {\tt fmass\_CreateBinomial} with the desired values of
   $n$ and $p$.
@@ -912,7 +912,7 @@ double fdist_Scan (long N, double d, long m);
 \endcode
  \tab Returns $F(m)$, the distribution function of the scan statistic
   with parameters $N$ and $d$, evaluated at $m$.
-  For a description of this statistic and its distribution, see 
+  For a description of this statistic and its distribution, see
   {\tt fbar\_Scan}, which computes its complementary distribution
   $\bar F(m) = 1 - F(m-1)$.
  \endtab

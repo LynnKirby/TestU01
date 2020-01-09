@@ -6,11 +6,11 @@
  */
 
 
-#include "fmass.h"
+#include "TestU01/fmass.h"
 
-#include "util.h"
-#include "num.h"
-#include "num2.h"
+#include "TestU01/util.h"
+#include "TestU01/num.h"
+#include "TestU01/num2.h"
 
 #include <stddef.h>
 #include <float.h>

@@ -4,10 +4,10 @@
  * Code derived from TestU01: http://simul.iro.umontreal.ca/testu01/tu01.html
  */
 
-#include "util.h"
-#include "addstr.h"
-#include "utouzin.h"
-#include "unif01.h"
+#include "TestU01/util.h"
+#include "TestU01/addstr.h"
+#include "TestU01/utouzin.h"
+#include "TestU01/unif01.h"
 
 #include <stdio.h>
 #include <string.h>

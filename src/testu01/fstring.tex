@@ -11,9 +11,9 @@ The results are placed in tables of $p$-values.
 #ifndef FSTRING_H
 #define FSTRING_H
 \endhide
-#include "ffam.h"
-#include "fres.h"
-#include "fcho.h"
+#include "TestU01/ffam.h"
+#include "TestU01/fres.h"
+#include "TestU01/fcho.h"
 
 
 extern long fstring_Maxn, fstring_MaxL;
@@ -40,23 +40,23 @@ typedef struct {
  \tab  Structure used to keep the results of tests
   {\tt fstring\_LongHead1}. {\tt GLen} corresponds to the global length
   over all blocks considered as a single sequence. {\tt BLen} corresponds
-  to one length for each block. 
+  to one length for each block.
  \endtab
 \code
 
 
 fstring_Res1 * fstring_CreateRes1 (void);
 \endcode
- \tab 
+ \tab
   Creates and returns a structure that will hold the results
-  of a  {\tt fstring\_LongHead1} test. 
+  of a  {\tt fstring\_LongHead1} test.
  \endtab
 \code
 
 
 void fstring_DeleteRes1 (fstring_Res1 *res);
 \endcode
- \tab 
+ \tab
   Frees the memory allocated by {\tt fstring\_CreateRes1}.
  \endtab
 \bigskip\hrule\bigskip
@@ -76,16 +76,16 @@ typedef struct {
 
 fstring_Res2 * fstring_CreateRes2 (void);
 \endcode
- \tab 
+ \tab
   Creates and returns a structure that will hold the results
-  of a  {\tt fstring\_Run1} test. 
+  of a  {\tt fstring\_Run1} test.
  \endtab
 \code
 
 
 void fstring_DeleteRes2 (fstring_Res2 *res);
 \endcode
- \tab 
+ \tab
   Frees the memory allocated by {\tt fstring\_CreateRes2}.
  \endtab
 

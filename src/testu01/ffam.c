@@ -6,10 +6,10 @@
  */
 
 
-#include "gdef.h"
-#include "util.h"
-#include "ffam.h"
-#include "unif01.h"
+#include "TestU01/gdef.h"
+#include "TestU01/util.h"
+#include "TestU01/ffam.h"
+#include "TestU01/unif01.h"
 
 #include <string.h>
 

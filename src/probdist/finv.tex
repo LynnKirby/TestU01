@@ -1,7 +1,7 @@
 \defmodule {finv}
 
-Here one finds procedures to compute or approximate the 
-inverse of certain distribution functions.  
+Here one finds procedures to compute or approximate the
+inverse of certain distribution functions.
 Each procedure computes $F^{-1}(u) = \inf\{x\in\mathbb{R} : F(x)\ge u\}$,
 where $0\le u\le 1$ and $F$
 is the distribution function of a specific type of random variable.
@@ -11,7 +11,7 @@ $U(0,1)$ random variate as the value of $u$.
 
 Several distributions are only implemented in standardized form here,
 i.e., with the location parameter set to 0 and the scale parameter
-set to 1.  To obtain the inverse for the distribution shifted 
+set to 1.  To obtain the inverse for the distribution shifted
 by $x_0$ and rescaled by a factor $c$, it suffices to multiply the
 returned value by $c$ and add $x_0$.
 
@@ -22,10 +22,10 @@ returned value by $c$ and add $x_0$.
 #ifndef FINV_H
 #define FINV_H
 \endhide
-#include "gdef.h"     /* From the library mylib */
-#include "fmass.h"
-#include "fdist.h"
-#include "wdist.h"
+#include "TestU01/gdef.h"     /* From the library mylib */
+#include "TestU01/fmass.h"
+#include "TestU01/fdist.h"
+#include "TestU01/wdist.h"
 \endcode
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -80,7 +80,7 @@ double finv_Pareto (double c, double u);
   \tab
   Returns the inverse of the standard Pareto distribution,
 $$
-     F^{-1}(u) = \left(\frac 1 {1 - u}\right)^{1/c}, 
+     F^{-1}(u) = \left(\frac 1 {1 - u}\right)^{1/c},
           \qquad  0 \le u \le 1.
 $$
   Restriction: $c > 0$.
@@ -90,14 +90,14 @@ $$
 
 double finv_Normal1 (double u);
 \endcode
-  \tab  
-  Returns an approximation of $\Phi^{-1}(u)$, 
+  \tab
+  Returns an approximation of $\Phi^{-1}(u)$,
   where $\Phi$ is the standard normal distribution function,
-  with mean 0 and variance 1. 
-  Uses rational Chebyshev approximations giving at least 15 decimal 
-  digits of precision over most of the range \cite{tBLA76a}. 
-  Far in the lower tail ($u < 10 ^{-122}$), the precision decreases slowly 
-  until for $u < 10 ^{-308}$, the function gives only 11 decimal 
+  with mean 0 and variance 1.
+  Uses rational Chebyshev approximations giving at least 15 decimal
+  digits of precision over most of the range \cite{tBLA76a}.
+  Far in the lower tail ($u < 10 ^{-122}$), the precision decreases slowly
+  until for $u < 10 ^{-308}$, the function gives only 11 decimal
   digits of precision.
  \endtab
 \code
@@ -105,12 +105,12 @@ double finv_Normal1 (double u);
 
 double finv_Normal2 (double u);
 \endcode
-  \tab  
-  Returns an approximation of $\Phi^{-1}(u)$, 
+  \tab
+  Returns an approximation of $\Phi^{-1}(u)$,
   where $\Phi$ is the standard normal distribution function, with mean 0 and
   variance 1. Uses Marsaglia's et al \cite{rMAR94b} method
   with tables lookup. The method works provided that
-  the processor respects the IEEE-754 floating-point standard. 
+  the processor respects the IEEE-754 floating-point standard.
   Returns 6 decimal digits of precision. This function is twice as fast
   as {\tt finv\_Normal1}.
  \endtab
@@ -119,10 +119,10 @@ double finv_Normal2 (double u);
 
 double finv_Normal3 (double u);
 \endcode
-  \tab  
-  Returns an approximation of $\Phi^{-1}(u)$, 
+  \tab
+  Returns an approximation of $\Phi^{-1}(u)$,
   where $\Phi$ is the standard normal distribution function,
-  with mean 0 and variance 1. 
+  with mean 0 and variance 1.
   Uses a rational approximation giving at least 7 decimal digits of
   precision when  $10^{-20} < u < 1 - 10^{-20}$
   (see \cite{sBRA87a,tKEN80a}). This method is slow.
@@ -135,7 +135,7 @@ double finv_LogNormal (double mu, double sigma, double u);
   \tab
   Returns the inverse of the lognormal distribution,
 $$
-     F^{-1}(u) = e^{\mu + \sigma\Phi^{-1} (u)}, 
+     F^{-1}(u) = e^{\mu + \sigma\Phi^{-1} (u)},
           \qquad  0 \le u \le 1.
 $$
   Restriction: $\sigma > 0$.
@@ -152,8 +152,8 @@ $$
      F^{-1}(u) = \frac {a + b\,v}{1 + v},
 $$
  where
-$$ 
-     v = \exp \left({\frac{\Phi^{-1}(u) - \alpha}{\beta}}\right), 
+$$
+     v = \exp \left({\frac{\Phi^{-1}(u) - \alpha}{\beta}}\right),
               \qquad  0 \le u \le 1.
 $$
  and $\Phi^{-1}$ is the inverse of the standard normal distribution.
@@ -171,7 +171,7 @@ $$
 $$
   where
 $$
-      v = \exp \left({\frac{\Phi^{-1}(u) - \alpha}{\beta}}\right), 
+      v = \exp \left({\frac{\Phi^{-1}(u) - \alpha}{\beta}}\right),
           \qquad  0 \le u \le 1.
 $$
 and $\Phi^{-1}$ is the inverse of the standard normal distribution.
@@ -183,7 +183,7 @@ Restriction: $\beta>0$.
 double finv_ChiSquare1 (long k, double u);
 \endcode
   \tab
-  Returns a quick and dirty approximation of $F^{-1}(u)$, 
+  Returns a quick and dirty approximation of $F^{-1}(u)$,
   where $F$ is the chi-square distribution with $k$ degrees of freedom.
   Uses the approximation given in  Figure L.24 of \cite{sBRA87a}.
  \endtab
@@ -193,7 +193,7 @@ double finv_ChiSquare1 (long k, double u);
 double finv_ChiSquare2 (long k, double u);
 \endcode
   \tab
-  Returns an approximation of $F^{-1}(u)$, where $F$ is the 
+  Returns an approximation of $F^{-1}(u)$, where $F$ is the
   chi-square distribution with $k$ degrees of freedom.
   Uses the approximation given in \cite{tBES75a}
   and in Figure L.23 of \cite{sBRA87a}. This function is up to
@@ -205,9 +205,9 @@ double finv_ChiSquare2 (long k, double u);
 double finv_Student (long n, double u);
 \endcode
   \tab
-  Returns an approximation of $F^{-1}(u)$, where $F$ is the 
+  Returns an approximation of $F^{-1}(u)$, where $F$ is the
   {\em Student-$t$\/} distribution function with $n$ degrees of freedom.
-  Uses an approximation giving at least 
+  Uses an approximation giving at least
   5 decimal digits of precision when $n \ge 8$ or $n\le 2$, and
   3 decimal digits of precision when $3\le n \le 7$
   (see \cite{tHIL70a} and Figure L.28 of \cite{sBRA87a}).
@@ -218,9 +218,9 @@ double finv_Student (long n, double u);
 double finv_BetaSymmetric (double p, double u);
 \endcode
   \tab
-  Returns a special approximation of $F^{-1}(u)$, where $F(x)$ is the 
+  Returns a special approximation of $F^{-1}(u)$, where $F(x)$ is the
   symmetric {\it beta} distribution with shape parameter $p = q$
-  as defined in (\ref{eq:Fbeta}). Uses four different hypergeometric series 
+  as defined in (\ref{eq:Fbeta}). Uses four different hypergeometric series
   (for the four cases $x$ close to 0 and $p \le 1$,
      $x$ close to 0 and $p > 1$,  $x$ close to 1/2 and $p \le 1$,
   and  $x$ close to 1/2 and $p > 1$)
@@ -273,7 +273,7 @@ long finv_GenericD2 (wdist_DFUNC F, fmass_INFO W, double u);
    distribution function $F$, evaluated at $u$.
    The parameters of $F$ (if any) are passed in the structure {\tt W}.
    The procedure assumes that the variable {\tt F}
-   contains the distribution function $F$ and returns an approximation 
+   contains the distribution function $F$ and returns an approximation
    of $F^{-1}(u)$. \\
   \hpierre{Je ne vois pas trop \`a quoi inverser $\bar F$ peut bien servir.
     En tous cas, il faut faire bien attention comment on d\'efinit

@@ -5,16 +5,16 @@
  * Code derived from TestU01: http://simul.iro.umontreal.ca/testu01/tu01.html
  */
 
-#include "util.h"
-#include "gofs.h"
+#include "TestU01/util.h"
+#include "TestU01/gofs.h"
 
-#include "fstring.h"
-#include "fcho.h"
-#include "ffam.h"
-#include "fres.h"
-#include "ftab.h"
-#include "sstring.h"
-#include "unif01.h"
+#include "TestU01/fstring.h"
+#include "TestU01/fcho.h"
+#include "TestU01/ffam.h"
+#include "TestU01/fres.h"
+#include "TestU01/ftab.h"
+#include "TestU01/sstring.h"
+#include "TestU01/unif01.h"
 
 #include <string.h>
 

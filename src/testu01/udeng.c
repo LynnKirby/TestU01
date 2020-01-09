@@ -5,13 +5,13 @@
  * Code derived from TestU01: http://simul.iro.umontreal.ca/testu01/tu01.html
  */
 
-#include "gdef.h"
-#include "util.h"
-#include "addstr.h"
-#include "num.h"
+#include "TestU01/gdef.h"
+#include "TestU01/util.h"
+#include "TestU01/addstr.h"
+#include "TestU01/num.h"
 
-#include "udeng.h"
-#include "unif01.h"
+#include "TestU01/udeng.h"
+#include "TestU01/unif01.h"
 
 #include <stdlib.h>
 #include <stdio.h>

@@ -6,9 +6,9 @@
  */
 
 
-#include "util.h"
-#include "addstr.h"
-#include "ubrent.h"
+#include "TestU01/util.h"
+#include "TestU01/addstr.h"
+#include "TestU01/ubrent.h"
 
 #include <stdio.h>
 #include <string.h>

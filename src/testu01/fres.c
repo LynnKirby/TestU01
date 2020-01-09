@@ -5,10 +5,10 @@
  * Code derived from TestU01: http://simul.iro.umontreal.ca/testu01/tu01.html
  */
 
-#include "util.h"
-#include "bitset.h"
-#include "fres.h"
-#include "ftab.h"
+#include "TestU01/util.h"
+#include "TestU01/bitset.h"
+#include "TestU01/fres.h"
+#include "TestU01/ftab.h"
 
 #include <string.h>
 

@@ -6,17 +6,17 @@
  */
 
 
-#include "gofw.h"
-#include "gofs.h"
-#include "fdist.h"
-#include "wdist.h"
-#include "fbar.h"
+#include "TestU01/gofw.h"
+#include "TestU01/gofs.h"
+#include "TestU01/fdist.h"
+#include "TestU01/wdist.h"
+#include "TestU01/fbar.h"
 
-#include "util.h"
-#include "num.h"
-#include "tables.h"
-#include "mystr.h"
-#include "bitset.h"
+#include "TestU01/util.h"
+#include "TestU01/num.h"
+#include "TestU01/tables.h"
+#include "TestU01/mystr.h"
+#include "TestU01/bitset.h"
 
 #include <float.h>
 #include <string.h>

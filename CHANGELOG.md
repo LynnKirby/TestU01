@@ -25,3 +25,4 @@ Note: these breaking changes are relative to TestU01 1.2.3.
 - Package now requires a C99 compiler.
 - Many function signatures and external variable types have changed because of
   the move to use standard C99 types.
+- Headers are now under a `TestU01` subdirectory.

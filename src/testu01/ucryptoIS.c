@@ -5,11 +5,11 @@
  * Code derived from TestU01: http://simul.iro.umontreal.ca/testu01/tu01.html
  */
 
-#include "util.h"
-#include "addstr.h"
+#include "TestU01/util.h"
+#include "TestU01/addstr.h"
 
-#include "ucrypto.h"
-#include "unif01.h"
+#include "TestU01/ucrypto.h"
+#include "TestU01/unif01.h"
 
 #include <stddef.h>
 #include <stdio.h>
@@ -83,7 +83,7 @@ MODIFIED:
 ------------------------------------------------------------------------------
 
 #ifndef STANDARD
-#include "standard.h"
+#include "TestU01/standard.h"
 #endif
 */
 
@@ -146,7 +146,7 @@ MODIFIED:
 ------------------------------------------------------------------------------
 
 #ifndef STANDARD
-#include "standard.h"
+#include "TestU01/standard.h"
 #endif
 #ifndef RAND
 #include "rand.h"

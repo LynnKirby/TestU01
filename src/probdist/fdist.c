@@ -5,14 +5,14 @@
  * Code derived from TestU01: http://simul.iro.umontreal.ca/testu01/tu01.html
  */
 
-#include "fdist.h"
-#include "fmass.h"
-#include "fbar.h"
+#include "TestU01/fdist.h"
+#include "TestU01/fmass.h"
+#include "TestU01/fbar.h"
 
-#include "num.h"
-#include "num2.h"
-#include "util.h"
-#include "tables.h"
+#include "TestU01/num.h"
+#include "TestU01/num2.h"
+#include "TestU01/util.h"
+#include "TestU01/tables.h"
 
 #include <stddef.h>
 #include <limits.h>

@@ -6,17 +6,17 @@
  */
 
 
-#include "util.h"
-#include "gofs.h"
-#include "num.h"
+#include "TestU01/util.h"
+#include "TestU01/gofs.h"
+#include "TestU01/num.h"
 
-#include "fvaria.h"
-#include "ffam.h"
-#include "fres.h"
-#include "fcho.h"
+#include "TestU01/fvaria.h"
+#include "TestU01/ffam.h"
+#include "TestU01/fres.h"
+#include "TestU01/fcho.h"
 
-#include "svaria.h"
-#include "sres.h"
+#include "TestU01/svaria.h"
+#include "TestU01/sres.h"
 
 
 

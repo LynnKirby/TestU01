@@ -4,8 +4,8 @@
  * Code derived from TestU01: http://simul.iro.umontreal.ca/testu01/tu01.html
  */
 
-#include "wdist.h"
-#include "fdist.h"
+#include "TestU01/wdist.h"
+#include "TestU01/fdist.h"
 
 
 

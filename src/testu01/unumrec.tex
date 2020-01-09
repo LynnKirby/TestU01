@@ -16,12 +16,12 @@ Implements the  generators proposed in
 #ifndef UNUMREC_H
 #define UNUMREC_H
 \endhide
-#include "unif01.h"
+#include "TestU01/unif01.h"
 
 
 unif01_Gen * unumrec_CreateRan0 (long s);
 \endcode
-  \tab Creates and initializes the generator {\tt Ran0} with the seed $s$. 
+  \tab Creates and initializes the generator {\tt Ran0} with the seed $s$.
 \index{Generator!Ran0}%
    Restriction: $0 < s < 2^{31}$.
  \endtab
@@ -30,7 +30,7 @@ unif01_Gen * unumrec_CreateRan0 (long s);
 
 unif01_Gen * unumrec_CreateRan1 (long s);
 \endcode
-  \tab Creates and initializes the generator {\tt Ran1} with the seed $s$. 
+  \tab Creates and initializes the generator {\tt Ran1} with the seed $s$.
 \index{Generator!Ran1}%
  Restriction: $0 < s < 2^{31}$.
  \endtab
@@ -38,8 +38,8 @@ unif01_Gen * unumrec_CreateRan1 (long s);
 
 
 unif01_Gen * unumrec_CreateRan2 (long s);
-\endcode 
-  \tab  Creates and initializes the generator {\tt Ran2} with the seed $s$. 
+\endcode
+  \tab  Creates and initializes the generator {\tt Ran2} with the seed $s$.
 \index{Generator!Ran2}%
   Restriction: $0 < s < 2^{31}$.
  \endtab

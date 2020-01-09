@@ -5,21 +5,21 @@
  * Code derived from TestU01: http://simul.iro.umontreal.ca/testu01/tu01.html
  */
 
-#include "util.h"
-#include "chrono.h"
-#include "num.h"
-#include "num2.h"
-#include "bitset.h"
+#include "TestU01/util.h"
+#include "TestU01/chrono.h"
+#include "TestU01/num.h"
+#include "TestU01/num2.h"
+#include "TestU01/bitset.h"
 
-#include "swalk.h"
-#include "wdist.h"
-#include "swrite.h"
-#include "unif01.h"
+#include "TestU01/swalk.h"
+#include "TestU01/wdist.h"
+#include "TestU01/swrite.h"
+#include "TestU01/unif01.h"
 
-#include "fmass.h"
-#include "fbar.h"
-#include "gofw.h"
-#include "gofs.h"
+#include "TestU01/fmass.h"
+#include "TestU01/fbar.h"
+#include "TestU01/gofw.h"
+#include "TestU01/gofs.h"
 
 #include <math.h>
 #include <stddef.h>

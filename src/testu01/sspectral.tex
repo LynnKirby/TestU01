@@ -6,7 +6,7 @@ This module contains tests based on spectral methods.
 The tests currently available compute the {\em discrete Fourier transform\/}
 for a string of $n$ bits and look for deviations in the spectrum
 \index{spectrum}%
-that are inconsistent with $\cH_0$.  
+that are inconsistent with $\cH_0$.
 %  They are taken from \cite{rRUK01a} and \cite{rERD92a}.
 \resdef
 
@@ -17,10 +17,10 @@ that are inconsistent with $\cH_0$.
 #ifndef SSPEC_H
 #define SSPEC_H
 \endhide
-#include "statcoll.h"
-#include "gofw.h"
-#include "unif01.h"
-#include "sres.h"
+#include "TestU01/statcoll.h"
+#include "TestU01/gofw.h"
+#include "TestU01/unif01.h"
+#include "TestU01/sres.h"
 \endcode
 
 \ifdetailed %%%%%%%%%%%%
@@ -63,16 +63,16 @@ typedef struct {
 
 sspectral_Res * sspectral_CreateRes (void);
 \endcode
- \tab 
+ \tab
   Creates and returns a structure that will hold the results
-  of a test. 
+  of a test.
  \endtab
 \code
 
 
 void sspectral_DeleteRes (sspectral_Res *res);
 \endcode
- \tab 
+ \tab
   Frees the memory allocated by {\tt sspectral\_CreateRes}.
  \endtab
 
@@ -89,23 +89,23 @@ void sspectral_Fourier1 (unif01_Gen *gen, sspectral_Res *res,
 \endcode
 \tab
    This test is taken from \cite{rRUK01a}. \index{Test!Fourier1}%
-   Given a string of $n= 2^k$ bits, let $A_j = -1$ if the $j${th} bit 
+   Given a string of $n= 2^k$ bits, let $A_j = -1$ if the $j${th} bit
    is 0 and $A_j = 1$ if the $j$th bit is 1.
    Define the discrete Fourier coefficients
 \begin{equation}
-   f_\ell = \sum_{j=0}^{n-1} A_j e^{2\pi i j\ell/n},\qquad 
+   f_\ell = \sum_{j=0}^{n-1} A_j e^{2\pi i j\ell/n},\qquad
     \ell = 0, 1, \ldots,n-1, \label{eq:Fourier1}
 \end{equation}
    where $i = \sqrt{-1}$, and let $|f_\ell|$ be the modulus of the
-   complex number $f_\ell$. 
-   Note that since the $A_j$ are real, 
+   complex number $f_\ell$.
+   Note that since the $A_j$ are real,
    the $f_\ell$ for $\ell > n/2$ can be obtained
-   simply from the $f_\ell$ with $\ell \le n/2$. 
-   Let $O_h$ denote the observed number of $|f_\ell|$'s, for $\ell \le n/2$, 
-   that are smaller than $h$. 
-   According to \cite{rRUK01a}, under $\cH_0$, for large enough 
+   simply from the $f_\ell$ with $\ell \le n/2$.
+   Let $O_h$ denote the observed number of $|f_\ell|$'s, for $\ell \le n/2$,
+   that are smaller than $h$.
+   According to \cite{rRUK01a}, under $\cH_0$, for large enough
    $n$ and $h = \sqrt{2.995732274n}$, $O_h$ has approximately the
-   normal distribution with mean $\mu = 0.95 n/2$ and variance 
+   normal distribution with mean $\mu = 0.95 n/2$ and variance
    $\sigma^2 = 0.05 \mu$.
    The test computes the $N$ values of the standardized statistic
    $(O_h - \mu)/\sigma$ and compares their distribution to the standard
@@ -123,22 +123,22 @@ void sspectral_Fourier2 (unif01_Gen *gen, sspectral_Res *res,
   computes $S_\ell = |f_\ell|^2/n$,  \index{Test!Fourier2}%
   for $\ell = 0, 1, \ldots,n-1$, where the Fourier coefficients
   $f_\ell$ are defined in (\ref{eq:Fourier1}).
-  It is shown in \cite{rERD92a} that under $\cH_0$, 
+  It is shown in \cite{rERD92a} that under $\cH_0$,
   each $S_\ell$ has mean 1 and variance $1 -  2 /n$ for $ \ell \not= 0$.
 % \begin{eqnarray*}
 %    V_\ell &=& \left\{\begin{array}{ll}
 %        2 -  2 /n & \qquad \mbox{ for } \ell = 0, \\[6pt]
-%        1 -  2 /n & \qquad \mbox{ for } \ell \not= 0. 
+%        1 -  2 /n & \qquad \mbox{ for } \ell \not= 0.
 %     \end{array} \right.
 % \end{eqnarray*}
   The test computes the sum \index{Test!Fourier3}
  $$
   X = \sum_{\ell= 1}^{n/4} S_\ell,
 $$
-  which should be approximately normal 
+  which should be approximately normal
 with mean $n/4$ and variance equal to $(n-2)/4$.
  \hpierre{Again, assuming independence...}
-  It compares the distribution of the $N$ values of $X$ 
+  It compares the distribution of the $N$ values of $X$
   with the normal distribution.
   Restrictions: $4 \le k \le 26$ and $N$ very small.
   Recommendations: $N=1$.
@@ -152,7 +152,7 @@ void sspectral_Fourier3 (unif01_Gen *gen, sspectral_Res *res,
 \tab
   For each $\ell$, let $X_\ell$ denote the sum of the $N$ copies of $S_\ell$,
   where $S_\ell$ is computed and defined as in {\tt sspectral\_Fourier2}.
-  The central limit theorem ensures that for $N$ large enough, 
+  The central limit theorem ensures that for $N$ large enough,
   $X_\ell$ should be approximately normal with mean  \index{Test!Fourier3}%
   $N$ and variance $NV_\ell$. This test compares the empirical
   distribution of the $n/4$ normal variables $X_\ell, \ \ell = 1, 2, \ldots,

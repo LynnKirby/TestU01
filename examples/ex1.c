@@ -4,9 +4,9 @@
  * Code derived from TestU01: http://simul.iro.umontreal.ca/testu01/tu01.html
  */
 
-#include "unif01.h"
-#include "ulcg.h"
-#include "ulec.h"
+#include "TestU01/unif01.h"
+#include "TestU01/ulcg.h"
+#include "TestU01/ulec.h"
 #include <stdio.h>
 
 int main (void)

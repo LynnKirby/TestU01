@@ -10,9 +10,9 @@ to a family of generators of different sizes.
 #ifndef FVARIA_H
 #define FVARIA_H
 \endhide
-#include "ffam.h"
-#include "fres.h"
-#include "fcho.h"
+#include "TestU01/ffam.h"
+#include "TestU01/fres.h"
+#include "TestU01/fcho.h"
 
 
 extern long fvaria_MaxN;
@@ -92,7 +92,7 @@ void fvaria_SumCollector1 (ffam_Fam *fam, fres_Cont *res, fcho_Cho *cho,
 
 void fvaria_Appearance1 (ffam_Fam *fam, fres_Cont *res, fcho_Cho *cho,
                          long N, int r, int s, int L,
-                         int Nr, int j1, int j2, int jstep); 
+                         int Nr, int j1, int j2, int jstep);
 \endcode
 \tab Similar to {\tt fvaria\_SampleCorr1} but with
   {\tt svaria\_AppearanceSpacings} and with $K$ as the varying sample size.
@@ -116,12 +116,12 @@ void fvaria_WeightDistrib1 (ffam_Fam *fam, fres_Cont *res, fcho_Cho2 *cho,
   One will have either {\tt n} = {\tt cho->Chon->Choose(param, i, j)},
   or {\tt k} = {\tt cho->Chop2->Choose(param, i, j)} or both. A positive
   value for {\tt n} or {\tt k} will be used as is by the test. When {\tt n}
-  exceeds {\tt fvaria\_Maxn} or {\tt k} exceeds {\tt fvaria\_Maxk}, 
+  exceeds {\tt fvaria\_Maxn} or {\tt k} exceeds {\tt fvaria\_Maxk},
   the test is not done.
 \endtab
 
 \code
-\hide 
+\hide
 #endif
 \endhide
 \endcode

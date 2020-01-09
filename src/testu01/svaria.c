@@ -5,23 +5,23 @@
  * Code derived from TestU01: http://simul.iro.umontreal.ca/testu01/tu01.html
  */
 
-#include "gdef.h"
-#include "util.h"
-#include "tables.h"
-#include "chrono.h"
-#include "num.h"
-#include "num2.h"
+#include "TestU01/gdef.h"
+#include "TestU01/util.h"
+#include "TestU01/tables.h"
+#include "TestU01/chrono.h"
+#include "TestU01/num.h"
+#include "TestU01/num2.h"
 
-#include "svaria.h"
-#include "unif01.h"
-#include "sres.h"
-#include "wdist.h"
-#include "swrite.h"
-#include "smultin.h"
+#include "TestU01/svaria.h"
+#include "TestU01/unif01.h"
+#include "TestU01/sres.h"
+#include "TestU01/wdist.h"
+#include "TestU01/swrite.h"
+#include "TestU01/smultin.h"
 
-#include "fmass.h"
-#include "gofs.h"
-#include "gofw.h"
+#include "TestU01/fmass.h"
+#include "TestU01/gofs.h"
+#include "TestU01/gofw.h"
 
 #include <math.h>
 #include <float.h>
