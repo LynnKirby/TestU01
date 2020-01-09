@@ -5,38 +5,34 @@
  * Code derived from TestU01: http://simul.iro.umontreal.ca/testu01/tu01.html
  */
 
+#include "TestU01/fcho.h"
 #include "TestU01/fcong.h"
 #include "TestU01/ffam.h"
-#include "TestU01/fcho.h"
 #include "TestU01/fmultin.h"
 #include "TestU01/smultin.h"
 
-int main (void)
+int main(void)
 {
-   int NbDelta = 1;
-   double ValDelta[] = { -1 };
-   int t = 2;
-   ffam_Fam *fam;
-   smultin_Param *par;
-   fmultin_Res *res;
-   fcho_Cho *chon;
-   fcho_Cho *chod;
-   fcho_Cho2 *cho;
+    int NbDelta = 1;
+    double ValDelta[] = { -1 };
+    int t = 2;
 
-   fam = fcong_CreateLCG ("LCGGood.par", 10, 30, 1);
-   par = smultin_CreateParam (NbDelta, ValDelta, smultin_GenerCellSerial, 2);
-   res = fmultin_CreateRes (par);
-   chon = fcho_CreateSampleSize (0.5, 1, 0, NULL, "n");
-   chod = fmultin_CreatePer_DT (t, 1);
-   cho = fcho_CreateCho2 (chon, chod);
+    ffam_Fam *fam = fcong_CreateLCG("LCGGood.par", 10, 30, 1);
+    smultin_Param *par
+        = smultin_CreateParam(NbDelta, ValDelta, smultin_GenerCellSerial, 2);
+    fmultin_res *res = fmultin_CreateRes(par);
+    fcho_Cho *chon = fcho_CreateSampleSize(0.5, 1, 0, NULL, "n");
+    fcho_Cho *chod = fmultin_CreatePer_DT(t, 1);
+    fcho_Cho2 *cho = fcho_CreateCho2(chon, chod);
 
-   fmultin_Serial1 (fam, par, res, cho, 1, 0, t, true, 21, 1, 5, 1);
+    fmultin_Serial1(fam, par, res, cho, 1, 0, t, true, 21, 1, 5, 1);
 
-   fcho_DeleteCho2 (cho);
-   fmultin_DeletePer (chod);
-   fcho_DeleteSampleSize (chon);
-   fmultin_DeleteRes (res);
-   smultin_DeleteParam (par);
-   fcong_DeleteLCG (fam);
-   return 0;
+    fcho_DeleteCho2(cho);
+    fmultin_DeletePer(chod);
+    fcho_DeleteSampleSize(chon);
+    fmultin_DeleteRes(res);
+    smultin_DeleteParam(par);
+    fcong_DeleteLCG(fam);
+
+    return 0;
 }

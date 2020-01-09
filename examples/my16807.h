@@ -6,6 +6,6 @@
 
 #include "TestU01/unif01.h"
 
-unif01_Gen *CreateMy16807 (int s);
+unif01_Gen *CreateMy16807(int s);
 
-void DeleteMy16807 (unif01_Gen * gen);
+void DeleteMy16807(unif01_Gen *gen);

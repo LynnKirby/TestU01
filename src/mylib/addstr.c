@@ -71,7 +71,8 @@ void addstr_ArrayInt(char *to, const char *add, size_t high, int val[])
     }
 }
 
-void addstr_ArrayUint(char *to, const char *add, size_t high, unsigned int val[])
+void addstr_ArrayUint(
+    char *to, const char *add, size_t high, unsigned int val[])
 {
     strcat(to, add);
     addstr_Uint(to, "(", val[0]);
@@ -103,7 +104,8 @@ void addstr_ArrayLong(char *to, const char *add, size_t high, long val[])
     }
 }
 
-void addstr_ArrayUlong(char *to, const char *add, size_t high, unsigned long val[])
+void addstr_ArrayUlong(
+    char *to, const char *add, size_t high, unsigned long val[])
 {
     strcat(to, add);
     addstr_Ulong(to, "(", val[0]);
