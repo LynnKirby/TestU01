@@ -35,8 +35,11 @@ if(TESTU01_ENABLE_WARNINGS)
     if(MSVC)
         target_compile_options(testu01_build_config INTERFACE /W2)
     else()
-	target_compile_options(testu01_build_config INTERFACE -Wall
-		               -Wextra -pedantic -Wno-unused-parameter)
+	    target_compile_options(
+            testu01_build_config
+            INTERFACE
+            -Wall -Wextra -pedantic
+            -Wno-unused-parameter)
     endif()
 endif()
 
@@ -73,7 +76,7 @@ set(testu01_modules unif01    ulcg      umrg      ucarry    utaus    ugfsr
 
 foreach(module_group IN ITEMS testu01 probdist mylib)
     foreach(module IN LISTS ${module_group}_modules)
-        list(APPEND all_sources ${module_group}/${module}.c)
+        list(APPEND all_sources src/${module_group}/${module}.c)
     endforeach()
 endforeach()
 
@@ -93,7 +96,7 @@ configure_file(include/gdefconf.h.in include/gdefconf.h)
 # Build the TeX to header file converter.
 #
 
-add_executable(tcode mylib/tcode.c)
+add_executable(tcode src/mylib/tcode.c)
 target_link_libraries(tcode PRIVATE testu01_build_config)
 
 #
@@ -122,22 +125,16 @@ target_compile_definitions(testu01 PRIVATE HAVE_CONFIG_H)
 
 foreach(module_group IN ITEMS mylib probdist testu01)
     foreach(module IN LISTS ${module_group}_modules)
+        set(src "${CMAKE_CURRENT_LIST_DIR}/src/${module_group}/${module}.tex")
+        set(dest "${CMAKE_CURRENT_BINARY_DIR}/include/${module}.h")
         # Generate the header.
         add_custom_command(
-            OUTPUT
-                ${CMAKE_CURRENT_BINARY_DIR}/include/${module}.h
-            MAIN_DEPENDENCY
-                ${CMAKE_CURRENT_LIST_DIR}/${module_group}/${module}.tex
-            COMMAND
-                tcode
-                "${CMAKE_CURRENT_LIST_DIR}/${module_group}/${module}.tex"
-                "${CMAKE_CURRENT_BINARY_DIR}/include/${module}.h")
+            OUTPUT ${dest}
+            MAIN_DEPENDENCY ${src}
+            COMMAND tcode ${src} ${dest})
 
         # Add generated header as a source to create a file level dependency.
-        target_sources(
-            testu01
-            PRIVATE
-            ${CMAKE_CURRENT_BINARY_DIR}/include/${module}.h)
+        target_sources( testu01 PRIVATE ${dest})
     endforeach()
 endforeach()
 
