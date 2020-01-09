@@ -14,7 +14,6 @@ foreach(header IN LISTS _TU01_INVERTED_HEADERS)
 
     add_custom_command(
         OUTPUT ${dest}
-        COMMAND ${CMAKE_COMMAND} -E make_directory ${_TU01_DOC_OUTPUT_DIR}
         COMMAND ${Python3_EXECUTABLE} ${script} ${src} -o ${dest}
         MAIN_DEPENDENCY ${src}
         DEPENDS ${script})

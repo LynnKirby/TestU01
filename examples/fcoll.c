@@ -20,7 +20,7 @@ int main(void)
     ffam_Fam *fam = fcong_CreateLCG("LCGGood.par", 10, 30, 1);
     smultin_Param *par
         = smultin_CreateParam(NbDelta, ValDelta, smultin_GenerCellSerial, 2);
-    fmultin_Res *res = fmultin_CreateRes(par);
+    fmultin_res *res = fmultin_CreateRes(par);
     fcho_Cho *chon = fcho_CreateSampleSize(0.5, 1, 0, NULL, "n");
     fcho_Cho *chod = fmultin_CreatePer_DT(t, 1);
     fcho_Cho2 *cho = fcho_CreateCho2(chon, chod);

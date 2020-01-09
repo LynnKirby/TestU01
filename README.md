@@ -4,7 +4,6 @@
 # Lynn's TestU01 fork
 
 [![License: GPL-3.0-or-later](https://img.shields.io/badge/license-GPL--3.0--or--later-blue?style=flat-square)](./COPYING.txt)
-[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/LynnKirby/TestU01/CI%20Build/master?style=flat-square)](https://github.com/LynnKirby/TestU01/actions)
 [![REUSE compliant](https://img.shields.io/badge/REUSE-compliant-green?style=flat-square)](https://reuse.software/spec/)
 
 **Warning: work in progress and undergoing rapid change.**
