@@ -1,0 +1,18 @@
+Lynn's TestU01 fork is provided under:
+
+	SPDX-License-Identifier: GPL-3.0-or-later AND LicenseRef-testu01
+
+Being under the terms of the GNU General Public License v3.0 or later:
+
+	LICENSES/GPL-3.0-or-later.txt
+
+With additional terms (as permitted by section 7 of GPL-3.0-or-later):
+
+	LICENSES/LicenseRef-testu01.txt
+
+In addition, other licenses may also apply. Refer to file comment headers and
+the DEP-5 file .reuse/dep5. This project follows the REUSE specification. See:
+
+    https://reuse.software/spec/
+
+for more details.
