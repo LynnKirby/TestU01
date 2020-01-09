@@ -14,3 +14,6 @@ max_line_length = 80
 
 [src/*.{c,h}]
 indent_size = 3
+
+[*.yml]
+indent_size = 2
