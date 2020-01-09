@@ -8,8 +8,10 @@ project(TestU01 C)
 include(CheckIncludeFile)
 include(CheckSymbolExists)
 
-set(CMAKE_C_STANDARD 99)
-set(CMAKE_C_STANDARD_REQUIRED ON)
+# Request C11 but decay to lower version if it's not available. We also set
+# per-target compile features below which require C99 or higher. In other words,
+# we need C99 but having C11 would be better (just not required).
+set(CMAKE_C_STANDARD 11)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
@@ -63,6 +65,8 @@ if(WIN32)
         _CRT_SECURE_NO_WARNINGS)
 endif()
 
+target_compile_features(testu01_build_config INTERFACE c_std_99)
+
 #
 # Lists of all modules (i.e. source files).
 #
@@ -115,6 +119,7 @@ target_link_libraries(tcode PRIVATE testu01_build_config)
 
 add_library(testu01 STATIC ${all_sources})
 target_link_libraries(testu01 PRIVATE testu01_build_config)
+target_compile_features(testu01 PUBLIC c_std_99)
 
 if(UNIX)
     target_link_libraries(testu01 PUBLIC m)
