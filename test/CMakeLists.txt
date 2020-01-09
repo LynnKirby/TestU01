@@ -16,7 +16,7 @@ if(NOT cmocka_FOUND)
 
     FetchContent_Declare(
         cmocka_git
-        GIT_REPOSITORY https://git.cryptomilk.org/projects/cmocka.git
+        GIT_REPOSITORY https://gitlab.com/cmocka/cmocka.git
         GIT_TAG cmocka-1.1.5
         GIT_SHALLOW ON)
 
